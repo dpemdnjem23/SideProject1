@@ -1,9 +1,9 @@
 import React from "react";
 
-// import "../../../css/common/modal";
-function Modal() {
+import "../../../css/common/modal/signinmodal.css";
+function SigninModal() {
   return (
-    <div className={"modal"}>
+    <div className="modal">
       <section>
         <header>
           <button className="close">close</button>
@@ -31,4 +31,4 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default SigninModal;
