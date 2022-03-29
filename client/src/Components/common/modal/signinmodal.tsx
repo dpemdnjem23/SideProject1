@@ -6,17 +6,17 @@ function SigninModal() {
     <div className="modal">
       <section>
         <header>
-          <button className="close">close</button>
+          <button className="close">X</button>
         </header>
-        <div className="modal-image">이미지</div>
+        <div className="modal-image">로그인</div>
         <div className="modal-login-input">
           <input type="text" name="username" placeholder="아이디"></input>
-          <div className="modal-id">ID:</div>
+          <div className="modal-id"></div>
         </div>
 
         <div className="modal-login-input">
           <input type="password" name="password" placeholder="비밀번호"></input>
-          <div className="modal-password">비밀번호:</div>
+          <div className="modal-password"></div>
         </div>
 
         <div className="modal-login-button">
