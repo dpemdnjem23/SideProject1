@@ -7,6 +7,9 @@ import Modal from "./Components/common/modal/signinmodal";
 import "./App.css";
 
 function App() {
+
+  
+  
   return (
     <div className="App">
      <Modal />

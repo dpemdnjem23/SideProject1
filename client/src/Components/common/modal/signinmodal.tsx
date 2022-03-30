@@ -2,6 +2,10 @@ import React from "react";
 
 import "../../../css/common/modal/signinmodal.css";
 function SigninModal() {
+  const modalopen = () => {};
+
+  const modalclose = () => {};
+
   return (
     <div className="modal">
       <section>
