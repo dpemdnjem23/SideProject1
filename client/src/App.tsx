@@ -14,6 +14,7 @@ function App() {
     <div className="App">
      <Modal />
       <header className="App-header">
+        <button>modal</button> 
     
         <div className="App-mainHeader">
           {/* 로그인 모달창 */}
