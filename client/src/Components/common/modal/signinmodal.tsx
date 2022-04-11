@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "../../../css/common/modal/signinmodal.css";
-function SigninModal() {
-  const modalopen = () => {};
-
-  const modalclose = () => {};
+const SigninModal: React.FC<any> = ({ setShowModal }) => {
+  const closemodal = () => {
+    setShowModal(false);
+  };
 
   return (
-    <div className="modal">
-      <section>
+    <div onClick={closemodal} className="modal">
+      <section onClick={(e) => e.stopPropagation()}>
         <header>
-          <button className="close">X</button>
+          <button onClick={closemodal} className="close">
+            X
+          </button>
         </header>
         <div className="modal-image">로그인</div>
         <div className="modal-login-input">
@@ -33,6 +35,6 @@ function SigninModal() {
       </section>
     </div>
   );
-}
+};
 
 export default SigninModal;
