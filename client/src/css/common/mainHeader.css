@@ -1,0 +1,22 @@
+#header {
+  width: 100%;
+  display: flex;
+}
+
+/* inline 은 나란히 배치해준다. */
+ul,
+li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+li {
+  display: inline;
+}
+span {
+  position: relative;
+  left: 30 px;
+  top: 29 px;
+  z-index: 5;
+  width: 105 px;
+}
