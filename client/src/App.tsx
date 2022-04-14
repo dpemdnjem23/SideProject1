@@ -14,6 +14,8 @@ const App = () => {
     setShowModal(true);
   };
 
+  //상단 메뉴바에 있는 5개의 목록 -> 각각의 페이지로 연결한다.
+
   return (
     <div className="App">
       {showModal ? <Modal setShowModal={setShowModal} /> : null}

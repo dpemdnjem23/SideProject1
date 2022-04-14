@@ -11,11 +11,13 @@ const Mainheader = () => {
       <div className="main_menu">
         <span className="logo">subgather</span>
         <ul>
+        <li className="menu">메인페이지</li>
           <li className="menu">구독모음</li>
           <li className="menu">구독달력</li>
-          <li className="menu">로그인/회원가입</li>
-          <li className="menu">메인페이지</li>
+       
+       
           <li className="menu">개인정보</li>
+          <li className="menu">로그인/회원가입</li>
         </ul>
       </div>
     </div>
