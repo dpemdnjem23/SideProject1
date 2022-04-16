@@ -16,7 +16,7 @@ const Mainheader = () => {
           <li className="menu">구독달력</li>
        
        
-          <li className="menu">개인정보</li>
+       
           <li className="menu">로그인/회원가입</li>
         </ul>
       </div>
