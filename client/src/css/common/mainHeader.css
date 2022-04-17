@@ -33,7 +33,7 @@ ul {
 }
 li {
   text-align: -webkit-match-parent;
-  margin: 0px 15px;
+  margin: 0px 30px;
   display: inline;
   cursor: pointer;
 }
