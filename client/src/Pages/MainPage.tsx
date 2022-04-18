@@ -1,10 +1,17 @@
-import react from "react";
+import React, { useState } from "react";
+import { BrowserRouter, Link } from "react-router-dom";
 
 const MainPage = () => {
   return (
-    <div id="s">
-      <div className="sdf"></div>
-    </div>
+
+      <div id="s">
+        <h2 className="asdf">
+          Allusers
+          {/* This links to /users - the parent route */}
+        
+        </h2>
+      </div>
+
   );
 };
 

@@ -8,6 +8,19 @@ import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import "./App.css";
 import Mainheader from "Components/common/mainHeader";
 import MainPage from "Pages/MainPage";
+import WalletPage from "Pages/WalletPage";
+import SharePage from "Pages/SharePage";
+import CallendarPage from "Pages/CallenderPage";
+import UserPage from "Pages/UserPage";
+
+// import {
+//   MainPage,
+//   WalletPage,
+//   SharePage,
+//   UserPage,
+//   CallendarPage,
+// } from 'Pages'
+
 const App = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   //modal을 클릭했을때 modal창이 뜯
@@ -21,23 +34,25 @@ const App = () => {
 
   return (
     <BrowserRouter>
+    
         <div className="App">
-      {showModal ? <Modal setShowModal={setShowModal} /> : null}
-
-        <Route path='/' element = {<MainPage/> } />  
-
-
-        
-
-
-      {/* <header className="App-header"> */}
-        {/* <Mainheader /> */}
-        {/* <button onClick={openmodal}>modal</button> */}
-
+          {showModal ? <Modal setShowModal={setShowModal} /> : null}
       
-    </div>
-    </BrowserRouter>
+          <Routes>
+                {/* <Link to="/">홈</Link> */}
+          <Route path="/" element={<MainPage />} />
+          </Routes>
+          {/* <Route path="/walllet" element={<WalletPage />} />
+        <Route path="/collection" element={<SharePage />} />
+        <Route path="/callendar" element={<CallendarPage />} />
+        <Route path="/callendar" element={<UserPage />} /> */}
 
+          {/* <header className="App-header"> */}
+          <Mainheader />
+          <button onClick={openmodal}>modal</button>
+        </div>
+    
+    </BrowserRouter>
   );
 };
 
