@@ -9,22 +9,32 @@ const Mainheader = () => {
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 
   return (
-    // <BrowserRouter>
     <div id="header">
-      {/* <Routes> */}
       <div className="main_menu">
-        <span className="logo">subgather</span>
+        <span className="logo">
+          <Link to="/">subgather</Link>
+        </span>
         <ul>
-          <li className="menu">메인페이지</li>
-          <li className="menu">구독지갑</li>
-          <li className="menu">구독모음</li>
-          <li className="menu">구독달력</li>
-          <li className="menu">로그인/회원가입</li>
+          <li className="menu">
+            <Link to="/">메인페이지</Link>
+          </li>
+          <li className="menu">
+            <Link to="/wallet">구독지갑</Link>
+          </li>
+          <li className="menu">
+            <Link to="/collection">구독모음</Link>
+          </li>
+          <li className="menu">
+            
+            <Link to="/callendar">구독달력</Link>
+          </li>
+          <li className="menu">
+          
+            <Link to="/sign">로그인/회원가입</Link>
+          </li>
         </ul>
       </div>
-      {/* </Routes> */}
     </div>
-    // </BrowserRouter>
   );
 };
 

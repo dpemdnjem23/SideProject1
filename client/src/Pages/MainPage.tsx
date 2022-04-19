@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Link } from "react-router-dom";
+import {Routes, BrowserRouter, Link } from "react-router-dom";
 
 const MainPage = () => {
   return (
@@ -11,8 +11,7 @@ const MainPage = () => {
         
         </h2>
       </div>
-
-  );
+  )
 };
 
 export default MainPage;

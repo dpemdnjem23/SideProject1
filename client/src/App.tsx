@@ -2,10 +2,11 @@ import React, { FC } from "react";
 import { useState, useEffect } from "react";
 
 import logo from "./logo.svg";
-import Modal from "./Components/common/modal/signinmodal";
+import Modal from "./Components/login/signModal";
 import "./css/reset.css";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import "./App.css";
+import "./css/reset.css"
 import Mainheader from "Components/common/mainHeader";
 import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
@@ -37,18 +38,22 @@ const App = () => {
     
         <div className="App">
           {showModal ? <Modal setShowModal={setShowModal} /> : null}
-      
+          <Mainheader />
           <Routes>
+        
                 {/* <Link to="/">홈</Link> */}
           <Route path="/" element={<MainPage />} />
-          </Routes>
+         
           {/* <Route path="/walllet" element={<WalletPage />} />
         <Route path="/collection" element={<SharePage />} />
         <Route path="/callendar" element={<CallendarPage />} />
         <Route path="/callendar" element={<UserPage />} /> */}
 
-          {/* <header className="App-header"> */}
-          <Mainheader />
+          {/* <header className="App-header"> */} 
+          </Routes>
+       
+
+     
           <button onClick={openmodal}>modal</button>
         </div>
     

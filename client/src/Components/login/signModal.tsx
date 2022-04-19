@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import "../../../css/common/modal/signinmodal.css";
+import "../../css/common/modal/signinmodal.css";
+import "../../css/reset.css"
 const SigninModal: React.FC<any> = ({ setShowModal }) => {
   const closemodal = () => {
     setShowModal(false);
