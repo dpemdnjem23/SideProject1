@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useState, useEffect } from "react";
 
 import logo from "./logo.svg";
-import Modal from "./Components/login/signModal";
+import Modal from "./Components/Modal/signModal";
 import "./css/reset.css";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import "./App.css";
