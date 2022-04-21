@@ -3,6 +3,10 @@ import "../../css/common/modal/signupmodal.css";
 const SignupModal = () =>{
 
 
+
+    const closemodal() =>{
+        
+    }
     //이메일
     //비밀번호
     //이름
