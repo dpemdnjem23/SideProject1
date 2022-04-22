@@ -6,6 +6,7 @@ const SignupModal = () =>{
 
     const closemodal() =>{
         
+
     }
     //이메일
     //비밀번호
@@ -22,23 +23,20 @@ const SignupModal = () =>{
                 </header>
                 <div className="modal-image">회원가입</div>
 
-                <div className="modal-login-input">
+                <div className="modal-signup-input">
                   <input type="text" name="username" placeholder="이름"></input>
                   <div className="modal-id"></div>
                 </div>
-                <div className="modal-login-input">
+                <div className="modal-signup-input">
                   <input type="text" name="username" placeholder="이메일"></input>
                   <div className="modal-id"></div>
                 </div>
         
-                <div className="modal-login-input">
+                <div className="modal-signup-input">
                   <input type="password" name="password" placeholder="비밀번호"></input>
                   <div className="modal-password"></div>
                 </div>
         
-                <div className="modal-login-button">
-                  <input type="submit" className="signin-btn"></input>
-                </div>
         
                 <div className="modal-signup-button">
                   <input type="submit" className="signup-btn"></input>
