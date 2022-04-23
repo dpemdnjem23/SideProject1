@@ -1,11 +1,11 @@
 import "../../css/reset.css"
 import "../../css/common/modal/signupmodal.css";
-const SignupModal = () =>{
+const SignupModal = ({setShowModal}) =>{
 
 
 
     const closemodal() =>{
-        
+        setShowModal(false)
 
     }
     //이메일
