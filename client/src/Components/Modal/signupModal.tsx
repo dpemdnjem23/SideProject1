@@ -5,7 +5,7 @@ const SignupModal = ({setShowModal}) =>{
 
 
     const closemodal() =>{
-        setShowModal(false)
+        setShowModal(false);
 
     }
     //이메일
