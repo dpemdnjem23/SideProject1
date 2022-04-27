@@ -9,7 +9,6 @@ const SignupModal = ({setShowModal}) =>{
 
     }
     //이메일
-    
     //비밀번호
 
     return (
