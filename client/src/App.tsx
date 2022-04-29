@@ -37,6 +37,7 @@ const App = () => {
     <BrowserRouter>
     
         <div className="App">
+          
           {showModal ? <Modal setShowModal={setShowModal} /> : null}
           <Mainheader />
           <Routes>
