@@ -10,6 +10,7 @@ const SigninModal: React.FC<any> = ({ setShowModal }) => {
   return (
     <div onClick={closemodal} className="modal">
       {/* onClick={(e) => e.stopPropagation()} */}
+      
       <section >
         <header>
           <button onClick={closemodal} className="close">
