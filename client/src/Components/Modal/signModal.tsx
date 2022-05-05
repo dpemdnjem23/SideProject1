@@ -5,6 +5,7 @@ import "../../css/reset.css"
 const SigninModal: React.FC<any> = ({ setShowModal }) => {
   const closemodal = () => {
     setShowModal(false);
+    
   };
   return (
     <div onClick={closemodal} className="modal">
