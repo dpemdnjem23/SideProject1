@@ -5,7 +5,7 @@ import "../../css/reset.css"
 const SigninModal: React.FC<any> = ({ setShowModal }) => {
   const closemodal = () => {
     setShowModal(false);
-    
+
   };
   return (
     <div onClick={closemodal} className="modal">
@@ -16,24 +16,27 @@ const SigninModal: React.FC<any> = ({ setShowModal }) => {
             X
           </button>
         </header>
-        <div className="modal-image">로그인</div>
+        <div className="modal-image">간편가입 / 로그인</div>
+        <div className ="modal-image-bottom">내가 무엇을 구독했는지 관리해보세요!</div>
         <div className="modal-login-input">
-          <input type="text" name="username" placeholder="아이디"></input>
+          <input type="text" name="username" placeholder="이메일"></input>
           <div className="modal-id"></div>
         </div>
 
         <div className="modal-login-input">
-          <input type="password" name="password" placeholder="비밀번호"></input>
+          <input type="password" name="password" placeholder="비밀번호(문자,숫자포함 8자 이상)"></input>
           <div className="modal-password"></div>
         </div>
 
         <div className="modal-login-button">
-          <input type="submit" className="signin-btn"></input>
+          <span className="email_login_bt">로그인</span>
+          <span className='facebook_login_bt'></span>
+          <span className='kakao_login_bt'></span>
+   
+          
         </div>
 
-        <div className="modal-signup-button">
-          <input type="submit" className="signup-btn"></input>
-        </div>
+     
       </section>
     </div>
   );
