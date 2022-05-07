@@ -41,14 +41,15 @@
 
   font-weight: 700;
 }
-.modal-image {
+.modal_title {
   font-weight: 700;
   font-size: 1.5rem;
   text-align: center;
   padding-top: 30px;
   padding-bottom: 30px;
 }
-.modal-image-bottom {
+.modal_title_desc{
+  font-size: 1.05rem;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 30px;
@@ -66,7 +67,7 @@
   background-color: transparent;
 }
 
-.modal-login-input {
+.modal_login_input {
   margin: 0 auto;
   width: 100%;
   position: relative;
@@ -76,7 +77,7 @@
   justify-content: center;
   flex-direction: column;
 }
-.modal-login-input > input {
+.modal_login_section > input {
   margin-top: 15px;
   border-radius: 2px;
   width: 100%;
@@ -103,6 +104,8 @@ signin-btn {
   background-color:#565656;
 
 }
+
+.modal > 
 
 .modal.openModal {
   display: flex;
