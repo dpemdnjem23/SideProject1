@@ -98,14 +98,16 @@
   border-radius: 5px;
   font-size: 13px;
 }
-signin-btn {
+.modal_login {
 
   display:block;
   background-color:#565656;
 
 }
 
-.modal > 
+.modal_login_button {
+
+} 
 
 .modal.openModal {
   display: flex;
