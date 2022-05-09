@@ -6,7 +6,7 @@ import Modal from "./Components/Modal/signModal";
 import "./css/reset.css";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import "./App.css";
-import "./css/reset.css"
+
 import Mainheader from "Components/common/mainHeader";
 import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
@@ -37,7 +37,7 @@ const App = () => {
     <BrowserRouter>
     
         <div className="App">
-          
+
           {showModal ? <Modal setShowModal={setShowModal} /> : null}
           <Mainheader />
           <Routes>
