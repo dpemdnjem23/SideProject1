@@ -31,13 +31,13 @@ const SigninModal: React.FC<any> = ({ setShowModal }) => {
         <div className="modal_button">
           <div className="email_login_bt">
             <div className="email_login ic">
-              <img></img>
+              <img src=""></img>
             </div>
             <div className="email_login_text">로그인</div>
           </div>
           <div className="email_signup_bt">
             <div className="email_signup ic">
-              <img></img>
+              <img src = "" width= "50" height = "50"></img>
             </div>
             <div className="email_signup_text">이메일 회원가입</div>
           </div>

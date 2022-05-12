@@ -10,10 +10,12 @@ const Mainheader = () => {
 
   return (
     <div id="header">
-      <div className="main_menu">
         <span className="logo">
-          <Link to="/">subgather</Link>
+          <Link to="/">
+            <img src="https://imgs.fontbrain.com/custom_imgs/18/8c/67954b7e85e8d427f54ed58ea03c/td-720-60-5cc39b75c2a04aabb08ac1757eb84f60.png"  />
+          </Link>
         </span>
+        <div className="main_menu">
         <ul>
           <li className="menu">
             <Link to="/">메인페이지</Link>

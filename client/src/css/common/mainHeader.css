@@ -1,22 +1,40 @@
 #header {
-  /* position: relative; */
+/* position: relative; */
   text-align: right;
-  height: 50px;
-  padding-top: 15px;
+  height: 70px;
+  padding-top: 24px;
   min-width: 800px;
-  z-index: 9;
+  width: 100%;
 
-  background: rebeccapurple;
+  
+  
+  /* transition-duration: 0.5s; */
+background-color: blue;
+  color: rgb(34, 34, 34);
+
 }
+img{
+  /* background-color: aqua; */
+  color:blue;
+  width: 200px;
+  
+  
+}
+#header > span {
+  position: absolute;
+/* background-color: aquamarine; */
+left:10px;
+top: 20px;
 
-span {
-    position: fixed;
-    left: 30px;
-    top: 15px;
-    width: 105px;
+    /* text-align: left; */
+    
+    width: 200px;
+  
   }
   
- .main_menu {
+ #header > .main_menu {
+   /* margin-bottom: 50px; */
+  
   transition-duration: 0.2s;
   right: 210px;
   position: absolute;
@@ -32,7 +50,7 @@ ul {
   padding: 0px;
 }
 li {
-  text-align: -webkit-match-parent;
+  
   margin: 0px 30px;
   display: inline;
   cursor: pointer;
