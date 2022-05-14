@@ -32,14 +32,15 @@ const App = () => {
   //상단 메뉴바에 있는 5개의 목록 -> 각각의 페이지로 연결한다.
   //app에선 router dom ㅇ로 page연결 시켜준다.
   //로그인 회원가입은 모달로 대체
-
+// 메인 header의 로그인을 클릭하면 모달창이 app.tsx에 켜진다.
   return (
     <BrowserRouter>
     
         <div className="App">
 
           {showModal ? <Modal setShowModal={setShowModal} /> : null}
-          <Mainheader />
+{/* 메인헤더에서 로그인을 클릭하면 모달창이 뜬다. */}
+          <Mainheader onSignClick ={openmodal}  />
           <Routes>
         
                 {/* <Link to="/">홈</Link> */}
@@ -55,7 +56,6 @@ const App = () => {
        
 
      
-          <button onClick={openmodal}>modal</button>
         </div>
     
     </BrowserRouter>

@@ -1,10 +1,15 @@
-import React from "react";
+import React,{useState} from "react";
 import "../../css/common/mainHeader.css";
 import MainPage from "../../Pages/MainPage";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 //왜 tsx는 FC를 넣을까?
 //
-const Mainheader = () => {
+
+const Mainheader = ({onSignClick}:any) => {
+
+  const [showModal,setShowModal] = useState(false)
+
+  
   //main header 에 들어갈것
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 
@@ -12,7 +17,9 @@ const Mainheader = () => {
     <div id="header">
         <span className="logo">
           <Link to="/">
-            <img src="https://imgs.fontbrain.com/custom_imgs/18/8c/67954b7e85e8d427f54ed58ea03c/td-720-60-5cc39b75c2a04aabb08ac1757eb84f60.png"  />
+            <img 
+            width='200'
+            src="https://imgs.fontbrain.com/custom_imgs/18/8c/67954b7e85e8d427f54ed58ea03c/td-720-60-5cc39b75c2a04aabb08ac1757eb84f60.png"  />
           </Link>
         </span>
         <div className="main_menu">
@@ -30,9 +37,11 @@ const Mainheader = () => {
             
             <Link to="/callendar">구독달력</Link>
           </li>
-          <li className="menu">
-          
-            <Link to="/sign">로그인/회원가입</Link>
+          <li className="menu" onClick={()=>onSignClick()}   >
+            로그인/회원가입
+            
+
+            
           </li>
         </ul>
       </div>

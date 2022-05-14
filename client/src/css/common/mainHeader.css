@@ -1,45 +1,40 @@
 #header {
-/* position: relative; */
+  position: relative;
   text-align: right;
-  height: 70px;
+  height: 80px;
   padding-top: 24px;
   min-width: 800px;
   width: 100%;
+  z-index: 10;
 
-  
-  
   /* transition-duration: 0.5s; */
-background-color: blue;
+  /* background-color: blue; */
   color: rgb(34, 34, 34);
+  border-bottom: 1px solid rgb(211, 211, 211);
+}
 
-}
-img{
-  /* background-color: aqua; */
-  color:blue;
-  width: 200px;
-  
-  
-}
-#header > span {
+#header > .logo {
   position: absolute;
-/* background-color: aquamarine; */
-left:10px;
-top: 20px;
+  /* background-color: aquamarine; */
+  left: 20px;
+  /* top: 21px; */
+  bottom: 8px;
+  /* cursor: pointer; */
 
-    /* text-align: left; */
-    
-    width: 200px;
-  
-  }
-  
- #header > .main_menu {
-   /* margin-bottom: 50px; */
-  
+  /* text-align: left; */
+  z-index: 5;
+  /* width: 105px; */
+}
+
+#header > .main_menu {
+  /* margin-bottom: 50px; */
+
   transition-duration: 0.2s;
   right: 210px;
+  
   position: absolute;
   text-align: right;
-  font-weight: 600;
+
   width: 100%;
 }
 
@@ -48,10 +43,15 @@ ul {
   list-style: none;
   margin: 0px;
   padding: 0px;
+  
 }
 li {
-  
   margin: 0px 30px;
   display: inline;
   cursor: pointer;
+  /* color:blue; */
+  font-weight: 400;
+}
+li:hover{
+  color: rgb(49, 49, 223);
 }
