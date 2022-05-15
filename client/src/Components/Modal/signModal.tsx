@@ -37,8 +37,8 @@ const SigninModal = ({ setShowModal }:any) => {
           <div className="email_signup_bt">
             <div className="email_signup ic">
               <img 
-               
-              width='25'
+               width='30'
+              
               src = "./images/ic_email_sign.svg"></img>
             </div>
             <span className="email_signup text">이메일 회원가입</span>
@@ -53,7 +53,8 @@ const SigninModal = ({ setShowModal }:any) => {
           </div>
           <div className="kakao_login_bt">
             <div className="kakao_login ic">
-              <img src ="./images/kakaologo.png">
+              <img width='40'
+              src ="./images/kakaologo.png">
               </img>
             </div>
             <span className="kakao_login text">카카오로 시작하기</span>
