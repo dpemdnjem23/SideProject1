@@ -1,0 +1,190 @@
+.modal {
+    /* max-width: 500; */
+    display: flex;
+    position: absolute;
+    width: 100%;
+    /* height: 100%; */
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    height: 100%;
+  
+    z-index: 25;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
+    border-radius: 6px;
+  }
+  .modal button {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+  }
+  .modal > section {
+    /* display: none; */
+    border: 1px solid beige;
+    box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    max-width: 550px;
+    margin: 0 auto;
+    border-radius: 0.3rem;
+    background-color: #fff;
+    /* 팝업이 열릴때 스르륵 열리는 효과 */
+    animation: modal-show 0.3s;
+    overflow: hidden;
+  }
+  .modal > section > header {
+    position: relative;
+    padding: 16px 64px 16px 16px;
+  }
+  .modal_title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .modal_title_desc {
+    font-size: 1.05rem;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 30px;
+  }
+  .img {
+    display: block;
+    height: auto !important;
+    /* width: 20px; */
+  }
+  .ic {
+    
+    flex: 1 1 0%;
+    align-items: center;
+  }
+  
+  .modal > section > header button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    color: #999;
+    background-color: transparent;
+  }
+  
+  .modal_login_section {
+    margin: 0 auto;
+    width: 100%;
+    /* position: relative; */
+    padding: 10px 32px;
+  
+    display: flex;
+  
+    justify-content: center;
+    flex-direction: column;
+  }
+  .modal_login_section > input {
+    margin: 7px 0px;
+    padding-left: 17px;
+    width: 100%;
+    height: 50px;
+    border: none;
+    /* padding: 9px 12px; */
+    border-bottom: 1px solid #efefef;
+  }
+  
+  .modal_button {
+    max-width: 410px;
+    margin: 0 120px;
+  }
+  
+  .modal_button > .bt {
+    display: flex;
+    height: 45px;
+    padding:0px 15px;
+  
+    /* padding: 10px 35px; */
+    border: 1px solid rgb(223, 223, 223);
+    /* display: flex; */
+    border-radius: 30px;
+    margin-bottom: 15px;
+    line-height: 15px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal_button > .email_login_bt{
+    /* display: flex; */
+  
+    height: 45px;
+    border: 1px solid rgb(223, 223, 223);
+    padding-top: 5px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+  
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  .text {
+    padding-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+  
+  
+    /* line-height: -30px; */
+    font-size: 16px;
+    flex-grow: 2;
+  }
+  .email_login_text{
+  flex-grow:1
+  }
+  .email_login_bt{
+    text-align: center;
+  }
+  .email_signup {
+  
+    margin-left: 5px;
+   
+  }
+  
+  .email_login_bt:hover {
+    transition: 0.2s;
+    border: 1px solid gray
+  }
+  .bt:hover{
+    transition: 0.2s;
+    border:1px solid gray
+  }
+  
+  .modal.openModal {
+    display: flex;
+    align-items: center;
+    /* 팝업이 열릴때 스르륵 열리는 효과 */
+    animation: modal-bg-show 0.3s;
+  }
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

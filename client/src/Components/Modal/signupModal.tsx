@@ -4,17 +4,22 @@ import React, { useState } from "react";
 import "../../css/reset.css";
 import "../../css/common/modal/signupmodal.css";
 
-const SignupModal = () => {
+const SignupModal = ({setShowModal}) => {
+
+
+  const closemodal = () =>{
+    setShowModal(false)
+  }
   //signumodal은 signmodal에서
   //     //이메일
-
+  
   //     //비밀번호
 
   return (
-    <div className="modal">
+    <div  onClick = {closemodal}className="modal">
       <section onClick={(e) => e.stopPropagation()}>
         <header>
-          <button className="close">X</button>
+          <button onClick = {closemodal} className="close">X</button>
         </header>
         <div className="modal-image">회원가입</div>
 

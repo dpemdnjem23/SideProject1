@@ -39,6 +39,10 @@ const App = () => {
         <div className="App">
 
           {showModal ? <Modal setShowModal={setShowModal} /> : null}
+
+
+  {/* 사인 모달에서 회원가입을 누르면 사인업 모달이 뜬다. */}
+
 {/* 메인헤더에서 로그인을 클릭하면 모달창이 뜬다. */}
           <Mainheader onSignClick ={openmodal}  />
           <Routes>

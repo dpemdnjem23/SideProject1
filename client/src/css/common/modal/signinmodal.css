@@ -103,7 +103,7 @@
   margin: 0 120px;
 }
 
-.modal_button > div {
+.modal_button > .bt {
   display: flex;
   height: 45px;
   padding:0px 15px;
@@ -118,6 +118,20 @@
   align-items: center;
   justify-content: center;
 }
+.modal_button > .email_login_bt{
+  /* display: flex; */
+
+  height: 45px;
+  border: 1px solid rgb(223, 223, 223);
+  padding-top: 5px;
+  border-radius: 30px;
+  margin-bottom: 15px;
+
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+}
 .text {
   padding-bottom: 20px;
   margin-top: 20px;
@@ -128,20 +142,27 @@
   font-size: 16px;
   flex-grow: 2;
 }
+.email_login_text{
+flex-grow:1
+}
+.email_login_bt{
+  text-align: center;
+}
 .email_signup {
 
   margin-left: 5px;
  
 }
-.email_login_bt {
-  background-color: #6c757d;
-}
+
 .email_login_bt:hover {
-  background-color: #6c757d;
+  transition: 0.2s;
+  border: 1px solid gray
 }
-.kakao_login_bt {
-  background-color: #fee500;
+.bt:hover{
+  transition: 0.2s;
+  border:1px solid gray
 }
+
 .modal.openModal {
   display: flex;
   align-items: center;

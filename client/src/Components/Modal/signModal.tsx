@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import "../../css/common/modal/signinmodal.css";
 
 const SigninModal = ({ setShowModal }:any) => {
+  //이메일 회원가입을 누르면 signup으로 이동
+  //signup은 회원가입창
   const closemodal = () => {
     setShowModal(false);
   };
@@ -34,7 +36,7 @@ const SigninModal = ({ setShowModal }:any) => {
             </div>
             <span className="email_login_text">로그인</span>
           </div>
-          <div className="email_signup_bt">
+          <div  className="email_signup bt">
             <div className="email_signup ic">
               <img 
                width='30'
@@ -43,7 +45,7 @@ const SigninModal = ({ setShowModal }:any) => {
             </div>
             <span className="email_signup text">이메일 회원가입</span>
           </div>
-          <div className="google_login_bt">
+          <div className="google_login bt">
             <div className="google_login ic">
               <img 
 
@@ -51,7 +53,7 @@ const SigninModal = ({ setShowModal }:any) => {
             </div>
             <span className="google_login text">Google로 시작하기</span>
           </div>
-          <div className="kakao_login_bt">
+          <div className="kakao_login bt">
             <div className="kakao_login ic">
               <img width='40'
               src ="./images/kakaologo.png">
