@@ -5,6 +5,7 @@ module.exports = {
         "es2021": true
     },
     "extends": [
+        
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended"
@@ -17,6 +18,7 @@ module.exports = {
         "ecmaVersion": "latest"
     },
     "plugins": [
+        
         "react",
         "@typescript-eslint"
     ],

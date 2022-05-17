@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 
 import "../../css/common/modal/signinmodal.css";
+import SignupModal from "./signupModal";
 
-const SigninModal = ({ setShowModal }:any) => {
+const SigninModal= ({ openSignupModal ,setShowModal }:any) => {
   //이메일 회원가입을 누르면 signup으로 이동
   //signup은 회원가입창
+  
+  // const [signupModal, setSignupModal] = useState<boolean>(false);
+  
   const closemodal = () => {
     setShowModal(false);
   };
+  const openSignupModal =() =>{
+    setSignupModal(true);
+    
+  }
   return (
     <div onClick={closemodal} className="modal">
       <section onClick={(e) => e.stopPropagation()}>
@@ -36,10 +44,10 @@ const SigninModal = ({ setShowModal }:any) => {
             </div>
             <span className="email_login_text">로그인</span>
           </div>
-          <div  className="email_signup bt">
+          <div onClick = {openSignupModal} className="email_signup bt">
             <div className="email_signup ic">
               <img 
-               width='30'
+               width='26'
               
               src = "./images/ic_email_sign.svg"></img>
             </div>

@@ -1,44 +1,46 @@
-
-
 import React, { useState } from "react";
-import "../../css/reset.css";
+
 import "../../css/common/modal/signupmodal.css";
 
-const SignupModal = ({setShowModal}) => {
-
-
-  const closemodal = () =>{
-    setShowModal(false)
-  }
+interface s {
+  setShowModal: (show: boolean) => void;
+}
+const SignupModal: React.FC<s> = ({ setShowModal }) => {
+  const closemodal = () => {
+    setShowModal(false);
+  };
   //signumodal은 signmodal에서
   //     //이메일
-  
+
   //     //비밀번호
 
   return (
-    <div  onClick = {closemodal}className="modal">
+    <div onClick={closemodal} className="signup_modal">
       <section onClick={(e) => e.stopPropagation()}>
         <header>
-          <button onClick = {closemodal} className="close">X</button>
+          <button onClick={closemodal} className="close">
+            X
+          </button>
+
+          <div className="modal_signup_title">회원가입</div>
         </header>
-        <div className="modal-image">회원가입</div>
-
-        <div className="modal-signup-input">
+        <div className="modal_signup_seciton">
           <input type="text" name="username" placeholder="이름"></input>
-          <div className="modal-id"></div>
-        </div>
-        <div className="modal-signup-input">
+
           <input type="text" name="username" placeholder="이메일"></input>
-          <div className="modal-id"></div>
+
+          <input
+            type="password"
+            name="password"
+            placeholder="비밀번호(문자,숫자조합 8자 이상)"
+          ></input>
         </div>
 
-        <div className="modal-signup-input">
-          <input type="password" name="password" placeholder="비밀번호"></input>
-          <div className="modal-password"></div>
-        </div>
-
-        <div className="modal-signup-button">
-          <input type="submit" className="signup-btn"></input>
+        <div className="modal_signup_button_section">
+          <div className="signup desc">
+            계정 만들기 버튼을 클릭하면, Subgather의 회원이 되실수 있습니다.
+          </div>
+          <span className="signup_text">계정만들기</span>
         </div>
       </section>
     </div>
