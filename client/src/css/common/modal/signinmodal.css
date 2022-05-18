@@ -7,7 +7,6 @@
   top: 0;
   right: 0;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 
   height: 100%;
@@ -54,15 +53,11 @@
   padding-top: 10px;
   padding-bottom: 30px;
 }
-.img {
-  display: block;
-  height: auto !important;
-  /* width: 20px; */
-}
+
 .ic {
   
   flex: 1 1 0%;
-  align-items: center;
+
 }
 
 .modal > section > header button {
@@ -78,14 +73,11 @@
 }
 
 .modal_login_section {
-  margin: 0 auto;
   width: 100%;
-  /* position: relative; */
   padding: 10px 32px;
 
   display: flex;
 
-  justify-content: center;
   flex-direction: column;
 }
 .modal_login_section > input {
@@ -122,13 +114,13 @@
   /* display: flex; */
 
   height: 45px;
+  line-height: 40px;
   border: 1px solid rgb(223, 223, 223);
-  padding-top: 5px;
   border-radius: 30px;
   margin-bottom: 15px;
 
   cursor: pointer;
-  align-items: center;
+  text-align: center;
   justify-content: center;
 
 }
@@ -138,30 +130,23 @@
   margin-top: 20px;
   text-align: center;
 
-
+   display: block;
   /* line-height: -30px; */
   font-size: 16px;
   flex-grow: 2;
 }
-.email_login_text{
-flex-grow:1
-}
-.email_login_bt{
-  text-align: center;
-}
-.email_signup {
-
-  padding-left: 7px;
- 
+.email_signup> img{
+  margin-left: 7px;
 }
 
-.email_login_bt:hover {
-  transition: 0.2s;
-  border: 1px solid gray
+.email_login_bt:hover{
+  transition-duration: 0.2s;
+  border:1px solid gray;
 }
+
 .bt:hover{
   transition: 0.2s;
-  border:1px solid gray
+  border:1px solid gray;
 }
 
 .modal.openModal {
