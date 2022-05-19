@@ -43,6 +43,10 @@ const Mainheader = ({onSignClick}:any) => {
 
             
           </li>
+          <li className = 'menu'>
+            <Link to='/user'>my</Link>
+
+          </li>
         </ul>
       </div>
     </div>
