@@ -40,11 +40,9 @@ const Mainheader = ({onSignClick}:any) => {
           <li className="menu" onClick={()=>onSignClick()}   >
             로그인/회원가입
             
-
-            
           </li>
-          <li className = 'menu'>
-            <Link to='/user'>my</Link>
+          <li className = 'menu mypage'>
+            <Link to='/user'>myPage</Link>
 
           </li>
         </ul>
