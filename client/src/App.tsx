@@ -41,6 +41,7 @@ const App: React.FC = () => {
   //app에선 router dom ㅇ로 page연결 시켜준다.
   //로그인 회원가입은 모달로 대체
   // 메인 header의 로그인을 클릭하면 모달창이 app.tsx에 켜진다.
+  //로그인이 완료되면 로그인 ->mypage
   return (
     <BrowserRouter>
       <div className="App">

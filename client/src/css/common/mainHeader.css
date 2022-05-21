@@ -1,15 +1,18 @@
 #header {
-  position: relative;
+  position: fixed;
   text-align: right;
   height: 80px;
-  padding-top: 24px;
-  min-width: 800px;
+  max-width: 100vw;
   width: 100%;
   z-index: 10;
-
+  background-color: white;
+  display:  flex;
+justify-content: center;
+-webkit-box-pack:center;
   /* transition-duration: 0.5s; */
   /* background-color: blue; */
   color: rgb(34, 34, 34);
+  /* transition: height 0.05s ease 0s; */
   border-bottom: 1px solid rgb(211, 211, 211);
 }
 
@@ -19,6 +22,7 @@
   left: 20px;
   /* top: 21px; */
   bottom: 8px;
+  color: aquamarine;
   /* cursor: pointer; */
 
   /* text-align: left; */
@@ -30,32 +34,61 @@
   /* margin-bottom: 50px; */
 
   transition-duration: 0.2s;
-  right: 210px;
-  
+  max-width: 1180px;
+  background-color: transparent;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
   position: absolute;
-  text-align: right;
+  align-items: center;
+  padding: 0px 20px;
 
   width: 100%;
 }
 
 /* inline 은 나란히 배치해준다. */
 ul {
+  height: 100%;
+  display: flex;
+  align-items: center;
   list-style: none;
   margin: 0px;
   padding: 0px;
+  /* background-color: white; */
   
 }
 li {
+
+  width: 90px;
+  height: 100%;
+align-items: center;
+justify-content: center;
+line-height: 24px;
+margin-left: 16px;
   margin: 0px 30px;
-  display: inline;
+  display: inline-flex;
   cursor: pointer;
   /* color:blue; */
   font-weight: 400;
 }
 li:hover{
   color: rgb(49, 49, 223);
+  
 }
 
-.mypage{
-  display:none;
+
+.menu > img {
+  
+  /* width: 35px; */
+  border-radius: 70%;
+margin-top: auto;
+/* padding: auto; */
+  cursor: pointer;
+  background-color: rgb(195, 222, 233);
+  display: inline;
+  position: absolute;
+  /* bottom: 3%; */
+  /* object-fit: contain; */
+  
+  /* margin: 0 auto; */
 }
