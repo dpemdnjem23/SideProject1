@@ -16,8 +16,8 @@ const Mainheader = ({ onSignClick }: any) => {
       <span className="logo">
         <Link to="/">
           <img
-            width="200"
-            src="https://imgs.fontbrain.com/custom_imgs/18/8c/67954b7e85e8d427f54ed58ea03c/td-720-60-5cc39b75c2a04aabb08ac1757eb84f60.png"
+            width="60"
+            src="./images/2.png"
           />
         </Link>
       </span>
@@ -39,7 +39,8 @@ const Mainheader = ({ onSignClick }: any) => {
             로그인
           </li>
           <li className="menu">
-            <img src="./images/bee-g854ab13c0_640.png" />
+          <Link to="/mypage">마이페이지</Link>
+
           </li>
         </ul>
       </div>

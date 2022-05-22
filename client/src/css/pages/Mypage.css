@@ -1,0 +1,15 @@
+#Mypage {
+  max-width: 100%;
+  /* width: 100%; */
+  padding-top: 80px;
+
+
+}
+#Mypage > .Mypage_section {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+   display: flex;
+   background-color: rgb(244, 244, 250);
+
+}
+

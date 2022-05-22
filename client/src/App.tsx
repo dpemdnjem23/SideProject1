@@ -13,7 +13,7 @@ import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
 import CallendarPage from "Pages/CallenderPage";
-import UserPage from "Pages/UserPage";
+import MyPage from "Pages/MyPage";
 
 // import {
 //   MainPage,
@@ -32,10 +32,9 @@ const App: React.FC = () => {
     setShowModal(true);
   };
 
-  const openSignupModal =() =>{
+  const openSignupModal = () => {
     setSignupModal(true);
-    
-  }
+  };
 
   //상단 메뉴바에 있는 5개의 목록 -> 각각의 페이지로 연결한다.
   //app에선 router dom ㅇ로 page연결 시켜준다.
@@ -44,13 +43,17 @@ const App: React.FC = () => {
   //로그인이 완료되면 로그인 ->mypage
   return (
     <BrowserRouter>
-      <div className="App">
-        {showModal ? <Modal setShowModal={setShowModal} setSignupModal={setSignupModal} /> : null}
+      <div id="App">
+        {showModal ? (
+          <Modal setShowModal={setShowModal} setSignupModal={setSignupModal} />
+        ) : null}
 
-        <div onClick={openmodal}>Alluse</div>
-        
-
-        {signupModal? <SignupModal setShowModal={setShowModal} setSignupModal={setSignupModal} /> :null}
+        {signupModal ? (
+          <SignupModal
+            setShowModal={setShowModal}
+            setSignupModal={setSignupModal}
+          />
+        ) : null}
         {/* 사인 모달에서 회원가입을 누르면 사인업 모달이 뜬다. */}
 
         {/* 메인헤더에서 로그인을 클릭하면 모달창이 뜬다. */}
@@ -60,8 +63,8 @@ const App: React.FC = () => {
 
           {/* <Route path="/walllet" element={<WalletPage />} />
         <Route path="/collection" element={<SharePage />} />
-        <Route path="/callendar" element={<CallendarPage />} />
-        <Route path="/callendar" element={<UserPage />} /> */}
+        <Route path="/callendar" element={<CallendarPage />} /> */}
+          <Route path="/mypage" element={<MyPage />} />
 
           {/* <header className="App-header"> */}
         </Routes>
