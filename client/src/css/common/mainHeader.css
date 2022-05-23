@@ -73,7 +73,7 @@ margin-left: 16px;
   /* color:blue; */
   font-weight: 400;
 }
-li>a:hover{
+li:hover{
   color: rgb(49, 49, 223);
   
 }
