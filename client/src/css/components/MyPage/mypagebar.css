@@ -1,6 +1,25 @@
-.contatiner{
-  display: flex;
-width: 400px;
-height: 500px;
-  background-color: aquamarine;
+
+.container{
+display: flex;
+width: 100%;
+  border-radius: 20px;
+  background-color:white;
+  padding: 40px 24px 28px;
+  /* margin-top: 10px; */
+flex-direction: column;
+
+/* margin-top: 20px; */
+  cursor: pointer;
+
+  text-align: left; 
+  max-width: 220px;
+  height: 100%;
+  max-height: 120px;
+align-items: center;
+  
+}
+.Mypage_bar_gap{
+  width: 100%;
+  height: auto;
+  margin-top: 30px;
 }

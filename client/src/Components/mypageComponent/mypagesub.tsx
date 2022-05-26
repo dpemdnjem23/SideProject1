@@ -4,7 +4,8 @@ import "../../css/components/MyPage/mypagesub.css";
 
 const Mypagesub = () => {
   return (
-    <>
+      <>
+    {/* // <div className='Mypage_sub_section'> */}
       <div className="Mypage_sub_text">나의 구독</div>
       <div className="Mypage_sub_section">
         <div className="Mypage_1 sub">
@@ -28,6 +29,8 @@ const Mypagesub = () => {
           </div>
         </div>
       </div>
+
+    {/* // </div> */}
     </>
   );
 };

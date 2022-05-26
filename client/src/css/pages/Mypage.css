@@ -10,23 +10,32 @@
   padding-top: 80px;
   overflow-y: scroll;
 }
-#Mypage > .Mypage_section {
+.Mypage_background{
+  
   width: 100%;
   min-height: calc(100vh - 80px);
   max-width: 100vw;
   display: flex;
   background-color: rgb(244, 244, 250);
-  /* flex-direction: column; */
+  flex-direction: column;
   align-items: center;
-
-  justify-content: space-between;
 }
-.Mypage_info_section {
+.Mypage_section {
   margin-top: 80px;
-  padding: 0 40px;
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  padding: 0px 40px;
+  justify-content: space-between;
+
 }
 .Mypage_bar_section {
-  width: 100vw;
-  max-width: 250px;
-  background-color: aliceblue;
+  width: 100%;
+  max-width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  /* background-color: aquamarine; */
+
+
 }
