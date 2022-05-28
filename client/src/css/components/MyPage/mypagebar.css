@@ -21,7 +21,7 @@
   margin-top: 30px;
 }
 
-.Mypage_bar_top_title {
+.title {
   font-size: 18px;
   /* text-align: left; */
   font-weight: bold;
@@ -31,44 +31,95 @@
   border-bottom: 1px solid gray;
 }
 
-.Mypage_bar_top_section1 {
-  text-align: left;
+.Mypage_bar_top_section {
+  /* text-align: left; */
 
-   
-  padding-top:8px;
-  
+  margin-top: 8px;
+
   /* height:20px; */
 }
 .Mypage_bar_top_section1 > span {
   font-size: 11px;
-  padding:0px 18px;
+  padding: 0px 20px;
 
   /* display:inline-block; */
 }
-.Mypage_bar_top_section1_pay{
-  color:rgb(111, 111, 255)
+.Mypage_bar_top_section1_pay {
+  color: #6f6fff;
+}
+.Mypage_bar_top_section1_pay2 {
+
+    color: red;
 }
 
-.Mypage_bar_top_section1_days{
+.Mypage_bar_top_section1_days {
+  color: gray;
+}
+
+.Mypage_bar_top_section2 {
+  margin-left: 10px;
+}
+.Mypage_bar_top_section2 > span {
+  /* display: inline-block; */
+  padding: 10px;
+}
+
+.Mypage_bar_top_section2_pay {
+  color: blue;
+}
+.Mypage_bar_center_section{
+
+  
+  margin-top: 8px;
+}
+
+.Mypage_bar_center_section1>span{
+  font-size: 11px;
+  padding:0px 20px;
+}
+.Mypage_bar_center_section2{
+  margin-left: 10px;
+}
+
+.Mypage_bar_center_section1_pay2{
+  color:blue;
+}
+.Mypage_bar_center_section1_pay{
+  color: #6f6fff;}
+
+
+.Mypage_bar_center_section2>span{
+  /* font-size: 11px; */
+  padding:0px 10px;
+}
+
+.Mypage_bar_center_section1_comp{
   color:gray;
 }
-
-.Mypage_bar_top_section2 { 
-  margin-left: 8px;
-
-}
-.Mypage_bar_top_section2 >span{
-/* display: inline-block; */
-  padding:10px;
-}
-
-.Mypage_bar_top_section {
-  /* width:100%; */
-  max-width: auto;
+.Mypage_bar_bottom_section{
+  display: flex;
+  flex-direction: column;
+ 
+  margin-top: 8px;
+  font-size: 13px;
+  text-align: left;
+  font-weight: 500;
  
 }
+.Mypage_bar_bottom_section>div{
+  width:100%;
+  min-width: 200px;
+  height:30px;
+vertical-align: middle;
+margin-bottom: 4px;
+padding-left: 10px;
 
+  cursor: pointer;
+  
+}
 
-.Mypage_bar_top_section2_pay{
-  color:blue;
+.Mypage_bar_bottom_section>div:hover{
+ background-color:rgb(226, 226, 226);
+ border-radius: 10px;
+
 }
