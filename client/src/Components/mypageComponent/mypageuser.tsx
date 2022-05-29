@@ -1,8 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
 
 import "../../css/components/MyPage/mypageuser.css";
+
+
 const Mypageuser = () => {
+
+  const [userEdit, setUsetEdit] = useState(false)
+
+  const changeUserEdit = () =>{
+    setUsetEdit(true)
+  }
   return (
+
+   
       <div className="Mypage_user">
         <img className="Mypage_user_img" src="./images/wallet-6551548.svg" />
         <div className="Mypage_user_top"></div>

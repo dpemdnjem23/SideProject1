@@ -1,0 +1,16 @@
+.Mypage_useredit {
+    display: flex;
+   
+    
+    background-color: white;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    width: 520px;
+    padding: 0px;
+    border-radius: 20px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 30px;
+  }

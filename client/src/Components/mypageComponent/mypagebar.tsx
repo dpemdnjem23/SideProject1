@@ -7,17 +7,9 @@ const Mypagebar = () => {
   //useRef로 Dom을 가져와
   //
 
-  const uo = useRef<any>(10);
+  const [change,setChange] = useState(true)
 
-  const [number, setNumber] = useState(Number(uo.current.innerText));
 
-  // setNumber()
-  // const pad = () =>{
-  //   pay.style.padding =
-
-  // console.log(parseInt(uo.current.innerText))
-
-  // }
   //현재 결제가 남은 구독갯수
 
   //top에는 결제일이 3일남앗다 3일남은 구독이 몇갡지
@@ -35,14 +27,14 @@ const Mypagebar = () => {
         <div className="Mypage_bar_top_section">
           <div className="Mypage_bar_top_section1">
             <span className="Mypage_bar_top_section1_days">결제일 </span>
-            {parseInt(uo.current.innerText) <= 9 ? (
+            
               <span className="Mypage_bar_top_section1_pay">결제금액</span>
-            ) : (
-              <span className="Mypage_bar_top_section1_pay2">결제 금액</span>
-            )}
+          
+              {/* <span className="Mypage_bar_top_section1_pay2">결제 금액</span>
+             */}
           </div>
           <div className="Mypage_bar_top_section2">
-            <span ref={uo} className="Mypage_bar_top_section2_days">
+            <span  className="Mypage_bar_top_section2_days">
               13 일
             </span>
             <span className="Mypage_bar_top_section2_slash">/</span>
@@ -71,7 +63,7 @@ const Mypagebar = () => {
       <div className="Mypage_bar_bottom container">
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
-          <div>회원 정보 수정</div>
+          <div >회원 정보 수정</div>
           <div>섭개더 구독 결제 현황</div>
         </div>
       </div>
