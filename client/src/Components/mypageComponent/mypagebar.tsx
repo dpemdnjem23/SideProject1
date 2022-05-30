@@ -3,12 +3,20 @@ import "../../css/components/MyPage/mypagebar.css";
 
 // const s = document.getElemnetsByClassName()
 
-const Mypagebar = () => {
+const Mypagebar = ({setUserEdit,setPayList}:any) => {
   //useRef로 Dom을 가져와
   //
 
-  const [change,setChange] = useState(true)
+ 
 
+  const changeEdit = () => {
+    setUserEdit(true);
+    setPayList(false);
+  };
+  const changeList = () => {
+    setUserEdit(false);
+    setPayList(true);
+  };
 
   //현재 결제가 남은 구독갯수
 
@@ -27,16 +35,14 @@ const Mypagebar = () => {
         <div className="Mypage_bar_top_section">
           <div className="Mypage_bar_top_section1">
             <span className="Mypage_bar_top_section1_days">결제일 </span>
-            
-              <span className="Mypage_bar_top_section1_pay">결제금액</span>
-          
-              {/* <span className="Mypage_bar_top_section1_pay2">결제 금액</span>
+
+            <span className="Mypage_bar_top_section1_pay">결제금액</span>
+
+            {/* <span className="Mypage_bar_top_section1_pay2">결제 금액</span>
              */}
           </div>
           <div className="Mypage_bar_top_section2">
-            <span  className="Mypage_bar_top_section2_days">
-              13 일
-            </span>
+            <span className="Mypage_bar_top_section2_days">13 일</span>
             <span className="Mypage_bar_top_section2_slash">/</span>
             <span className="Mypage_bar_top_section2_pay">5,000 원</span>
           </div>
@@ -63,8 +69,8 @@ const Mypagebar = () => {
       <div className="Mypage_bar_bottom container">
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
-          <div >회원 정보 수정</div>
-          <div>섭개더 구독 결제 현황</div>
+          <div onClick={changeEdit}>회원 정보 수정</div>
+          <div onClick={changeList}>섭개더 구독 결제 내역(미구현)</div>
         </div>
       </div>
       <div></div>

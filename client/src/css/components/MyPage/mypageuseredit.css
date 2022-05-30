@@ -1,16 +1,74 @@
-.Mypage_useredit {
-    display: flex;
-   
-    
-    background-color: white;
-    width: 100%;
-    height: auto;
-    min-height: 200px;
-    width: 520px;
-    padding: 0px;
-    border-radius: 20px;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 30px;
-  }
+.Mypage_useredit_section {
+  display: flex;
+
+  background-color: white;
+  width: 100%;
+  /* height: auto; */
+  min-height: 230px;
+  width: 520px;
+  padding: 32px 24px;
+  border-radius: 20px;
+  flex-direction: column;
+
+  margin-bottom: 30px;
+}
+
+.Mypage_useredit_title {
+  height: 21px;
+  font-weight: bold;
+  line-height: 28px;
+  font-size: 18px;
+  text-align: left;
+}
+.Mypgae_useredit_gap {
+  width: 100%;
+  margin: 20px 0px;
+  height: 1px;
+  background-color: rgb(227, 227, 227);
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Mypage_useredit_nick {
+  margin-top: 10px;
+}
+.Mypgae_useredit_gap2 {
+  width: 100%;
+  margin-top: 40px;
+}
+.subsection {
+  display: flex;
+  align-items: center;
+}
+
+.Mypage_useredit_description {
+  color: gray;
+}
+
+.contents {
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  margin-right: 24px;
+}
+.bt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: blue;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  width: 70px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: rgb(240, 240, 255);
+}
