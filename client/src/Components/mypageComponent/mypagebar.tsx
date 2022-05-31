@@ -70,7 +70,7 @@ const Mypagebar = ({setUserEdit,setPayList}:any) => {
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
           <div onClick={changeEdit}>회원 정보 수정</div>
-          <div onClick={changeList}>섭개더 구독 결제 내역(미구현)</div>
+          <div onClick={changeList}>회원탈퇴</div>
         </div>
       </div>
       <div></div>

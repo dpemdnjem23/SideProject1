@@ -6,6 +6,8 @@ import Mypagesub from "Components/mypageComponent/mypagesub";
 
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/mypageComponent/mypageuseredit";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import RegisterPage from "./ReigstPage";
 
 const MyPage = () => {
   //가운데 메인 내정보
@@ -21,9 +23,14 @@ const MyPage = () => {
       <div className="Mypage_background">
         <div className="Mypage_section">
           <div className="Mypage_info_section">
-            {userEdit?<MypageEdit /> :  <Mypageuser />}
+            {userEdit ? <MypageEdit /> : <Mypageuser />}
             {/* {paylist?<Myp} */}
-          
+
+            {/* <BrowserRouter>
+              <Routes>
+                <Route path="/subregist" element={<RegisterPage />} />
+              </Routes>
+            </BrowserRouter> */}
             <Mypagesub></Mypagesub>
           </div>
           <div className="Mypage_bar_section">
@@ -31,8 +38,6 @@ const MyPage = () => {
           </div>
         </div>
       </div>
-
-      {/* <Mypagebar></Mypagebar> */}
     </div>
   );
 };

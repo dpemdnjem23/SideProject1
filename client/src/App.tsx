@@ -14,6 +14,7 @@ import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
 import CallendarPage from "Pages/CallenderPage";
 import MyPage from "Pages/MyPage";
+import RegisterPage from "Pages/ReigstPage";
 
 // import {
 //   MainPage,
@@ -61,6 +62,9 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
 
+          {/* <Route path="/subregist" element={<RegisterPage />} /> */}
+                                                      
+                                                      
           {/* <Route path="/walllet" element={<WalletPage />} />
         <Route path="/collection" element={<SharePage />} />
         <Route path="/callendar" element={<CallendarPage />} /> */}

@@ -50,7 +50,7 @@
   color: gray;
 }
 
-.contents {
+.Mypage_useredit_contents {
   border: none;
   border-bottom: 1px solid black;
   font-size: 16px;
@@ -58,7 +58,7 @@
   line-height: 24px;
   margin-right: 24px;
 }
-.bt {
+.Mypage_useredit_bt {
   display: flex;
   align-items: center;
   justify-content: center;

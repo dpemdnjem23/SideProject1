@@ -1,4 +1,7 @@
-import React from "react";
+import React  from "react";
+import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
+
+
 
 import "../../css/components/MyPage/mypagesub.css";
 
@@ -8,6 +11,7 @@ const Mypagesub = () => {
     {/* // <div className='Mypage_sub_section'> */}
       <div className="Mypage_sub_text">나의 구독</div>
       <div className="Mypage_sub_section">
+<Link to='/subregist'>
         <div className="Mypage_1 sub">
           <div className="Mypage_1 textarea">
             <span className="text_top">구독 등록</span>
@@ -18,6 +22,7 @@ const Mypagesub = () => {
             </div>
           </div>
         </div>
+        </Link>
         <div className="Mypage_2 sub">
           <div className="Mypage_2 textarea">
             <span className="text_top">구독 모음</span>

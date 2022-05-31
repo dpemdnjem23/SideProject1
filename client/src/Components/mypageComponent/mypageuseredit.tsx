@@ -15,9 +15,9 @@ const MypageEdit = () => {
             <input
               type="text"
               placeholder="오징어게임"
-              className="Mypage_useredit_id contents"
+              className="Mypage_useredit_contents"
             ></input>
-            <button className="Mypage_useredit_id bt">변경하기</button>
+            <button className="Mypage_useredit_bt">변경하기</button>
           </div>
         </div>
         <div className="Mypgae_useredit_gap2"></div>
@@ -27,9 +27,9 @@ const MypageEdit = () => {
           <div className="Mypage_userdit_pass subsection">
             <input
               type="password"
-              className="Mypage_useredit_pass contents"
+              className="Mypage_useredit_contents"
             ></input>
-            <button className="Mypage_useredit_pass bt">변경하기</button>
+            <button className="Mypage_useredit_bt">변경하기</button>
           </div>
         </div>
       </div>
