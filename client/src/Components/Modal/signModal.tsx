@@ -3,24 +3,25 @@ import React, { useState } from "react";
 import "../../css/common/modal/signinmodal.css";
 import SignupModal from "./signupModal";
 
-const SigninModal= ({ setSignupModal ,setShowModal }:any) => {
+
+type modal = {
+
+  closemodal:() =>void
+  openSignupModal: () =>void
+}
+
+const SigninModal:React.FC<modal>= ({closemodal,openSignupModal}) => {
   //이메일 회원가입을 누르면 signup으로 이동
   //signup은 회원가입창
   
-  // const [signupModal, setSignupModal] = useState<boolean>(false);
+  const [signupModal, setSignupModal] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   
-  const closemodal = () => {
-    setShowModal(false);
-  };
-  const openSignupModal =() =>{
-    setSignupModal(true);
-    
-  }
   return (
-    <div onClick={closemodal} className="modal">
+    <div onClick={()=>closemodal()} className="modal">
       <section onClick={(e) => e.stopPropagation()}>
         <header>
-          <button onClick={closemodal} className="close">
+          <button onClick={() => closemodal()} className="close">
             X
           </button>
 

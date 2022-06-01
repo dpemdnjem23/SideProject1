@@ -1,23 +1,20 @@
-import React from 'react'
+import React from "react";
 
-const SubRegistPeriod = () =>{
+const SubRegistPeriod = () => {
+  return (
+      <>
+      </>
+    // <div id="SubregistPeriod">
+    //   <div className="Subregist_ection">
+    //     <span></span>
+    //     <span></span>
+    //   </div>
+    //   <div className="Subregist_section">
+    //     <input></input>
+    //     <input></input>
+    //   </div>
+    // </div>
+  );
+};
 
-
-
-
-    return(
-
-        <div id = 'SubregistPeriod'>
-            <div className='Subregist_ection'>
-                <span></span>
-                <span></span>
-            </div>
-            <div className='Subregist_section'>
-                <input></input>
-                <input></input>
-            </div>
-        </div>
-    )
-}
-
-export default SubRegistPeriod
+export default SubRegistPeriod;

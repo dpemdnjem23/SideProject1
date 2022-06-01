@@ -6,21 +6,21 @@ import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 //
 
 const Mainheader = ({ onSignClick }: any) => {
-  const [showModal, setShowModal] = useState(false);
-
   //main header 에 들어갈것
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 
   return (
+    // {setSubRegist? null:
     <div id="header">
-      <span className="logo">
+
+        <div className="logo">
+
         <Link to="/">
-          <img
-            width="60"
-            src="./images/2.png"
-          />
-        </Link>
-      </span>
+          <img width="60" src="./images/2.png" />
+          </Link>
+        </div>
+   
+
       <div className="main_menu">
         <ul>
           <li className="menu">
@@ -30,7 +30,7 @@ const Mainheader = ({ onSignClick }: any) => {
             <Link to="/wallet">구독지갑</Link>
           </li>
           <li className="menu">
-            <Link to="/collection">구독모음</Link>
+            <Link to="/collection">구독공유</Link>
           </li>
           <li className="menu">
             <Link to="/callendar">구독달력</Link>
@@ -39,12 +39,12 @@ const Mainheader = ({ onSignClick }: any) => {
             로그인
           </li>
           <li className="menu">
-          <Link to="/mypage">마이페이지</Link>
-
+            <Link to="/mypage">마이페이지</Link>
           </li>
         </ul>
       </div>
     </div>
+    // }
   );
 };
 

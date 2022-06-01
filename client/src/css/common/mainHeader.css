@@ -1,4 +1,5 @@
 #header {
+  
   position: fixed;
   text-align: right;
   height: 80px;
@@ -17,22 +18,16 @@ justify-content: center;
 
 #header > .logo {
   /* width:10px; */
-  display: inline-block;
   background-color: white;
   top: 10px;
   position: absolute;
-  /* background-color: aquamarine; */
   left: 20px;
-  /* background-color: transparent; */
-  /* top: 21px; */
-  /* bottom: 8px; */
-  /* color: aquamarine; */
   /* cursor: pointer; */
-
-  /* text-align: left; */
-  /* z-index: 5; */
-  /* width: 105px; */
 }
+#header > .logo>img {
+  cursor: pointer;
+}
+
 
 #header > .main_menu {
   /* margin-bottom: 50px; */
@@ -65,9 +60,10 @@ li {
 background-color: white;
   width: 90px;
 align-items: center;
-height:60px;
+height:30px;
 justify-content: center;
 margin-left: 16px;
+cursor: pointer;
   /* margin: 0px 30px; */
   display: inline-flex;
   /* color:blue; */
@@ -77,5 +73,4 @@ li:hover{
   color: rgb(49, 49, 223);
   
 }
-
 

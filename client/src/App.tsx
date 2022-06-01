@@ -15,6 +15,7 @@ import SharePage from "Pages/SharePage";
 import CallendarPage from "Pages/CallenderPage";
 import MyPage from "Pages/MyPage";
 import RegisterPage from "Pages/ReigstPage";
+import { Navigate } from "react-router";
 
 // import {
 //   MainPage,
@@ -24,18 +25,31 @@ import RegisterPage from "Pages/ReigstPage";
 //   CallendarPage,
 // } from 'Pages'
 
-const App: React.FC = () => {
+const App = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [signupModal, setSignupModal] = useState<boolean>(false);
-
+  const [showRegist, setShowRegist] = useState<boolean>(false);
   //modal을 클릭했을때 modal창이 뜯
   const openmodal = () => {
     setShowModal(true);
+    setSignupModal(false);
+  };
+  const closemodal = () => {
+    setShowModal(false);
+    setSignupModal(false);
   };
 
+  const openRegist = () => {
+    setShowRegist(true);
+  };
   const openSignupModal = () => {
+    setShowModal(false);
     setSignupModal(true);
   };
+
+  // const openSignupModal = () => {
+  //   setSignupModal(true);
+  // };
 
   //상단 메뉴바에 있는 5개의 목록 -> 각각의 페이지로 연결한다.
   //app에선 router dom ㅇ로 page연결 시켜준다.
@@ -46,32 +60,38 @@ const App: React.FC = () => {
     <BrowserRouter>
       <div id="App">
         {showModal ? (
-          <Modal setShowModal={setShowModal} setSignupModal={setSignupModal} />
+          <Modal closemodal={closemodal} openSignupModal={openSignupModal} />
         ) : null}
 
         {signupModal ? (
-          <SignupModal
-            setShowModal={setShowModal}
-            setSignupModal={setSignupModal}
-          />
+          <SignupModal openmodal={openmodal} closemodal={closemodal} />
         ) : null}
-        {/* 사인 모달에서 회원가입을 누르면 사인업 모달이 뜬다. */}
-
-        {/* 메인헤더에서 로그인을 클릭하면 모달창이 뜬다. */}
+           
+           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
         <Mainheader onSignClick={openmodal} />
         <Routes>
           <Route path="/" element={<MainPage />} />
+          
+          {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
 
-          {/* <Route path="/subregist" element={<RegisterPage />} /> */}
-                                                      
-                                                      
+
           {/* <Route path="/walllet" element={<WalletPage />} />
         <Route path="/collection" element={<SharePage />} />
         <Route path="/callendar" element={<CallendarPage />} /> */}
-          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage" element={<MyPage  openRegist={openRegist} />} />
+
+
+          <Route path="/mypage/*" element={<Navigate replace to="/mypage" />} />
 
           {/* <header className="App-header"> */}
+      
+
+  
+        
         </Routes>
+
+   
+  
       </div>
     </BrowserRouter>
   );

@@ -1,27 +1,18 @@
-import SubRegistInfo from 'Components/mypageComponent/mypagesub/subregistInfo'
-import SubRegistPeriod from 'Components/mypageComponent/mypagesub/subregistPeriod'
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import SubRegistInfo from "Components/mypageComponent/mypagesub/subregistInfo";
+import SubRegistPeriod from "Components/mypageComponent/mypagesub/subregistPeriod";
+import React from "react";
 
-const RegisterPage = () =>{
-
-    return(
-<BrowserRouter>
-
-        <div id ='RegisterPage'>
-            <SubRegistInfo></SubRegistInfo>
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
-            <SubRegistPeriod />
- 
+const RegisterPage = () => {
+  return (
+    <div id="RegisterPage">
+      <SubRegistInfo />
 
+      <SubRegistPeriod />
+    </div>
+  );
+};
 
-        </div>
-
-        </BrowserRouter>
-    )
-
-
-}
-
-export default RegisterPage
+export default RegisterPage;

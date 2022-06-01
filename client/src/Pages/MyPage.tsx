@@ -9,7 +9,11 @@ import MypageEdit from "Components/mypageComponent/mypageuseredit";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RegisterPage from "./ReigstPage";
 
-const MyPage = () => {
+type props =  {
+  openRegist: () => void;
+}
+
+const MyPage: React.FC<props>= ({openRegist,}) => {
   //가운데 메인 내정보
   //사이드 정보
 
@@ -19,6 +23,7 @@ const MyPage = () => {
 
   //유저 정보 수정을 누르면 useEdit으로 바뀐다.
   return (
+    
     <div id="Mypage">
       <div className="Mypage_background">
         <div className="Mypage_section">
@@ -26,12 +31,7 @@ const MyPage = () => {
             {userEdit ? <MypageEdit /> : <Mypageuser />}
             {/* {paylist?<Myp} */}
 
-            {/* <BrowserRouter>
-              <Routes>
-                <Route path="/subregist" element={<RegisterPage />} />
-              </Routes>
-            </BrowserRouter> */}
-            <Mypagesub></Mypagesub>
+            <Mypagesub openRegist={openRegist} />
           </div>
           <div className="Mypage_bar_section">
             <Mypagebar setUserEdit={setUserEdit} setPayList={setPayList} />

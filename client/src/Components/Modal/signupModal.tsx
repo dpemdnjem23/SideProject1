@@ -2,20 +2,12 @@ import React, { useState } from "react";
 
 import "../../css/common/modal/signupmodal.css";
 
-interface s {
-  setShowModal: (show: boolean) => void;
-  setSignupModal:(signup:boolean) =>void;
+interface signupmodal {
+  openmodal: () => void;
+  closemodal:() =>void;
 }
-const SignupModal: React.FC<s> = ({ setShowModal,setSignupModal }) => {
-  const closemodal = () => {
-    setShowModal(false);
-    setSignupModal(false)
-  };
-  const openmodal =() =>{
-    setShowModal(true);
-    setSignupModal(false);
-  }
-
+const SignupModal: React.FC<signupmodal> = ({ openmodal,closemodal}) => {
+  
  
   //signumodal은 signmodal에서
   //     //이메일
@@ -23,10 +15,10 @@ const SignupModal: React.FC<s> = ({ setShowModal,setSignupModal }) => {
   //     //비밀번호
 
   return (
-    <div onClick={closemodal}  className="signup_modal">
+    <div onClick={()=>closemodal()}  className="signup_modal">
       <section onClick={(e) => e.stopPropagation()}>
         <header>
-          <button onClick={closemodal} className="close">
+          <button onClick={()=>closemodal()} className="close">
             X
           </button>
 
@@ -51,7 +43,7 @@ const SignupModal: React.FC<s> = ({ setShowModal,setSignupModal }) => {
           <span className="signup_text">계정만들기</span>
           <div className ='already_account'>
             이미 가입 하셨나요?
-            <a onClick={openmodal}> 로그인</a>
+            <a onClick={()=>openmodal()}> 로그인</a>
           </div>
         </div>
       </section>
