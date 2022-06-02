@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../css/common/mainHeader.css";
 import MainPage from "../../Pages/MainPage";
-import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
+import { Route, BrowserRouter, Link, Routes ,Outlet} from "react-router-dom";
 //왜 tsx는 FC를 넣을까?
 //
 
@@ -10,16 +10,19 @@ const Mainheader = ({ onSignClick }: any) => {
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 
   return (
-    // {setSubRegist? null:
+    <>
+    
     <div id="header">
+  
 
-        <div className="logo">
+        <span className="logo">
 
         <Link to="/">
           <img width="60" src="./images/2.png" />
           </Link>
-        </div>
+        </span>
    
+        
 
       <div className="main_menu">
         <ul>
@@ -40,11 +43,18 @@ const Mainheader = ({ onSignClick }: any) => {
           </li>
           <li className="menu">
             <Link to="/mypage">마이페이지</Link>
+           
           </li>
+          
+          
         </ul>
+      
+        
       </div>
+    
     </div>
-    // }
+    <Outlet></Outlet>
+  </>
   );
 };
 

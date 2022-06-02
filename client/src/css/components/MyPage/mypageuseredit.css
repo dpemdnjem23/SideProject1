@@ -59,6 +59,7 @@
   margin-right: 24px;
 }
 .Mypage_useredit_bt {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,0 +1,48 @@
+#SubregistInfo {
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height:800px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 150px;
+  flex-direction: column;
+
+  background-color: rgb(204, 200, 200);
+}
+
+.SubregistInfo_section {
+  width: 100%;
+  height: 100%;
+  max-width: 260px;
+  max-height: 300px;
+  /* margin-bottom: 30px; */
+  background-color: brown;
+}
+
+
+
+.SubregistInfo_section_title{
+    font-size: 17px;
+    color:blue;
+
+    margin-bottom:5px;
+}
+
+.SubregistInfo_section_title2{
+    font-size: 20px;
+
+    font-weight: bold;
+
+
+}
+.SubregistInfo_section_sub{
+
+    width:100%;
+    min-width: 100px;
+
+    background-color: gray;
+    border-radius: 5px;
+}

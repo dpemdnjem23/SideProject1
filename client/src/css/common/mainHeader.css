@@ -18,11 +18,12 @@ justify-content: center;
 
 #header > .logo {
   /* width:10px; */
+  display: inline-block;
   background-color: white;
   top: 10px;
   position: absolute;
   left: 20px;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 #header > .logo>img {
   cursor: pointer;
@@ -60,7 +61,7 @@ li {
 background-color: white;
   width: 90px;
 align-items: center;
-height:30px;
+height:50px;
 justify-content: center;
 margin-left: 16px;
 cursor: pointer;

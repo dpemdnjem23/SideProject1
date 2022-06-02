@@ -15,7 +15,7 @@ import SharePage from "Pages/SharePage";
 import CallendarPage from "Pages/CallenderPage";
 import MyPage from "Pages/MyPage";
 import RegisterPage from "Pages/ReigstPage";
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 // import {
 //   MainPage,
@@ -66,32 +66,35 @@ const App = () => {
         {signupModal ? (
           <SignupModal openmodal={openmodal} closemodal={closemodal} />
         ) : null}
-           
-           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
-        <Mainheader onSignClick={openmodal} />
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          
-          {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
+          {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
+          <Route element={<Mainheader onSignClick={openmodal} />}>
+            <Route path="/" element={<MainPage />} />
+            <Route
+              path="/mypage"
+              element={<MyPage openRegist={openRegist} />}
+            />
 
+            <Route
+              path="/mypage/*"
+              element={<Navigate replace to="/mypage" />}
+            />
+          </Route>
+          {/* <Outlet></Outlet> */}
+
+
+
+          <Route
+            path="/subregist"
+            element={<RegisterPage></RegisterPage>}
+          ></Route>
+
+          {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
 
           {/* <Route path="/walllet" element={<WalletPage />} />
         <Route path="/collection" element={<SharePage />} />
         <Route path="/callendar" element={<CallendarPage />} /> */}
-          <Route path="/mypage" element={<MyPage  openRegist={openRegist} />} />
-
-
-          <Route path="/mypage/*" element={<Navigate replace to="/mypage" />} />
-
-          {/* <header className="App-header"> */}
-      
-
-  
-        
         </Routes>
-
-   
-  
       </div>
     </BrowserRouter>
   );

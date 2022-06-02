@@ -6,7 +6,7 @@ import Mypagesub from "Components/mypageComponent/mypagesub";
 
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/mypageComponent/mypageuseredit";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,Outlet } from "react-router-dom";
 import RegisterPage from "./ReigstPage";
 
 type props =  {
@@ -25,6 +25,7 @@ const MyPage: React.FC<props>= ({openRegist,}) => {
   return (
     
     <div id="Mypage">
+  
       <div className="Mypage_background">
         <div className="Mypage_section">
           <div className="Mypage_info_section">
