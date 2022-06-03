@@ -7,7 +7,7 @@ import Mypagesub from "Components/mypageComponent/mypagesub";
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/mypageComponent/mypageuseredit";
 import { BrowserRouter, Route, Routes,Outlet } from "react-router-dom";
-import RegisterPage from "./ReigstPage";
+import RegisterPage from "./SubReigstPage";
 
 type props =  {
   openRegist: () => void;

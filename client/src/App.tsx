@@ -14,8 +14,8 @@ import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
 import CallendarPage from "Pages/CallenderPage";
 import MyPage from "Pages/MyPage";
-import RegisterPage from "Pages/ReigstPage";
-import { Navigate, Outlet } from "react-router";
+import SubRegisterPage from "Pages/SubReigstPage";
+import { Navigate} from "react-router";
 
 // import {
 //   MainPage,
@@ -86,7 +86,7 @@ const App = () => {
 
           <Route
             path="/subregist"
-            element={<RegisterPage></RegisterPage>}
+            element={<SubRegisterPage></SubRegisterPage>}
           ></Route>
 
           {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}

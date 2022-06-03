@@ -1,0 +1,21 @@
+.cancellation_bt_section{
+
+display: flex;
+    cursor:pointer;
+    width: 100%;
+    height:100%;
+    max-width:220px;
+    min-height: 50px;
+    /* border-color: red; */
+    border-radius: 10px;
+    border: 1px solid red;
+
+    /* background-color: aquamarine; */
+
+    justify-content: center;
+    align-items: center;
+}
+
+.cancellation_bt_section >span{
+    color:red;
+}

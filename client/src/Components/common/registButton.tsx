@@ -1,14 +1,12 @@
-import React from 'react'
+import React from "react";
 
-const RegistButton = () =>{
+import "../../css/common/registButton.css";
+const RegistButton = () => {
+  return (
+    <div className="regist_bt_section">
+      <span>등록하기</span>
+    </div>
+  );
+};
 
-
-
-    return(
-
-        <div>
-
-            <button></button>
-        </div>
-    )
-}
+export default RegistButton;
