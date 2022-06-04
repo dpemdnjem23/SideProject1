@@ -6,9 +6,9 @@ import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import "../css/pages/SubRegisterPage.css";
+import "../../css/pages/SubRegisterPage.css";
 
-const RegisterPage = () => {
+const SubRegisterPage = () => {
   return (
     <div id="RegisterPage">
       <SubRegistInfo />
@@ -23,4 +23,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default SubRegisterPage;

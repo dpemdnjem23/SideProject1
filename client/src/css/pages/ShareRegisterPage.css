@@ -1,0 +1,23 @@
+#ShareRegisterPage {
+  white-space: pre-line;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  /* padding-top: 30px; */
+
+  max-width: 100vw;
+
+  min-height: 100vh;
+
+  align-items: center;
+}
+
+.SharRegisterPage_bt {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

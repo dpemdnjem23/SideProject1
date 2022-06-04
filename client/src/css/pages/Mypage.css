@@ -7,12 +7,10 @@
   width: 100%;
   max-width: 100vw;
   min-height: 100%;
-  padding-top: 80px;
-  overflow-y: scroll;
+   padding-top: 80px;
+
 }
-.Mypage_background{
-  
-  width: 100%;
+.Mypage_background{  width: 100%;
   min-height: calc(100vh - 80px);
   max-width: 100vw;
   display: flex;

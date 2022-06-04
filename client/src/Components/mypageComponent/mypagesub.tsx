@@ -28,6 +28,7 @@ const Mypagesub: React.FC<props> = ({ openRegist }) => {
           </div>
         </Link>
         <div className="Mypage_2 sub">
+        <Link to="/shareregist">
           <div className="Mypage_2 textarea">
             <span className="text_top">구독 모음</span>
             <span className="text_middle">나의 구독을 글과 함께 공유해요!</span>
@@ -36,9 +37,11 @@ const Mypagesub: React.FC<props> = ({ openRegist }) => {
               <img src="./images/icons8-들어가다-30.png"></img>
             </div>
           </div>
+          </Link>
         </div>
+     
       </div>
-
+ 
       {/* // </div> */}
     </>
   );
