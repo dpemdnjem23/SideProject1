@@ -1,0 +1,16 @@
+div>textarea {
+
+    line-height:25px;
+
+    /* width:20%; */
+    min-width:400px;
+    min-height:180px;
+
+    font-style: normal;
+    font-weight: normal;
+    text-align: left;
+outline-color: rgb(255, 209, 124);
+
+margin:30px 0px;
+}
+

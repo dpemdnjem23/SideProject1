@@ -33,7 +33,7 @@ const Mainheader = ({ onSignClick }: any) => {
             <Link to="/wallet">구독지갑</Link>
           </li>
           <li className="menu">
-            <Link to="/collection">구독공유</Link>
+            <Link to="/share">구독공유</Link>
           </li>
           <li className="menu">
             <Link to="/callendar">구독달력</Link>

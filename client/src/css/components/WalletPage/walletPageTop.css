@@ -1,0 +1,11 @@
+.WalletPage_top_section{
+
+    width:100%;
+    height: 100%;
+
+    max-width: 400px;
+    min-height:600px;
+    
+
+    background-color: white;
+}

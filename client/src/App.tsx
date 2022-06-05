@@ -75,7 +75,7 @@ const App = () => {
               path="/mypage"
               element={<MyPage openRegist={openRegist} />}
             />
-
+            <Route path="/wallet" element={<WalletPage />} />
             <Route
               path="/mypage/*"
               element={<Navigate replace to="/mypage" />}
@@ -94,7 +94,7 @@ const App = () => {
           ></Route>
           {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
 
-          {/* <Route path="/walllet" element={<WalletPage />} />
+          {/* 
         <Route path="/collection" element={<SharePage />} />
         <Route path="/callendar" element={<CallendarPage />} /> */}
         </Routes>

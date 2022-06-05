@@ -4,6 +4,11 @@ import "../../../css/components/MyPage/MypageShare/shareregistInfo.css";
 
 const ShareRegistInfo = () => {
 
+  //구독 정보 를 불러모으는 버튼이 있다.
+  // 버튼을 누를시 구독정보를 불러오고 불러오는동안 대기화면 표시
+  // 구독정보를 불러오고 싶지 않을수 있으니 버튼을 누르지 않으면 그냥 글만 쓸수 있다
+  // 이를 안내할만한 것들을 모달창을 띄우든 버튼 클릭시 안내가 필요하다.
+
     const [button, setButton] = useState(true);
 
 
@@ -56,12 +61,7 @@ const ShareRegistInfo = () => {
 
       }
       </div>
-          
-
-      <div className="ShareRegistInfo_section_sub3">
-
-          글쓰는곳
-      </div>
+        
     </div>
   );
 };
