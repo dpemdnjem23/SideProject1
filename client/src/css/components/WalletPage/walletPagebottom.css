@@ -1,0 +1,12 @@
+.WalletPage_Bottom_section{
+margin-top: 40px;
+    min-width: 500px;
+
+    min-height: 50px;
+
+    border:3px solid gray
+}
+
+.WalletPage_Bottom_section_contents{
+
+}

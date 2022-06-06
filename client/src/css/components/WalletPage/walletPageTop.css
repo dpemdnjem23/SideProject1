@@ -1,11 +1,48 @@
-.WalletPage_top_section{
+.WalletPage_Top_section {
+  min-width: 500px;
+  background-color: rgb(219, 217, 217);
+  /* rgb(244, 244, 250); */
+  min-height: 200px;
+}
 
-    width:100%;
-    height: 100%;
+.WalletPage_center_section_sub {
+  /* position: relative; */
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
 
-    max-width: 400px;
-    min-height:600px;
-    
+  flex-direction: row;
+  /* width: 30px; */
+}
 
-    background-color: white;
+.WalletPage_center_section_sub2 {
+    width: 165px;
+  height: 160px;
+  padding-left: 20px;
+
+  border-right: 3px solid white;
+}
+.WalletPage_center_section_sub3 {
+    /* text-align: Top; */
+ 
+  width: 140px;
+  height: 160px;
+  
+
+  border-right: 3px solid white;
+}
+.WalletPage_center_section_sub4 {
+  width: 140px;
+  height: 160px;
+  /* border-right: 3px solid white; */
+}
+.WalletPage_center_section_sub2 > img {
+  position: relative;
+  width: 30px;
+  bottom: 38px;
+  left: 15px;
+}
+.WalletPage_center_section_sub > img {
+  position: absolute;
+  width: 30px;
 }
