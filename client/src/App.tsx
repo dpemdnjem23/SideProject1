@@ -30,6 +30,10 @@ const App = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [signupModal, setSignupModal] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
+  const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
+  const [userEdit, setUserEdit] = useState<boolean>(false);
+  const [delUser, setDelUser] = useState<boolean>(false);
+
   //modal을 클릭했을때 modal창이 뜯
   const openmodal = () => {
     setShowModal(true);
@@ -47,7 +51,21 @@ const App = () => {
     setShowModal(false);
     setSignupModal(true);
   };
+const openSubModal = () =>{
+setShowSubDetail(true)
+}
 
+const closeSubModal = () =>{
+  setShowSubDetail(false)
+
+}
+const changeEdit = () =>{
+setUserEdit(true);
+}
+const deleteUser = () =>{
+  setDelUser(true)
+
+}
   // const openSignupModal = () => {
   //   setSignupModal(true);
   // };
@@ -60,6 +78,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <div id="App">
+
+        {}
         {showModal ? (
           <Modal closemodal={closemodal} openSignupModal={openSignupModal} />
         ) : null}
@@ -73,9 +93,10 @@ const App = () => {
             <Route path="/" element={<MainPage />} />
             <Route
               path="/mypage"
-              element={<MyPage openRegist={openRegist} />}
+              element={<MyPage openRegist={openRegist} userEdit= {userEdit} changeEdit={changeEdit} deleteUser={deleteUser}/>}
             />
-            <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/wallet" element={<WalletPage subDetail = {showSubDetail}  closeSubModal={closeSubModal}
+          openSubModal={openSubModal} />} />
             <Route
               path="/mypage/*"
               element={<Navigate replace to="/mypage" />}

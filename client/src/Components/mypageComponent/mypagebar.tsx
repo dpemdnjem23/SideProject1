@@ -3,20 +3,18 @@ import "../../css/components/MyPage/mypagebar.css";
 
 // const s = document.getElemnetsByClassName()
 
-const Mypagebar = ({setUserEdit,setPayList}:any) => {
+interface Change {
+  changeEdit : () =>void
+  deleteUser : () =>void
+}
+
+const Mypagebar:React.FC<Change> = ({changeEdit,deleteUser}) => {
   //useRef로 Dom을 가져와
   //
 
  
 
-  const changeEdit = () => {
-    setUserEdit(true);
-    setPayList(false);
-  };
-  const changeList = () => {
-    setUserEdit(false);
-    setPayList(true);
-  };
+
 
   //현재 결제가 남은 구독갯수
 
@@ -69,8 +67,8 @@ const Mypagebar = ({setUserEdit,setPayList}:any) => {
       <div className="Mypage_bar_bottom container">
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
-          <div onClick={changeEdit}>회원 정보 수정</div>
-          <div onClick={changeList}>회원탈퇴</div>
+          <div onClick={()=>changeEdit()}>회원 정보 수정</div>
+          <div onClick={() => deleteUser()}>회원탈퇴</div>
         </div>
       </div>
       <div></div>

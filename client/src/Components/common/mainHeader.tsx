@@ -5,7 +5,12 @@ import { Route, BrowserRouter, Link, Routes ,Outlet} from "react-router-dom";
 //왜 tsx는 FC를 넣을까?
 //
 
-const Mainheader = ({ onSignClick }: any) => {
+
+interface showSignModal {
+  onSignClick: () =>void
+}
+
+const Mainheader:React.FC<showSignModal> = ({ onSignClick }) => {
   //main header 에 들어갈것
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 

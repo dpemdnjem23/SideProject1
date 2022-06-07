@@ -14,9 +14,6 @@ const SigninModal:React.FC<modal>= ({closemodal,openSignupModal}) => {
   //이메일 회원가입을 누르면 signup으로 이동
   //signup은 회원가입창
   
-  const [signupModal, setSignupModal] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  
   return (
     <div onClick={()=>closemodal()} className="modal">
       <section onClick={(e) => e.stopPropagation()}>

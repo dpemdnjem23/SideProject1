@@ -7,16 +7,18 @@ const WalletPageBottom = () =>{
 
     return (
         <div className='WalletPage_Bottom_section'>
-            <div className='WalletPage_Bottom_section_contents'>
-                <span>총 구독가격 0 원</span>
+          
+                <span> 총 구독가격 &nbsp;</span>
+                <span className='WallPage_Bottom_section_price'>30,0000</span>
+                <span>&nbsp; 원  &nbsp; </span>
 
-                <span>총 결제금액</span>
-                <span>0원</span>
+                <span>총 결제금액&nbsp;</span>
+                <span className='WallPage_Bottom_section_price2'>30,000원</span>
                 
             </div>
 
 
-        </div>
+    
     )
 }
 
