@@ -33,6 +33,8 @@ const App = () => {
   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   const [userEdit, setUserEdit] = useState<boolean>(false);
   const [delUser, setDelUser] = useState<boolean>(false);
+  const [showCancellation, setShowCancellation] = useState<boolean>(false);
+  const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
 
   //modal을 클릭했을때 modal창이 뜯
   const openmodal = () => {
@@ -51,21 +53,35 @@ const App = () => {
     setShowModal(false);
     setSignupModal(true);
   };
-const openSubModal = () =>{
-setShowSubDetail(true)
-}
+  const openSubModal = () => {
+    setShowSubDetail(true);
+  };
 
-const closeSubModal = () =>{
-  setShowSubDetail(false)
+  const closeSubModal = () => {
+    setShowSubDetail(false);
+  };
+  const changeEdit = () => {
+    setUserEdit(true);
+  };
+  const deleteUser = () => {
+    setDelUser(true);
+  };
 
-}
-const changeEdit = () =>{
-setUserEdit(true);
-}
-const deleteUser = () =>{
-  setDelUser(true)
+  const openCancellationModal = () => {
+    setShowCancellation(true);
+  };
+  const closeCancellationModal = () => {
+    setShowCancellation(false);
 
-}
+  };
+  const openSubDetailEditModal = () =>{
+    setShowSubEdit(true)
+
+  }
+  const closeSubDetailEditModal = () =>{
+    setShowSubEdit(false)
+  }
+
   // const openSignupModal = () => {
   //   setSignupModal(true);
   // };
@@ -78,7 +94,6 @@ const deleteUser = () =>{
   return (
     <BrowserRouter>
       <div id="App">
-
         {}
         {showModal ? (
           <Modal closemodal={closemodal} openSignupModal={openSignupModal} />
@@ -93,10 +108,31 @@ const deleteUser = () =>{
             <Route path="/" element={<MainPage />} />
             <Route
               path="/mypage"
-              element={<MyPage openRegist={openRegist} userEdit= {userEdit} changeEdit={changeEdit} deleteUser={deleteUser}/>}
+              element={
+                <MyPage
+                  openRegist={openRegist}
+                  userEdit={userEdit}
+                  changeEdit={changeEdit}
+                  deleteUser={deleteUser}
+                />
+              }
             />
-            <Route path="/wallet" element={<WalletPage subDetail = {showSubDetail}  closeSubModal={closeSubModal}
-          openSubModal={openSubModal} />} />
+            <Route
+              path="/wallet"
+              element={
+                <WalletPage
+                showSubEdit={showSubEdit}
+                closeCancellationModal = {closeCancellationModal}
+                closeSubDetailEditModal={closeSubDetailEditModal}
+                  openSubDetailEditModal={openSubDetailEditModal}
+                  showCancellation={showCancellation}
+                  openCancellationModal={openCancellationModal}
+                  subDetail={showSubDetail}
+                  closeSubModal={closeSubModal}
+                  openSubModal={openSubModal}
+                />
+              }
+            />
             <Route
               path="/mypage/*"
               element={<Navigate replace to="/mypage" />}

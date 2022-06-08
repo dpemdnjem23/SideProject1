@@ -10,6 +10,12 @@ interface showSubDetailModal {
   openSubModal: () => void;
   subDetail: boolean;
   closeSubModal: () => void;
+  openCancellationModal: () =>void
+  showCancellation:boolean
+  openSubDetailEditModal: () => void
+  closeSubDetailEditModal:() =>void
+  showSubEdit:boolean
+  closeCancellationModal:() =>void
 }
 
 import "../css/pages/WalletPage.css";
@@ -17,6 +23,12 @@ const WalletPage: React.FC<showSubDetailModal> = ({
   subDetail,
   openSubModal,
   closeSubModal,
+  openCancellationModal,
+  showCancellation,
+  openSubDetailEditModal,
+  closeSubDetailEditModal,
+  showSubEdit,
+  closeCancellationModal,
 }) => {
 //   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   //   const closeSubModal =() =>{
@@ -29,11 +41,12 @@ const WalletPage: React.FC<showSubDetailModal> = ({
 //   onClick = {() =>closeSubModal()}
   return (
     <div  id="WalletPage">
-      {subDetail ? <SubDetailModal closeSubModal={closeSubModal}></SubDetailModal> : null}
+    {subDetail ? <SubDetailModal showSubEdit ={showSubEdit} closeCancellationModal={ closeCancellationModal} closeSubDetailEditModal={closeSubDetailEditModal} oepnSubDetailEditModal={openSubDetailEditModal} showCancellation={showCancellation}  openCancellationModal={openCancellationModal} closeSubModal={closeSubModal}></SubDetailModal> : null}
       <div className="WalletPage_background">
         <WalletPageTop></WalletPageTop>
 
         <WalletPageCenter
+        // showCancellation={showCancellation}
           openSubModal={openSubModal}
         />
         <WalletPageBottom></WalletPageBottom>

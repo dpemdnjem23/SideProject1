@@ -11,21 +11,32 @@
 
   height: 100%;
 
-  z-index: 25;
+  z-index: 10;
   background-color: rgba(0, 0, 0, 0.4);
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
   border-radius: 6px;
 }
+header {
+  width: 100%;
+  text-align: end;
+}
+header > button {
+  background-color: white;
+  /* color:blue; */
+  outline: none;
+  cursor: pointer;
+  border: 0;
+}
 .SubDetail_Modal_section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
   width: 100%;
   height: 100%;
 
   max-width: 350px;
-  max-height: 300px;
+  max-height: 450px;
   background-color: #fff;
   border: 1px solid beige;
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
@@ -36,37 +47,83 @@
   overflow: hidden;
 }
 
-
-.SubDetail_Modal_section >img{
-    display: block;
-    margin:20px 0px;
-    width:  70px;
-
-
+.SubDetail_Modal_section > img {
+  display: block;
+  margin: 20px 0px;
+  width: 70px;
 }
-.SubDetail_Modal_section >span{
-    font-weight: bold;
-    font-size: 23px;
-    /* margin:auto; */
+.SubDetail_Modal_section > span {
+  font-weight: bold;
+  font-size: 23px;
+  /* margin:auto; */
+}
+.SubDetail_Modal_sub_section {
+  padding: 5px 10px;
+  margin-top: 25px;
+  border-radius: 8px;
+  min-height: 100px;
+  min-width: 340px;
+  background-color: rgb(218, 234, 248);
 }
 
+.SubDetail_Modal_sub_section_text {
+  color: rgb(112, 112, 112);
+  font-size: 12px;
+}
+.SubDetail_Modal_sub_section_text2 {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+}
+
+.SubDetail_Modal_bt_section {
+  margin-top: 10px;
+}
+
+.SubDetail_Modal_bt_section > button {
+  /* border: 1px solid red; */
+  border-radius: 10px;
+  width: 160px;
+  height: 45px;
+  margin: 0px 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.SubDetail_Modal_bt_delete {
+  background-color: white;
+  border: 1px solid red;
+  color: red;
+}
+
+.SubDetail_Modal_bt_modify {
+  background-color: rgb(194, 194, 194);
+  border: none;
+}
+
+.SubDetail_Modal_bt_delete:active {
+  background-color: rgb(255, 187, 187);
+}
+
+.SubDetail_Modal_bt_modify:active {
+  background-color: rgb(172, 172, 172);
+}
 
 @keyframes modal-show {
-    from {
-      opacity: 0;
-      margin-top: -50px;
-    }
-    to {
-      opacity: 1;
-      margin-top: 0;
-    }
+  from {
+    opacity: 0;
+    margin-top: -50px;
   }
-  @keyframes modal-bg-show {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  to {
+    opacity: 1;
+    margin-top: 0;
   }
-  
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
