@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 
 import CancellationModal from "./cancellationModal";
 import "../../css/common/modal/subDetailModal.css";
@@ -20,9 +20,14 @@ const SubDetailModal: React.FC<modal> = ({
   openCancellationModal,
   showSubEdit,
   closeCancellationModal
+  ,closeSubDetailEditModal
 }) => {
-  console.log("모달시작");
 
+ 
+
+
+
+  
   return (
     <div onClick={() => closeSubModal()} id="SubDetail_Modal">
       <div
@@ -30,7 +35,7 @@ const SubDetailModal: React.FC<modal> = ({
         className="SubDetail_Modal_section"
       >
         {showCancellation ? <CancellationModal closeCancellationModal={closeCancellationModal}/> : null}
-        {showSubEdit? <SubDetailEditModal /> : null}
+        {showSubEdit? <SubDetailEditModal closeSubDetailEditModal={closeSubDetailEditModal}/> : null}
         <header>
           <button onClick={() => closeSubModal()} className="close">
             X
@@ -39,7 +44,7 @@ const SubDetailModal: React.FC<modal> = ({
         <img src="./images/netflex.png" />
         <span>넷플릭스</span>
 
-        <div className="SubDetail_Modal_sub_section">
+        <div className={`SubDetail_Modal_sub_secton ` }>
           <span className="SubDetail_Modal_sub_section_text">
             {" "}
             50,000원 / 1달{" "}

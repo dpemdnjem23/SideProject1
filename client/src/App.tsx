@@ -58,7 +58,9 @@ const App = () => {
   };
 
   const closeSubModal = () => {
+    setShowSubEdit(false);
     setShowSubDetail(false);
+    setShowCancellation(false);
   };
   const changeEdit = () => {
     setUserEdit(true);
@@ -72,15 +74,13 @@ const App = () => {
   };
   const closeCancellationModal = () => {
     setShowCancellation(false);
-
   };
-  const openSubDetailEditModal = () =>{
-    setShowSubEdit(true)
-
-  }
-  const closeSubDetailEditModal = () =>{
-    setShowSubEdit(false)
-  }
+  const openSubDetailEditModal = () => {
+    setShowSubEdit(true);
+  };
+  const closeSubDetailEditModal = () => {
+    setShowSubEdit(false);
+  };
 
   // const openSignupModal = () => {
   //   setSignupModal(true);
@@ -105,6 +105,7 @@ const App = () => {
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
           <Route element={<Mainheader onSignClick={openmodal} />}>
+
             <Route path="/" element={<MainPage />} />
             <Route
               path="/mypage"
@@ -121,9 +122,9 @@ const App = () => {
               path="/wallet"
               element={
                 <WalletPage
-                showSubEdit={showSubEdit}
-                closeCancellationModal = {closeCancellationModal}
-                closeSubDetailEditModal={closeSubDetailEditModal}
+                  showSubEdit={showSubEdit}
+                  closeCancellationModal={closeCancellationModal}
+                  closeSubDetailEditModal={closeSubDetailEditModal}
                   openSubDetailEditModal={openSubDetailEditModal}
                   showCancellation={showCancellation}
                   openCancellationModal={openCancellationModal}
@@ -139,6 +140,7 @@ const App = () => {
             />
           </Route>
           {/* <Outlet></Outlet> */}
+          <Route path="/callendar" element={<CallendarPage />} /> 
 
           <Route
             path="/subregist"
@@ -151,9 +153,8 @@ const App = () => {
           ></Route>
           {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
 
-          {/* 
-        <Route path="/collection" element={<SharePage />} />
-        <Route path="/callendar" element={<CallendarPage />} /> */}
+          
+        {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
       </div>
     </BrowserRouter>
