@@ -1,0 +1,38 @@
+#callendarSectino {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.calendarHead {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.head {
+  /* display: flex; */
+  /* flex-direction: row; */
+  margin: 20px 0px 20px 0px;
+  /* padding-bottom: 20px; */
+  height: 30px;
+
+  text-align: center;
+}
+
+.calendarBody {
+  justify-content: center;
+  align-items: center;
+}
+.row {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.box {
+    width:50pxm;
+  /* font-weight: bold; */
+}

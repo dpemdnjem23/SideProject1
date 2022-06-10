@@ -12,7 +12,7 @@ import Mainheader from "Components/common/mainHeader";
 import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
-import CallendarPage from "Pages/CallenderPage";
+import CalendarPage from "Pages/CalenderPage";
 import MyPage from "Pages/MyPage";
 import { Navigate } from "react-router";
 import ShareRegisterPage from "Pages/Mypage/ShareRegisterPage";
@@ -140,7 +140,7 @@ const App = () => {
             />
           </Route>
           {/* <Outlet></Outlet> */}
-          <Route path="/callendar" element={<CallendarPage />} /> 
+          <Route path="/callendar" element={<CalendarPage />} /> 
 
           <Route
             path="/subregist"
