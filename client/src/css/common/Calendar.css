@@ -1,4 +1,4 @@
-#callendarSectino {
+#callendarSection {
   width: 100%;
 
   display: flex;
@@ -6,33 +6,81 @@
   align-items: center;
 }
 .calendarHead {
+      margin: 20px 0px 20px 0px;
+      
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
-.head {
-  /* display: flex; */
-  /* flex-direction: row; */
-  margin: 20px 0px 20px 0px;
-  /* padding-bottom: 20px; */
-  height: 30px;
+.calendarHead_title{
+    font-size:25px;
 
-  text-align: center;
 }
 
+.calendarHaed_head{
+    /* width: 100%; */
+ /* background-color: gray; */
+ line-height: 50px;
+
+}
+.util-button>button{
+    height: 30px;
+    width: 50px;
+    
+}
+.fas{
+    width: 30px;
+    height: 10px;
+}
 .calendarBody {
   justify-content: center;
   align-items: center;
 }
 .row {
+    color: white;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: row;
 }
 
-.box {
-    width:50pxm;
+.calendarbody_text{
+    
+}
+.calendarbody_box {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width:50px;
+    height: 100%;
+    min-height: 50px;
+
+
+    color:rgb(109, 109, 109);
+    /* min-height: 40px; */
   /* font-weight: bold; */
+}
+.blank{
+    pointer-events: none;
+}
+.blank>span{
+    
+
+    display: none;
+   
+color: white;
+}
+.selected{
+
+
+    /* width: 30px; */
+    border-radius: 70%;
+    background-color: rgb(135, 135, 248);
+}
+.selected>span{
+    color:white;
 }
