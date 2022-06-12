@@ -40,3 +40,14 @@
     width:100px;
     height:50px;
 }
+.SubregistPeriod_section_sub_date_section_text{
+    display: inline-block;
+    
+}
+.Arrow{
+    width: 30px;
+    margin-left: 10px;
+}
+.SubregisterPeriod_section_sub_date_section{
+    cursor: pointer;
+}

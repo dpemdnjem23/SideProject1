@@ -17,7 +17,6 @@ const CallendarPage:React.FC = () => {
 
     <div>
 
-      <Calendar ></Calendar>
      
     </div>
   )

@@ -17,6 +17,7 @@ import MyPage from "Pages/MyPage";
 import { Navigate } from "react-router";
 import ShareRegisterPage from "Pages/Mypage/ShareRegisterPage";
 import SubRegisterPage from "Pages/Mypage/SubReigstPage";
+import Calendar from "Components/common/Calendar";
 
 // import {
 //   MainPage,
@@ -150,6 +151,11 @@ const App = () => {
           <Route
             path="/shareregist"
             element={<ShareRegisterPage></ShareRegisterPage>}
+          ></Route>
+
+<Route
+            path="/calendarselect"
+            element={<Calendar></Calendar>}
           ></Route>
           {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
 

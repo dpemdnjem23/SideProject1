@@ -1,18 +1,23 @@
 import React, { useState } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
+import { faAngleLeft , faAngleRight} from "@fortawesome/free-solid-svg-icons";
+
 
 import "../../css/common/Calendar.css";
 import "moment/locale/ko";
 
 const Calendar = () => {
-  const [date, setDate] = useState<moment.Moment>( moment());
+  const [date, setDate] = useState<moment.Moment>(()=> moment());
   //moment는 객체로 반환된다.
 
   const handleDayClick = (current: moment.Moment) => setDate(current);
 
   const returnToday = () => setDate(moment());
+  const jumpToMonth = (num:number) =>{
+    num? setDate(date.clone().add(30,'day')) :setDate(date.clone().subtract(30,'day'))
 
+  }
   //캘린더 생성
   const generate = () => {
     //초기값 설정
@@ -31,6 +36,8 @@ const Calendar = () => {
         ? 53
         : today.clone().endOf("month").week();
 
+
+      
     const calendar = [];
 
     //시작주부터 마지막 주까지 +1
@@ -74,7 +81,6 @@ const Calendar = () => {
         </div>
       );
     }
-console.log(calendar)
     return calendar;
   };
   return (
@@ -88,12 +94,13 @@ console.log(calendar)
               " 월"}
           </span>
           <div className="util-button">
-            <button>
-              <i className="fas fa-angle-left"></i>
+            <button  onClick = {() =>jumpToMonth(0)}className='fas'>
+              <FontAwesomeIcon icon={faAngleLeft}/>
+          
             </button>
-            <button onClick={returnToday}>Today</button>
-            <button>
-              <i className="fas fa-angle-right"></i>
+            <button className = 'today'onClick={returnToday}>Today</button>
+            <button onClick={()=>jumpToMonth(1)} className='fas'>
+            <FontAwesomeIcon icon={faAngleRight}/>
             </button>
           </div>
         </div>
@@ -101,7 +108,7 @@ console.log(calendar)
       <div className="calendarBody">
         <div className="row">
           {["일", "월", "화", "수", "목", "금", "토"].map((el) => (
-            <div className="calendarbody_box " key={el}>
+            <div className={`calendarbody_box ${el}` } key={el}>
               <span className="calendarbody_text">{el}</span>
             </div>
           ))}
