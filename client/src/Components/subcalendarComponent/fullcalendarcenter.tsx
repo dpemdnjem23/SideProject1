@@ -1,33 +1,32 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
-import { faAngleLeft , faAngleRight} from "@fortawesome/free-solid-svg-icons";
-import {useNavigate} from 'react-router-dom'
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
-
-import "../../css/common/Calendar.css";
 import "moment/locale/ko";
 
-const Calendar = () => {
+import "../../css/components/CallendarPage/fullcalendarcenter.css";
 
-  const back = useNavigate()
-//1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
-//2. 클릭할 경우 뒤로가기 edit인경우 edit으로 subregister인 경우 subregister로 이동
+const FullMyCalendar = () => {
+  const back = useNavigate();
+  //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
+  //2. 클릭할 경우 뒤로가기 edit인경우 edit으로 subregister인 경우 subregister로 이동
 
-  const [date, setDate] = useState<moment.Moment>(()=> moment());
+  const [date, setDate] = useState<moment.Moment>(() => moment());
   //moment는 객체로 반환된다.
 
-
   const handleDayClick = (current: moment.Moment) => {
-    back(-1)
+    // back(-1);
     setDate(current);
-  }
-  
-  const returnToday = () => setDate(moment());
-  const jumpToMonth = (num:number) =>{
-    num? setDate(date.clone().add(30,'day')) :setDate(date.clone().subtract(30,'day'))
+  };
 
-  }
+  const returnToday = () => setDate(moment());
+  const jumpToMonth = (num: number) => {
+    num
+      ? setDate(date.clone().add(30, "day"))
+      : setDate(date.clone().subtract(30, "day"));
+  };
   //캘린더 생성
   const generate = () => {
     //초기값 설정
@@ -46,8 +45,6 @@ const Calendar = () => {
         ? 53
         : today.clone().endOf("month").week();
 
-
-      
     const calendar = [];
 
     //시작주부터 마지막 주까지 +1
@@ -65,25 +62,22 @@ const Calendar = () => {
                 .startOf("week")
                 .add(n + i, "day");
 
-              
-
               const isSelected =
                 today.format("YYYYMMDD") === current.format("YYYYMMDD")
-                  ? "selected"
+                  ? "Fullselected"
                   : "";
 
               const isBlanked =
-                current.format("MM") !== today.format("MM") ? "blank" : "";
+                current.format("MM") !== today.format("MM") ? "blanked" : "";
 
               return (
                 <div
-                
-                  onClick={()=>handleDayClick(current)}
-                  className={`calendarbody_box ${isSelected}${isBlanked}`}
+                  onClick={() => handleDayClick(current)}
+                  className={`Full_calendar_body_box_days ${isSelected}${isBlanked}`}
                   key={i}
                   //   onClick={() => handleDayClick(current)}
                 >
-                  <span className="calendarbody_text">
+                  <span className="Full_calendar_body_box_text">
                     {current.format("D")}
                   </span>
                 </div>
@@ -95,32 +89,34 @@ const Calendar = () => {
     return calendar;
   };
   return (
-    <div id="calendarSection">
-      <div className="calendarHead">
-        <div className="calendarHaed_head">
-          <span className="calendarHead_title">
+    <div id="Full_calendar_section">
+      <div className="Full_calendar_head_section">
+        <div className="Full_calendar_head">
+          <span className="Full_calendar_head_title">
             {date.locale("ko").format("YYYY") +
               " 년 " +
               date.locale("ko").format("MM") +
               " 월"}
           </span>
-          <div className="util-button">
-            <button  onClick = {() =>jumpToMonth(0)}className='fas'>
-              <FontAwesomeIcon icon={faAngleLeft}/>
-          
+          <div className="Full_calendar_util-button">
+            <button className="Full_calendar_today" onClick={returnToday}>
+              Today
             </button>
-            <button className = 'today'onClick={returnToday}>Today</button>
-            <button onClick={()=>jumpToMonth(1)} className='fas'>
-            <FontAwesomeIcon icon={faAngleRight}/>
+            <button onClick={() => jumpToMonth(0)} className="Full_fas">
+              <FontAwesomeIcon icon={faAngleLeft} />
+            </button>
+
+            <button onClick={() => jumpToMonth(1)} className="Full_fas">
+              <FontAwesomeIcon icon={faAngleRight} />
             </button>
           </div>
         </div>
       </div>
-      <div className="calendarBody">
+      <div className="Full_calendar_body">
         <div className="row">
           {["일", "월", "화", "수", "목", "금", "토"].map((el) => (
-            <div className={`calendarbody_box ${el}` } key={el}>
-              <span className="calendarbody_text">{el}</span>
+            <div className={`Full_calendar_body_box ${el}`} key={el}>
+              <span className="Full_calendar_body_text">{el}</span>
             </div>
           ))}
         </div>
@@ -132,4 +128,4 @@ const Calendar = () => {
   //   return <div></div>;
 };
 
-export default Calendar;
+export default FullMyCalendar;

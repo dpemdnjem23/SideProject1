@@ -1,7 +1,7 @@
-import Calendar from 'Components/common/Calendar';
+import FullMyCalendar from 'Components/subcalendarComponent/fullcalendarcenter';
 import React ,{useState}from 'react'
-
-
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 
 // import '../css/pages/CalendarPage.css'
@@ -16,8 +16,9 @@ const CallendarPage:React.FC = () => {
   return(
 
     <div>
-
-     
+<FullMyCalendar></FullMyCalendar>
+{/* <FullCalendar plugins={[dayGridPlugin]}></FullCalendar> */}
+{/* <Calendar></Calendar> */}
     </div>
   )
 };

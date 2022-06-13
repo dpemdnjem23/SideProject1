@@ -25,7 +25,7 @@
   max-width: 350px;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
-  background-color: whitesmoke;
+  background-color: white;
   z-index:-1;
 
   margin:0px auto;
@@ -34,6 +34,66 @@
   overflow: hidden;
 }
 
+
+.SubDetailEdit_modal_title_section{
+  margin-bottom: 10px;
+}
+.SubDetailEdit_modal_title_section >span{
+  display: block;
+  padding:3px 0px;
+  
+  
+}
+.SubDetailEdit_modal_title_section_title{
+font-weight: bold;
+font-size: 20px;
+}
+.SubDetailEdit_modal_title_section_title2{
+  /* font-size: 13px; */
+  color:rgb(66, 66, 66);
+}
+
+
+.SubDetailEdit_modal_section_sub_pay{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+}
+.SubDetailEdit_modal_section_sub_pay_pay{
+  border:none;
+  width:100px;
+}
+
+.SubDetailEdit_modal_section_sub_cycle{
+  display: flex;
+  justify-content: space-between;
+
+}
+.cycle_text{
+  height: 60px;
+  padding: 10px 0px;
+}
+
+
+.SubDetailEdit_modal_section_sub_cycle>input{
+  width: 80px;
+  height: 40px;
+
+}
+
+.SubDetailEdit_modal_section_sub_start{
+  display: flex;
+  justify-content: space-between;
+}
+
+.SubDetailEdit_modal_section_sub_start>div>span{
+  margin-right: 10px;
+}
+
+.SubDetailEdit_modal_section_sub_start>div{
+cursor: pointer;
+}
 /* 
 &.openAnimation {
   animation: slide 1s ease-in-out 0s 1 normal forwards;

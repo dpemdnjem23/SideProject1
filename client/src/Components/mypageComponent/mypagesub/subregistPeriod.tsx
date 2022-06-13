@@ -12,6 +12,7 @@ const SubRegistPeriod = () => {
 
   const month = moment().format("MM");
   const day = moment().format("D");
+  const year = moment().format('YYYY')
 
   return (
     <div className="SubregistPeriod_section">
@@ -30,7 +31,7 @@ const SubRegistPeriod = () => {
         <Link to='/calendarselect'>
         <div className="SubregisterPeriod_section_sub_date_section">
           <span className="SubregistPeriod_section_sub_date_section_text">
-            {month}월 {day}일
+           {year}년 {month}월 {day}일
           </span>
           <FontAwesomeIcon className="Arrow" icon={faArrowRight} />
         </div>
