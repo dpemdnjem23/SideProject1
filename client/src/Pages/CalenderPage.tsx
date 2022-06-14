@@ -15,7 +15,7 @@ const CallendarPage:React.FC = () => {
 
   return(
 
-    <div>
+    <div id='Calendar_Page'>
 <FullMyCalendar></FullMyCalendar>
 {/* <FullCalendar plugins={[dayGridPlugin]}></FullCalendar> */}
 {/* <Calendar></Calendar> */}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +7,45 @@ import { useNavigate } from "react-router-dom";
 import "moment/locale/ko";
 
 import "../../css/components/CallendarPage/fullcalendarcenter.css";
+import { off } from "process";
+import { isBoxedPrimitive } from "util/types";
 
-const FullMyCalendar = () => {
-  const back = useNavigate();
+const SocialNetworks = [
+  {title: "Twitter", color: "white", backgroundColor: "Red"},
+  {title: "Facebook", color: "black", backgroundColor: "Orange"},
+  {title: "Line", color: "black", backgroundColor: "Yellow"},
+  {title: "Instagram", color: "white", backgroundColor: "Green"},
+  {title: "Telegram", color: "white", backgroundColor: "Blue"},
+  {title: "KaKao", color: "white", backgroundColor: "DarkBlue"},
+  {title: "LinkedIn", color: "white", backgroundColor: "Purple"},
+]
+
+const FullCalendarCenter = () => {
+
+
+const[list,setList] = useState(SocialNetworks)
+const [grab,setGrab] =useState(null)
+
+const onDragOver =(e:any) =>{
+  e.preventDefault();
+}
+const onDragStart = (e:any) =>{
+  setGrab(e.target)
+  e.target.classList.add('grabbing')
+  e.dataTransfer.effectAllowed='move'
+  e.dataTransfer.setData('text/html',e.target)
+}
+
+const onDragEnd =(e:any) =>{
+  e.target.classList.remove('grabbing')
+
+  e.dataTransfer.dropEffect = 'move'
+}
+const onDrop =(e:any) =>{
+  
+}
+
+
   //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
   //2. 클릭할 경우 뒤로가기 edit인경우 edit으로 subregister인 경우 subregister로 이동
 
@@ -80,6 +116,9 @@ const FullMyCalendar = () => {
                   <span className="Full_calendar_body_box_text">
                     {current.format("D")}
                   </span>
+                  {/* <div className='divided'>멍청이 트윗</div> */}
+                
+                
                 </div>
               );
             })}
@@ -102,11 +141,11 @@ const FullMyCalendar = () => {
             <button className="Full_calendar_today" onClick={returnToday}>
               Today
             </button>
-            <button onClick={() => jumpToMonth(0)} className="Full_fas">
+            <button onClick={() => jumpToMonth(0)} className="Full_fas left">
               <FontAwesomeIcon icon={faAngleLeft} />
             </button>
 
-            <button onClick={() => jumpToMonth(1)} className="Full_fas">
+            <button onClick={() => jumpToMonth(1)} className="Full_fas right">
               <FontAwesomeIcon icon={faAngleRight} />
             </button>
           </div>
@@ -116,6 +155,7 @@ const FullMyCalendar = () => {
         <div className="row">
           {["일", "월", "화", "수", "목", "금", "토"].map((el) => (
             <div className={`Full_calendar_body_box ${el}`} key={el}>
+              
               <span className="Full_calendar_body_text">{el}</span>
             </div>
           ))}
@@ -128,4 +168,4 @@ const FullMyCalendar = () => {
   //   return <div></div>;
 };
 
-export default FullMyCalendar;
+export default FullCalendarCenter;
