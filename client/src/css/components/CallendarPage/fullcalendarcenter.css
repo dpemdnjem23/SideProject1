@@ -28,6 +28,10 @@
   
       
   }
+
+  .grabbing{
+    color:red;
+  }
   .divided{
     height: 50px;
     width: 100px;
