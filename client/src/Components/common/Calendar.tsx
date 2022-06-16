@@ -98,22 +98,24 @@ const Calendar = () => {
     <div id="calendarSection">
       <div className="calendarHead">
         <div className="calendarHaed_head">
-          <span className="calendarHead_title">
+        <button  onClick = {() =>jumpToMonth(0)}className='fas'>
+              <FontAwesomeIcon icon={faAngleLeft}/>
+          
+            </button>
+          <span onClick={returnToday} className="calendarHead_title">
             {date.locale("ko").format("YYYY") +
               " 년 " +
               date.locale("ko").format("MM") +
               " 월"}
           </span>
-          <div className="util-button">
-            <button  onClick = {() =>jumpToMonth(0)}className='fas'>
-              <FontAwesomeIcon icon={faAngleLeft}/>
-          
-            </button>
-            <button className = 'today'onClick={returnToday}>Today</button>
-            <button onClick={()=>jumpToMonth(1)} className='fas'>
+          <button onClick={()=>jumpToMonth(1)} className='fas'>
             <FontAwesomeIcon icon={faAngleRight}/>
             </button>
-          </div>
+          {/* <div className="util-button"> */}
+           
+            {/* <button className = 'today'onClick={returnToday}>Today</button> */}
+         
+          {/* </div> */}
         </div>
       </div>
       <div className="calendarBody">

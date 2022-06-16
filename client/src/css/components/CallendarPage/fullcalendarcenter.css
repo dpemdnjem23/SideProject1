@@ -30,11 +30,17 @@
   }
 
   .grabbing{
-    color:red;
+    /* color: red;
+    background-color: blue;
+    width: 80px;
+    height: 20px; */
   }
   .divided{
+    display: flex;
+    flex-direction: column;
     height: 50px;
     width: 100px;
+    color:red;
     background-color: green;
   }
   .left{

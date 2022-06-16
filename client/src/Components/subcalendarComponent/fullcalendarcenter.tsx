@@ -7,22 +7,18 @@ import { useNavigate } from "react-router-dom";
 import "moment/locale/ko";
 
 import "../../css/components/CallendarPage/fullcalendarcenter.css";
-import { off } from "process";
-import { isBoxedPrimitive } from "util/types";
+
 
 const SocialNetworks = [
   { title: "Twitter", color: "white", backgroundColor: "Red" },
   { title: "Facebook", color: "black", backgroundColor: "Orange" },
-  { title: "Line", color: "black", backgroundColor: "Yellow" },
-  { title: "Instagram", color: "white", backgroundColor: "Green" },
-  { title: "Telegram", color: "white", backgroundColor: "Blue" },
-  { title: "KaKao", color: "white", backgroundColor: "DarkBlue" },
-  { title: "LinkedIn", color: "white", backgroundColor: "Purple" },
+  { title: "Line", color: "black", backgroundColor: "Yellow" } 
 ];
 
 const FullCalendarCenter = () => {
-  const [list, setList] = useState<any>(SocialNetworks);
+  const [lists, setLists] = useState<any>(SocialNetworks);
   const [grab, setGrab] = useState<any>(null);
+
 
   const onDragOver = (e: any) => {
     e.preventDefault();
@@ -32,15 +28,22 @@ const FullCalendarCenter = () => {
     e.target.classList.add("grabbing");
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/html", e.target);
-
-
-    
   };
 
   const onDragEnd = (e: any) => {
     e.target.classList.remove("grabbing");
 
     e.dataTransfer.dropEffect = "move";
+  };
+
+  const onDrop = (e: any) => {
+    const grabPosition = Number(grab.dataset.position);
+    const targetPosition = Number(e.target.dataset.position);
+
+    const list = [...lists];
+    list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
+
+    setLists(list);
   };
 
   //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
@@ -113,14 +116,27 @@ const FullCalendarCenter = () => {
                   <span className="Full_calendar_body_box_text">
                     {current.format("D")}
                   </span>
-                  <li
-                    draggable="true"
-                    key={i}
-                    onDragStart={onDragStart}
-                    className="divided"
-                  >
-                    <ul onDragOver={onDragOver}>못생긴놈{i}</ul>
-                  </li>
+                  <ul className="divided">
+                    {lists.map((sns:any,index:number)=>
+                    
+                    <li
+                    key={index}
+                    data-position={index}
+
+                      draggable="true"
+                      onDrop={onDrop}
+                      onDragStart={onDragStart}
+                      onDragOver={onDragOver}
+                      
+                      onDragEnd={onDragEnd}
+
+                  
+                    >
+                  {sns.title}
+                    </li>
+
+)}
+                  </ul>
                 </div>
               );
             })}

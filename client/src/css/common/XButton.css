@@ -1,0 +1,13 @@
+.Xbt_section{
+    width: 100%;
+    height: 100px;
+    max-height: 40px;
+}
+
+.Xbt_section >button{
+    border:none;
+    font-size: 30px;
+
+    cursor:pointer;
+    background-color: white;
+}

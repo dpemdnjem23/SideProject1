@@ -1,6 +1,6 @@
 import SubRegistPeriod from "Components/mypageComponent/mypagesub/subregistPeriod";
 import React, { useState, useEffect } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -55,16 +55,15 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
           <div className="SubDetailEdit_modal_section_sub_start">
             <span>시작일</span>
 
-<Link to='/calendarselect'>
-            <div>
-              <span>
-                {today.format("yyyy")} 년 {today.format("m")} 월{" "}
-                {today.format("d")} 일
-              </span>
-              <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
-          {/* </div> */}
-          
-            </div>
+            <Link to="/calendarselect">
+              <div>
+                <span>
+                  {today.format("yyyy")} 년 {today.format("mm")} 월 {' '}
+                  {today.format("d")} 일
+                </span>
+                <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
+                {/* </div> */}
+              </div>
             </Link>
           </div>
         </div>
