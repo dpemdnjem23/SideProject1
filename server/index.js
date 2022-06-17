@@ -2,7 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const app = express();
-const Port = 5000;
+const Port =process.env.PORT|| 5001;
+const middleware = require('./middleware/authChecker');
+
 
 app.use(express.json()); //미들웨어
 app.use(express.urlencoded({ extended: false })); //미들웨어
@@ -10,11 +12,18 @@ app.use(cookieParser()); // 미들웨어
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [process.env.CLIENT_URL,"http://localhost:3000"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
 );
+    
+    
+   
+//routes
+
+app.use('/',middleware.authchecker)
+
 
 app.get("/", (req, res) => {
   res.send("Hello Nodes.js");
