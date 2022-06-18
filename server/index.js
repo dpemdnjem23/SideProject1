@@ -5,14 +5,16 @@ const app = express();
 const Port =process.env.PORT|| 5001;
 const middleware = require('./middleware/authChecker');
 
+const authRouter = require('./routes/auth')
 
+const userRouter = require('./routes/user')
 app.use(express.json()); //미들웨어
 app.use(express.urlencoded({ extended: false })); //미들웨어
 app.use(cookieParser()); // 미들웨어
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL,"http://localhost:3000"],
+    origin: [process.env.CLIENT_URL,"http://localhost:5001"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
@@ -25,9 +27,12 @@ app.use(
 app.use('/',middleware.authchecker)
 
 
-app.get("/", (req, res) => {
-  res.send("Hello Nodes.js");
-});
+app.use('/auth',authRouter)
+
+
+// app.get("/", (req, res) => {
+//   res.send("Hello Nodes.js");
+// });
 
 app.listen(Port, () => {
   console.log(`Server is Startin on ${Port}`);
