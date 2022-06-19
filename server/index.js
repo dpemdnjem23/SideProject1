@@ -3,7 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const app = express();
 const Port =process.env.PORT|| 5001;
-const middleware = require('./middleware/authChecker');
+const {authchecker} = require('./middleware/authChecker');
 
 const authRouter = require('./routes/auth')
 
@@ -14,7 +14,7 @@ app.use(cookieParser()); // 미들웨어
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL,"http://localhost:5001"],
+    origin: [process.env.CLIENT_URL,"http://localhost:3000"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
@@ -24,7 +24,7 @@ app.use(
    
 //routes
 
-app.use('/',middleware.authchecker)
+app.use(authchecker)
 
 
 app.use('/auth',authRouter)

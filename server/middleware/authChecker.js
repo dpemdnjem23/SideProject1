@@ -10,11 +10,23 @@ module.exports = {
 
       const token = authorization.split(" ")[1]; // `Bearer ${Authorization}`
 
+
+      // console.log(token,'authchecker token')
       if (!token) {
         return res.status(401).send("JWT expired");
       }
 
-      return verify(token, process.env.ACCESS_SECRET);
+
+
+      // console.log(verify(token, process.env.ACCESS_SECRET))
+    const data = verify(token, process.env.ACCESS_SECRET);
+
+    // return data
+req.request = data    
+next()
+    // return res.status(200).send({data:data})
+
+    
     } catch (err) {
       
       next()

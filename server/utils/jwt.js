@@ -1,5 +1,7 @@
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
 const { sign, verify } = require("jsonwebtoken");
+// const { NONE } = require("sequelize");
 
 module.exports = {
   generateAccessToken: (data) => {
@@ -16,4 +18,10 @@ module.exports = {
       return null;
     }
   },
+  sendCookie:(res,refreshToken) =>{
+
+    res.cookie('refreshToken',refreshToken,{
+      httpOnly:'true',sameSite:'none'
+    })
+  }
 };
