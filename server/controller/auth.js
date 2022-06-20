@@ -162,9 +162,12 @@ module.exports = {
 
     
     const { username } = req.body;
+    console.log(username)
 
     const existUsername = await user.findOne({ where: { username } });
 
+
+    console.log(existUsername)
     if (!existUsername) {
       return res.status(200).send("아이디 사용가능");
     }

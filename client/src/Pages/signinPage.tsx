@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import "../../css/common/modal/signinmodal.css";
-import SignupModal from "./signupModal";
+import "../../css/common/modal/signinPage.css";
+import SignupModal from "../Components/Modal/signupModal";
 
 
 type modal = {

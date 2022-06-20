@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useState, useEffect } from "react";
 
 import logo from "./logo.svg";
-import Modal from "./Components/Modal/signModal";
+import Modal from "./Pages/signinPage";
 import SignupModal from "./Components/Modal/signupModal";
 import "./css/reset.css";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
@@ -54,6 +54,11 @@ const App = () => {
     setShowModal(false);
     setSignupModal(true);
   };
+  const closeSignupModal = () =>{
+    setShowModal(true);
+    setSignupModal(false);
+    // setShowModal(true)
+  }
   const openSubModal = () => {
     setShowSubDetail(true);
   };
@@ -101,7 +106,7 @@ const App = () => {
         ) : null}
 
         {signupModal ? (
-          <SignupModal openmodal={openmodal} closemodal={closemodal} />
+          <SignupModal closeSignupModal = {closeSignupModal}openmodal={openmodal} closemodal={closemodal} />
         ) : null}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
