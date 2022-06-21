@@ -1,6 +1,6 @@
-import WalletPageBottom from "Components/walletcomponent/walletPageBottom";
-import WalletPageCenter from "Components/walletcomponent/walletPageCenter";
-import WalletPageTop from "Components/walletcomponent/walletPageTop";
+import WalletPageBottom from "Components/wallet/walletPageBottom";
+import WalletPageCenter from "Components/wallet/walletPageCenter";
+import WalletPageTop from "Components/wallet/walletPageTop";
 import SubDetailModal from "Components/Modal/subDetailModal";
 import React, { useState } from "react";
 

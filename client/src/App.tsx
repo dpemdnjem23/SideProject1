@@ -2,11 +2,12 @@ import React, { FC } from "react";
 import { useState, useEffect } from "react";
 
 import logo from "./logo.svg";
-import Modal from "./Pages/signinPage";
+import Modal from "./Pages/SigninPage";
 import SignupModal from "./Components/Modal/signupModal";
 import "./css/reset.css";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import "./App.css";
+
 
 import Mainheader from "Components/common/mainHeader";
 import MainPage from "Pages/MainPage";
@@ -18,6 +19,8 @@ import { Navigate } from "react-router";
 import ShareRegisterPage from "Pages/Mypage/ShareRegisterPage";
 import SubRegisterPage from "Pages/Mypage/SubReigstPage";
 import CalendarSelect from "Pages/calendarSelectPage";
+import SigninPage from "./Pages/SigninPage";
+import MainHeaderLogo from "Components/common/mainHeaderLogo";
 
 // import {
 //   MainPage,
@@ -28,8 +31,7 @@ import CalendarSelect from "Pages/calendarSelectPage";
 // } from 'Pages'
 
 const App = () => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [signupModal, setSignupModal] = useState<boolean>(false);
+ 
   const [showRegist, setShowRegist] = useState<boolean>(false);
   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   const [userEdit, setUserEdit] = useState<boolean>(false);
@@ -38,27 +40,12 @@ const App = () => {
   const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
 
   //modal을 클릭했을때 modal창이 뜯
-  const openmodal = () => {
-    setShowModal(true);
-    setSignupModal(false);
-  };
-  const closemodal = () => {
-    setShowModal(false);
-    setSignupModal(false);
-  };
+
 
   const openRegist = () => {
     setShowRegist(true);
   };
-  const openSignupModal = () => {
-    setShowModal(false);
-    setSignupModal(true);
-  };
-  const closeSignupModal = () =>{
-    setShowModal(true);
-    setSignupModal(false);
-    // setShowModal(true)
-  }
+
   const openSubModal = () => {
     setShowSubDetail(true);
   };
@@ -100,17 +87,17 @@ const App = () => {
   return (
     <BrowserRouter>
       <div id="App">
-        {}
+        {/* {}
         {showModal ? (
           <Modal closemodal={closemodal} openSignupModal={openSignupModal} />
         ) : null}
 
         {signupModal ? (
           <SignupModal closeSignupModal = {closeSignupModal}openmodal={openmodal} closemodal={closemodal} />
-        ) : null}
+        ) : null} */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
-          <Route element={<Mainheader onSignClick={openmodal} />}>
+          <Route element={<Mainheader  />}>
 
             <Route path="/" element={<MainPage />} />
             <Route
@@ -145,7 +132,17 @@ const App = () => {
               element={<Navigate replace to="/mypage" />}
             />
           </Route>
-          {/* <Outlet></Outlet> */}
+
+
+          <Route element={<MainHeaderLogo />   }> 
+            
+          <Route path='/login' element={<SigninPage></SigninPage>} />
+          {/* <Route path='/signup' element={<SignupPage} />          <Route path='/login' element={<SigninPage></SigninPage>} /> */}
+
+
+            </Route>
+
+
           <Route path="/callendar" element={<CalendarPage />} /> 
 
           <Route

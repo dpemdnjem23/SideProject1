@@ -6,11 +6,9 @@ import { Route, BrowserRouter, Link, Routes ,Outlet} from "react-router-dom";
 //
 
 
-interface showSignModal {
-  onSignClick: () =>void
-}
 
-const Mainheader:React.FC<showSignModal> = ({ onSignClick }) => {
+
+const Mainheader = () => {
   //main header 에 들어갈것
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 
@@ -43,8 +41,8 @@ const Mainheader:React.FC<showSignModal> = ({ onSignClick }) => {
           <li className="menu">
             <Link to="/callendar">구독달력</Link>
           </li>
-          <li className="menu" onClick={() => onSignClick()}>
-            로그인
+          <li className="menu" >
+           <Link to='/login'> 로그인</Link>
           </li>
           <li className="menu">
             <Link to="/mypage">마이페이지</Link>

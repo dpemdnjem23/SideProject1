@@ -1,4 +1,4 @@
-import SubRegistPeriod from "Components/mypageComponent/mypagesub/subregistPeriod";
+import SubRegistPeriod from "Components/mypage/mypagesub/subregistPeriod";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import moment from "moment";
