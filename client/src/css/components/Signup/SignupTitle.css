@@ -1,0 +1,22 @@
+header{
+
+    text-align: center;
+
+
+}
+
+
+.Signup_title {
+  
+    font-weight: 700;
+    font-size: 1.5rem;
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+
+.already_account>a{
+    border-bottom: 1px solid black;
+}
+  

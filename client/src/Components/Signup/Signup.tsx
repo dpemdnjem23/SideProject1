@@ -174,12 +174,11 @@ const Signup = () => {
           username: username,
         })
         .then((res) => {
-        
-            navigate('/login')
+          navigate("/login");
           //회원가입이 완료되면 로그인창으로 다시 넘어간다.
         })
         .catch((err) => {
-            //회원가입 실패하는경우
+          //회원가입 실패하는경우
           throw err;
         });
     } else {
@@ -189,9 +188,7 @@ const Signup = () => {
 
   return (
     <div className="Signup">
-      <header>
-        <div className="Signup_title">회원가입</div>
-      </header>
+
       <div className="Signup_section">
         <input
           onKeyDown={spaceBarBlock}
@@ -202,9 +199,9 @@ const Signup = () => {
           name="username"
           placeholder="이름(2~7자 특수문자 불가)"
         ></input>
-        
-          <span>{nickCheckErrorMessage}</span>
-    
+
+        <span>{nickCheckErrorMessage}</span>
+
         <input
           onBlur={usernameBlur}
           maxLength={15}
@@ -233,12 +230,18 @@ const Signup = () => {
           placeholder="비밀번호 확인"
         ></input>
         <span>{passCheckErrorMessage}</span>
-        <div className="signup_desc">
-            <span>
-            계정 만들기 버튼을 클릭하면, Subgather의 회원이 되실수 있습니다.
 
-            </span>
-            </div>
+        <div className="signup_desc">
+          <span>
+            계정 만들기 버튼을 클릭하면, Subgather의 회원이 되실수 있습니다.
+          </span>
+          <div
+            onClick={() => handleSignupRequest()}
+            className="Signup_Btn_section"
+          >
+            <span className="Signup_Btn_text">계정만들기</span>
+          </div>
+        </div>
       </div>
     </div>
   );

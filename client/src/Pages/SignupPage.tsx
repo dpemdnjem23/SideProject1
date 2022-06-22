@@ -1,6 +1,5 @@
 import Signup from 'Components/Signup/Signup'
-import SignupBackLogin from 'Components/Signup/SignupBackLogin'
-import SignupBtn from 'Components/Signup/SignupBtn'
+import SignupTitle from 'Components/Signup/SignupTitle'
 import React from 'react'
 
 import '../css/pages/SignupPage.css'
@@ -8,10 +7,13 @@ const SignupPage = () =>{
 
 
     return(
+        
         <div id= 'SignupPage'>
+
+<SignupTitle></SignupTitle>
             <Signup></Signup>
-            <SignupBtn></SignupBtn>
-            <SignupBackLogin></SignupBackLogin>
+           
+
 
         </div>
     )
