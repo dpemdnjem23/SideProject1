@@ -1,8 +1,10 @@
 import React from "react";
 
+
+import '../../css/components/Login/OauthLoginBtn.css'
 const OauthLoignBtn = () => {
   return (
-    <div>
+    <div className = 'Oauth_sign_section'>
       <div className="google_login bt">
         <div className="google_login ic">
           <img src="./images/googlelogo.png"></img>

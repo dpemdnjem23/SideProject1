@@ -7,13 +7,13 @@ import React, { useState } from "react";
 
 
 
-
+import '../css/pages/SigninPage.css'
 const SigninPage= () => {
   //이메일 회원가입을 누르면 signup으로 이동
   //signup은 회원가입창
   
   return (
-    <div>
+    <div id= "SigninPage">
 
       <Login></Login>
       <LoginBtn></LoginBtn>
