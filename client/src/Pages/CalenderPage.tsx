@@ -1,4 +1,4 @@
-import FullMyCalendar from 'Components/subcalendar/fullcalendarcenter';
+import FullMyCalendar from 'Components/Subcalendar/fullcalendarcenter';
 import React ,{useState}from 'react'
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'

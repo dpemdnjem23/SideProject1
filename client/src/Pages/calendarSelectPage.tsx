@@ -1,5 +1,5 @@
-import Calendar from 'Components/common/Calendar'
-import XButton from 'Components/common/XButton'
+import Calendar from 'Components/Common/Calendar'
+import XButton from 'Components/Common/XButton'
 import React from 'react'
 
 

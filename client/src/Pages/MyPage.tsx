@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import Mypagebar from "Components/mypage/mypagebar";
-import Mypageuser from "Components/mypage/mypageuser";
-import Mypagesub from "Components/mypage/mypagesub";
+import Mypagebar from "Components/Mypage/mypagebar";
+import Mypageuser from "Components/Mypage/mypageuser";
+import Mypagesub from "Components/Mypage/mypagesub";
 
 import "../css/pages/Mypage.css";
-import MypageEdit from "Components/mypage/mypageuseredit";
+import MypageEdit from "Components/Mypage/mypageuseredit";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import RegisterPage from "./Mypage/SubReigstPage";
 

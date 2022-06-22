@@ -1,7 +1,7 @@
-import CancellationButton from "Components/common/cancellationButoon";
-import RegistButton from "Components/common/registButton";
-import ShareRegistInfo from "Components/mypage/mypageshare/shareregistInfo";
-import ShareRegistBoard from "Components/mypage/mypageshare/shareregistBoard";
+import CancellationButton from "Components/Common/cancellationButoon";
+import RegistButton from "Components/Common/registButton";
+import ShareRegistInfo from "Components/Mypage/mypageshare/shareregistInfo";
+import ShareRegistBoard from "Components/Mypage/mypageshare/shareregistBoard";
 import React from "react";
 
 import "../../css/pages/ShareRegisterPage.css";

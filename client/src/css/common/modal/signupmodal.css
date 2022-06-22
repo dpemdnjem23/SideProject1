@@ -60,23 +60,10 @@
   background-color: transparent;
 }
 
-.modal_signup_title {
-  margin-top: 25px;
-  
-  /* margin: 0 auto; */
-  width: 100%;
-  padding: 10px 32px;
-
-  display: flex;
-
-  justify-content: center;
-  flex-direction: column;
-}
 .modal_signup_section {
   margin: 0 auto;
   width: 100%;
   /* position: relative; */
-  padding: 10px 32px;
 
   display: flex;
 
@@ -115,12 +102,6 @@
 }
 
 
-.desc {
-  font-size: 13px;
-  color: gray;
-  
-  /* margin-top: 5px; */
-}
 .signup_text{
   display: block;
   color: white;

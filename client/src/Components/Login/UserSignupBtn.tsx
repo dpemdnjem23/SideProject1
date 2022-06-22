@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../css/components/Login/SignupBtn.css";
-const SignupBtn = () => {
+const UserSignupBtn = () => {
     //signupBtn을 누르면 signuppage로 연결
   return (
     <div className='id_signup_section'>
@@ -20,4 +20,4 @@ const SignupBtn = () => {
   );
 };
 
-export default SignupBtn;
+export default UserSignupBtn;

@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import "../../css/common/modal/signupmodal.css";
-
-interface signupmodal {
-  openmodal: () => void;
-  closemodal: () => void;
-  closeSignupModal: () =>void
-  // usernameValidation:(username:React.FocusEvent<HTMLInputElement>) =>void
-}
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const SignupModal: React.FC<signupmodal> = ({ openmodal, closemodal,closeSignupModal }) => {
+import "../../css/components/Signup/Signup.css";
+
+const Signup = () => {
+  const navigate = useNavigate();
+  const goBack = navigate(-1);
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -62,7 +58,7 @@ const SignupModal: React.FC<signupmodal> = ({ openmodal, closemodal,closeSignupM
     } else {
       axios
         .post(`${process.env.REACT_APP_API_URI}/auth/usernamecheck`, {
-          username: username
+          username: username,
         })
         .then((res) => {
           setUsernameErrorMessage("");
@@ -70,7 +66,6 @@ const SignupModal: React.FC<signupmodal> = ({ openmodal, closemodal,closeSignupM
         })
         .catch((err) => {
           setUsernameErrorMessage("중복된 아이디 입니다.");
-        
         });
       setUsernameErrorMessage("");
       return true;
@@ -105,36 +100,6 @@ const SignupModal: React.FC<signupmodal> = ({ openmodal, closemodal,closeSignupM
       return true;
     }
   };
-
-  // const validateNickname = () =>{
-
-  // }
-
-  // const validatePassword = () =>{
-
-  // }
-
-  //아이디 검증 아이디를 입력했을때
-
-  // const validateUsername = (username: string) => {
-  //   //아이든 6~15자 영,숫자 조합
-  //   const regUsername = /^[a-z]+[a-z0-9]{6,15}$/g;
-
-  //   if (!regUsername.test(username)) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // };
-
-  // const validateCheckPassword = (password: string, passwordCheck: string) => {
-  //   if (password !== passwordCheck) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // };
-
   const passwordBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     // 8자이상 16자이하 의 숫자, 문자, 특수문자 조합
 
@@ -209,85 +174,74 @@ const SignupModal: React.FC<signupmodal> = ({ openmodal, closemodal,closeSignupM
           username: username,
         })
         .then((res) => {
-          closeSignupModal()
-
-          //회원가입이 완료되면 회원가입 모달창을 닫는다
+        
+            navigate('/login')
+          //회원가입이 완료되면 로그인창으로 다시 넘어간다.
         })
         .catch((err) => {
+            //회원가입 실패하는경우
           throw err;
         });
     } else {
-      console.log("형이왜여기서 나와");
+      //아무것도입력이 안됐는데 만약 엔터키를 누르면 모든 message활성화
     }
   };
 
   return (
-    <div onClick={() => closemodal()} className="signup_modal">
-      <section onClick={(e) => e.stopPropagation()}>
-        <header>
-          <button onClick={() => closemodal()} className="close">
-            X
-          </button>
-
-          <div className="modal_signup_title">회원가입</div>
-        </header>
-        <div className="modal_signup_section">
-          <input
-            onKeyDown={spaceBarBlock}
-            onBlur={nicknameBlur}
-            onChange={handleNick}
-            maxLength={7}
-            type="text"
-            name="username"
-            placeholder="이름(2~7자 특수문자 불가)"
-          ></input>
+    <div className="Signup">
+      <header>
+        <div className="Signup_title">회원가입</div>
+      </header>
+      <div className="Signup_section">
+        <input
+          onKeyDown={spaceBarBlock}
+          onBlur={nicknameBlur}
+          onChange={handleNick}
+          maxLength={7}
+          type="text"
+          name="username"
+          placeholder="이름(2~7자 특수문자 불가)"
+        ></input>
+        
           <span>{nickCheckErrorMessage}</span>
+    
+        <input
+          onBlur={usernameBlur}
+          maxLength={15}
+          onChange={handleUsername}
+          type="text"
+          name="username"
+          placeholder="ID(6~15자 영문,숫자)"
+        ></input>
 
-          <input
-            onBlur={usernameBlur}
-            maxLength={15}
-            onChange={handleUsername}
-            type="text"
-            name="username"
-            placeholder="ID(6~15자 영문,숫자)"
-          ></input>
+        <span>{usernameErrorMessage}</span>
 
-          <span>{usernameErrorMessage}</span>
-
-          <input
-            maxLength={16}
-            onBlur={passwordBlur}
-            onChange={handlePassword}
-            type="type"
-            name="password"
-            placeholder="비밀번호(8~16자 이내의 소문자, 숫자, 특수문자)"
-          ></input>
-          <span>{passErrorMessage}</span>
-          <input
-            onBlur={checkPasswordBlur}
-            onChange={handlePasswordCheck}
-            type="password"
-            name="password"
-            placeholder="비밀번호 확인"
-          ></input>
-          <span>{passCheckErrorMessage}</span>
-        </div>
-
-        <div className="modal_signup_button_section">
-          <div className="signup desc">
+        <input
+          maxLength={16}
+          onBlur={passwordBlur}
+          onChange={handlePassword}
+          type="type"
+          name="password"
+          placeholder="비밀번호(8~16자 이내의 소문자, 숫자, 특수문자)"
+        ></input>
+        <span>{passErrorMessage}</span>
+        <input
+          onBlur={checkPasswordBlur}
+          onChange={handlePasswordCheck}
+          type="password"
+          name="password"
+          placeholder="비밀번호 확인"
+        ></input>
+        <span>{passCheckErrorMessage}</span>
+        <div className="signup_desc">
+            <span>
             계정 만들기 버튼을 클릭하면, Subgather의 회원이 되실수 있습니다.
-          </div>
-          <span onClick={handleSignupRequest} className="signup_text">
-            계정만들기
-          </span>
-          <div className="already_account">
-            이미 가입 하셨나요?
-            <a onClick={() => openmodal()}> 로그인</a>
-          </div>
-        </div>
-      </section>
+
+            </span>
+            </div>
+      </div>
     </div>
   );
 };
 
-export default SignupModal;
+export default Signup;

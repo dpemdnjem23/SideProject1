@@ -1,7 +1,7 @@
-import Login from "Components/login/Login";
-import LoginBtn from "Components/login/LoginBtn";
-import OauthLoignBtn from "Components/login/OauthLoginBtn";
-import SignupBtn from "Components/login/SignupBtn";
+import Login from "Components/Login/Login";
+import LoginBtn from "Components/Login/LoginBtn";
+import OauthLoignBtn from "Components/Login/OauthLoginBtn";
+import UserSignupBtn from "Components/Login/UserSignupBtn";
 import React, { useState } from "react";
 
 
@@ -17,7 +17,7 @@ const SigninPage= () => {
 
       <Login></Login>
       <LoginBtn></LoginBtn>
-      <SignupBtn></SignupBtn>
+      <UserSignupBtn></UserSignupBtn>
       <OauthLoignBtn></OauthLoignBtn>
      
     </div>

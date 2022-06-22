@@ -1,7 +1,7 @@
-import CancellationButton from "Components/common/cancellationButoon";
-import RegistButton from "Components/common/registButton";
-import SubRegistInfo from "Components/mypage/mypagesub/subregistInfo";
-import SubRegistPeriod from "Components/mypage/mypagesub/subregistPeriod";
+import CancellationButton from "Components/Common/cancellationButoon";
+import RegistButton from "Components/Common/registButton";
+import SubRegistInfo from "Components/Mypage/mypagesub/subregistInfo";
+import SubRegistPeriod from "Components/Mypage/mypagesub/subregistPeriod";
 import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";

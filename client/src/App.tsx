@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 
 import logo from "./logo.svg";
 import Modal from "./Pages/SigninPage";
-import SignupModal from "./Components/Modal/signupModal";
+// import SignupModal from "./Components/Modal/signupModal";
 import "./css/reset.css";
 import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import "./App.css";
 
 
-import Mainheader from "Components/common/mainHeader";
+import Mainheader from "Components/Common/mainHeader";
 import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
@@ -20,7 +20,8 @@ import ShareRegisterPage from "Pages/Mypage/ShareRegisterPage";
 import SubRegisterPage from "Pages/Mypage/SubReigstPage";
 import CalendarSelect from "Pages/calendarSelectPage";
 import SigninPage from "./Pages/SigninPage";
-import MainHeaderLogo from "Components/common/mainHeaderLogo";
+import MainHeaderLogo from "Components/Common/mainHeaderLogo";
+import SignupPage from "Pages/SignupPage";
 
 // import {
 //   MainPage,
@@ -137,8 +138,8 @@ const App = () => {
           <Route element={<MainHeaderLogo />   }> 
             
           <Route path='/login' element={<SigninPage></SigninPage>} />
-          {/* <Route path='/signup' element={<SignupPage} />          <Route path='/login' element={<SigninPage></SigninPage>} /> */}
-
+          <Route path='/signup' element={<SignupPage></SignupPage>} />       
+          
 
             </Route>
 
