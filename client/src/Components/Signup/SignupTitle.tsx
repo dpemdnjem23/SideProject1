@@ -8,8 +8,7 @@ const SignupTitle = () => {
     <header>
       <div className="Signup_title">회원가입</div>
       <div className="already_account">
-        이미 가입 하셨나요?
-        <Link to="/login"> 로그인</Link>
+        이미 가입 하셨나요?<Link to="/login"> 로그인</Link>
       </div>
     </header>
   );

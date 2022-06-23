@@ -55,14 +55,14 @@
   border-bottom: 1px solid #efefef;
 }
 
-.signup_desc >span{
+.Signup_desc >span{
     font-size: 13px;
     color: gray;
     
     /* margin-top: 5px; */
   }
 
-.signup_desc{
+.Signup_desc{
     width: 100%;
 
 margin: auto;
@@ -73,7 +73,7 @@ margin: auto;
 
 .Signup_Btn_section {
     width:100%;
-    max-width: 350px;
+    width: 350px;
     margin-top:30px;
   }
   
@@ -98,5 +98,13 @@ margin: auto;
     transition-duration: 0.3s;
     background-color: rgb(112, 112, 199);
   }
+
+.Signup_bottom_section{
+
+
+  display: flex;
+  
+  flex-direction: column;
+}
   
   
