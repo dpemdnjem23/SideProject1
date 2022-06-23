@@ -63,7 +63,7 @@ module.exports = {
   },
   signinControl: async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { username, password } = req.body;
 
       const salt = await user.findOne({
         attributes: ["salt"],

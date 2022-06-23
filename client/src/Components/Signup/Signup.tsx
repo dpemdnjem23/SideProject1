@@ -140,7 +140,7 @@ const Signup = () => {
 
     if (!regPassword.test(e.target.value)) {
       setPassErrorMessage(
-        "비밀번호를 8~16자, 숫자, 특수문자,영어를 혼합해주세요"
+        "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
       );
 
       setValidateUserInfo({ ...validateUserInfo, passwordValidate: false });
@@ -170,7 +170,7 @@ const Signup = () => {
         });
 
         setPassCheckErrorMessage(
-          "비밀번호를 8~16자, 숫자, 특수문자,영어를 혼합해주세요"
+          "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
         );
       } else {
         setValidateUserInfo({
@@ -180,13 +180,17 @@ const Signup = () => {
 
         setPassCheckErrorMessage("");
       }
-    } else {
+    }
+    
+    else if(  password !== e.target.value &&
+      password !== "" &&
+      e.target.value !== "") {
       setValidateUserInfo({
         ...validateUserInfo,
         passwordCheckValidate: false,
       });
 
-      setPassCheckErrorMessage("비밀번호를 확인해주세요");
+      setPassCheckErrorMessage('비밀번호를 확인해주세요'      );
     }
   };
 
@@ -195,8 +199,8 @@ const Signup = () => {
       validateUserInfo.nicknameValidate &&
       validateUserInfo.passwordCheckValidate &&
       validateUserInfo.passwordValidate &&
-      validateUserInfo.usernameValidate &&
-      validateAllCheck
+      validateUserInfo.usernameValidate
+      // validateAllCheck
     ) {
       setValidateAllCheck(true);
     } else {
@@ -221,7 +225,7 @@ const Signup = () => {
 
     // console.log(validateCheckPassword())
 
-    console.log(validateAllCheck)
+    console.log(validateAllCheck);
     if (validateAllCheck) {
       axios
         .post(`${process.env.REACT_APP_API_URI}/auth/signup`, {
@@ -230,7 +234,7 @@ const Signup = () => {
           username: username,
         })
         .then((res) => {
-          console.log('출')
+          console.log("출");
           navigate("/login");
           //회원가입이 완료되면 로그인창으로 다시 넘어간다.
         })
@@ -241,22 +245,27 @@ const Signup = () => {
       //회원가입을 눌럿을때 만약
       //  정보가 입력이 됐고 true인 상황이면 errormessage 변경이 필요없다.
 
-      if (
-        validateUserInfo.passwordValidate &&
-        validateUserInfo.passwordCheckValidate
-      ) {
-        setPassCheckErrorMessage("");
-      } else {
-        setPassCheckErrorMessage("비밀번호를 확인해주세요");
+      //계정만들기시 pass가 존재 하고 validate false인경우
+      // 확인해주세요 문구
+      //계정만들기시 pass가 없고 validate flase인경우
+      //비밀번호 혼합해주세요
+      if (!password && !passwordCheck) {
+        setPassCheckErrorMessage(
+          "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
+        );
+      }
+      else if(password&&!passwordCheck){
+        setPassCheckErrorMessage(
+         '비밀번호를 확인해주세요'
+        );
+      }
+      // setPassCheckErrorMessage("비밀번호를 확인해주세요");
 
-        // if (validateUserInfo.passwordCheckValidate) {
-        //   setPassCheckErrorMessage("");
-        // } else {
-        //   setPassCheckErrorMessage(
-        //     "비밀번호를 8~16자 숫자, 특수문자, 소문자 혼합해주세요"
-        //   );
-        }
-      
+      if (validateUserInfo.passwordValidate&&!validateUserInfo.passwordCheckValidate) {
+        setPassCheckErrorMessage(
+          '비밀번호를 확인해주세요'
+        );
+      } 
 
       if (validateUserInfo.usernameValidate) {
         setUsernameErrorMessage("");
@@ -267,7 +276,7 @@ const Signup = () => {
         setPassErrorMessage("");
       } else {
         setPassErrorMessage(
-          "비밀번호를 8~16자 숫자, 특수문자, 소문자 혼합해주세요"
+          "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
         );
       }
 

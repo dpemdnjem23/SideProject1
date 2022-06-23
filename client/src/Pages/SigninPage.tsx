@@ -1,5 +1,4 @@
 import Login from "Components/Login/Login";
-import LoginBtn from "Components/Login/LoginBtn";
 import OauthLoignBtn from "Components/Login/OauthLoginBtn";
 import UserSignupBtn from "Components/Login/UserSignupBtn";
 import React, { useState } from "react";
@@ -16,7 +15,6 @@ const SigninPage= () => {
     <div id= "SigninPage">
 
       <Login></Login>
-      <LoginBtn></LoginBtn>
       <UserSignupBtn></UserSignupBtn>
       <OauthLoignBtn></OauthLoignBtn>
      
