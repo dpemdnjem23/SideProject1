@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import "../../css/common/mainHeader.css";
 import MainPage from "../../Pages/MainPage";
 import { Route, BrowserRouter, Link, Routes ,Outlet} from "react-router-dom";
+import useStore from 'zustand'
 //왜 tsx는 FC를 넣을까?
 //
 
+// type mypageState ={
+//   disabledSignin:boolean
+//   mypageOff:() =>void
 
-
+//   mypageOn:() =>void
+// }
 
 const Mainheader = () => {
+
+const {disabledSignin}:any =useStore()
   //main header 에 들어갈것
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
-
+console.log(disabledSignin)
   return (
     <>
     
@@ -41,13 +48,13 @@ const Mainheader = () => {
           <li className="menu">
             <Link to="/callendar">구독달력</Link>
           </li>
+          {disabledSignin ? <li className="menu">
+            <Link to="/mypage"><img width='50' src='./images/wallet-6551548.svg'></img></Link>
+          </li>:
           <li className="menu" >
            <Link to='/login'> 로그인</Link>
-          </li>
-          <li className="menu">
-            <Link to="/mypage">마이페이지</Link>
-           
-          </li>
+          </li>}
+         
           
           
         </ul>

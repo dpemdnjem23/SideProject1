@@ -1,7 +1,10 @@
 import axios from "axios";
+import create from'zustand'
+import {devtools} from 'zustand/middleware'
+import { persist } from "zustand/middleware";
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
 
@@ -9,9 +12,33 @@ type SigninInfo = {
   username: string;
   password: string;
 };
-axios.defaults.withCredentials=true;
+type mypageState ={
+  disabledSignin:boolean
+  mypageOff:() =>void
+
+  mypageOn:() =>void
+}
+
+// type signInfo = {
+//   handleSignin: () => void;
+//   signinErrMessage:string;
+// };
+axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
+
+
+ 
+const useStore =create<mypageState>((set)=>({
+  disabledSignin:false,
+  mypageOn(){
+    set(()=>({disabledSignin:true}))
+  },
+  mypageOff(){
+    set(()=>({disabledSignin:false}))
+  }
+}))
+
 const Login = () => {
 
 
@@ -19,11 +46,14 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const [disabledSignin,setDisabledSignin] = useState<boolean>(false)
 
-  const [signinErrMessage,setSigninErrMessagae] =useState<string>('')
-  const navigate = useNavigate()
-
+  const navigate:NavigateFunction = useNavigate()
+  const [signinErrMessage, setSigninErrMessagae] = useState<string>("");
+  // const [disabledSignin, setDisabledSignin] = useState<boolean>(false);
+ 
+  
+  const {mypageOn,mypageOff,disabledSignin} = useStore()
+  // const [disabledSignin,setDisabledSignin] = useState<boolean>(false)
 
   const handleSignInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "signin-user") {
@@ -38,24 +68,29 @@ const Login = () => {
   // a
 
   const handleSignin = () => {
-    axios.post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
-      username:signinInfo.username,
-      password:signinInfo.password
-    }).then((res)=>{
-      // localStorage.setItem
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
+        username: signinInfo.username,
+        password: signinInfo.password,
+      })
+      .then((res) => {
+        localStorage.setItem('accessToken',res.data.accessToken)
 
-      console.log(res)
-      setDisabledSignin(true);
-      navigate('/')
+        
+        console.log(mypageOn())
+        useStore.setState({disabledSignin:true})
+        console.log(disabledSignin)
 
-    }).catch((err)=>{
-      setDisabledSignin(false);
-      setSigninErrMessagae('아이디와 비밀번호를 정확히 입력해주세요')
-      console.log(err)
-      //로그인 정보가 맞지 않는경우. errmessage
-      throw err
-    })
-  };
+        navigate("/");
+      })
+      .catch((err) => {
+        mypageOff()
+       
+         setSigninErrMessagae("아이디와 비밀번호를 정확히 입력해주세요");
+        //로그인 정보가 맞지 않는경우. errmessage
+        throw err;
+      });
+  }
   return (
     <div className="login">
       <header>
@@ -82,8 +117,8 @@ const Login = () => {
           placeholder="비밀번호(문자,숫자포함 8자 이상)"
         ></input>
         <span>{signinErrMessage}</span>
-          <div onClick = {handleSignin}className="login_bt">
-            <span className="login_bt_text">로그인</span>
+        <div onClick={() => handleSignin()} className="login_bt">
+          <span className="login_bt_text">로그인</span>
           {/* </div> */}
         </div>
       </div>

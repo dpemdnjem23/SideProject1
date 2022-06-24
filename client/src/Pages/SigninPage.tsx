@@ -4,9 +4,14 @@ import UserSignupBtn from "Components/Login/UserSignupBtn";
 import React, { useState } from "react";
 
 
+// type signInfo = {
 
+//   handleSignin :() =>void
+//   signinErrMessage:string;
+// }
 
 import '../css/pages/SigninPage.css'
+
 const SigninPage= () => {
   //이메일 회원가입을 누르면 signup으로 이동
   //signup은 회원가입창
@@ -14,7 +19,7 @@ const SigninPage= () => {
   return (
     <div id= "SigninPage">
 
-      <Login></Login>
+      <Login  ></Login>
       <UserSignupBtn></UserSignupBtn>
       <OauthLoignBtn></OauthLoignBtn>
      

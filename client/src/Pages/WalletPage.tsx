@@ -6,42 +6,55 @@ import React, { useState } from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-interface showSubDetailModal {
-  openSubModal: () => void;
-  subDetail: boolean;
-  closeSubModal: () => void;
-  openCancellationModal: () =>void
-  showCancellation:boolean
-  openSubDetailEditModal: () => void
-  closeSubDetailEditModal:() =>void
-  showSubEdit:boolean
-  closeCancellationModal:() =>void
-}
+// interface showSubDetailModal {
+//   openSubModal: () => void;
+//   subDetail: boolean;
+//   closeSubModal: () => void;
+//   openCancellationModal: () =>void
+//   showCancellation:boolean
+//   openSubDetailEditModal: () => void
+//   closeSubDetailEditModal:() =>void
+//   showSubEdit:boolean
+//   closeCancellationModal:() =>void
+// }
 
 import "../css/pages/WalletPage.css";
-const WalletPage: React.FC<showSubDetailModal> = ({
-  subDetail,
-  openSubModal,
-  closeSubModal,
-  openCancellationModal,
-  showCancellation,
-  openSubDetailEditModal,
-  closeSubDetailEditModal,
-  showSubEdit,
-  closeCancellationModal,
-}) => {
-//   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
-  //   const closeSubModal =() =>{
-  //       setSubModal(false);
-  //   }
-  //   const openSubModal = () => {
-  //     setSubModal(true);
-  //   };
+const WalletPage = () => {
+  const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
+  // const [userEdit, setUserEdit] = useState<boolean>(false);
 
-//   onClick = {() =>closeSubModal()}
+  const [showCancellation, setShowCancellation] = useState<boolean>(false);
+  const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
+  const [showRegist, setShowRegist] = useState<boolean>(false);
+
+
+
+  const openSubModal = () => {
+    setShowSubDetail(true);
+  };
+
+  const closeSubModal = () => {
+    setShowSubEdit(false);
+    setShowSubDetail(false);
+    setShowCancellation(false);
+  };
+
+  const openCancellationModal = () => {
+    setShowCancellation(true);
+  };
+  const closeCancellationModal = () => {
+    setShowCancellation(false);
+  };
+  const openSubDetailEditModal = () => {
+    setShowSubEdit(true);
+  };
+  const closeSubDetailEditModal = () => {
+    setShowSubEdit(false);
+  };
+
   return (
     <div  id="WalletPage">
-    {subDetail ? <SubDetailModal showSubEdit ={showSubEdit} closeCancellationModal={ closeCancellationModal} closeSubDetailEditModal={closeSubDetailEditModal} oepnSubDetailEditModal={openSubDetailEditModal} showCancellation={showCancellation}  openCancellationModal={openCancellationModal} closeSubModal={closeSubModal}></SubDetailModal> : null}
+    {showSubDetail ? <SubDetailModal showSubEdit ={showSubEdit} closeCancellationModal={ closeCancellationModal} closeSubDetailEditModal={closeSubDetailEditModal} oepnSubDetailEditModal={openSubDetailEditModal} showCancellation={showCancellation}  openCancellationModal={openCancellationModal} closeSubModal={closeSubModal}></SubDetailModal> : null}
       <div className="WalletPage_background">
         <WalletPageTop></WalletPageTop>
 

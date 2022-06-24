@@ -9,19 +9,33 @@ import MypageEdit from "Components/Mypage/mypageuseredit";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import RegisterPage from "./Mypage/SubReigstPage";
 
-type props = {
-  openRegist: () => void;
-  changeEdit: () => void;
-  deleteUser: () => void;
-  userEdit: boolean;
-};
+// type props = {
+//   openRegist: () => void;
+//   changeEdit: () => void;
+//   deleteUser: () => void;
+//   userEdit: boolean;
+// };
+// React.FC<props>
+const MyPage = () => {
+  const [userEdit, setUserEdit] = useState<boolean>(false);
 
-const MyPage: React.FC<props> = ({
-  userEdit,
-  openRegist,
-  changeEdit,
-  deleteUser,
-}) => {
+  const [showRegist, setShowRegist] = useState<boolean>(false);
+
+  const [delUser, setDelUser] = useState<boolean>(false);
+
+  const changeEdit = () => {
+    setUserEdit(true);
+  };
+  const deleteUser = () => {
+    setDelUser(true);
+  };
+
+
+  const openRegist = () => {
+    setShowRegist(true);
+  };
+
+
   //가운데 메인 내정보
   //사이드 정보
 
