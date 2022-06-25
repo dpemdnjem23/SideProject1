@@ -1,12 +1,12 @@
 import axios from "axios";
 import create from'zustand'
-import {devtools} from 'zustand/middleware'
-import { persist } from "zustand/middleware";
+import { persist , devtools} from "zustand/middleware";
 
 import React, { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
+import { STATES } from "mongoose";
 
 type SigninInfo = {
   username: string;
@@ -27,17 +27,17 @@ axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-
  
-const useStore =create<mypageState>((set)=>({
+export const useStore=create<mypageState>()(devtools((set)=>({
   disabledSignin:false,
   mypageOn(){
-    set(()=>({disabledSignin:true}))
+    set((state)=>({disabledSignin:state.disabledSignin}))
   },
   mypageOff(){
     set(()=>({disabledSignin:false}))
   }
-}))
+})))
+
 
 const Login = () => {
 
@@ -49,11 +49,10 @@ const Login = () => {
 
   const navigate:NavigateFunction = useNavigate()
   const [signinErrMessage, setSigninErrMessagae] = useState<string>("");
-  // const [disabledSignin, setDisabledSignin] = useState<boolean>(false);
  
-  
-  const {mypageOn,mypageOff,disabledSignin} = useStore()
-  // const [disabledSignin,setDisabledSignin] = useState<boolean>(false)
+  const {disabledSignin,mypageOn}:any =useStore()
+  const [disabled, setDisabled] = useState<boolean>(disabledSignin);
+
 
   const handleSignInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "signin-user") {
@@ -76,15 +75,16 @@ const Login = () => {
       .then((res) => {
         localStorage.setItem('accessToken',res.data.accessToken)
 
-        
-        console.log(mypageOn())
-        useStore.setState({disabledSignin:true})
+           setDisabled(false)
+
+           console.log(mypageOn(disabled) )
+
         console.log(disabledSignin)
 
         navigate("/");
       })
       .catch((err) => {
-        mypageOff()
+        // mypageOff()
        
          setSigninErrMessagae("아이디와 비밀번호를 정확히 입력해주세요");
         //로그인 정보가 맞지 않는경우. errmessage
@@ -125,5 +125,7 @@ const Login = () => {
     </div>
   );
 };
+
+
 
 export default Login;

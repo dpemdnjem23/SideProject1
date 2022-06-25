@@ -15,6 +15,9 @@ import '../css/pages/SigninPage.css'
 const SigninPage= () => {
   //이메일 회원가입을 누르면 signup으로 이동
   //signup은 회원가입창
+
+  // const {disabledSignin}:any =useStore()
+
   
   return (
     <div id= "SigninPage">
@@ -22,7 +25,7 @@ const SigninPage= () => {
       <Login  ></Login>
       <UserSignupBtn></UserSignupBtn>
       <OauthLoignBtn></OauthLoignBtn>
-     
+
     </div>
   );
 };
