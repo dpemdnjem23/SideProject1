@@ -1,8 +1,8 @@
 import axios from "axios";
-import create from'zustand'
-import { persist , devtools} from "zustand/middleware";
+import create from "zustand";
+import { persist, devtools } from "zustand/middleware";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
@@ -12,12 +12,12 @@ type SigninInfo = {
   username: string;
   password: string;
 };
-type mypageState ={
-  disabledSignin:boolean
-  mypageOff:() =>void
+type mypageState = {
+  disabledSignin: boolean;
+  mypageOff: () => void;
 
-  mypageOn:() =>void
-}
+  mypageOn: (input: boolean) => void;
+};
 
 // type signInfo = {
 //   handleSignin: () => void;
@@ -27,32 +27,31 @@ axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
- 
-export const useStore=create<mypageState>()(devtools((set)=>({
-  disabledSignin:false,
-  mypageOn(){
-    set((state)=>({disabledSignin:state.disabledSignin}))
-  },
-  mypageOff(){
-    set(()=>({disabledSignin:false}))
-  }
-})))
-
+export const useStore = create<mypageState>()(
+  devtools((set) => ({
+    disabledSignin: false,
+    mypageOn(input) {
+      set(() => ({ disabledSignin: input }));
+    },
+    mypageOff() {
+      set(() => ({ disabledSignin: false }));
+    },
+  }))
+);
 
 const Login = () => {
-
-
   const [signinInfo, setSigninInfo] = useState<SigninInfo>({
     username: "",
     password: "",
   });
 
-  const navigate:NavigateFunction = useNavigate()
+  const navigate: NavigateFunction = useNavigate();
   const [signinErrMessage, setSigninErrMessagae] = useState<string>("");
- 
-  const {disabledSignin,mypageOn}:any =useStore()
-  const [disabled, setDisabled] = useState<boolean>(disabledSignin);
 
+  const { disabledSignin, mypageOn }: any = useStore();
+  const [disabled, setDisabled] = useState<boolean>(true);
+
+  const disalbedHandle = (disabled: boolean) => mypageOn(disabled);
 
   const handleSignInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "signin-user") {
@@ -73,24 +72,29 @@ const Login = () => {
         password: signinInfo.password,
       })
       .then((res) => {
-        localStorage.setItem('accessToken',res.data.accessToken)
+        localStorage.setItem("accessToken", res.data.accessToken);
 
-           setDisabled(false)
+        setDisabled(true);
+        disalbedHandle;
 
-           console.log(mypageOn(disabled) )
-
-        console.log(disabledSignin)
+        //  console.log(mypageOn(disabled) )
 
         navigate("/");
       })
       .catch((err) => {
         // mypageOff()
-       
-         setSigninErrMessagae("아이디와 비밀번호를 정확히 입력해주세요");
+        setDisabled(false);
+        disalbedHandle;
+
+        setSigninErrMessagae("아이디와 비밀번호를 정확히 입력해주세요");
         //로그인 정보가 맞지 않는경우. errmessage
         throw err;
       });
-  }
+  };
+
+  useEffect(() => {
+    handleSignin
+  }, []);
   return (
     <div className="login">
       <header>
@@ -108,8 +112,9 @@ const Login = () => {
           type="text"
           placeholder="아이디"
         ></input>
-
+        {disabledSignin}
         <input
+          onClick={() => mypageOn(disabled)}
           onChange={handleSignInfo}
           value={signinInfo.password}
           id="signin-password"
@@ -125,7 +130,5 @@ const Login = () => {
     </div>
   );
 };
-
-
 
 export default Login;

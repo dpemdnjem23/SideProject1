@@ -21,6 +21,7 @@ import CalendarSelect from "Pages/calendarSelectPage";
 import SigninPage from "./Pages/SigninPage";
 import MainHeaderLogo from "Components/Common/mainHeaderLogo";
 import SignupPage from "Pages/SignupPage";
+import MypageModal from "Components/Modal/MypageModal";
 
 // import {
 //   MainPage,
@@ -49,6 +50,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <div id="App">
+
+        <MypageModal></MypageModal>
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}

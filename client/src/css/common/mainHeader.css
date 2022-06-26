@@ -65,14 +65,19 @@ align-items: center;
 height:50px;
 justify-content: center;
 margin-left: 16px;
-cursor: pointer;
+/* cursor: pointer; */
   /* margin: 0px 30px; */
   display: inline-flex;
   /* color:blue; */
   font-weight: 400;
 }
-li:hover{
+li>a:hover{
   color: rgb(49, 49, 223);
   
+}
+li>img{
+  cursor: pointer;
+  top: 50px;
+  border-radius: 50%;
 }
 

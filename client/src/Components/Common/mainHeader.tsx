@@ -16,9 +16,10 @@ import { useStore } from "Components/Login/Login";
 const Mainheader = () => {
 
 const {disabledSignin} = useStore()
-// console.log( disabledSignin)
+// console.log( disabledSifa34 gnin)
   //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
 // console.log(disabledSignin)
+console.log(disabledSignin)
   return (
     <>
     
@@ -48,13 +49,14 @@ const {disabledSignin} = useStore()
           <li className="menu">
             <Link to="/callendar">구독달력</Link>
           </li>
+          {disabledSignin?
            <li className="menu">
-            <Link to="/mypage"><img width='50' src='./images/wallet-6551548.svg'></img></Link>
+            <img  width='60' src='./images/wallet-6551548.svg'></img>
           </li>:
           <li className="menu" >
            <Link to='/login'> 로그인</Link>
           </li>
-         
+}
           
           
         </ul>
