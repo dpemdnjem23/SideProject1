@@ -2,22 +2,47 @@ import axios from "axios";
 import create from "zustand";
 import { persist, devtools } from "zustand/middleware";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
-import { STATES } from "mongoose";
 
 type SigninInfo = {
   username: string;
   password: string;
 };
 type mypageState = {
-  disabledSignin: boolean;
-  mypageOff: () => void;
+  getStorage :() =>void;
+  name:string;
+  userSignin: boolean;
 
-  mypageOn: (input: boolean) => void;
+  // mypageOn: (input: boolean) => void;
 };
+
+// export const usStore = create(persist(
+//   (set, get) => ({
+//     fishes: 0,
+//     addAFish: () => set({ fishes: get().fishes + 1 })
+//   }),
+//   {
+//     name: "food-storage", // unique name
+//     getStorage: () => AsyncStorage, // Add this here!
+//   }
+// ))
+
+
+
+export const useStore = create(persist(
+  (set,get) => ({
+    userSignin: false,
+    mypageOn:(input:boolean) =>set({ userSignin: input })
+  }),
+  {
+    name:'isSign-storage',
+    getStorage: () => localStorage
+  }
+))
+
 
 // type signInfo = {
 //   handleSignin: () => void;
@@ -27,31 +52,19 @@ axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export const useStore = create<mypageState>()(
-  devtools((set) => ({
-    disabledSignin: false,
-    mypageOn(input) {
-      set(() => ({ disabledSignin: input }));
-    },
-    mypageOff() {
-      set(() => ({ disabledSignin: false }));
-    },
-  }))
-);
-
 const Login = () => {
   const [signinInfo, setSigninInfo] = useState<SigninInfo>({
     username: "",
     password: "",
   });
 
+
   const navigate: NavigateFunction = useNavigate();
   const [signinErrMessage, setSigninErrMessagae] = useState<string>("");
 
-  const { disabledSignin, mypageOn }: any = useStore();
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const {mypageOn}:any = useStore();
 
-  const disalbedHandle = (disabled: boolean) => mypageOn(disabled);
+  // const disalbedHandle = (disabled: boolean) => mypageOn(disabled);
 
   const handleSignInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "signin-user") {
@@ -64,6 +77,7 @@ const Login = () => {
 
   //로그인을 누르면 db랑 id 매칭해서 확인되면 통과, 메인, 토큰 받기
   // a
+  //토큰이 존재한다면 로그인 상태를 갱신하지 않아야 한다.
 
   const handleSignin = () => {
     axios
@@ -73,9 +87,9 @@ const Login = () => {
       })
       .then((res) => {
         localStorage.setItem("accessToken", res.data.accessToken);
+        console.log(res)
 
-        setDisabled(true);
-        disalbedHandle;
+        mypageOn(true);
 
         //  console.log(mypageOn(disabled) )
 
@@ -83,8 +97,8 @@ const Login = () => {
       })
       .catch((err) => {
         // mypageOff()
-        setDisabled(false);
-        disalbedHandle;
+        
+        mypageOn(false);
 
         setSigninErrMessagae("아이디와 비밀번호를 정확히 입력해주세요");
         //로그인 정보가 맞지 않는경우. errmessage
@@ -92,9 +106,7 @@ const Login = () => {
       });
   };
 
-  useEffect(() => {
-    handleSignin
-  }, []);
+
   return (
     <div className="login">
       <header>
@@ -112,9 +124,8 @@ const Login = () => {
           type="text"
           placeholder="아이디"
         ></input>
-        {disabledSignin}
         <input
-          onClick={() => mypageOn(disabled)}
+          
           onChange={handleSignInfo}
           value={signinInfo.password}
           id="signin-password"

@@ -1,13 +1,50 @@
 #MypageModal{
 
+    text-align: left;
+
     
 
-    position: relative;
-    width:100%;
-    height:100%;
-    max-width: 300px;
-    min-height: 300px;
+    position: absolute;
 
-    background-color: red;
+    box-shadow: rgb(0 0 0 / 10%) 0px 5px 15px 0px;
+    top:80px;
+    width:100%;
+    /* height:100%; */
+    max-width: 220px;
+    height: 120px;
+
+    background-color: white;
     z-index: 10;
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    /* margin-left: 40px; */
+
+}
+
+.MypageModal_line{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
+margin: 10px 0px;
+
+    border: 1px solid rgb(231, 231, 231);
+}
+.MypageModal_section{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.MypageModal_section>img{
+border-radius: 50%;
+    
+}
+.MypageModal_section:last-child{
+    cursor: pointer;
+    width: 100%;
+}
+.MypageModal_section_textarea{
+
+padding-left: 15px;
 }

@@ -9,7 +9,7 @@ import "./css/reset.css";
 import { Route, Navigate,useNavigate,BrowserRouter, Routes } from "react-router-dom";
 import "./App.css";
 
-import Mainheader from "Components/Common/mainHeader";
+import Mainheader, { mainheaderuseStore } from "Components/Common/mainHeader";
 import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
@@ -22,7 +22,6 @@ import SigninPage from "./Pages/SigninPage";
 import MainHeaderLogo from "Components/Common/mainHeaderLogo";
 import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
-
 // import {
 //   MainPage,
 //   WalletPage,
@@ -31,31 +30,34 @@ import MypageModal from "Components/Modal/MypageModal";
 //   CallendarPage,
 // } from 'Pages'
 
-type SigninInfo = {
-  username: string;
-  password: string;
-};
 axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
-// const navigate =useNavigate()
-
-  ///로그인 부분
 
 
-  // disabledSignin={disabledSignin}
+  const{showMypageModalOn,showMypageModal} = mainheaderuseStore()
 
+  const closeShowMypageModal = () =>{
+
+    showMypageModalOn(false)
+    console.log(showMypageModal)
+  }
+  
   return (
     <BrowserRouter>
-      <div id="App">
+      <div onClick = {closeShowMypageModal}id="App">
 
-        <MypageModal></MypageModal>
+
+        
+
+
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
           <Route element={<Mainheader  />}>
+
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage  />} />
             <Route
@@ -71,6 +73,7 @@ const App = () => {
               element={<Navigate replace to="/mypage" />}
             />
           </Route>
+
 
           <Route element={<MainHeaderLogo />}> 
             <Route path="/login" element={<SigninPage ></SigninPage>} />
@@ -97,6 +100,8 @@ const App = () => {
 
           {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
+
+
       </div>
     </BrowserRouter>
   );

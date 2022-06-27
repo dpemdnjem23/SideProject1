@@ -125,8 +125,12 @@ module.exports = {
   },
 
   signoutControl: async (req, res) => {
+    console.log(req.user);
+    // console.log(req.headers)
+
     try {
-      if (!req.request) {
+      if (!req.user) {
+        console.log(req.user);
         return res.status(401).send("토큰이 존재하지 않습니다.");
       }
 
@@ -157,25 +161,20 @@ module.exports = {
 
   kakaoControl: async (req, res) => {},
   usernameCheckControl: async (req, res) => {
+    try {
+      const { username } = req.body;
+      console.log(username);
 
-    try{
+      const existUsername = await user.findOne({ where: { username } });
 
-    
-    const { username } = req.body;
-    console.log(username)
+      console.log(existUsername);
+      if (!existUsername) {
+        return res.status(200).send("아이디 사용가능");
+      }
 
-    const existUsername = await user.findOne({ where: { username } });
-
-
-    console.log(existUsername)
-    if (!existUsername) {
-      return res.status(200).send("아이디 사용가능");
+      return res.status(400).send("아이디 사용불가");
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-    return res.status(400).send("아이디 사용불가");
-
-  }catch(err){
-    return res.status(500).send(err);
-  }
   },
 };
