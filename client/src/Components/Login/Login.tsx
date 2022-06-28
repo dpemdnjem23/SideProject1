@@ -12,8 +12,8 @@ type SigninInfo = {
   password: string;
 };
 type mypageState = {
-  getStorage :() =>void;
-  name:string;
+  getStorage: () => void;
+  name: string;
   userSignin: boolean;
 
   // mypageOn: (input: boolean) => void;
@@ -30,19 +30,18 @@ type mypageState = {
 //   }
 // ))
 
-
-
-export const useStore = create(persist(
-  (set,get) => ({
-    userSignin: false,
-    mypageOn:(input:boolean) =>set({ userSignin: input })
-  }),
-  {
-    name:'isSign-storage',
-    getStorage: () => localStorage
-  }
-))
-
+export const useStore = create(
+  persist(
+    (set, get) => ({
+      userSignin: false,
+      mypageOn: (input: boolean) => set({ userSignin: input }),
+    }),
+    {
+      name: "isSign-storage",
+      getStorage: () => localStorage,
+    }
+  )
+);
 
 // type signInfo = {
 //   handleSignin: () => void;
@@ -58,11 +57,10 @@ const Login = () => {
     password: "",
   });
 
-
   const navigate: NavigateFunction = useNavigate();
-  const [signinErrMessage, setSigninErrMessagae] = useState<string>("");
+  const [signinErrMessage, setSigninErrMessage] = useState<string>("");
 
-  const {mypageOn}:any = useStore();
+  const { mypageOn }: any = useStore();
 
   // const disalbedHandle = (disabled: boolean) => mypageOn(disabled);
 
@@ -80,32 +78,40 @@ const Login = () => {
   //토큰이 존재한다면 로그인 상태를 갱신하지 않아야 한다.
 
   const handleSignin = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
-        username: signinInfo.username,
-        password: signinInfo.password,
-      })
-      .then((res) => {
-        localStorage.setItem("accessToken", res.data.accessToken);
-        console.log(res)
+    if (!signinInfo.username&&signinInfo.password) {
+      setSigninErrMessage("아이디를 입력해주세요");
+    } else if (signinInfo.username&&!signinInfo.password) {
+      setSigninErrMessage("비밀번호를 입력해주세요");
+    } else if (!signinInfo.username&&!signinInfo.password) {
+      setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
+    }
+     else if (signinInfo.password && signinInfo.username) {
+      axios
+        .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
+          username: signinInfo.username,
+          password: signinInfo.password,
+        })
+        .then((res) => {
+          // localStorage.setItem("accessToken", res.data.accessToken);
+          console.log(res);
 
-        mypageOn(true);
+          mypageOn(true);
 
-        //  console.log(mypageOn(disabled) )
+          //  console.log(mypageOn(disabled) )
 
-        navigate("/");
-      })
-      .catch((err) => {
-        // mypageOff()
-        
-        mypageOn(false);
+          navigate("/");
+        })
+        .catch((err) => {
+          // mypageOff()
 
-        setSigninErrMessagae("아이디와 비밀번호를 정확히 입력해주세요");
-        //로그인 정보가 맞지 않는경우. errmessage
-        throw err;
-      });
+          // mypageOn(false);
+
+          setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
+          //로그인 정보가 맞지 않는경우. errmessage
+          throw err;
+        });
+    }
   };
-
 
   return (
     <div className="login">
@@ -125,7 +131,6 @@ const Login = () => {
           placeholder="아이디"
         ></input>
         <input
-          
           onChange={handleSignInfo}
           value={signinInfo.password}
           id="signin-password"

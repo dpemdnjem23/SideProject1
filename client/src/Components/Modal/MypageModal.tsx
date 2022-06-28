@@ -35,10 +35,14 @@ const MypageModal = () => {
         localStorage.removeItem("accessToken");
         disalbedHandle(false);
         showMypageModalOn(false)
-        localStorage.removeItem('isSign-storage')
+        useStore.persist.clearStorage();
+
         window.location.reload()
       })
       .catch((err) => {
+        
+
+
         throw err;
       });
   };

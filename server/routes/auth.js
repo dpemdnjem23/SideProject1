@@ -8,5 +8,6 @@ router.post("/signin", controller.signinControl);
 router.get("/signout", controller.signoutControl);
 router.post("/nickcheck", controller.nickcheckControl);
 router.post("/usernamecheck", controller.usernameCheckControl);
+router.post('/refresh',controller.accessTokenReissuaControl)
 
 module.exports = router;

@@ -10,6 +10,7 @@ const {
   generateAccessToken,
   generateRefreshToken,
   sendCookie,
+  checkRefreshToken,
 } = require("../utils/jwt");
 
 module.exports = {
@@ -114,7 +115,14 @@ module.exports = {
           //referesh는 쿠키로, access는 활용할수 있도록 client로 보낸다.
           sendCookie(res, refreshToken);
 
-          return res.status(200).send({ accessToken: accessToken });
+          return res
+            .status(200)
+            .send({
+              id: userId,
+              nickname: userNick,
+              username: userUsername,
+              accessToken: accessToken,
+            });
 
           // 토큰 생성 한다. 구글, 카카오 인경우도 있으므로 id이용
         }
@@ -125,18 +133,19 @@ module.exports = {
   },
 
   signoutControl: async (req, res) => {
-    console.log(req.user);
+    // console.log(req.user);
     // console.log(req.headers)
+    //signout 시 토큰이 만료가 됐다.
+    const accessTokenData = req.user
 
     try {
-      if (!req.user) {
-        console.log(req.user);
+      if (!accessTokenData) {
         return res.status(401).send("토큰이 존재하지 않습니다.");
       }
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {
-      return res.status(500).send("서버오류");
+      return res.status(500).send("로그아웃 서버오류");
     }
     //로그 아웃은 토큰을 제거해준다.
     // authchecker(req,res,next)
@@ -176,5 +185,25 @@ module.exports = {
     } catch (err) {
       return res.status(500).send(err);
     }
+  },
+
+  accessTokenReissuaControl: async (req, res) => {
+//만약 액세스 토큰이 expired 되기 전이라면, refresh로 재발급
+//액세스 토큰에 담긴 사용자 정보를 확인하고, refreshoToken이 만료 되지
+//않았다면 새로운 토큰을 발급해준다.
+
+    const refreshToken = req.cookies.refreshToken
+
+    console.log(refreshToken)
+
+    const refreshTokenData = checkRefreshToken(refreshToken)
+
+    if(!refreshTokenData){
+      return res.status(401).send({message: "유효하지 않은 토큰~"});
+    }
+
+
+
+
   },
 };

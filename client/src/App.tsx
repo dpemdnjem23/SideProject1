@@ -44,7 +44,10 @@ const App = () => {
     showMypageModalOn(false)
     console.log(showMypageModal)
   }
-  
+  //1. 리프레쉬 토큰은 쿠키에 존재한다.
+  //2. 액세스 토큰이 만료되면 리프레쉬 토큰으로 액세스 토큰 재발급
+  //3. 
+  console.log(document.cookie.match('refreshToken'))
   return (
     <BrowserRouter>
       <div onClick = {closeShowMypageModal}id="App">
