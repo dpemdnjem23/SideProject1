@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-import logo from "./logo.svg";
-import Modal from "./Pages/SigninPage";
 import "./css/reset.css";
 import { Route, Navigate,useNavigate,BrowserRouter, Routes } from "react-router-dom";
 import "./App.css";
@@ -22,6 +20,9 @@ import SigninPage from "./Pages/SigninPage";
 import MainHeaderLogo from "Components/Common/mainHeaderLogo";
 import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
+import { useStore } from "Components/Login/Login";
+import { loadavg } from "os";
+import { isAuthenticated } from "utils/isAuthenticatd";
 // import {
 //   MainPage,
 //   WalletPage,
@@ -36,18 +37,21 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
 
+  // isAuthenticated()
 
-  const{showMypageModalOn,showMypageModal} = mainheaderuseStore()
+ //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
+ //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
+
+  const{showMypageModalOn} = mainheaderuseStore()
 
   const closeShowMypageModal = () =>{
 
     showMypageModalOn(false)
-    console.log(showMypageModal)
   }
   //1. 리프레쉬 토큰은 쿠키에 존재한다.
   //2. 액세스 토큰이 만료되면 리프레쉬 토큰으로 액세스 토큰 재발급
   //3. 
-  console.log(document.cookie.match('refreshToken'))
+  // console.log(document.cookie.match('refreshToken'))
   return (
     <BrowserRouter>
       <div onClick = {closeShowMypageModal}id="App">

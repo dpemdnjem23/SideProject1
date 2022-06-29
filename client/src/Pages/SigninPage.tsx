@@ -1,7 +1,9 @@
-import Login from "Components/Login/Login";
+import Login, { useStore } from "Components/Login/Login";
 import OauthLoignBtn from "Components/Login/OauthLoginBtn";
 import UserSignupBtn from "Components/Login/UserSignupBtn";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+
 
 
 // type signInfo = {
@@ -13,10 +15,8 @@ import React, { useState } from "react";
 import '../css/pages/SigninPage.css'
 
 const SigninPage= () => {
-  //이메일 회원가입을 누르면 signup으로 이동
-  //signup은 회원가입창
+ 
 
-  // const {disabledSignin}:any =useStore()
 
   
   return (

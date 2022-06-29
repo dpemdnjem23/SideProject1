@@ -39,5 +39,6 @@ module.exports = {
     // return res.status(200).send({data:data})
   },
 
-  accessCheck: (req, res) => {},
 };
+
+

@@ -21,7 +21,7 @@ module.exports = {
   sendCookie:(res,refreshToken) =>{
 
     res.cookie('refreshToken',refreshToken,{
-      httpOnly:'true',sameSite:'none'
+      httpOnly: true
     })
   }
 };

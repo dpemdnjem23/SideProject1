@@ -118,9 +118,11 @@ module.exports = {
           return res
             .status(200)
             .send({
+              data:{
               id: userId,
               nickname: userNick,
               username: userUsername,
+              },
               accessToken: accessToken,
             });
 
@@ -137,6 +139,8 @@ module.exports = {
     // console.log(req.headers)
     //signout 시 토큰이 만료가 됐다.
     const accessTokenData = req.user
+
+    console.log(req.use)
 
     try {
       if (!accessTokenData) {
@@ -188,9 +192,11 @@ module.exports = {
   },
 
   accessTokenReissuaControl: async (req, res) => {
-//만약 액세스 토큰이 expired 되기 전이라면, refresh로 재발급
-//액세스 토큰에 담긴 사용자 정보를 확인하고, refreshoToken이 만료 되지
-//않았다면 새로운 토큰을 발급해준다.
+
+
+    //서버는 accesstoken이 만료됨을 확인했어 => 권한이 없음을 나타내야함
+    // 서버는 받은 accesstoken 조작되지 않음을 확인하고, 
+    
 
     const refreshToken = req.cookies.refreshToken
 
