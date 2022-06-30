@@ -1,14 +1,16 @@
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
+const { access } = require("fs");
 const { sign, verify } = require("jsonwebtoken");
 // const { NONE } = require("sequelize");
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "10m" });
+    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "3m" });
   },
   generateRefreshToken: (data) => {
-    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "1d" });h
+    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "10m" });
+    h;
   },
 
   checkRefreshToken: (refreshToken) => {
@@ -18,10 +20,26 @@ module.exports = {
       return null;
     }
   },
-  sendCookie:(res,refreshToken) =>{
 
-    res.cookie('refreshToken',refreshToken,{
-      httpOnly: true
-    })
-  }
+  checkAccessToken: (accessToken) => {
+    try {
+      return verify(accessToken, process.env.ACCESS_SECRET);
+    } catch (err) {
+      return null;
+    }
+  },
+  sendCookie: (res, refreshToken) => {
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+    });
+  },
+  tokenExp: (Token) => {
+    // const token = authorization.split(" ")[1];
+    const base64Payload = Token.split(".")[1];
+
+    const payload = Buffer.from(base64Payload, "base64");
+    const result = JSON.parse(payload.toString());
+
+    return result.exp;
+  },
 };

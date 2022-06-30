@@ -37,7 +37,7 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
 
 const Mainheader = () => {
   const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
-  // const { userSignin } = isSigninState();
+  const { userSignin } = isSigninState();
 
   // console.log(userSignin)
   // console.log(persistLogin)
@@ -90,7 +90,7 @@ const Mainheader = () => {
             <li className="menu">
               <Link to="/callendar">구독달력</Link>
             </li>
-            {/* {userSignin ? ( */}
+            {userSignin ? (
               <li className="menu">
                 <FontAwesomeIcon className="menu_bell" icon={faBell} />
                 <img
@@ -99,11 +99,11 @@ const Mainheader = () => {
                   src="./images/wallet-6551548.svg"
                 ></img>
               </li>
-            {/* ) : ( */}
+             ) : (
               <li className="menu">
                 <Link to="/login"> 로그인</Link>
               </li>
-            {/* )} */}
+             )} 
           </ul>
           {showMypageModal ? <MypageModal></MypageModal> : null}
         </div>

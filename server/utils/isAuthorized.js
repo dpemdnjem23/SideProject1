@@ -12,6 +12,7 @@ module.exports={
     }
 
     const token = authorization.split(" ")[1];
+    
     try {
       return verify(token, process.env.ACCESS_SECRET);
     } catch (e) {

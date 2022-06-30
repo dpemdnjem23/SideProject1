@@ -11,6 +11,7 @@ const {
   generateRefreshToken,
   sendCookie,
   checkRefreshToken,
+  tokenExp,
 } = require("../utils/jwt");
 
 module.exports = {
@@ -109,22 +110,24 @@ module.exports = {
             userNick,
             userId,
           });
-
-          console.log(accessToken);
+          const accessExp = tokenExp(accessToken);
+          const refreshExp = tokenExp(refreshToken);
 
           //referesh는 쿠키로, access는 활용할수 있도록 client로 보낸다.
           sendCookie(res, refreshToken);
 
-          return res
-            .status(200)
-            .send({
-              data:{
+          console.log(req.exp, req.user, "req.exp");
+
+          return res.status(200).send({
+            data: {
               id: userId,
               nickname: userNick,
               username: userUsername,
-              },
-              accessToken: accessToken,
-            });
+              accessExp: accessExp,
+              refreshExp: refreshExp,
+            },
+            accessToken: accessToken,
+          });
 
           // 토큰 생성 한다. 구글, 카카오 인경우도 있으므로 id이용
         }
@@ -138,9 +141,9 @@ module.exports = {
     // console.log(req.user);
     // console.log(req.headers)
     //signout 시 토큰이 만료가 됐다.
-    const accessTokenData = req.user
+    const accessTokenData = req.user;
 
-    console.log(req.use)
+    // console.log(req.use)
 
     try {
       if (!accessTokenData) {
@@ -192,24 +195,67 @@ module.exports = {
   },
 
   accessTokenReissuaControl: async (req, res) => {
+    //만료시간이 다가오면 작동됨
+    //1. 액세스토큰이 만료되기전에 리프레쉬로 액세스토큰을 재발행 한다.
+    //2.  리프레쉬가 만료가됐는지를 확인해야함
+    //2-1 => 리프레쉬가 만료가됐는지 or 리프레쉬 토큰에 조작이 있었는지
 
+    //조작을 확인하는 방법은 decode해서 비교를 해야하고, 토큰 만료는 토큰이
+    //있는지 없는지만 확인한다.
+    // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
+    // 로컬스토리지는 id, nickname,username 3개를 가져온다.
 
-    //서버는 accesstoken이 만료됨을 확인했어 => 권한이 없음을 나타내야함
-    // 서버는 받은 accesstoken 조작되지 않음을 확인하고, 
-    
+    const { username, nickname, id } = req.body;
 
-    const refreshToken = req.cookies.refreshToken
+    const refreshToken = req.cookies.refreshToken;
 
-    console.log(refreshToken)
+    // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
-    const refreshTokenData = checkRefreshToken(refreshToken)
-
-    if(!refreshTokenData){
-      return res.status(401).send({message: "유효하지 않은 토큰~"});
+    if (!refreshToken) {
+      return res.status(401).send("토큰이 없어");
     }
 
+    try {
+      const refreshTokenData = checkRefreshToken(refreshToken);
 
+      if (!refreshTokenData) {
+        return res.status(401).send( '리프레쉬 토큰이 만료되었습니다.' );
+      }
 
+      //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
+      //만약 다르다면 정보가 변경때문에 로그아웃
+      const userInfo = await user.findOne({
+        where: { username: username, nickname: nickname, id: id },
+      });
+      if (!userInfo) {
+        return res.status(401).send("토큰 정보가 일치하지 않습니다.");
+      }
+      const userUsername = userInfo.dataValues.username;
+      const userNick = userInfo.dataValues.nickname;
+      const userId = userInfo.dataValues.id;
+      // const { email, nickname, id } = userInfo.dataValues;
+      const accessToken = generateAccessToken({
+        userUsername,
+        userNick,
+        userId,
+      });
+      const accessExp = tokenExp(accessToken);
+      const refreshExp = tokenExp(refreshToken);
 
+      return res.status(200).send({
+        data: {
+          id: userId,
+          nickname: userNick,
+          username: userUsername,
+          accessExp: accessExp,
+          refreshExp: refreshExp,
+        },
+        accessToken: accessToken,
+      
+      });
+    } catch (err) {
+      res.status(401);
+      throw err;
+    }
   },
 };
