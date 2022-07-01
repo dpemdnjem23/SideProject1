@@ -8,9 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER
-      },
+   
       name: {
         type: Sequelize.STRING
       },
@@ -22,6 +20,9 @@ module.exports = {
       },
       cycle: {
         type: Sequelize.INTEGER
+      },
+      image:{
+        type:Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

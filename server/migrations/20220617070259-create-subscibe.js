@@ -29,6 +29,5 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("subscribes");
-    // await queryInterface.dropTable('Subscibes');
   },
 };

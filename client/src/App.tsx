@@ -56,9 +56,7 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
-  const { persistLogin,userSignin } = isSigninState();
-
-
+  const { persistLogin, userSignin } = isSigninState();
 
   const issueAccessToken = () => {
     axios
@@ -82,6 +80,7 @@ const App = () => {
           "subgatherUserInfo",
           JSON.stringify(res.data.data)
         );
+        console.log("토큰재발급함");
       })
       .catch(() => {
         //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
@@ -97,15 +96,17 @@ const App = () => {
         // isSigninState.persist.clearStorage()
       });
   };
+  useEffect(() => {
+    if (
+      localstorageUserInfo.accessExp < today ||
+      localstorageUserInfo.refreshExp < today
+    ) {
+      issueAccessToken();
+    }
+  }, []);
 
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
-
-  useEffect(() => {
-    //token이 존재할때만 작동하도록한다. => 로그인이 되었을때만 작동하도록해야함
-    
-    issueAccessToken();
-  }, [localstorageUserInfo.accessExp < today,localstorageUserInfo.refreshExp < today,userSignin===true]);
 
   const { showMypageModalOn } = mainheaderuseStore();
 

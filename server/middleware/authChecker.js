@@ -41,7 +41,7 @@ module.exports = {
         return res.status(401).send("토큰이 만료되었습니다.");
       }
       // return data
-      req.user = data;
+      req.user = accessTokendata;
     } catch (err) {
       res.status(500);
       throw err;

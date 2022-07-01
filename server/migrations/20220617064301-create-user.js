@@ -26,6 +26,9 @@ module.exports = {
       google_id:{
         type:Sequelize.STRING
       },
+      social_user:{
+        type:Sequelize.BOOLEAN
+      },
 
       createdAt: {
         allowNull: false,

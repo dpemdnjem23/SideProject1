@@ -209,6 +209,8 @@ module.exports = {
 
     const refreshToken = req.cookies.refreshToken;
 
+    console.log(refreshToken)
+
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
     if (!refreshToken) {
@@ -254,7 +256,7 @@ module.exports = {
       
       });
     } catch (err) {
-      res.status(401);
+      res.status(500);
       throw err;
     }
   },
