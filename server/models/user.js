@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey:'id',
         onDelete:'cascade'
       })
-      user.hasMany(share,{
+      models.user.hasMany(models.share,{
         foreignKey:'user_id',
         sourceKey:'id',
         onDelete:'cascade'
       })
-      user.hasMany(wallet,{
+      models.user.hasMany(models.wallet,{
         foreignKey:'user_id',
         sourceKey:'id',
         onDelete:'cascade'

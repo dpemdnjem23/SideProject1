@@ -9,6 +9,15 @@ type isSigninState = {
     // mypageOn: (input: boolean) => void;
   };
 
+
+  type showErrModalState={
+    showErrModal :boolean;
+    setShowErrModal:(input:boolean) =>void
+
+
+
+  }
+
 export const isSigninState = create<isSigninState>()(devtools(
     persist(
       (set) => ({
@@ -19,4 +28,13 @@ export const isSigninState = create<isSigninState>()(devtools(
         name: "isSign-storage"
       }
     ))
+
+
+    
   );
+
+  export const showErrModalState = create<showErrModalState>()( (set)=>({
+
+    showErrModal :false,
+    setShowErrModal: (input:boolean) => set({showErrModal:input })
+  }))

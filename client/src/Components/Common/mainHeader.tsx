@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../../css/common/mainHeader.css";
 import MainPage from "../../Pages/MainPage";
-import { Route, BrowserRouter, Link, Routes, Outlet } from "react-router-dom";
+import { Route, BrowserRouter, Link, Routes, Outlet,useNavigate } from "react-router-dom";
 import { useStore } from "Components/Login/Login";
 import MypageModal from "Components/Modal/MypageModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import create from "zustand";
-import { isSigninState } from "utils/state";
+import { isSigninState, showErrModalState } from "utils/state";
 
-//왜 tsx는 FC를 넣을까?
-//
-
-// type mypageState ={
-//   disabledSignin:boolean
-//   mypageOff:() =>void
-
-//   mypageOn:() =>void
-// }
 
 type showModaleState = {
   showMypageModal: boolean;
@@ -36,20 +27,30 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
 }));
 
 const Mainheader = () => {
+  const navigate = useNavigate()
   const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
   const { userSignin } = isSigninState();
 
-  // console.log(userSignin)
-  // console.log(persistLogin)
-  // useEffect(()=>{
+const {setShowErrModal} = showErrModalState()
 
-  // },[])
 
-  // useStore.setState({userSignin:true})
+const handleErrModal  =() =>{
+  if(localStorage.getItem('accessToken')){
+    
+    setShowErrModal(false)
 
-  // console.log(userSignin)
-  //  const [showMypageModal,setShowMypageModal]  = useState<boolean>(false)
+      }
+      else{
 
+        navigate('/')
+        setShowErrModal(true)
+
+      }
+
+}
+ 
+ 
+ 
   const openShowMypageModal = () => {
     if (showMypageModal === false) {
       showMypageModalOn(true);
@@ -81,13 +82,13 @@ const Mainheader = () => {
             <li className="menu">
               <Link to="/">메인페이지</Link>
             </li>
-            <li className="menu">
+            <li onClick = {handleErrModal} className="menu">
               <Link to="/wallet">구독지갑</Link>
             </li>
-            <li className="menu">
+            <li  className="menu">
               <Link to="/share">구독공유</Link>
             </li>
-            <li className="menu">
+            <li onClick = {handleErrModal} className="menu">
               <Link to="/callendar">구독달력</Link>
             </li>
             {userSignin ? (

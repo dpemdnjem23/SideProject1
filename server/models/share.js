@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const user = require("./user");
 module.exports = (sequelize, DataTypes) => {
   class share extends Model {
     /**
@@ -9,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      share.belongsTo(user, {
+      models.share.belongsTo(models.user, {
         foreignKey: "user_id",
         sourceKey: "id",
         onDelete: "cascade",

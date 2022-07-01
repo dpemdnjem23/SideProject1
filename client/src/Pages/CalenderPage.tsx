@@ -11,6 +11,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 
 // }
 const CallendarPage:React.FC = () => {
+  //캘린더 페이지에 진입하려고한다
+  //캘린더 페이지는 토큰이 없으면 진입할수 없다. 
 
 
   return(
