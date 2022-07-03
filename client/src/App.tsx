@@ -5,10 +5,12 @@ import "./css/reset.css";
 import {
   Route,
   Navigate,
-  useNavigate,
   BrowserRouter,
   Routes,
 } from "react-router-dom";
+
+
+import { useNavigate } from "react-router";
 import "./App.css";
 
 import Mainheader, { mainheaderuseStore } from "Components/Common/mainHeader";
@@ -44,6 +46,10 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const App = () => {
 
 const {showErrModal} =   showErrModalState()
+
+{/* <Route path={ROUTES.CALLBACK} element={<IsUserRedirect />}>
+<Route path="/oauth/:corp" element={<Callback />} /> */}
+const navi = useNavigate()
 
 
   const today = new Date().getTime() / 1000;
@@ -106,6 +112,8 @@ const {showErrModal} =   showErrModalState()
     }
   }, []);
 
+
+
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
 
@@ -120,7 +128,44 @@ const {showErrModal} =   showErrModalState()
   // console.log(document.cookie.match('refreshToken'))
 
 
-  //로컬 스토리지에 토큰이 없는경우 지갑 달력에 접근할수 없다. ->
+// const kakaoAuthCode = () =>{
+//   const url = new URL(window.location.href);
+//   console.log(url.pathname)
+//   const {persistLogin} = isSigninState()
+//   const searchs = url.search;
+//   if (url.pathname === "/kakao/callback") {
+//     const code = searchs.split("=")[1].split("&")[0];
+//     axios
+//       .post(
+//         `${process.env.REACT_APP_API_URI}/auth/kakao`,
+//         {code: code},
+
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//         },
+//       )
+//       .then(data => {
+    
+//         navi("/",{replace:true});
+//         localStorage.setItem('accessToken', data.data.accessToken)
+//         persistLogin(true)
+//       })
+//       .catch(err => {
+      
+        
+//        persistLogin(false)
+//       });
+//   }
+// }
+
+
+// useEffect(()=>{
+// kakaoAuthCode()
+
+// },[])
+
   return (
     <BrowserRouter>
 

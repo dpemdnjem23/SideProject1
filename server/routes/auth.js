@@ -8,5 +8,7 @@ router.get("/signout", controller.signoutControl);
 router.post("/nickcheck", controller.nickcheckControl);
 router.post("/usernamecheck", controller.usernameCheckControl);
 router.post('/issueaccess',controller.accessTokenReissuaControl)
+router.post('/kakao',controller.kakaoControl)
+router.post('/google',controller.googleControl)
 
 module.exports = router;

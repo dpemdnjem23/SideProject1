@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const { default: axios } = require("axios");
 const crypto = require("crypto");
 const { authchecker } = require("../middleware/authChecker");
 // const { exit } = require("process");
@@ -116,7 +117,7 @@ module.exports = {
           //referesh는 쿠키로, access는 활용할수 있도록 client로 보낸다.
           sendCookie(res, refreshToken);
 
-          console.log(req.exp, req.user, "req.exp");
+          // console.log(req.exp, req.user, "req.exp");
 
           return res.status(200).send({
             data: {
@@ -175,7 +176,28 @@ module.exports = {
 
   googleControl: async (req, res) => {},
 
-  kakaoControl: async (req, res) => {},
+  kakaoControl: async (req, res) => {
+
+    console.log(req.params,req.query)
+    const { code } = req.body;
+    const url = "https://kauth.kakao.com/oauth/token";
+
+    try {
+      const result = await axios.post(
+        `${url}?code=${code}$client_id=${process.env.KAKAO_CLIENT}&client_secret=${process.env.KAKAO_SECRET}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&grant_type=authorization_code`,
+        {
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        }
+      );
+console.log(result)
+
+
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
   usernameCheckControl: async (req, res) => {
     try {
       const { username } = req.body;
@@ -209,7 +231,7 @@ module.exports = {
 
     const refreshToken = req.cookies.refreshToken;
 
-    console.log(refreshToken)
+    console.log(refreshToken);
 
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
@@ -221,7 +243,7 @@ module.exports = {
       const refreshTokenData = checkRefreshToken(refreshToken);
 
       if (!refreshTokenData) {
-        return res.status(401).send( '리프레쉬 토큰이 만료되었습니다.' );
+        return res.status(401).send("리프레쉬 토큰이 만료되었습니다.");
       }
 
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
@@ -253,7 +275,6 @@ module.exports = {
           refreshExp: refreshExp,
         },
         accessToken: accessToken,
-      
       });
     } catch (err) {
       res.status(500);

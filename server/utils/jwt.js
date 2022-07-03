@@ -1,6 +1,5 @@
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const { access } = require("fs");
 const { sign, verify } = require("jsonwebtoken");
 // const { NONE } = require("sequelize");
 

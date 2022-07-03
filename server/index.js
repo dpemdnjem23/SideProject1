@@ -8,6 +8,7 @@ const {authchecker} = require('./middleware/authChecker');
 const authRouter = require('./routes/auth')
 
 const userRouter = require('./routes/user');
+
 const { nextTick } = require("process");
 app.use(express.json()); //미들웨어
 app.use(express.urlencoded({ extended: false })); //미들웨어
@@ -28,6 +29,8 @@ app.use(
 app.use(authchecker)
 
 app.use('/auth',authRouter)
+app.use('/user',userRouter)
+
 
 
 // app.get("/", (req, res) => {

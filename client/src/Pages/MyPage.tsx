@@ -8,6 +8,8 @@ import "../css/pages/Mypage.css";
 import MypageEdit from "Components/Mypage/mypageuseredit";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import RegisterPage from "./Mypage/SubReigstPage";
+import MypageWithdrwal from "Components/Mypage/mypageuserWithdrawal";
+import { showMypageState } from "utils/state";
 
 // type props = {
 //   openRegist: () => void;
@@ -17,24 +19,14 @@ import RegisterPage from "./Mypage/SubReigstPage";
 // };
 // React.FC<props>
 const MyPage = () => {
-  const [userEdit, setUserEdit] = useState<boolean>(false);
 
   const [showRegist, setShowRegist] = useState<boolean>(false);
-
-  const [delUser, setDelUser] = useState<boolean>(false);
-
-  const changeEdit = () => {
-    setUserEdit(true);
-  };
-  const deleteUser = () => {
-    setDelUser(true);
-  };
-
-
+ 
   const openRegist = () => {
     setShowRegist(true);
   };
 
+  const { editUser, delUser } = showMypageState()
 
   //가운데 메인 내정보
   //사이드 정보
@@ -47,13 +39,15 @@ const MyPage = () => {
       <div className="Mypage_background">
         <div className="Mypage_section">
           <div className="Mypage_info_section">
-            {userEdit ? <MypageEdit /> : <Mypageuser />}
+          {editUser||delUser?null:<Mypageuser />}
+            {editUser ? <MypageEdit /> : null}
+            {delUser ? <MypageWithdrwal />:null}
             {/* {paylist?<Myp} */}
 
             <Mypagesub openRegist={openRegist} />
           </div>
           <div className="Mypage_bar_section">
-            <Mypagebar changeEdit={changeEdit} deleteUser={deleteUser} />
+            <Mypagebar />
           </div>
         </div>
       </div>

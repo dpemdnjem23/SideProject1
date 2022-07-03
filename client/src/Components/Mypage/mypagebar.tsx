@@ -1,20 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
+import { showMypageState } from "utils/state";
 import "../../css/components/MyPage/mypagebar.css";
 
 // const s = document.getElemnetsByClassName()
 
-interface Change {
-  changeEdit : () =>void
-  deleteUser : () =>void
-}
-
-const Mypagebar:React.FC<Change> = ({changeEdit,deleteUser}) => {
-  //useRef로 Dom을 가져와
+const Mypagebar = () => {
   //
 
- 
+  //한번더 클릭하면 원래대로 돌아가야한다.
+  const { setDelUser, setEditUser, editUser, delUser } = showMypageState();
 
+  const handleEditUser = () => {
+    //마이페이지에서 같은 걸 한번더 클릭하면 원래대로 돌아오도록 한다.
+    if (editUser === true) {
+      setEditUser(false);
+      setDelUser(false);
+    } else {
+      setEditUser(true);
+      setDelUser(false);
+    }
+  };
 
+  const handleDelUser = () => {
+    //마이페이지에서 같은 걸 한번더 클릭하면 원래대로 돌아오도록 한다.
+    if (delUser === true) {
+      setDelUser(false);
+      setEditUser(false);
+    } else {
+      setDelUser(true);
+      setEditUser(false);
+
+    }
+  };
 
   //현재 결제가 남은 구독갯수
 
@@ -67,8 +84,8 @@ const Mypagebar:React.FC<Change> = ({changeEdit,deleteUser}) => {
       <div className="Mypage_bar_bottom container">
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
-          <div onClick={()=>changeEdit()}>회원 정보 수정</div>
-          <div onClick={() => deleteUser()}>회원탈퇴</div>
+          <div onClick={handleEditUser}>회원 정보 수정</div>
+          <div onClick={handleDelUser}>회원탈퇴</div>
         </div>
       </div>
       <div></div>

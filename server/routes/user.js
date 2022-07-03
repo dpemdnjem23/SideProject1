@@ -3,3 +3,5 @@ const controller = require("../controller/user");
 
 
 router.delete('/withdrawal',controller.withdrawalControl)
+
+module.exports  = router
