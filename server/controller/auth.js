@@ -89,18 +89,18 @@ module.exports = {
           const hardPassword = key.toString("base64");
 
           // console.log(hardPassword)
-          const userInfo = await user.findOne({
+          const getUserInfo = await user.findOne({
             where: { username: username, password: hardPassword },
           });
-          console.log(userInfo);
+          console.log(getUserInfo);
 
-          if (!userInfo) {
+          if (!getUserInfo) {
             return res.status(401).send("이메일 및 비밀번호 확인");
           }
-          const userUsername = userInfo.dataValues.username;
-          const userNick = userInfo.dataValues.nickname;
-          const userId = userInfo.dataValues.id;
-          // const { email, nickname, id } = userInfo.dataValues;
+          const userUsername = getUserInfo.dataValues.username;
+          const userNick = getUserInfo.dataValues.nickname;
+          const userId = getUserInfo.dataValues.id;
+          // const { email, nickname, id } = getUserInfo.dataValues;
           const accessToken = generateAccessToken({
             userUsername,
             userNick,
@@ -178,24 +178,58 @@ module.exports = {
 
   kakaoControl: async (req, res) => {
 
-    console.log(req.params,req.query)
+    
     const { code } = req.body;
-    const url = "https://kauth.kakao.com/oauth/token";
+
+    if (!code) {
+      return res.status(400).send("Bad request");
+    }
+    
+
 
     try {
-      const result = await axios.post(
-        `${url}?code=${code}$client_id=${process.env.KAKAO_CLIENT}&client_secret=${process.env.KAKAO_SECRET}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&grant_type=authorization_code`,
+      // client_secret=${process.env.KAKAO_SECRET}&
+      console.log(code)
+
+      const getAccessToken = await axios.post(
+        `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&grant_type=authorization_code`,
         {
           headers: {
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            Accept: "application/json",
           },
         }
+
+
       );
-console.log(result)
+      // console.log(result.data)
+
+      const accessToken =getAccessToken.data.access_token
+      const refrshToken = getAccessToken.data.refresh_token
+      const accessExp = getAccessToken.data.expires_in
+      const refreshExp = getAccessToken.data.refresh_token_expires_in
+      
+      const getUserInfo = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
+        headers: {
+          Authorization: `Bearer ${getAccessToken.data.access_token}`,
+        },
+      });
+console.log(getUserInfo)
+
+
+const email = getUserInfo.kakao_account.email
+const nickname = getUserInfo.kakao_account.profile.nickname
+
+console.log(nickname)
+
+
+
+
 
 
     } catch (err) {
-      res.status(500).send(err);
+  
+      return res.status(500).send({err:err});
     }
   },
   usernameCheckControl: async (req, res) => {
@@ -248,16 +282,16 @@ console.log(result)
 
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
       //만약 다르다면 정보가 변경때문에 로그아웃
-      const userInfo = await user.findOne({
+      const getUserInfo = await user.findOne({
         where: { username: username, nickname: nickname, id: id },
       });
-      if (!userInfo) {
+      if (!getUserInfo) {
         return res.status(401).send("토큰 정보가 일치하지 않습니다.");
       }
-      const userUsername = userInfo.dataValues.username;
-      const userNick = userInfo.dataValues.nickname;
-      const userId = userInfo.dataValues.id;
-      // const { email, nickname, id } = userInfo.dataValues;
+      const userUsername = getUserInfo.dataValues.username;
+      const userNick = getUserInfo.dataValues.nickname;
+      const userId = getUserInfo.dataValues.id;
+      // const { email, nickname, id } = getUserInfo.dataValues;
       const accessToken = generateAccessToken({
         userUsername,
         userNick,

@@ -43,7 +43,7 @@ module.exports = {
       // return data
       req.user = accessTokendata;
     } catch (err) {
-      res.status(500);
+      res.status(501);
       throw err;
     }
 
