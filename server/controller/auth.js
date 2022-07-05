@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const { default: axios } = require("axios");
 const crypto = require("crypto");
+const { emit, send } = require("process");
 const { authchecker } = require("../middleware/authChecker");
 // const { exit } = require("process");
 
@@ -142,7 +143,9 @@ module.exports = {
     // console.log(req.user);
     // console.log(req.headers)
     //signout 시 토큰이 만료가 됐다.
+
     const accessTokenData = req.user;
+    const token = req.access;
 
     // console.log(req.use)
 
@@ -150,6 +153,12 @@ module.exports = {
       if (!accessTokenData) {
         return res.status(401).send("토큰이 존재하지 않습니다.");
       }
+
+      // await axios.get("https://kapi.kakao.com/v1/user/logout", {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {
@@ -177,59 +186,106 @@ module.exports = {
   googleControl: async (req, res) => {},
 
   kakaoControl: async (req, res) => {
-
-    
     const { code } = req.body;
 
     if (!code) {
       return res.status(400).send("Bad request");
     }
-    
-
 
     try {
       // client_secret=${process.env.KAKAO_SECRET}&
-      console.log(code)
 
       const getAccessToken = await axios.post(
         `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&grant_type=authorization_code`,
         {
           headers: {
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-            Accept: "application/json",
           },
         }
-
-
       );
       // console.log(result.data)
 
-      const accessToken =getAccessToken.data.access_token
-      const refrshToken = getAccessToken.data.refresh_token
-      const accessExp = getAccessToken.data.expires_in
-      const refreshExp = getAccessToken.data.refresh_token_expires_in
-      
+      const Token = getAccessToken.data.access_token;
+
       const getUserInfo = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
         headers: {
-          Authorization: `Bearer ${getAccessToken.data.access_token}`,
+          Authorization: `Bearer ${Token}`,
         },
       });
-console.log(getUserInfo)
 
 
-const email = getUserInfo.kakao_account.email
-const nickname = getUserInfo.kakao_account.profile.nickname
+      // console.log(getUserInfo)
+      //로그인을하면 kakao 유저정보를 가ㅕ와서 client에 뿌려줄껀데 refresh와 accesstoken 발급받아서
+      // 만약 다되면 로그아웃이 되도록
 
-console.log(nickname)
+      const kakao_id = getUserInfo.data.id;
+      const email = getUserInfo.data.kakao_account.email;
+      const nickname = getUserInfo.data.properties.nickname;
 
 
+      // console.log(nickname);
 
+      const kakaoUser = await user.findOne({ where: { kakao_id: kakao_id } });
+      // 신규 가입자 인경우
+      //아이디만 만든다.만들엇으면
+      if (!kakaoUser) {
 
+      
+        const newUser = await user.create({
+          kakao_id: kakao_id,
+          nickname: nickname,
+          email: email,
+          social_user: true,
+        });
+        console.log(newUser,'newUser')
 
+        const access = generateAccessToken(newUser.dataValues);
 
+        console.log(access,'ac')
+        // const refresh = generatRefreshsToken({kakao_id:kakao_id});
+        // console.log(refresh,'re')
+
+        const accessExp = tokenExp(access);
+        console.log(accessExp)
+        // const refreshExp = tokenExp(refresh);
+
+        // sendCookie(res,refresh)
+
+        return res
+          .status(200)
+          .send({
+            data: {
+              id:newUser.id,
+              accessExp: accessExp,
+              // refreshExp: refreshExp,
+              kakao_id: kakao_id,
+              nickname: nickname,
+              social_user: true,
+            },
+            accessToken: access,
+          });
+      }
+      //이미 가입한 경우
+      const accessToken = generateAccessToken(kakaoUser.dataValues);
+      const refreshToken = generateRefreshToken(kakaoUser.dataValues);
+      const accessExp = tokenExp(accessToken);
+    
+      const refreshExp = tokenExp(refreshToken);
+      sendCookie(res,refreshToken)
+   return res.status(200)
+        .send({
+          data: {
+            id:kakaoUser.dataValues.id,
+            accessExp: accessExp,
+            refreshExp: refreshExp,
+            kakao_id: kakao_id,
+            nickname: nickname,
+            social_user: true,
+          },
+          accessToken: accessToken,
+        });
     } catch (err) {
-  
-      return res.status(500).send({err:err});
+      return res.status(500).send({ err: err });
     }
   },
   usernameCheckControl: async (req, res) => {
@@ -261,7 +317,7 @@ console.log(nickname)
     // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
 
-    const { username, nickname, id } = req.body;
+    const { username, nickname, id, kakao_id, google_id } = req.body;
 
     const refreshToken = req.cookies.refreshToken;
 
@@ -283,28 +339,28 @@ console.log(nickname)
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
       //만약 다르다면 정보가 변경때문에 로그아웃
       const getUserInfo = await user.findOne({
-        where: { username: username, nickname: nickname, id: id },
+        where: {
+          google_id: google_id,
+          kakao_id: kakao_id,
+          username: username,
+          nickname: nickname,
+          id: id,
+        },
       });
       if (!getUserInfo) {
         return res.status(401).send("토큰 정보가 일치하지 않습니다.");
       }
-      const userUsername = getUserInfo.dataValues.username;
-      const userNick = getUserInfo.dataValues.nickname;
-      const userId = getUserInfo.dataValues.id;
+
+      delete getUserInfo.dataValues.password;
+
       // const { email, nickname, id } = getUserInfo.dataValues;
-      const accessToken = generateAccessToken({
-        userUsername,
-        userNick,
-        userId,
-      });
+      const accessToken = generateAccessToken({});
       const accessExp = tokenExp(accessToken);
       const refreshExp = tokenExp(refreshToken);
 
       return res.status(200).send({
         data: {
-          id: userId,
-          nickname: userNick,
-          username: userUsername,
+          getUserInfo,
           accessExp: accessExp,
           refreshExp: refreshExp,
         },

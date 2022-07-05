@@ -152,7 +152,7 @@ const App = () => {
             element={<ShareRegisterPage></ShareRegisterPage>}
           ></Route>
 
-          <Route path='/callback/:auth' element={<CallbackPage></CallbackPage>}></Route>
+          <Route path='/callback/kakao' element={<CallbackPage></CallbackPage>}></Route>
           <Route
             path="/calendarselect"
             element={<CalendarSelect></CalendarSelect>}

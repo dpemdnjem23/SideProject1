@@ -1,10 +1,12 @@
 import axios from "axios";
 import React from "react";
 import { NavigateFunction, useNavigate } from "react-router";
+import { isSigninState } from "utils/state";
 
 import "../../css/components/MyPage/mypageuserWithdrawal.css";
 const MypageWithdrwal = () => {
 
+  const {persistLogin} = isSigninState()
     const navigate:NavigateFunction = useNavigate()
   const localstorageUserInfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || "{}"
@@ -16,7 +18,9 @@ const MypageWithdrwal = () => {
         id: localstorageUserInfo.id,
       },
     }).then(()=>{
+      persistLogin(false)
         //회원탈퇴에 성공했을시 로컬스토리 정보 삭제
+
         localStorage.clear()
         navigate('/')
         

@@ -34,24 +34,25 @@ const MypageModal = () => {
         },
       })
       .then(() => {
-        // persistLogin(false)
+        persistLogin(false)
         localStorage.removeItem("accessToken");
         localStorage.removeItem("subgatherUserInfo");
        
         showMypageModalOn(false);
         isSigninState.persist.clearStorage();
 
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         persistLogin(false)
+        showMypageModalOn(false);
 
         localStorage.removeItem("accessToken");
         alert("로그인이 만료되었습니다. 다시 로그인해주세요");
         isSigninState.persist.clearStorage();
         localStorage.removeItem("subgatherUserInfo");
 
-        window.location.reload()
+        // window.location.reload()
 
         throw err;
       });

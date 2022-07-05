@@ -1,6 +1,7 @@
 import React ,{useEffect}from 'react'
 import { isSigninState } from 'utils/state';
 import axios from 'axios'
+import { useNavigate } from 'react-router';
 // import { useNavigate } from 'react-router';
 
 const CallbackPage = () =>{
@@ -8,6 +9,7 @@ const CallbackPage = () =>{
 
   const{ persistLogin} =isSigninState()
   const url = new URL(window.location.href);
+  const navigate = useNavigate()
 
   const searchs = url.search;
 
@@ -29,12 +31,16 @@ const CallbackPage = () =>{
           }
         )
         .then((data) => {
-          // navigate("/");
+          navigate("/");
+
+          console.log(data.data.data)
           localStorage.setItem("accessToken", data.data.accessToken);
+          localStorage.setItem("subgatherUserInfo",JSON.stringify(data.data.data))
           persistLogin(true);
         })
         .catch((err) => {
           console.log(err);
+          navigate('/login')
 
           persistLogin(false);
         });

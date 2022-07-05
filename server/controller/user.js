@@ -43,6 +43,20 @@ try{
     
 
     }
+    else{
+
+
+    
+        // await axios.get('https://kapi.kakao.com/v1/user/unlink', {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
+      await user.destroy({where:{id:id}})
+    
+      return res.status(200).send('회원 탈퇴 완료')
+
+    }
 
   }catch(err){
     return res.status(500).send(err)
