@@ -45,6 +45,38 @@ const CallbackPage = () =>{
           persistLogin(false);
         });
     }
+    else if(url.pathname === "/callback/google"){
+      const code: string | null = searchs.split("=")[1].split("&")[0];
+      console.log(code);
+
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URI}/auth/google`,
+          { code: code },
+
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((data) => {
+          navigate("/");
+
+          console.log(data.data.data)
+          localStorage.setItem("accessToken", data.data.accessToken);
+          localStorage.setItem("subgatherUserInfo",JSON.stringify(data.data.data))
+          persistLogin(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate('/login')
+
+          persistLogin(false);
+        });
+
+
+    }
   }, []);
 
 

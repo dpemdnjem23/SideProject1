@@ -28,7 +28,7 @@ const handlegoogleLogin = () =>{
   
   return (
     <div className = 'Oauth_sign_section'>
-      <div className="google_login bt">
+      <div onClick={handlegoogleLogin} className="google_login bt">
         <div className="google_login ic">
           <img src="./images/googlelogo.png"></img>
         </div>

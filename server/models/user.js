@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model, BOOLEAN
+  Model
 } = require('sequelize');
 const alarm = require('./alarm');
 const share = require('./share');
@@ -39,7 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     kakao_id:DataTypes.STRING,
     google_id:DataTypes.STRING,
     social_user:DataTypes.BOOLEAN,
-    isAdmin:DataTypes.BOOLEAN
+    isAdmin:DataTypes.BOOLEAN,
+    email:DataTypes.STRING
 
   }, {
     sequelize,

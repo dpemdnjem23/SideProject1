@@ -183,7 +183,126 @@ module.exports = {
     return res.status(400).send("닉네임 사용불가");
   },
 
-  googleControl: async (req, res) => {},
+  googleControl: async (req, res) => {
+    const { code } = req.body;
+
+    try {
+      const getAccessToken = await axios.post(
+        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`,
+        {
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      const Token = getAccessToken.data.access_token;
+
+      // console.log(Token)
+      // https://www.googleapis.com/oauth2/v2/userinfo?access_token=${Token}
+      // https://www.googleapis.com/oauth2/v3/tokeninfo
+      const getUserInfo = await axios.get(
+        `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${Token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        }
+      );
+
+      // console.log(getUserInfo)
+      const googleNickname = new Array(
+        "뭉차이",
+        "더더덜",
+        "슈슈슉",
+        "쑤욱쑥",
+        "키요틴",
+        "날라리",
+        "수구링",
+        "멍텅구",
+        "울하비",
+        "차차아",
+        "뽀로로",
+        "어피치",
+        "초롱초롱",
+        "튜브",
+        "프로도",
+        "라이언",
+        "프로도"
+      );
+      function randomItem(a) {
+        return a[Math.floor(Math.random() * a.length)];
+      }
+
+      const google_id = getUserInfo.data.id;
+      console.log(google_id);
+      const email = getUserInfo.data.email;
+      console.log(email);
+
+      const googleUser = await user.findOne({
+        where: { google_id: google_id },
+      });
+
+                // 신규 가입자 인경우
+      //아이디만 만든다.만들엇으면
+      // console.log(googleUser);
+      // console.log(googleUser===null)
+
+      if (!googleUser) {
+        const newUser = await user.create({
+          google_id: google_id,
+          nickname: randomItem(googleNickname),
+          email: email,
+          social_user: true,
+        });
+        console.log(newUser, "newUser");
+
+        const accessToken = generateAccessToken(newUser.dataValues);
+
+        const refreshToken = generateRefreshToken(newUser.dataValues);
+        console.log(refreshToken, "re");
+
+        const accessExp = tokenExp(accessToken);
+        console.log(accessExp);
+        const refreshExp = tokenExp(refreshToken);
+
+        sendCookie(res, refreshToken);
+
+        return res.status(200).send({
+          data: {
+            id: newUser.id,
+            accessExp: accessExp,
+            refreshExp: refreshExp,
+            google_id: google_id,
+            nickname: newUser.nickname,
+            social_user: true,
+          },
+          accessToken: accessToken,
+        });
+      }
+      //이미 가입한 경우
+      const accessToken = generateAccessToken(googleUser.dataValues);
+      const refreshToken = generateRefreshToken(googleUser.dataValues);
+      const accessExp = tokenExp(accessToken);
+
+      const refreshExp = tokenExp(refreshToken);
+      sendCookie(res, refreshToken);
+      return res.status(200).send({
+        data: {
+          id: googleUser.dataValues.id,
+          accessExp: accessExp,
+          refreshExp: refreshExp,
+          google_id:google_id,
+          nickname: googleUser.nickname,
+          social_user: true,
+        },
+        accessToken: accessToken,
+      });
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  },
 
   kakaoControl: async (req, res) => {
     const { code } = req.body;
@@ -213,7 +332,6 @@ module.exports = {
         },
       });
 
-
       // console.log(getUserInfo)
       //로그인을하면 kakao 유저정보를 가ㅕ와서 client에 뿌려줄껀데 refresh와 accesstoken 발급받아서
       // 만약 다되면 로그아웃이 되도록
@@ -222,60 +340,31 @@ module.exports = {
       const email = getUserInfo.data.kakao_account.email;
       const nickname = getUserInfo.data.properties.nickname;
 
-
       // console.log(nickname);
 
       const kakaoUser = await user.findOne({ where: { kakao_id: kakao_id } });
       // 신규 가입자 인경우
       //아이디만 만든다.만들엇으면
       if (!kakaoUser) {
-
-      
         const newUser = await user.create({
           kakao_id: kakao_id,
           nickname: nickname,
           email: email,
           social_user: true,
         });
-        console.log(newUser,'newUser')
 
-        const access = generateAccessToken(newUser.dataValues);
+        const accessToken = generateAccessToken(newUser.dataValues);
 
-        console.log(access,'ac')
-        // const refresh = generatRefreshsToken({kakao_id:kakao_id});
-        // console.log(refresh,'re')
+        const refreshToken = generateRefreshToken(newUser.dataValues);
 
-        const accessExp = tokenExp(access);
-        console.log(accessExp)
-        // const refreshExp = tokenExp(refresh);
+        const accessExp = tokenExp(accessToken);
+        const refreshExp = tokenExp(refreshToken);
 
-        // sendCookie(res,refresh)
+        sendCookie(res, refreshToken);
 
-        return res
-          .status(200)
-          .send({
-            data: {
-              id:newUser.id,
-              accessExp: accessExp,
-              // refreshExp: refreshExp,
-              kakao_id: kakao_id,
-              nickname: nickname,
-              social_user: true,
-            },
-            accessToken: access,
-          });
-      }
-      //이미 가입한 경우
-      const accessToken = generateAccessToken(kakaoUser.dataValues);
-      const refreshToken = generateRefreshToken(kakaoUser.dataValues);
-      const accessExp = tokenExp(accessToken);
-    
-      const refreshExp = tokenExp(refreshToken);
-      sendCookie(res,refreshToken)
-   return res.status(200)
-        .send({
+        return res.status(200).send({
           data: {
-            id:kakaoUser.dataValues.id,
+            id: newUser.id,
             accessExp: accessExp,
             refreshExp: refreshExp,
             kakao_id: kakao_id,
@@ -284,6 +373,25 @@ module.exports = {
           },
           accessToken: accessToken,
         });
+      }
+      //이미 가입한 경우
+      const accessToken = generateAccessToken(kakaoUser.dataValues);
+      const refreshToken = generateRefreshToken(kakaoUser.dataValues);
+      const accessExp = tokenExp(accessToken);
+
+      const refreshExp = tokenExp(refreshToken);
+      sendCookie(res, refreshToken);
+      return res.status(200).send({
+        data: {
+          id: kakaoUser.dataValues.id,
+          accessExp: accessExp,
+          refreshExp: refreshExp,
+          kakao_id: kakao_id,
+          nickname: nickname,
+          social_user: true,
+        },
+        accessToken: accessToken,
+      });
     } catch (err) {
       return res.status(500).send({ err: err });
     }

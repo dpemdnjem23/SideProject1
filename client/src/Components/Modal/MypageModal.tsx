@@ -65,7 +65,7 @@ const MypageModal = () => {
         <div className="MypageModal_section_textarea">
           <span>님의</span>
           <br></br>
-          <Link to="/mypage">
+          <Link onClick={()=> showMypageModalOn(false)} to="/mypage">
             <div>
               마이페이지 <FontAwesomeIcon icon={faCaretRight} />
             </div>
