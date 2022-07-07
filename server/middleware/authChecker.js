@@ -20,7 +20,7 @@ module.exports = {
     console.log(authorization);
 
     //accesstoken이 존재하지 않는경우 넘어간다.
-    if (!authorization) {
+    if (!authorization||refreshToken) {
       return next();
     }
 

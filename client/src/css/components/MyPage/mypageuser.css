@@ -32,16 +32,19 @@
     
   }
   .Mypage_user >img{
+    
+
+    
     width:80px;
     height:80px;
     border-radius: 70px;
-    top:37px;
+    top:30px;
     object-fit: contain;
   position: relative;
-  /* top: -40px; */
   z-index: 5;
   background-color:white;
   }
+
   .Mypage_user_top{
     position: relative;
     bottom:80px;

@@ -34,6 +34,12 @@ const MyPage = () => {
   // const [paylist, setPayList] = useState<boolean>(false);
 
   //유저 정보 수정을 누르면 useEdit으로 바뀐다.
+
+  //페이지에 wallet 정보를 불러온다. 불러온 정보로 구독 현황, 
+  // 결제일, 결제금액 갱신
+  // 결제금액 -> 결제일과 매칭되는 금액
+  //결제완료는 총 금액- 결제금액, 지출 액은 총금액
+
   return (
     <div id="Mypage">
       <div className="Mypage_background">

@@ -29,7 +29,6 @@ const Mypagebar = () => {
     } else {
       setDelUser(true);
       setEditUser(false);
-
     }
   };
 
@@ -50,16 +49,22 @@ const Mypagebar = () => {
         <div className="Mypage_bar_top_section">
           <div className="Mypage_bar_top_section1">
             <span className="Mypage_bar_top_section1_days">결제일 </span>
-
-            <span className="Mypage_bar_top_section1_pay">결제금액</span>
+            <br></br>
+            <span className="Mypage_bar_top_section1_day">13 일</span>
 
             {/* <span className="Mypage_bar_top_section1_pay2">결제 금액</span>
              */}
           </div>
+
           <div className="Mypage_bar_top_section2">
-            <span className="Mypage_bar_top_section2_days">13 일</span>
+            <br></br>
             <span className="Mypage_bar_top_section2_slash">/</span>
-            <span className="Mypage_bar_top_section2_pay">5,000 원</span>
+          </div>
+          <div className="Mypage_bar_top_section3">
+            <span className="Mypage_bar_top_section1_pay">결제금액</span>
+            <br></br>
+
+            <span className="Mypage_bar_top_section2_pay"> 665456455465456546 원</span>
           </div>
         </div>
         {/* <span>3-days / 2 (결제금액)</span> */}
@@ -70,12 +75,20 @@ const Mypagebar = () => {
         <div className="Mypage_bar_center_section">
           <div className="Mypage_bar_center_section1">
             <span className="Mypage_bar_center_section1_comp">결제 완료</span>
-            <span className="Mypage_bar_center_section1_pay">지출 총액</span>
+            <br></br>
+
+            <div className="Mypage_bar_center_section1_comp2">500원</div>
           </div>
+
           <div className="Mypage_bar_center_section2">
-            <span className="Mypage_bar_center_section1_comp2">5,000</span>
-            <span className="Mypage_bar_top_section2_slash">/</span>
-            <span className="Mypage_bar_center_section1_pay2">85,000</span>
+            <br></br>
+            <span className="Mypage_bar_center_section2_slash">/</span>
+          </div>
+          <div className="Mypage_bar_center_section3">
+            <span className="Mypage_bar_center_section1_pay">지출 총액</span>
+            <br></br>
+
+            <span className="Mypage_bar_center_section1_pay2">854원</span>
           </div>
         </div>
         <div className="Mypage_bar_gap"></div>
