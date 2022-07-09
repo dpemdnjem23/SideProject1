@@ -5,7 +5,7 @@ const { default: axios } = require("axios");
 const { authchecker } = require("../middleware/authChecker");
 // const { exit } = require("process");
 
-const { user,wallet } = require("../models");
+const { user,wallet,subscribe } = require("../models");
 
 const {
   generateAccessToken,
@@ -21,6 +21,16 @@ module.exports = {
     //2. 월렛을 create한다
     //3. 월렛을 삭제한다.
     //4. 월렛을 변경한다.
+    //5. 구독 목록을 불러온다.
+
+    subscribesInfo:async (req,res) =>{
+
+
+       const subInfo =  await subscribe.findAll()
+
+        return res.status(200).send(subInfo)
+        
+    },
 
     walletInfo:async(req,res) =>{
         
@@ -49,7 +59,7 @@ module.exports = {
         //토큰이 존재해야한다. => middleware
       
 
-        const { id,name,cost,start_date,cycle,image}
+        const { id,name,cost,start_date,cycle,image} = req.body
 
         if(!name&&cost&&start_date&&cycle&&image){
             return res.status(400).send('구독 정보는 전부 입력해야한다.')

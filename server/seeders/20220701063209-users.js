@@ -2,13 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('user',[{
-      id:1,
-      username:'xptmxmdyd123',
-      password:123,
-      nickname:'테스트'    
-    }])
- 
+  
 
     /**
      * Add seed commands here.
@@ -22,6 +16,8 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("subscribes", null, {});
+
     /**
      * Add commands to revert seed here.
      *

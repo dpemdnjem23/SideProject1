@@ -8,6 +8,7 @@ const {authchecker} = require('./middleware/authChecker');
 const authRouter = require('./routes/auth')
 
 const userRouter = require('./routes/user');
+const walletRouter = require('./routes/wallet')
 
 const { nextTick } = require("process");
 app.use(express.json()); //미들웨어
@@ -30,6 +31,7 @@ app.use(authchecker)
 
 app.use('/auth',authRouter)
 app.use('/user',userRouter)
+app.use('/wallet',walletRouter)
 
 
 
