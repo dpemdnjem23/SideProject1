@@ -38,11 +38,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       createdAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE,
       },
       updatedAt: {
-        allowNull: false,
+        // allowNull: false,
         type: Sequelize.DATE,
       },
     });

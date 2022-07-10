@@ -25,7 +25,6 @@ const MypageModal = () => {
   const {persistLogin} = isSigninState()
 
   const handleSignout = () => {
-    console.log(`Bearer ` + localStorage.getItem("accessToken"));
     axios
       .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
         headers: {

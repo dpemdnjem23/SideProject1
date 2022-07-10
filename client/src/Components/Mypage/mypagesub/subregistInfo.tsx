@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../../../css/components/MyPage/MypageSub/subregistInfo.css";
+import MypageSelectBox from "./mypageSelectBox";
 const SubRegistInfo = () => {
   return (
     <div className="SubregistInfo_section">
@@ -18,11 +19,7 @@ const SubRegistInfo = () => {
       <div className="SubregistInfo_section_sub2">
         <div className="SubregistInfo_sub2_whatSub">
           <div className="SubregistInfo_sub2_whatsub_title">서비스이름</div>
-          <input
-            className="SubregistInfo_input"
-            type="text"
-            placeholder="어떤 구독을 등록할까요?"
-          ></input>
+          <MypageSelectBox></MypageSelectBox>
         </div>
         {/* </div> */}
 

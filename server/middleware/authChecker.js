@@ -17,10 +17,10 @@ module.exports = {
 
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
-    console.log(authorization);
+    // console.log(authorization);
 
     //accesstoken이 존재하지 않는경우 넘어간다.
-    if (!authorization||refreshToken) {
+    if (!authorization||!refreshToken) {
       return next();
     }
 

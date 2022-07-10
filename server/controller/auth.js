@@ -69,12 +69,14 @@ module.exports = {
     try {
       const { username, password } = req.body;
 
+      // console.log(username,password)
+
       const salt = await user.findOne({
         attributes: ["salt"],
         where: { username },
       });
 
-      console.log(salt.dataValues.salt);
+    
       //2. 유저 db에서 이메일 확인하기
 
       crypto.pbkdf2(
@@ -111,9 +113,12 @@ module.exports = {
             userUsername,
             userNick,
             userId,
+        
           });
           const accessExp = tokenExp(accessToken);
           const refreshExp = tokenExp(refreshToken);
+
+          // console.log(accessToken)
 
           //referesh는 쿠키로, access는 활용할수 있도록 client로 보낸다.
           sendCookie(res, refreshToken);
@@ -244,7 +249,7 @@ module.exports = {
         where: { google_id: google_id },
       });
 
-                // 신규 가입자 인경우
+      // 신규 가입자 인경우
       //아이디만 만든다.만들엇으면
       // console.log(googleUser);
       // console.log(googleUser===null)
@@ -293,7 +298,7 @@ module.exports = {
           id: googleUser.dataValues.id,
           accessExp: accessExp,
           refreshExp: refreshExp,
-          google_id:google_id,
+          google_id: google_id,
           nickname: googleUser.nickname,
           social_user: true,
         },

@@ -26,9 +26,24 @@ module.exports = {
     subscribesInfo:async (req,res) =>{
 
 
-       const subInfo =  await subscribe.findAll()
+        // console.log(req.user,'req.user')
+    //구독 목록을 불러올때 로그인을 한상황이어야 한다.
+    if(!req.user){
+        return res.status(401).send('로그인 후 볼수있다.')
+    }
 
+    try{
+
+    
+
+       const subInfo =  await subscribe.findAll()
+console.log(subInfo)
         return res.status(200).send(subInfo)
+
+
+    }catch(err){
+        return res.status(500).send(err)
+    }
         
     },
 
@@ -38,6 +53,13 @@ module.exports = {
         
         //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
         // startdate 순으로 배치한다.
+        if(!req.user){
+            return res.status(400).send('로그인 후 볼수있다.')
+        }
+
+        try{
+
+       
 
         const findWallet = await wallet.findAll({where:{user_id:req.user.id},order:[['start_data','ASC']]}
 
@@ -48,7 +70,9 @@ module.exports = {
         }
 
         return res.status(200).send({data:findWallet})
-    
+    }catch(err){
+        return res.status(500).send(err)
+    }
 
 
     },
@@ -57,13 +81,18 @@ module.exports = {
         //같은 이름을가진 구독상품은 존재x
         //user를 확인하고, 구독상품을 만들어야 한다.
         //토큰이 존재해야한다. => middleware
-      
+        if(!req.user){
+            return res.status(400).send('로그인 후')
+        }
 
         const { id,name,cost,start_date,cycle,image} = req.body
 
         if(!name&&cost&&start_date&&cycle&&image){
             return res.status(400).send('구독 정보는 전부 입력해야한다.')
         }
+        try{
+
+        
 
         const userInfo = await user.findByPk(id)
 
@@ -78,7 +107,9 @@ module.exports = {
 
         return res.status(200).send('구독목록이 생성 되었습니다.')
 
-
+    }catch(err){
+        return res.status(500).send(err)
+    }
 
 
     },

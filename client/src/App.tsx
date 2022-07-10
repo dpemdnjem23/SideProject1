@@ -38,6 +38,8 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
+
+  //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
 
   {
@@ -95,13 +97,11 @@ const App = () => {
       });
   };
   useEffect(() => {
-    if (
-      localstorageUserInfo.accessExp < today ||
-      localstorageUserInfo.refreshExp < today
-    ) {
+ 
       issueAccessToken();
-    }
-  }, []);
+    
+  }, [   localstorageUserInfo.accessExp < today ,
+    localstorageUserInfo.refreshExp < today]);
 
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
