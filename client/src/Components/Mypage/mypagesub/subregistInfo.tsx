@@ -3,8 +3,23 @@ import React from "react";
 import "../../../css/components/MyPage/MypageSub/subregistInfo.css";
 import MypageSelectBox from "./mypageSelectBox";
 const SubRegistInfo = () => {
+
+  // const onClickSelect = (e:React.MouseEvent<HTMLDivElement>) => {
+  //   const isActive = e.currentTarget.className.indexOf("active") !== -1;
+
+  //   console.log(isActive);
+  //   if (isActive) {
+  //     console.log(e.currentTarget.className);
+
+  //     e.currentTarget.className = "select_box";
+  //   } else {
+  //     console.log(e.currentTarget.className);
+
+  //     e.currentTarget.className = "select_box active";
+  //   }
+  // };
   return (
-    <div className="SubregistInfo_section">
+    <div  className="SubregistInfo_section">
       <div className="SubregistInfo_section_sub">
         <div className="SubregistInfo_section_title ">구독 추가하기</div>
 

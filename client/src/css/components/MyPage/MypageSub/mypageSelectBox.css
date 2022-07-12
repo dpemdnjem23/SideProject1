@@ -1,13 +1,33 @@
+/* div[contentEditable=true]{
+    content: attr(placholder);
+    display: block;
+} */
+[contentEditable=true]:empty:before{
+    content: attr(placeholder);
+    color:#999;
+    font-size: 17px;
+  }
+.selected_value{
+    cursor: pointer;
+
+    height: 30px;
+
+    width: 400px;
+    /* height: 30px; */
+    font-size: 17px;
+
+}
+  
 .select_box{
 
     position: relative;
-    padding:5px 10px;
+    /* padding:5px 10px; */
+
     /* width: 300/px; */
     border-radius: 5px;
     height: 40px;
     /* border: 1px solid salmon; */
     /* background-color: linen; */ 
-    cursor: pointer;
     
     
 }
@@ -28,17 +48,20 @@
     background: #fff;
     border-top: none;
     margin: 1px 0 0 -1px;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .active > ul {
 
+
+
     display: flex;
     flex-direction: column;
-    height: 200px;
-    overflow: hidden;
+    height: 300px;
+    overflow-y:scroll;
     width: 400px;
-    align-items: flex-start
+    
+    
 }
 .option .selected_value {
     white-space: nowrap;
@@ -52,12 +75,27 @@
     text-overflow: ellipsis;
 }
 
-.select_box   ul li:hover {
-    background: rgba(248, 248, 248, 0.35)
+.option:hover {
+    background: rgba(128, 128, 128,0.25)
   }
 
   .option_image{
+      margin-right: 15px;
 
     width: 35px;
     border-radius: 50%;
+  }
+  .option{
+      display: flex;
+      justify-content: left;
+      height: 60px;
+      padding: 10px 0px;
+      font-size: 17px;
+      /* border: 1px solid black; */
+      width: 95%;
+      cursor: pointer;
+  }
+
+  .select_box{
+      font-size: 17px;
   }

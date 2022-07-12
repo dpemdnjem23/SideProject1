@@ -1,3 +1,4 @@
+import { type } from "os";
 import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
@@ -8,6 +9,12 @@ type isSigninState = {
 
   // mypageOn: (input: boolean) => void;
 };
+
+type dropDownListState ={
+
+  dropDownOpen:boolean;
+  setDropDownOpen:(input:boolean) =>void
+}
 
 type showErrModalState = {
   showErrModal: boolean;
@@ -46,3 +53,10 @@ export const showMypageState = create<showMypageState>()((set) => ({
   setDelUser: (input) => set({ delUser: input }),
   setEditUser: (input) => set({ editUser: input }),
 }));
+
+
+export const showDropDownList = create<dropDownListState>()((set)=>({
+
+  dropDownOpen:false,
+  setDropDownOpen:(input) => set({dropDownOpen:input})
+}))
