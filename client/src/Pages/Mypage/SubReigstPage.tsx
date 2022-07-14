@@ -5,12 +5,22 @@ import SubRegistPeriod from "Components/Mypage/mypagesub/subregistPeriod";
 import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { showDropDownList } from "utils/state";
 
 import "../../css/pages/SubRegisterPage.css";
 
 const SubRegisterPage = () => {
+
+  const { setDropDownOpen, dropDownOpen } = showDropDownList()
+
+
+  const closeToggling = () => {
+    setDropDownOpen(false);
+    console.log(dropDownOpen);
+  };
+
   return (
-    <div id="RegisterPage">
+    <div onClick={closeToggling} id="RegisterPage">
       <SubRegistInfo />
 
       <SubRegistPeriod />

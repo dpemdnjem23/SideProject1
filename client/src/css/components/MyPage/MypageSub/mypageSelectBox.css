@@ -4,8 +4,8 @@
 } */
 [contentEditable=true]:empty:before{
     content: attr(placeholder);
-    color:#999;
-    font-size: 17px;
+    color:rgb(129, 129, 129);
+    font-size: 21px;
   }
 .selected_value{
     cursor: pointer;
@@ -14,7 +14,7 @@
 
     width: 400px;
     /* height: 30px; */
-    font-size: 17px;
+    font-size: 2px;
 
 }
   
@@ -40,29 +40,21 @@
 
 
 .select_box > ul{
-    /* z-index: 999; */
-    /* width: 120px; */
     border: 1px solid #999;
-    display: none;
+
     position: absolute;
     background: #fff;
     border-top: none;
     margin: 1px 0 0 -1px;
-    /* cursor: pointer; */
-}
-
-.active > ul {
-
-
 
     display: flex;
     flex-direction: column;
     height: 300px;
     overflow-y:scroll;
     width: 400px;
-    
-    
 }
+
+
 .option .selected_value {
     white-space: nowrap;
     overflow: hidden;
