@@ -33,7 +33,7 @@ const MypageSelectBox = () => {
   //input값을 포함하는 autocomplete 추천 항목 리스트를 확인
   const [auto, setAuto] = useState(false);
 
-  const subscribes = () => {
+  const subscribes =  () => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
         headers: {
@@ -41,6 +41,7 @@ const MypageSelectBox = () => {
         },
       })
       .then((res) => {
+        console.log("subscribes");
         setUseSubscribe(res.data);
       })
       .catch((err) => {
@@ -73,25 +74,21 @@ const MypageSelectBox = () => {
 
     console.log(useSubscribe);
     console.log(inputValue);
+
     const chooseList = useSubscribe.filter((item: any) => {
       console.log(item.sub_name);
       return item.sub_name.includes(inputValue);
     });
-    console.log(chooseList);
     // setUseSubscribe(chooseList);
-    //만약에 ㅋ 을 입력했으면, 
-
+    //만약에 ㅋ 을 입력했으면,
 
     if (chooseList.length === 0) {
       setAuto(false);
-      // setUseSubscribe([...useSubscribe])
-                console.log(useSubscribe)
-
+      setUseSubscribe([]);
+      console.log(useSubscribe, auto);
     } else {
-      console.log(auto);
-
       setAuto(true);
-
+      console.log(auto);
 
       setUseSubscribe([...chooseList]);
     }
@@ -104,27 +101,22 @@ const MypageSelectBox = () => {
 
     console.log(inputValue);
   };
-  useEffect(() => {
-    
-      subscribes();
 
-
-    
-  }, [inputValue==='',auto===true]);
+  //autocomplete를 적용하기전에 항상 subscribes를 적용해야함
+  //true면 자동완성 아니면 지우기
 
   useEffect(() => {
-    autoCompleteDropDown();
+      autoCompleteDropDown();
   }, [inputValue]);
 
+  useEffect(() => {
+    if (auto || inputValue === "") {
+      subscribes();
+    }
+  }, [inputValue === "", auto]);
 
-  //자동완성 inputvalue가 입력이 되면 dropdownlist 가 나와야되고
-  // inputvalue가 없으면 다시 원래대로 되어야 한다
-  //쿠팡 -> ㅋ 이렵햇을때 아무것도 나오지 않아야함 
-  //문제점 -> useSubScribe에다 넣다보니 사라지면 복구가 안된다, 그러면 
-  //일치할때 subscribe를 불러와서 filter를 거쳐야한다
-
-  //넷ㅍ 햇을때 넷플릭스가 사라져야함
-
+  //input이 없을때 구독목록을 불러와야한다
+  //input이 존재하는데, 자동완성 조건이 완성되지 않는경우
   return (
     <div onClick={(e) => e.stopPropagation()} className="select_box">
       <div className="selected_value_box">
