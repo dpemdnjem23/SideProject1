@@ -6,12 +6,12 @@ module.exports = {
       {
         id: 1,
         sub_name: "넷플릭스",
-        image: "/subscribes/넷플릭스.png",
+        image: "subscribes/넷플릭스.png",
       },
       {
         id:2,
         sub_name: '쿠팡',
-        image: "/subscribes/쿠팡.png",
+        image: "subscribes/쿠팡.png",
       }
     ],{});
     /**

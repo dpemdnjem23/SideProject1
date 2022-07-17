@@ -38,7 +38,6 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
-
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
 
@@ -59,12 +58,12 @@ const App = () => {
   const { persistLogin } = isSigninState();
 
   const issueAccessToken = () => {
+    console.log("issue access 시작");
+    console.log(localstorageUserInfo);
     axios
       .post(
         `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
         {
-          username: localstorageUserInfo.username,
-          nickname: localstorageUserInfo.nickname,
           id: localstorageUserInfo.id,
         },
         {
@@ -74,13 +73,17 @@ const App = () => {
         }
       )
       .then((res) => {
+        console.log("토큰재발급함");
+        console.log(res.data)
+        
+
+
         //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem(
           "subgatherUserInfo",
-          JSON.stringify(res.data.data)
+          JSON.stringify(res.data)
         );
-        console.log("토큰재발급함");
       })
       .catch(() => {
         //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
@@ -96,12 +99,14 @@ const App = () => {
         // isSigninState.persist.clearStorage()
       });
   };
-  useEffect(() => {
- 
+
+  if(localstorageUserInfo.accessExp -10 < today||
+    localstorageUserInfo.refreshExp -10 < today){
+
       issueAccessToken();
-    
-  }, [   localstorageUserInfo.accessExp < today ,
-    localstorageUserInfo.refreshExp < today]);
+
+    }
+
 
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
@@ -115,7 +120,6 @@ const App = () => {
   //2. 액세스 토큰이 만료되면 리프레쉬 토큰으로 액세스 토큰 재발급
   //3.
   // console.log(document.cookie.match('refreshToken'))
-  
 
   //
   return (
@@ -152,7 +156,10 @@ const App = () => {
             element={<ShareRegisterPage></ShareRegisterPage>}
           ></Route>
 
-          <Route path='/callback/:auth' element={<CallbackPage></CallbackPage>}></Route>
+          <Route
+            path="/callback/:auth"
+            element={<CallbackPage></CallbackPage>}
+          ></Route>
           <Route
             path="/calendarselect"
             element={<CalendarSelect></CalendarSelect>}

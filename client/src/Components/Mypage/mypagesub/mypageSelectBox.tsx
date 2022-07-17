@@ -25,6 +25,7 @@ const MypageSelectBox = () => {
   const accessToken: string | null = localStorage.getItem("accessToken");
   const [useSubscribe, setUseSubscribe] = useState<any>([]);
   const [selected, setSelected] = useState<string | null>(null);
+  const [newArr,setNewArr] = useState<any>([])
   //autocomplete
   //hastext는 input 값 유무
   const [hasText, setHasText] = useState<boolean>(false);
@@ -33,21 +34,7 @@ const MypageSelectBox = () => {
   //input값을 포함하는 autocomplete 추천 항목 리스트를 확인
   const [auto, setAuto] = useState(false);
 
-  const subscribes =  () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        console.log("subscribes");
-        setUseSubscribe(res.data);
-      })
-      .catch((err) => {
-        navigate("/");
-      });
-  };
+ 
   //인풋밸류가 , 자동완성이 안된경우, 존재하지 않는경우
 
   //변할때마다.
@@ -72,23 +59,21 @@ const MypageSelectBox = () => {
     //input값이 입력된경우 input 값에 따라서 dropdown을 보여줘야 한다
     // include => ['쿠팡','넷플릭스']
 
-    console.log(useSubscribe);
-    console.log(inputValue);
 
-    const chooseList = useSubscribe.filter((item: any) => {
-      console.log(item.sub_name);
+    const chooseList = newArr.filter((item: any) => {
       return item.sub_name.includes(inputValue);
     });
-    // setUseSubscribe(chooseList);
+    console.log([...chooseList])
     //만약에 ㅋ 을 입력했으면,
 
     if (chooseList.length === 0) {
+
+
       setAuto(false);
-      setUseSubscribe([]);
-      console.log(useSubscribe, auto);
+      setUseSubscribe([...chooseList])
+      console.log(useSubscribe, auto,chooseList);
     } else {
       setAuto(true);
-      console.log(auto);
 
       setUseSubscribe([...chooseList]);
     }
@@ -102,18 +87,33 @@ const MypageSelectBox = () => {
     console.log(inputValue);
   };
 
-  //autocomplete를 적용하기전에 항상 subscribes를 적용해야함
-  //true면 자동완성 아니면 지우기
+  //ㅋ을 입력했을때 sub함수가 작동하여선 안된다.
 
   useEffect(() => {
       autoCompleteDropDown();
+
   }, [inputValue]);
 
   useEffect(() => {
-    if (auto || inputValue === "") {
-      subscribes();
-    }
-  }, [inputValue === "", auto]);
+    console.log(inputValue,'sub시작')
+    
+      axios
+        .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
+          console.log("subscribes");
+          setNewArr(res.data);
+        })
+        .catch((err) => {
+          navigate("/");
+        });
+    
+   
+
+  }, []);
 
   //input이 없을때 구독목록을 불러와야한다
   //input이 존재하는데, 자동완성 조건이 완성되지 않는경우
@@ -135,6 +135,7 @@ const MypageSelectBox = () => {
       {dropDownOpen || inputValue ? (
         <ul onClick={changeOption} className="option_list">
           {useSubscribe.map((el: any) => {
+
             return (
               <li key={el.id} className="option">
                 <img src={el.image}></img>

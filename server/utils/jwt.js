@@ -5,10 +5,10 @@ const { sign, verify } = require("jsonwebtoken");
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "1h" });
+    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "3h" });
   },
   generateRefreshToken: (data) => {
-    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "1d" });
+    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "3d" });
   },
 
   checkRefreshToken: (refreshToken) => {

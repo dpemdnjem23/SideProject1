@@ -76,7 +76,6 @@ module.exports = {
         where: { username },
       });
 
-    
       //2. 유저 db에서 이메일 확인하기
 
       crypto.pbkdf2(
@@ -113,7 +112,6 @@ module.exports = {
             userUsername,
             userNick,
             userId,
-        
           });
           const accessExp = tokenExp(accessToken);
           const refreshExp = tokenExp(refreshToken);
@@ -430,7 +428,6 @@ module.exports = {
     // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
 
-    const { username, nickname, id, kakao_id, google_id } = req.body;
 
     const refreshToken = req.cookies.refreshToken;
 
@@ -442,7 +439,9 @@ module.exports = {
       return res.status(401).send("토큰이 없어");
     }
 
-    try {
+    try {    
+
+
       const refreshTokenData = checkRefreshToken(refreshToken);
 
       if (!refreshTokenData) {
@@ -453,32 +452,104 @@ module.exports = {
       //만약 다르다면 정보가 변경때문에 로그아웃
       const getUserInfo = await user.findOne({
         where: {
-          google_id: google_id,
-          kakao_id: kakao_id,
-          username: username,
-          nickname: nickname,
-          id: id,
+          id: req.body.id,
         },
       });
       if (!getUserInfo) {
         return res.status(401).send("토큰 정보가 일치하지 않습니다.");
       }
 
-      delete getUserInfo.dataValues.password;
+      // id: 1,
+      // username: 'xptmxm123',
+      // nickname: '테스트 아이디',
+      // salt: 'C7H69/xwsfq45ePqQnbHg7UlaqV6BzuU1fHbtowt8ZMMosPR/6EOVWBomOq/aofc76lPiOtqnh0GeR8mLzlztg==',
+      // kakao_id: null,
+      // google_id: null,
+      // social_user: false,
+      // isAdmin: false,
+      // email: null,
 
-      // const { email, nickname, id } = getUserInfo.dataValues;
-      const accessToken = generateAccessToken({});
+      const {username, email, nickname, id, kakao_id, google_id, social_user, isAdmin } =
+        getUserInfo.dataValues;
+      //카카오 로그인
+      if (kakao_id) {
+        const accessToken = generateAccessToken({
+          id,
+          kakao_id,
+          nickname,
+
+          social_user,
+          isAdmin,
+        });
+        const accessExp = tokenExp(accessToken);
+        const refreshExp = tokenExp(refreshToken);
+
+        return res.status(200).send({
+          data: {
+            id: id,
+            kakao_id: kakao_id,
+            nickname: nickname,
+
+            social_user: social_user,
+            isAdmin: isAdmin,
+            accessExp: accessExp,
+            refreshExp: refreshExp,
+          },
+          accessToken: accessToken,
+        });
+      } else if (google_id) {
+        const accessToken = generateAccessToken({
+          id,
+          nickname,
+          google_id,
+
+          email,
+          social_user,
+          isAdmin,
+        });
+        const accessExp = tokenExp(accessToken);
+        const refreshExp = tokenExp(refreshToken);
+
+        return res.status(200).send({
+          data: {
+            id: id,
+            google_id: google_id,
+            email: email,
+            nickname: nickname,
+            social_user: social_user,
+            isAdmin: isAdmin,
+            accessExp: accessExp,
+            refreshExp: refreshExp,
+          },
+          accessToken: accessToken,
+        });
+      }
+
+      const accessToken = generateAccessToken({
+        id,
+        username,
+        nickname,
+        social_user,
+        isAdmin,
+      });
       const accessExp = tokenExp(accessToken);
       const refreshExp = tokenExp(refreshToken);
 
       return res.status(200).send({
         data: {
-          getUserInfo,
+          id: id,
+          username: username,
+          nickname: nickname,
+          social_user: social_user,
+          isAdmin: isAdmin,
+
           accessExp: accessExp,
           refreshExp: refreshExp,
         },
         accessToken: accessToken,
       });
+
+      //구글 로그인
     } catch (err) {
       res.status(500);
       throw err;
