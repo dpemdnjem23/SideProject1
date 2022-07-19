@@ -7,9 +7,10 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 // ../../../../public/subscribes/네이버 플러스.png
 
 type subInfo = {
-  id: number;
-  image: string;
-  sub_name: string;
+  id?: number;
+  image?: string | undefined;
+  sub_name?: string;
+  inpuValue?: string;
 };
 
 import "../../../css/components/MyPage/MypageSub/mypageSelectBox.css";
@@ -23,18 +24,18 @@ const MypageSelectBox = () => {
 
   // const navigate = useNavigate()
   const accessToken: string | null = localStorage.getItem("accessToken");
-  const [useSubscribe, setUseSubscribe] = useState<any>([]);
+
+  const [useSubscribe, setUseSubscribe] = useState<subInfo[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
-  const [newArr,setNewArr] = useState<any>([])
+  const [newArr, setNewArr] = useState<subInfo[]>([]);
   //autocomplete
   //hastext는 input 값 유무
   const [hasText, setHasText] = useState<boolean>(false);
   //inputValue state 는 input갑스이 상태를 확인
-  const [inputValue, setInputValue] = useState<string | null>("");
+  const [inputValue, setInputValue] = useState<string|null>(null);
   //input값을 포함하는 autocomplete 추천 항목 리스트를 확인
-  const [auto, setAuto] = useState(false);
+  const [auto, setAuto] = useState<boolean>(false);
 
- 
   //인풋밸류가 , 자동완성이 안된경우, 존재하지 않는경우
 
   //변할때마다.
@@ -45,6 +46,7 @@ const MypageSelectBox = () => {
     // const selectValue =
     setSelected(eText);
     setDropDownOpen(false);
+    console.log("선택하셨습니다.", selected, dropDownOpen);
   };
 
   const openToggling = () => {
@@ -59,19 +61,15 @@ const MypageSelectBox = () => {
     //input값이 입력된경우 input 값에 따라서 dropdown을 보여줘야 한다
     // include => ['쿠팡','넷플릭스']
 
-
-    const chooseList = newArr.filter((item: any) => {
-      return item.sub_name.includes(inputValue);
-    });
-    console.log([...chooseList])
+    const chooseList = newArr.filter((item:subInfo) => {
+      return item.sub_name?.includes(inputValue as string)
+        })
     //만약에 ㅋ 을 입력했으면,
 
     if (chooseList.length === 0) {
-
-
       setAuto(false);
-      setUseSubscribe([...chooseList])
-      console.log(useSubscribe, auto,chooseList);
+      setUseSubscribe([...chooseList]);
+
     } else {
       setAuto(true);
 
@@ -81,38 +79,31 @@ const MypageSelectBox = () => {
 
   const changeInputValue = (e: React.FormEvent<HTMLDivElement>) => {
     const eText = (e.target as HTMLElement).textContent;
-
+    setDropDownOpen(true);
     setInputValue(eText);
-
-    console.log(inputValue);
   };
 
   //ㅋ을 입력했을때 sub함수가 작동하여선 안된다.
 
   useEffect(() => {
-      autoCompleteDropDown();
-
+    autoCompleteDropDown();
   }, [inputValue]);
 
   useEffect(() => {
-    console.log(inputValue,'sub시작')
-    
-      axios
-        .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((res) => {
-          console.log("subscribes");
-          setNewArr(res.data);
-        })
-        .catch((err) => {
-          navigate("/");
-        });
-    
-   
-
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("subscribes");
+        setNewArr(res.data);
+        setUseSubscribe(res.data);
+      })
+      .catch((err) => {
+        navigate("/");
+      });
   }, []);
 
   //input이 없을때 구독목록을 불러와야한다
@@ -132,14 +123,13 @@ const MypageSelectBox = () => {
         </div>
         {/* <span></span> */}
       </div>
-      {dropDownOpen || inputValue ? (
+      {dropDownOpen ? (
         <ul onClick={changeOption} className="option_list">
-          {useSubscribe.map((el: any) => {
-
+          {useSubscribe.map((el: subInfo) => {
             return (
               <li key={el.id} className="option">
                 <img src={el.image}></img>
-                {el.sub_name}
+                <div>{el.sub_name}</div>
               </li>
             );
           })}

@@ -7,8 +7,11 @@ import {useNavigate} from 'react-router-dom'
 
 import "../../css/common/Calendar.css";
 import "moment/locale/ko";
+import { dateState } from "utils/state";
 
 const Calendar = () => {
+  const {dateCal,setDateCal} =dateState()
+  console.log(dateCal)
 
   const back = useNavigate()
 //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
@@ -19,8 +22,11 @@ const Calendar = () => {
 
 
   const handleDayClick = (current: moment.Moment) => {
+
     back(-1)
-    setDate(current);
+    setDateCal(current)
+
+    //달력에서 day를 클릭할경우 => 년 월 일 을 받아서 subRegister에 뿌려준다.
   }
   
   const returnToday = () => setDate(moment());

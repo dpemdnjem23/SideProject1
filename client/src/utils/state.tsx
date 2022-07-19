@@ -1,4 +1,4 @@
-import { type } from "os";
+import moment from "moment";
 import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
@@ -27,7 +27,29 @@ type showMypageState = {
   setEditUser: (input: boolean) => void;
   setDelUser: (input: boolean) => void;
 };
+type registSubInfoState={
+  selected:string|null;
+  setSelected:(input:string|null) =>void
+  subCash:number
+  setSubCash:(input:number) =>void
 
+
+
+
+}
+//년 월 일 을 입력해야한다.
+//년월일을 나누지않고 통합 관리하는방법
+type dateState = {
+  dateCal:moment.Moment
+  setDateCal:(input:moment.Moment) =>void
+
+}
+
+type cycleState ={
+ cycle:number
+
+  setCycle:(input:number) =>void
+}
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -59,4 +81,33 @@ export const showDropDownList = create<dropDownListState>()((set)=>({
 
   dropDownOpen:false,
   setDropDownOpen:(input) => set({dropDownOpen:input})
+}))
+
+
+export const registSubInfoState = create<registSubInfoState>()((set)=>({
+
+  selected:'',
+  setSelected:(input) =>set({selected:input}),
+  subCash:0,
+  setSubCash:(input) =>set({subCash:input})
+}))
+
+
+
+export const dateState = create<dateState>()((set)=>({
+
+  dateCal:moment(),
+  setDateCal:(input) =>set({dateCal:input}),
+  // subStart:,
+  // setSubStart:(input) => set({subStart:input})
+}))
+
+
+
+export const cycleState = create<cycleState>()((set)=>({
+
+  cycle:0,
+  setCycle:(input) =>set({cycle:input}),
+  // subStart:,
+  // setSubStart:(input) => set({subStart:input})
 }))
