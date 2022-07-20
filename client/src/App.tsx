@@ -80,9 +80,10 @@ const App = () => {
 
         //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
         localStorage.setItem("accessToken", res.data.accessToken);
+        //res.data
         localStorage.setItem(
           "subgatherUserInfo",
-          JSON.stringify(res.data)
+          JSON.stringify(res.data.data)
         );
       })
       .catch(() => {

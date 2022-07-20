@@ -9,11 +9,11 @@ import "../../../css/components/MyPage/MypageSub/subregistPeriod.css";
 import { cycleState, dateState } from "utils/state";
 
 const SubRegistPeriod = () => {
-  const {setCycle} = cycleState()
+  const {setCycle,cycle} = cycleState()
 
   const {dateCal,setDateCal} =dateState()
 
-  const [cycleCal,setCycleCal]= useState<any>({day:0,year:0,month:0})
+  const [cycleCal,setCycleCal]= useState<{day:string,year:string,month:string}>({day:'',year:'',month:''})
 
   const handleCycleInfo =(e:React.ChangeEvent<HTMLInputElement>) =>{
     //주기는 계속 반복되어야 한다
@@ -28,8 +28,8 @@ if(e.target.id==='day'){
 }
 // dateCal.add
 // console.log(cycleCal.day,cycleCal.month*30,cycleCal.year)
-setCycle(cycleCal.day+cycleCal.month*30+cycleCal.year*365)
-
+setCycle(Number(cycleCal.day)+Number(cycleCal.month)*30+Number(cycleCal.year)*365)
+console.log(cycle)
   }
 
 //구독 주기를 입력 받아
@@ -43,9 +43,9 @@ setCycle(cycleCal.day+cycleCal.month*30+cycleCal.year*365)
 
       <div className="SubregistPeriod_section_sub subyear">
         <span className="s">구독 주기</span>
-        <input id='year' onChange={handleCycleInfo} placeholder="년" className="date"></input>
-        <input id='month' onChange={handleCycleInfo}  placeholder="월" className="date"></input>
-        <input id='day' onChange={handleCycleInfo}  placeholder="일" className="date"></input>
+        <input type='number'id='year' onChange={handleCycleInfo} placeholder="년" className="date"></input>
+        <input type='number' id='month' onChange={handleCycleInfo}  placeholder="월" className="date"></input>
+        <input type='number' id='day' onChange={handleCycleInfo}  placeholder="일" className="date"></input>
       </div>
       <div className="SubregistPeriod_section_sub subyear">
         <span className="SubregistPeriod_section_sub_start"> 구독 시작</span>

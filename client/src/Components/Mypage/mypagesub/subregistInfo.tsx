@@ -5,30 +5,20 @@ import { useStore } from "zustand";
 import "../../../css/components/MyPage/MypageSub/subregistInfo.css";
 import MypageSelectBox from "./mypageSelectBox";
 const SubRegistInfo = () => {
-  const [num,setNum] = useState<any>(0)
+  const [num,setNum] = useState<any>('')
 
   // const change
 
   const{setSubCash} = registSubInfoState()
 
-  // const handleChangeCash = (string:any) =>{
 
-  //   console.log(string)
-    
-  //   // setSubCash(e.target.value)
-
-  //   return Number(string).toLocaleString()
-
-  // }
-
-
-  const inputPriceFormat = (str:any) => {
-    const comma = (str:any) => {
+  const inputPriceFormat = (str:string) => {
+    const comma = (str:string) => {
       str = String(str);
       return Number(str).toLocaleString()
     };
 
-  const uncomma = (str:any) => {
+  const uncomma = (str:string) => {
     str = String(str);
     return str.replace(/[^\d]+/g, "");
   };
