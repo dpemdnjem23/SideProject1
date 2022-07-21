@@ -102,16 +102,22 @@ module.exports = {
           const userUsername = getUserInfo.dataValues.username;
           const userNick = getUserInfo.dataValues.nickname;
           const userId = getUserInfo.dataValues.id;
+          const isSocial = getUserInfo.dataValues.social_user;
+          const isAdmin = getUserInfo.dataValues.isAdmin
           // const { email, nickname, id } = getUserInfo.dataValues;
           const accessToken = generateAccessToken({
             userUsername,
             userNick,
             userId,
+            isAdmin,
+            isSocial
           });
           const refreshToken = generateRefreshToken({
             userUsername,
             userNick,
             userId,
+            isAdmin,
+            isSocial
           });
           const accessExp = tokenExp(accessToken);
           const refreshExp = tokenExp(refreshToken);
@@ -128,6 +134,8 @@ module.exports = {
               id: userId,
               nickname: userNick,
               username: userUsername,
+              social_user:false,
+              isAdmin:false,
               accessExp: accessExp,
               refreshExp: refreshExp,
             },

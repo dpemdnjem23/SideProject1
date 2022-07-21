@@ -1,4 +1,5 @@
 import axios from "axios";
+import { userInfo } from "os";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { cycleState, dateState, registSubInfoState } from "utils/state";
@@ -19,19 +20,21 @@ const RegistButton = () => {
   //cost, cycle, localstorage =>id,
   const navigate = useNavigate()
 
-
+// console.log(userinfo.id)
   
 
   const registWallet = () => {
-    console.log(cycle,dateCal,selected,subCash)
+    const number = subCash.replace(/,/g, "");
+    const today = dateCal.format('YYYY-MM-DD')
+
     axios.post(
       `${process.env.REACT_APP_API_URI}/wallet/regist`,
       {
         cycle: cycle,
-        start_date: dateCal,
+        start_date: today,
         name: selected,
-        cahs: subCash,
-        user_id: userinfo.id,
+        cost: number,
+        id: userinfo.id,
       },
 
       {
@@ -41,11 +44,13 @@ const RegistButton = () => {
       }
     ).then((res)=>{
       navigate('/mypage')
+      window.location.reload()
       //지갑 등록에 성공한경우 mypage로
       
 
     }).catch((err)=>{
-      //지갑 등록에 실패한 경우
+    console.log(cycle,dateCal,selected,number,userinfo.id)
+//지갑 등록에 실패한 경우
       alert('모든 정보를 입력해주세요')
 
     })

@@ -5,14 +5,14 @@ import { useStore } from "zustand";
 import "../../../css/components/MyPage/MypageSub/subregistInfo.css";
 import MypageSelectBox from "./mypageSelectBox";
 const SubRegistInfo = () => {
-  const [num,setNum] = useState<any>('')
 
   // const change
 
-  const{setSubCash} = registSubInfoState()
+  const{setSubCash,subCash} = registSubInfoState()
 
 
   const inputPriceFormat = (str:string) => {
+
     const comma = (str:string) => {
       str = String(str);
       return Number(str).toLocaleString()
@@ -20,6 +20,7 @@ const SubRegistInfo = () => {
 
   const uncomma = (str:string) => {
     str = String(str);
+    
     return str.replace(/[^\d]+/g, "");
   };
   return comma(uncomma(str));
@@ -48,8 +49,8 @@ const SubRegistInfo = () => {
         <div className="SubregistInfo_sub2_pay">
           <div className="SubregistInfo_section_sub2_pay_title">구독 요금</div>
           <input
-          value={num}
-          onChange={(e)=>setNum(inputPriceFormat(e.target.value))}
+          value={subCash}
+          onChange={(e)=>setSubCash(inputPriceFormat(e.target.value))}
             className="SubregistInfo_input"
             type="text"
             

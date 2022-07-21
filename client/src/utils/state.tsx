@@ -30,8 +30,8 @@ type showMypageState = {
 type registSubInfoState={
   selected:string|null;
   setSelected:(input:string|null) =>void
-  subCash:number
-  setSubCash:(input:number) =>void
+  subCash:string
+  setSubCash:(input:string) =>void
 
 
 
@@ -49,6 +49,8 @@ type cycleState ={
  cycle:number
 
   setCycle:(input:number) =>void
+  cycleCal:{year:string,month:string,day:string}
+  setCycleCal:(input:{year:string,month:string,day:string}) =>void
 }
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -88,7 +90,7 @@ export const registSubInfoState = create<registSubInfoState>()((set)=>({
 
   selected:'',
   setSelected:(input) =>set({selected:input}),
-  subCash:0,
+  subCash:'',
   setSubCash:(input) =>set({subCash:input})
 }))
 
@@ -108,6 +110,11 @@ export const cycleState = create<cycleState>()((set)=>({
 
   cycle:0,
   setCycle:(input) =>set({cycle:input}),
-  // subStart:,
-  // setSubStart:(input) => set({subStart:input})
+  cycleCal:{
+    year:'',
+    month:'',
+    day:''
+  },
+  setCycleCal:(input) =>set({cycleCal:input})
+
 }))

@@ -14,7 +14,7 @@ type subInfo = {
 };
 
 import "../../../css/components/MyPage/MypageSub/mypageSelectBox.css";
-import { showDropDownList } from "utils/state";
+import { registSubInfoState, showDropDownList } from "utils/state";
 
 const MypageSelectBox = () => {
   const navigate = useNavigate();
@@ -24,13 +24,12 @@ const MypageSelectBox = () => {
 
   // const navigate = useNavigate()
   const accessToken: string | null = localStorage.getItem("accessToken");
-
+const {setSelected,selected} = registSubInfoState()
+  
   const [useSubscribe, setUseSubscribe] = useState<subInfo[]>([]);
-  const [selected, setSelected] = useState<string | null>(null);
   const [newArr, setNewArr] = useState<subInfo[]>([]);
   //autocomplete
   //hastext는 input 값 유무
-  const [hasText, setHasText] = useState<boolean>(false);
   //inputValue state 는 input갑스이 상태를 확인
   const [inputValue, setInputValue] = useState<string|null>(null);
   //input값을 포함하는 autocomplete 추천 항목 리스트를 확인

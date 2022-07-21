@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Mypagebar from "Components/Mypage/mypagebar";
 import Mypageuser from "Components/Mypage/mypageuser";
 import Mypagesub from "Components/Mypage/mypagesub";
+import moment from "moment";
 
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/Mypage/mypageuseredit";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import RegisterPage from "./Mypage/SubReigstPage";
 import MypageWithdrwal from "Components/Mypage/mypageuserWithdrawal";
-import { showMypageState } from "utils/state";
+import { showMypageState,dateState,cycleState,registSubInfoState } from "utils/state";
 
 // type props = {
 //   openRegist: () => void;
@@ -27,6 +28,28 @@ const MyPage = () => {
   };
 
   const { editUser, delUser } = showMypageState()
+
+  const {setCycle,cycle,cycleCal,setCycleCal} = cycleState()
+
+  const {dateCal,setDateCal} =dateState()
+
+const {setSelected,setSubCash} =  registSubInfoState()
+
+//mypage 화면에 도달할때마다
+const resetState= () =>{
+
+setCycleCal({year:'',day:'',month:''})
+setDateCal(moment())
+setSelected('')
+setSubCash('')
+
+}
+
+useEffect(()=>{
+
+  resetState()
+},[])
+  
 
   //가운데 메인 내정보
   //사이드 정보
