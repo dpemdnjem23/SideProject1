@@ -21,7 +21,6 @@ const Signup = () => {
 
   //check를 줘야한다.
   const [validateAllCheck, setValidateAllCheck] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [validateUserInfo, setValidateUserInfo] = useState<validateUserInfo>({
     usernameValidate: false,
     passwordValidate: false,
@@ -77,6 +76,8 @@ const Signup = () => {
 
       // return false;
     } else {
+      console.log(username)
+      
       axios
         .post(`${process.env.REACT_APP_API_URI}/auth/usernamecheck`, {
           username: username,

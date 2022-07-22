@@ -3,15 +3,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const app = express();
 const Port =process.env.PORT|| 5001;
+const bodyparser = require('body-parser')
 const {authchecker} = require('./middleware/authChecker');
-
 const authRouter = require('./routes/auth')
 
 const userRouter = require('./routes/user');
 const walletRouter = require('./routes/wallet')
-
-const { nextTick } = require("process");
 app.use(express.json()); //미들웨어
+
 app.use(express.urlencoded({ extended: false })); //미들웨어
 app.use(cookieParser()); // 미들웨어
 
@@ -26,6 +25,7 @@ app.use(
     
    
 //routes
+
 
 app.use(authchecker)
 

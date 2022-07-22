@@ -37,13 +37,12 @@ export const useStore = create<mypageState>()((set) => ({
 // type signInfo = {
 //   handleSignin: () => void;
 //   signinErrMessage:string;
-// };
 axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const Login = () => {
-const {mypageOn} = useStore();
+  const { mypageOn } = useStore();
   const [signinInfo, setSigninInfo] = useState<SigninInfo>({
     username: "",
     password: "",
@@ -64,8 +63,8 @@ const {mypageOn} = useStore();
       setSigninInfo({ ...signinInfo, password: e.target.value });
     }
   };
-  const { persistLogin } = isSigninState();
 
+  const { persistLogin } = isSigninState();
 
   //로그인을 누르면 db랑 id 매칭해서 확인되면 통과, 메인, 토큰 받기
   // a
@@ -80,11 +79,15 @@ const {mypageOn} = useStore();
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
       axios
-        .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
-          username: signinInfo.username,
-          password: signinInfo.password,
-        })
+        .post(
+          `${process.env.REACT_APP_API_URI}/auth/signin`,
+          {password:'JSON.stringify(signinInfo)'
+        }
+      
+          
+        )
         .then((res) => {
+          console.log(signinInfo.username);
 
           localStorage.setItem("accessToken", res.data.accessToken);
 
@@ -100,6 +103,8 @@ const {mypageOn} = useStore();
           navigate("/");
         })
         .catch((err) => {
+          console.log(signinInfo.password, signinInfo.username);
+
           // mypageOff()
 
           mypageOn(false);

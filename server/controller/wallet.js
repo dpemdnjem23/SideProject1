@@ -24,12 +24,13 @@ module.exports = {
   subscribesInfo: async (req, res) => {
     // console.log(req.user,'req.user')
     //구독 목록을 불러올때 로그인을 한상황이어야 한다.
+    const {id} = req.body
     if (!req.user) {
       return res.status(401).send("로그인 후 볼수있다.");
     }
 
     try {
-      const subInfo = await subscribe.findAll();
+      const subInfo = await subscribe.findAll({where:{user_id:id}});
       console.log(subInfo);
       return res.status(200).send(subInfo);
     } catch (err) {

@@ -13,14 +13,19 @@ module.exports = {
 
     //2. auth가 만료된 경우 ( 리프레쉬로 재발급, 로그인상황 에서 시간이다된경우)
 
+    console.log(req.body,'body')
+
     const refreshToken = req.cookies.refreshToken;
 
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
     // console.log(authorization);
 
+
     //accesstoken이 존재하지 않는경우 넘어간다.
     if (!authorization||!refreshToken) {
+      console.log(authorization,'auth x')
+
       return next();
     }
 
@@ -36,7 +41,7 @@ module.exports = {
       //accessTokne 만료가 됏는데 refresh가 아직 살아있으면 재발급 여지존재
 
       //그러면 next()
-      if (!accessTokendata&&!refreshTokenData) {
+      if (!accessTokendata||!refreshTokenData) {
 
         return res.status(401).send("토큰이 만료되었습니다.");
       }

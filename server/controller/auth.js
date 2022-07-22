@@ -66,14 +66,21 @@ module.exports = {
     }
   },
   signinControl: async (req, res) => {
+
+    const { username, password } = req.body;
+
+    // const body = JSON.stringify(req.body)
+    // console.log(body)
+
     try {
-      const { username, password } = req.body;
+      console.log(req.body,req.params,req.query,'login')
+      
 
       // console.log(username,password)
 
       const salt = await user.findOne({
         attributes: ["salt"],
-        where: { username },
+        where: { username:username },
       });
 
       //2. 유저 db에서 이메일 확인하기
@@ -156,7 +163,7 @@ module.exports = {
     //signout 시 토큰이 만료가 됐다.
 
     const accessTokenData = req.user;
-    const token = req.access;
+    // const token = req.access;
 
     // console.log(req.use)
 
@@ -185,6 +192,9 @@ module.exports = {
     //닉이 존재하지 않아야 한다.
     const { nickname } = req.body;
 
+try{
+
+
     const existNick = await user.findOne({ where: { nickname } });
 
     if (!existNick) {
@@ -192,7 +202,13 @@ module.exports = {
     }
 
     return res.status(400).send("닉네임 사용불가");
+
+
+  }catch(err){
+    return res.status(500).send(err)
+  }
   },
+  
 
   googleControl: async (req, res) => {
     const { code } = req.body;
@@ -408,9 +424,9 @@ module.exports = {
     }
   },
   usernameCheckControl: async (req, res) => {
-    try {
       const { username } = req.body;
       console.log(username);
+      try {
 
       const existUsername = await user.findOne({ where: { username } });
 
