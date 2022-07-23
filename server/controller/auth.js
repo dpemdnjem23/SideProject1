@@ -69,11 +69,13 @@ module.exports = {
 
     const { username, password } = req.body;
 
+    console.log(req.body,req.params,req.query,'login')
+
+
     // const body = JSON.stringify(req.body)
     // console.log(body)
 
     try {
-      console.log(req.body,req.params,req.query,'login')
       
 
       // console.log(username,password)
@@ -153,7 +155,7 @@ module.exports = {
         }
       );
     } catch (err) {
-      return res.status(500).send(err);
+      return res.status(500).send(err.res.data)
     }
   },
 
@@ -212,6 +214,8 @@ try{
 
   googleControl: async (req, res) => {
     const { code } = req.body;
+
+    console.log(req.body)
 
     try {
       const getAccessToken = await axios.post(

@@ -39,7 +39,7 @@ export const useStore = create<mypageState>()((set) => ({
 //   signinErrMessage:string;
 axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
-axios.defaults.headers.post["Content-Type"] = "application/json";
+// axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const Login = () => {
   const { mypageOn } = useStore();
@@ -70,7 +70,16 @@ const Login = () => {
   // a
   //토큰이 존재한다면 로그인 상태를 갱신하지 않아야 한다.
 
-  const handleSignin = () => {
+  const handleSignin = async () => {
+
+    const data = JSON.stringify({
+      username: signinInfo.username,
+      password: signinInfo.password
+    });
+
+
+    console.log(data)
+    
     if (!signinInfo.username && signinInfo.password) {
       setSigninErrMessage("아이디를 입력해주세요");
     } else if (signinInfo.username && !signinInfo.password) {
@@ -81,7 +90,11 @@ const Login = () => {
       axios
         .post(
           `${process.env.REACT_APP_API_URI}/auth/signin`,
-          {password:'JSON.stringify(signinInfo)'
+          data,
+        {
+          headers:{'Content-Type':'application/json'
+       },
+       withCredentials:true
         }
       
           
