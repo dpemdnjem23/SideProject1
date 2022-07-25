@@ -37,7 +37,9 @@ export const useStore = create<mypageState>()((set) => ({
 // type signInfo = {
 //   handleSignin: () => void;
 //   signinErrMessage:string;
-axios.defaults.withCredentials = true;
+
+
+
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 // axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -72,13 +74,8 @@ const Login = () => {
 
   const handleSignin = async () => {
 
-    const data = JSON.stringify({
-      username: signinInfo.username,
-      password: signinInfo.password
-    });
 
 
-    console.log(data)
     
     if (!signinInfo.username && signinInfo.password) {
       setSigninErrMessage("아이디를 입력해주세요");
@@ -87,14 +84,14 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
-      axios
+     await axios
         .post(
-          `${process.env.REACT_APP_API_URI}/auth/signin`,
-          data,
+          `${process.env.REACT_APP_API_URI}/auth/signin`,{
+          username: signinInfo.username,
+          password: signinInfo.password},
         {
           headers:{'Content-Type':'application/json'
        },
-       withCredentials:true
         }
       
           
@@ -116,7 +113,6 @@ const Login = () => {
           navigate("/");
         })
         .catch((err) => {
-          console.log(signinInfo.password, signinInfo.username);
 
           // mypageOff()
 
@@ -125,7 +121,7 @@ const Login = () => {
 
           setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
           //로그인 정보가 맞지 않는경우. errmessage
-          throw err;
+        console.log(err.response)
         });
     }
   };

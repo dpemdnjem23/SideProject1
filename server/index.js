@@ -10,8 +10,8 @@ const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user');
 const walletRouter = require('./routes/wallet')
 app.use(express.json()); //미들웨어
+// app.use(express.urlencoded({ extended: false })); //미들웨어
 
-app.use(express.urlencoded({ extended: false })); //미들웨어
 app.use(cookieParser()); // 미들웨어
 
 app.use(
