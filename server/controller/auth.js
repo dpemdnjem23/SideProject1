@@ -1,10 +1,7 @@
 require("dotenv").config();
 
-const { default: axios } = require("axios");
+const {  axios } = require("axios");
 const crypto = require("crypto");
-const { emit, send } = require("process");
-const { authchecker } = require("../middleware/authChecker");
-// const { exit } = require("process");
 
 const { user } = require("../models");
 
@@ -67,23 +64,30 @@ module.exports = {
   },
   signinControl: async (req, res) => {
 
-    const { username, password } = req.body;
-
-    console.log(req.body,req.params,req.query,'login')
-
+ 
 
     // const body = JSON.stringify(req.body)
     // console.log(body)
 
     try {
-      
+
+      const { username, password } = req.body;
+
+      console.log(req.body.username,req.body,'login')
+  
 
       // console.log(username,password)
 
       const salt = await user.findOne({
         attributes: ["salt"],
-        where: { username:username },
+        where: { username },
       });
+
+      if(!salt){
+        return res.status(401).send('유저를 찾을수 없다.')
+      }
+
+      console.log(salt)
 
       //2. 유저 db에서 이메일 확인하기
 
@@ -165,6 +169,7 @@ module.exports = {
     //signout 시 토큰이 만료가 됐다.
 
     const accessTokenData = req.user;
+    console.log
     // const token = req.access;
 
     // console.log(req.use)
@@ -182,7 +187,7 @@ module.exports = {
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {
-      return res.status(500).send("로그아웃 서버오류");
+      return res.clearCookie("refreshToken").status(500).send("로그아웃 서버오류");
     }
     //로그 아웃은 토큰을 제거해준다.
     // authchecker(req,res,next)

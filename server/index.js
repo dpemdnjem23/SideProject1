@@ -6,11 +6,12 @@ const app = express();
 const Port =process.env.PORT|| 5001;
 const {authchecker} = require('./middleware/authChecker');
 const authRouter = require('./routes/auth')
+require("dotenv").config();
 
 const userRouter = require('./routes/user');
 const walletRouter = require('./routes/wallet')
 app.use(express.json()); //미들웨어
-app.use(express.urlencoded({ extended: true })); //미들웨어
+app.use(express.urlencoded({ extended: false })); //미들웨어
 
 app.use(cookieParser()); // 미들웨어
 
@@ -44,3 +45,5 @@ app.use('/wallet',walletRouter)
 app.listen(Port, () => {
   console.log(`Server is Startin on ${Port}`);
 });
+
+

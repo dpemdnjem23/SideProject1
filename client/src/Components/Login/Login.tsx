@@ -39,7 +39,7 @@ export const useStore = create<mypageState>()((set) => ({
 //   signinErrMessage:string;
 
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
-// axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const Login = () => {
   const { mypageOn } = useStore();
@@ -70,7 +70,7 @@ const Login = () => {
   // a
   //토큰이 존재한다면 로그인 상태를 갱신하지 않아야 한다.
 
-  const handleSignin = async () => {
+  const handleSignin = () => {
     if (!signinInfo.username && signinInfo.password) {
       setSigninErrMessage("아이디를 입력해주세요");
     } else if (signinInfo.username && !signinInfo.password) {
@@ -78,43 +78,68 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
-      await axios
-        .post(
-          `${process.env.REACT_APP_API_URI}/auth/signin`,
-          {
-            username: signinInfo.username,
-            password: signinInfo.password,
-          },
-          {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.log(signinInfo.username);
 
-          localStorage.setItem("accessToken", res.data.accessToken);
+      fetch(`${process.env.REACT_APP_API_URI}/auth/signin`,
+        {
+          method: "post",
+          headers:{
+            'Content-Type':'application/json '
+         },
+          body:JSON.stringify({ username: signinInfo.username, password: signinInfo.password }),
+
+        })
+      // axios({
+      //   url: `${process.env.REACT_APP_API_URI}/auth/signin`,
+      //   method: "post",
+      //   data: { username: signinInfo.username, password: signinInfo.password },
+
+      //   headers: {
+      //     "Content-Type": "application/json;charset=UTF-8",
+      //   },
+      // })
+        .then((res) => {
+          console.log(res.ok)
+          if(!res.ok){
+            mypageOn(false);
+            setSigninInfo({ ...signinInfo, password: "" });
+  
+            setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
+
+          }
+          return res.json()
+
+   
+
+          //  console.log(mypageOn(disabled) )
+
+        })
+        .then((res)=>{
+
+          console.log(res.data)
+
+         localStorage.setItem("accessToken", res.accessToken);
 
           localStorage.setItem(
             "subgatherUserInfo",
-            JSON.stringify(res.data.data)
+            JSON.stringify(res.data)
           );
 
           persistLogin(true);
 
-          //  console.log(mypageOn(disabled) )
-
           navigate("/");
+
+          // console.log(res)
         })
         .catch((err) => {
-          // mypageOff()
-
           mypageOn(false);
           setSigninInfo({ ...signinInfo, password: "" });
 
           setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
+          // mypageOff()
+
+        
           //로그인 정보가 맞지 않는경우. errmessage
-          console.log(err.response);
+        
         });
     }
   };

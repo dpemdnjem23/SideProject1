@@ -25,24 +25,17 @@ const MypageModal = () => {
   const {persistLogin} = isSigninState()
 
   const handleSignout = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then(() => {
-        persistLogin(false)
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("subgatherUserInfo");
-       
-        showMypageModalOn(false);
-        isSigninState.persist.clearStorage();
+    fetch(`${process.env.REACT_APP_API_URI}/auth/signout`,{
+      method:'get',
+      headers:{
+        authorization:  `Bearer ${localStorage.getItem("accessToken")}`,
+        'Content-Type':'application/json'
+      },
+      
+    })
+    .then((res) => {
 
-        // window.location.reload();
-      })
-      .catch((err) => {
+      if(!res.ok){
         persistLogin(false)
         showMypageModalOn(false);
 
@@ -52,10 +45,54 @@ const MypageModal = () => {
         localStorage.removeItem("subgatherUserInfo");
 
         // window.location.reload()
+      }
+      return res.json()
+      //       // window.location.reload();
+          })
+    .then((res) => {
+                  persistLogin(false)
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("subgatherUserInfo");
+                 
+                  showMypageModalOn(false);
+                  isSigninState.persist.clearStorage();
+          
+                  // window.location.reload();
+                })
 
-        throw err;
-      });
-  };
+
+  }
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+  //       headers: {
+  //         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then(() => {
+  //       persistLogin(false)
+  //       localStorage.removeItem("accessToken");
+  //       localStorage.removeItem("subgatherUserInfo");
+       
+  //       showMypageModalOn(false);
+  //       isSigninState.persist.clearStorage();
+
+  //       // window.location.reload();
+  //     })
+  //     .catch((err) => {
+  //       persistLogin(false)
+  //       showMypageModalOn(false);
+
+  //       localStorage.removeItem("accessToken");
+  //       alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+  //       isSigninState.persist.clearStorage();
+  //       localStorage.removeItem("subgatherUserInfo");
+
+  //       // window.location.reload()
+
+  //       throw err;
+  //     });
+  // };
 
   return (
     <div id="MypageModal">
