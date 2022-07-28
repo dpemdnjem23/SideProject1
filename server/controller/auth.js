@@ -168,8 +168,7 @@ module.exports = {
     // console.log(req.headers)
     //signout 시 토큰이 만료가 됐다.
 
-    const accessTokenData = req.user;
-    console.log
+    const accessTokenData = req.user;    
     // const token = req.access;
 
     // console.log(req.use)

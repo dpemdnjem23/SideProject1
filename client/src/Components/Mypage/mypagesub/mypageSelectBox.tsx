@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 import axios from "axios";
 import { useNavigate } from "react-router";
-axios.defaults.headers.get["Content-Type"] = "application/json";
 
 // ../../../../public/subscribes/네이버 플러스.png
 
@@ -24,20 +23,18 @@ const MypageSelectBox = () => {
 
   // const navigate = useNavigate()
   const accessToken: string | null = localStorage.getItem("accessToken");
-const {setSelected,selected} = registSubInfoState()
-  
+  const { setSelected, selected } = registSubInfoState();
+
   const [useSubscribe, setUseSubscribe] = useState<subInfo[]>([]);
   const [newArr, setNewArr] = useState<subInfo[]>([]);
   //autocomplete
   //hastext는 input 값 유무
   //inputValue state 는 input갑스이 상태를 확인
-  const [inputValue, setInputValue] = useState<string|null>(null);
+  const [inputValue, setInputValue] = useState<string | null>(null);
   //input값을 포함하는 autocomplete 추천 항목 리스트를 확인
   const [auto, setAuto] = useState<boolean>(false);
 
   //인풋밸류가 , 자동완성이 안된경우, 존재하지 않는경우
-
-  //변할때마다.
 
   const changeOption = (e: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
     const eText = (e.target as HTMLElement).textContent;
@@ -45,8 +42,7 @@ const {setSelected,selected} = registSubInfoState()
     // const selectValue =
     setSelected(eText);
     setDropDownOpen(false);
-    console.log("선택하셨습니다.", selected, dropDownOpen);
-  };
+  }
 
   const openToggling = () => {
     setDropDownOpen(true);
@@ -60,15 +56,14 @@ const {setSelected,selected} = registSubInfoState()
     //input값이 입력된경우 input 값에 따라서 dropdown을 보여줘야 한다
     // include => ['쿠팡','넷플릭스']
 
-    const chooseList = newArr.filter((item:subInfo) => {
-      return item.sub_name?.includes(inputValue as string)
-        })
+    const chooseList = newArr.filter((item: subInfo) => {
+      return item.sub_name?.includes(inputValue as string);
+    });
     //만약에 ㅋ 을 입력했으면,
 
     if (chooseList.length === 0) {
       setAuto(false);
       setUseSubscribe([...chooseList]);
-
     } else {
       setAuto(true);
 
@@ -89,19 +84,32 @@ const {setSelected,selected} = registSubInfoState()
   }, [inputValue]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
+    fetch(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
+      method: "get",
+      credentials:'include',
+
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res: any) => {
+        if (!res.ok) {
+          // navigate("/");
+
+          throw new Error(res.status);
+        }
+        // console.log(res.json())
+
+        return res.json();
       })
-      .then((res) => {
-        console.log("subscribes");
-        setNewArr(res.data);
-        setUseSubscribe(res.data);
+      .then((result) => {
+        console.log(result.data);
+        setNewArr(result.data);
+        setUseSubscribe(result.data);
       })
       .catch((err) => {
-        navigate("/");
+        console.log(err);
       });
   }, []);
 
@@ -136,6 +144,7 @@ const {setSelected,selected} = registSubInfoState()
       ) : null}
     </div>
   );
-};
+
+ };
 
 export default MypageSelectBox;

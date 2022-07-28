@@ -22,77 +22,49 @@ const MypageModal = () => {
   const { showMypageModalOn } = mainheaderuseStore();
   const { mypageOn }: any = useStore();
 
-  const {persistLogin} = isSigninState()
+  const { persistLogin } = isSigninState();
 
   const handleSignout = () => {
-    fetch(`${process.env.REACT_APP_API_URI}/auth/signout`,{
-      method:'get',
-      headers:{
-        authorization:  `Bearer ${localStorage.getItem("accessToken")}`,
-        'Content-Type':'application/json'
+    fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+      method: "get",
+      credentials: "include",
+
+      headers: {
+        // "Accept" : 'application/json',
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "application/json",
       },
-      
     })
-    .then((res) => {
+      .then((res: any) => {
+        if (!res.ok) {
+          persistLogin(false);
+          showMypageModalOn(false);
 
-      if(!res.ok){
-        persistLogin(false)
+          localStorage.removeItem("accessToken");
+          alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+          isSigninState.persist.clearStorage();
+          localStorage.removeItem("subgatherUserInfo");
+
+          throw new Error(res.status);
+          // window.location.reload()
+        }
+       return res.text()
+        //       // window.location.reload();
+      })
+      .then((res) => {
+        console.log('로그아웃')
+        persistLogin(false);
         showMypageModalOn(false);
-
         localStorage.removeItem("accessToken");
-        alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-        isSigninState.persist.clearStorage();
         localStorage.removeItem("subgatherUserInfo");
+        isSigninState.persist.clearStorage();
 
-        // window.location.reload()
-      }
-      return res.json()
-      //       // window.location.reload();
-          })
-    .then((res) => {
-                  persistLogin(false)
-                  localStorage.removeItem("accessToken");
-                  localStorage.removeItem("subgatherUserInfo");
-                 
-                  showMypageModalOn(false);
-                  isSigninState.persist.clearStorage();
-          
-                  // window.location.reload();
-                })
-
-
-  }
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
-  //       headers: {
-  //         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then(() => {
-  //       persistLogin(false)
-  //       localStorage.removeItem("accessToken");
-  //       localStorage.removeItem("subgatherUserInfo");
-       
-  //       showMypageModalOn(false);
-  //       isSigninState.persist.clearStorage();
-
-  //       // window.location.reload();
-  //     })
-  //     .catch((err) => {
-  //       persistLogin(false)
-  //       showMypageModalOn(false);
-
-  //       localStorage.removeItem("accessToken");
-  //       alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-  //       isSigninState.persist.clearStorage();
-  //       localStorage.removeItem("subgatherUserInfo");
-
-  //       // window.location.reload()
-
-  //       throw err;
-  //     });
-  // };
+        // window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div id="MypageModal">
@@ -101,7 +73,7 @@ const MypageModal = () => {
         <div className="MypageModal_section_textarea">
           <span>님의</span>
           <br></br>
-          <Link onClick={()=> showMypageModalOn(false)} to="/mypage">
+          <Link onClick={() => showMypageModalOn(false)} to="/mypage">
             <div>
               마이페이지 <FontAwesomeIcon icon={faCaretRight} />
             </div>

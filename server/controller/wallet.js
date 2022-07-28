@@ -24,15 +24,14 @@ module.exports = {
   subscribesInfo: async (req, res) => {
     // console.log(req.user,'req.user')
     //구독 목록을 불러올때 로그인을 한상황이어야 한다.
-    const {id} = req.body
     if (!req.user) {
       return res.status(401).send("로그인 후 볼수있다.");
     }
 
     try {
-      const subInfo = await subscribe.findAll({where:{user_id:id}});
+      const subInfo = await subscribe.findAll();
       console.log(subInfo);
-      return res.status(200).send(subInfo);
+      return res.status(200).send({data:subInfo});
     } catch (err) {
       return res.status(500).send(err);
     }
@@ -43,20 +42,25 @@ module.exports = {
 
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
+
+    console.log(req.user.userId)
+
     if (!req.user) {
       return res.status(400).send("로그인 후 볼수있다.");
     }
-    console.log(req.user);
 
     try {
-      const findWallet = await wallet.findAll({
+      const findWallet = await wallet.findOne({
         where: { user_id: req.user.userId },
-        order: [["start_date", "ASC"]],
+        // order: [["start_date", "ASC"]],
       });
+      console.log(findWallet,'findWallet')
+
 
       if (!findWallet) {
         return res.status(400).send("회원을 찾을수가 없습니다.");
       }
+
 
       return res.status(200).send({ data: findWallet });
     } catch (err) {
@@ -71,24 +75,20 @@ module.exports = {
     if (!req.user) {
       return res.status(401).send("로그인 후");
     }
-    const { id, name, cost, start_date, cycle } = req.body;
+    const { name, cost, start_date, cycle } = req.body;
 
     //cycle 은 1년인경우 365일, 1달인경우 30일로 계산되어야 한다.
     // => start date에 더해짐
-    console.log(id, name, cost, start_date, cycle )
+    console.log(req.user.userId,'walletRegister')
 
     if(!name||!cost||!start_date||!cycle){
         return res.status(400).send('구독 정보는 전부 입력해야한다.')
     }
     try {
       const subscribes = await subscribe.findOne({ where: { sub_name: name } });
-      const userInfo = await user.findByPk(id)
 
-      if (!userInfo) {
-        return res.status(400).send("존재하지 않는 회원입니다.");
-      }
       await wallet.create({
-        user_id: userInfo.id,
+        user_id: req.user.userId,
         name: name,
         cost: cost,
         start_date: start_date,

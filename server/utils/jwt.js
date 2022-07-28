@@ -28,7 +28,7 @@ module.exports = {
   },
   sendCookie: (res, refreshToken) => {
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,SameSite:'Lax'
+      httpOnly: true
     });
   },
   tokenExp: (Token) => {

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-axios.defaults.headers.post["Content-Type"] = "application/json";
-
 import "../../css/components/Signup/Signup.css";
+import { json } from "stream/consumers";
 
 type validateUserInfo = {
   usernameValidate: boolean;
@@ -76,12 +75,15 @@ const Signup = () => {
 
       // return false;
     } else {
-      console.log(username)
-      
-      axios
-        .post(`${process.env.REACT_APP_API_URI}/auth/usernamecheck`, {
-          username: username,
-        })
+      console.log(username);
+
+      fetch(`${process.env.REACT_APP_API_URI}/auth/usernamecheck`, {
+        body: JSON.stringify({ username: username }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
         .then((res) => {
           setUsernameErrorMessage("");
           setValidateUserInfo({ ...validateUserInfo, usernameValidate: true });
@@ -112,20 +114,28 @@ const Signup = () => {
       // return false;
       // return false;
     } else {
-      axios
-        .post(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
-          nickname: nickname,
+      fetch(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
+        method: "post",
+        body: JSON.stringify({ nickname: nickname }),
+      })
+        .then((res: any) => {
+          if (!res.ok) {
+            setNickCheckErrorMessage("중복된 닉네임 입니다.");
+            setValidateUserInfo({
+              ...validateUserInfo,
+              nicknameValidate: false,
+            });
+            throw new Error(res.status);
+          }
+
+          return res.text();
         })
-        .then((res) => {
+        .then((result) => {
           setNickCheckErrorMessage("");
           setValidateUserInfo({ ...validateUserInfo, nicknameValidate: true });
-
-          // return true;
         })
         .catch((err) => {
           console.log(err);
-          setNickCheckErrorMessage("중복된 닉네임 입니다.");
-          setValidateUserInfo({ ...validateUserInfo, nicknameValidate: false });
         });
 
       setNickCheckErrorMessage("");
@@ -181,17 +191,17 @@ const Signup = () => {
 
         setPassCheckErrorMessage("");
       }
-    }
-    
-    else if(  password !== e.target.value &&
+    } else if (
+      password !== e.target.value &&
       password !== "" &&
-      e.target.value !== "") {
+      e.target.value !== ""
+    ) {
       setValidateUserInfo({
         ...validateUserInfo,
         passwordCheckValidate: false,
       });
 
-      setPassCheckErrorMessage('비밀번호를 확인해주세요'      );
+      setPassCheckErrorMessage("비밀번호를 확인해주세요");
     }
   };
 
@@ -228,18 +238,30 @@ const Signup = () => {
 
     console.log(validateAllCheck);
     if (validateAllCheck) {
-      axios
-        .post(`${process.env.REACT_APP_API_URI}/auth/signup`, {
-          nickname: nickname,
-          password: password,
-          username: username,
+      fetch(`${process.env.REACT_APP_API_URI}/auth/signup`, {
+
+
+          method:'post',
+
+          body:JSON.stringify({    nickname: nickname,
+            password: password,
+            username: username,})
+      
         })
-        .then((res) => {
-          console.log("출");
-          navigate("/login");
+        .then((res:any) => {
+
+          if(!res.ok){
+            throw new Error(res.status)
+          }
+   
           //회원가입이 완료되면 로그인창으로 다시 넘어간다.
         })
-        .catch(() => {
+        .then((result)=>{
+          navigate("/login");
+
+        })
+        .catch((err) => {
+          console.log(err)
           //회원가입 실패하는경우
         });
     } else {
@@ -254,19 +276,17 @@ const Signup = () => {
         setPassCheckErrorMessage(
           "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
         );
-      }
-      else if(password&&!passwordCheck){
-        setPassCheckErrorMessage(
-         '비밀번호를 확인해주세요'
-        );
+      } else if (password && !passwordCheck) {
+        setPassCheckErrorMessage("비밀번호를 확인해주세요");
       }
       // setPassCheckErrorMessage("비밀번호를 확인해주세요");
 
-      if (validateUserInfo.passwordValidate&&!validateUserInfo.passwordCheckValidate) {
-        setPassCheckErrorMessage(
-          '비밀번호를 확인해주세요'
-        );
-      } 
+      if (
+        validateUserInfo.passwordValidate &&
+        !validateUserInfo.passwordCheckValidate
+      ) {
+        setPassCheckErrorMessage("비밀번호를 확인해주세요");
+      }
 
       if (validateUserInfo.usernameValidate) {
         setUsernameErrorMessage("");

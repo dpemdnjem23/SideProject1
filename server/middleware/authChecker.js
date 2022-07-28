@@ -1,7 +1,6 @@
 require("dotenv").config();
-const router = require("express").Router();
-const { access } = require("fs");
-const { verify } = require("jsonwebtoken");
+
+
 const { checkAccessToken, checkRefreshToken } = require("../utils/jwt");
 module.exports = {
   authchecker: (req, res, next) => {
@@ -13,18 +12,15 @@ module.exports = {
 
     //2. auth가 만료된 경우 ( 리프레쉬로 재발급, 로그인상황 에서 시간이다된경우)
 
-    const refreshToken = req
+    const refreshToken =req.cookies.refreshToken
 
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
-    // console.log(authorization);
-
-
-
-    console.log(refreshToken,'auth x')
-      console.log(authorization,'auth x')
+  
+      console.log(authorization,'authchecker')
     //accesstoken이 존재하지 않는경우 넘어간다.
-    if (!authorization) {
+    if (!authorization||!refreshToken) {
+      console.log('토큰을 넘긴다.')
       
 
       return next();
@@ -35,9 +31,7 @@ module.exports = {
       //만료된 혹은 변경된 경우(기존과 달라짐) accesstoken은 null값으로 잡힌다.
       const accessTokendata = checkAccessToken(accessToken);
       const refreshTokenData = checkRefreshToken(refreshToken);
-      console.log(accessTokendata, "checkAccess");
-      console.log(refreshTokenData,'checkRefresh')
-
+    
       //accessToken이 만료됐거나 변경된경우
       //accessTokne 만료가 됏는데 refresh가 아직 살아있으면 재발급 여지존재
 
@@ -49,9 +43,9 @@ module.exports = {
       // return data
       req.access=accessToken
       req.user = accessTokendata;
+
     } catch (err) {
-      res.status(501);
-      throw err;
+     return res.status(501).send(err)
     }
 
     return next();

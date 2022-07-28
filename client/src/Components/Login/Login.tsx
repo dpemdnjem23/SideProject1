@@ -38,8 +38,6 @@ export const useStore = create<mypageState>()((set) => ({
 //   handleSignin: () => void;
 //   signinErrMessage:string;
 
-// axios.defaults.headers.common['Authorization'] =  'Bearer token'
-axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const Login = () => {
   const { mypageOn } = useStore();
@@ -85,6 +83,8 @@ const Login = () => {
           headers:{
             'Content-Type':'application/json '
          },
+         credentials: "include",
+
           body:JSON.stringify({ username: signinInfo.username, password: signinInfo.password }),
 
         })
@@ -97,14 +97,14 @@ const Login = () => {
       //     "Content-Type": "application/json;charset=UTF-8",
       //   },
       // })
-        .then((res) => {
-          console.log(res.ok)
+        .then((res:any) => {
           if(!res.ok){
             mypageOn(false);
             setSigninInfo({ ...signinInfo, password: "" });
   
             setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
 
+            throw new Error(res.status)
           }
           return res.json()
 
@@ -115,7 +115,6 @@ const Login = () => {
         })
         .then((res)=>{
 
-          console.log(res.data)
 
          localStorage.setItem("accessToken", res.accessToken);
 
@@ -137,6 +136,7 @@ const Login = () => {
           setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
           // mypageOff()
 
+          console.log(err)
         
           //로그인 정보가 맞지 않는경우. errmessage
         

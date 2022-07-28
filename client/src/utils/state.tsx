@@ -3,6 +3,9 @@ import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
 
+
+export const accessToken: string | null = localStorage.getItem("accessToken");
+console.log(accessToken,'accessToken')
 type isSigninState = {
   userSignin: boolean;
   persistLogin: (input: boolean) => void;

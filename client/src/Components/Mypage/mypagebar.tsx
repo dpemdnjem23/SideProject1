@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import { showMypageState } from "utils/state";
+import { accessToken, showMypageState } from "utils/state";
 import "../../css/components/MyPage/mypagebar.css";
 
 // const s = document.getElemnetsByClassName()
@@ -9,7 +10,8 @@ const Mypagebar = () => {
 
   //한번더 클릭하면 원래대로 돌아가야한다.
   const { setDelUser, setEditUser, editUser, delUser } = showMypageState();
-
+// const {paymentDay , setPaymentDay}  = useState<number>(0)
+// const {cash , setCash} = useState<number>(0)
   const handleEditUser = () => {
     //마이페이지에서 같은 걸 한번더 클릭하면 원래대로 돌아오도록 한다.
     if (editUser === true) {
@@ -31,6 +33,61 @@ const Mypagebar = () => {
       setEditUser(false);
     }
   };
+
+  const paymentManagement =() =>{
+    //결제일과 결제금액 => 
+    
+    //가장 적게남은 결제일 의 결제금액의 합을 보여준다
+
+    axios.get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`,{
+      headers:{
+        authorization : `Bearer ${accessToken}`
+
+      },
+      withCredentials:true
+    }).then((res)=>{
+      console.log(res.data)
+
+    }).catch((err)=>{
+      console.log(err)
+    })
+
+    // fetch(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`,{
+    //   method:'get',
+    //   credentials:'include',
+    //   headers:{
+    //     authorization : `Bearer ${accessToken}`
+
+    //   }
+    // })
+    // .then((res:any)=>{
+
+    //   if(!res.ok){
+    //     throw new Error(res.status)
+    //   }
+
+
+    //   return res.json()
+
+    // }).then((result)=>{
+    //   console.log(result)
+
+
+    // })
+    // .catch((err)=>{
+    //   console.log(err)
+    // })
+
+  }
+
+  useEffect(()=>{
+paymentManagement()
+
+  },[])
+// const subscribeManagement = () =>{
+// console.log('s')
+// }
+
 
   //현재 결제가 남은 구독갯수
 

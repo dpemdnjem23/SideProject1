@@ -11,7 +11,6 @@ const Mypageuser = () => {
     setUsetEdit(true)
   }
   const userNick:{nickname:string} = JSON.parse(localStorage.getItem('subgatherUserInfo')||'{}')
-  console.log(userNick.nickname)
   return (
 
    
