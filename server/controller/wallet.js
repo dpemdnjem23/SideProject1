@@ -20,6 +20,8 @@ module.exports = {
   //3. 월렛을 삭제한다.
   //4. 월렛을 변경한다.
   //5. 구독 목록을 불러온다.
+  //6. 월렛의 date를 컨트롤 해야한다. 오늘날 end_date에 도달했을때,
+  //7. start <-> end 를 해주고 start는 다시  
 
   subscribesInfo: async (req, res) => {
     // console.log(req.user,'req.user')
@@ -50,9 +52,9 @@ module.exports = {
     }
 
     try {
-      const findWallet = await wallet.findOne({
+      const findWallet = await wallet.findAll({
         where: { user_id: req.user.userId },
-        // order: [["start_date", "ASC"]],
+        
       });
       console.log(findWallet,'findWallet')
 

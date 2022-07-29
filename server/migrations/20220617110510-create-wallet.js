@@ -24,6 +24,9 @@ module.exports = {
       image:{
         type:Sequelize.STRING
       },
+      end_date:{
+        type:Sequelize.DATE
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

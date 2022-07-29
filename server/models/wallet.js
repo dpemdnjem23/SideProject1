@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       start_date: DataTypes.DATE,
       cycle: DataTypes.NUMBER,
       image: DataTypes.STRING,
+      end_date:DataTypes.DATE
     },
     {
       sequelize,
