@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       start_date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       cycle: {
         type: Sequelize.INTEGER
@@ -25,7 +25,7 @@ module.exports = {
         type:Sequelize.STRING
       },
       end_date:{
-        type:Sequelize.DATE
+        type:Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

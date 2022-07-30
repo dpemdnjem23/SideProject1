@@ -16,11 +16,9 @@ module.exports = {
 
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
-  
-      console.log(authorization,'authchecker')
     //accesstoken이 존재하지 않는경우 넘어간다.
+
     if (!authorization||!refreshToken) {
-      console.log('토큰을 넘긴다.')
       
 
       return next();
@@ -36,7 +34,9 @@ module.exports = {
       //accessTokne 만료가 됏는데 refresh가 아직 살아있으면 재발급 여지존재
 
       //그러면 next()
+
       if (!accessTokendata||!refreshTokenData) {
+        console.log('토큰 만료')
 
         return res.status(401).send("토큰이 만료되었습니다.");
       }

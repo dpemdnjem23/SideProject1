@@ -1,4 +1,6 @@
 require("dotenv").config();
+const moment = require('moment')
+const { Op } = require("sequelize");
 
 const { default: axios } = require("axios");
 const { authchecker } = require("../middleware/authChecker");
@@ -13,6 +15,7 @@ const {
   checkRefreshToken,
   tokenExp,
 } = require("../utils/jwt");
+const { start } = require("repl");
 
 module.exports = {
   //1. 월렛을 불러온다.
@@ -32,7 +35,6 @@ module.exports = {
 
     try {
       const subInfo = await subscribe.findAll();
-      console.log(subInfo);
       return res.status(200).send({data:subInfo});
     } catch (err) {
       return res.status(500).send(err);
@@ -45,7 +47,6 @@ module.exports = {
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
 
-    console.log(req.user.userId)
 
     if (!req.user) {
       return res.status(400).send("로그인 후 볼수있다.");
@@ -56,8 +57,6 @@ module.exports = {
         where: { user_id: req.user.userId },
         
       });
-      console.log(findWallet,'findWallet')
-
 
       if (!findWallet) {
         return res.status(400).send("회원을 찾을수가 없습니다.");
@@ -71,17 +70,18 @@ module.exports = {
   },
 
   walletRegister: async (req, res) => {
+
+    
     //같은 이름을가진 구독상품은 존재x
     //user를 확인하고, 구독상품을 만들어야 한다.
     //토큰이 존재해야한다. => middleware
     if (!req.user) {
       return res.status(401).send("로그인 후");
     }
-    const { name, cost, start_date, cycle } = req.body;
+    const { name, cost, start_date, cycle} = req.body;
 
     //cycle 은 1년인경우 365일, 1달인경우 30일로 계산되어야 한다.
     // => start date에 더해짐
-    console.log(req.user.userId,'walletRegister')
 
     if(!name||!cost||!start_date||!cycle){
         return res.status(400).send('구독 정보는 전부 입력해야한다.')
@@ -89,21 +89,85 @@ module.exports = {
     try {
       const subscribes = await subscribe.findOne({ where: { sub_name: name } });
 
-      await wallet.create({
+      console.log(subscribes)
+      console.log(start_date)
+      const calculateEnd_date = moment(start_date).add(cycle,'d').format('YYYY-MM-DD')
+      console.log(calculateEnd_date)
+
+    const createWallet =   await wallet.create({
         user_id: req.user.userId,
         name: name,
         cost: cost,
         start_date: start_date,
         cycle: cycle,
         cost: cost,
+        end_date:calculateEnd_date,
         image: subscribes.image,
       });
 
+      console.log(createWallet,'create')
+
+
+      if(!createWallet){
+        return res.status(400).send('구독 목록 생성이 안되었습니다.')
+      }
       //지갑에 들어갈 목록 생성
 
       return res.status(200).send("구독목록이 생성 되었습니다.");
+
     } catch (err) {
       return res.status(500).send(err);
     }
   },
+  walletDateControl: async (req,res) =>{
+
+
+     const today = moment().format('YYYY-MM-DD')
+console.log(typeof(today))
+
+
+    try{
+      console.log(req.user)
+
+
+
+      const personalWallet = await wallet.findAll({where:{user_id:req.user.userId ,start_date:{[Op.eq]:today}}})
+      
+      //start_date가 ===today 랑 같은 걸 find 한다.
+      //start_date === today 
+      //지갑에 있는 모든 구독을 불러온다.
+      // 
+
+
+      //today가 end_date에 도달하는 순간, 목록들을 불러온다. 
+      //불러온 목록들중 , cycle이 다 다르다. 이 다른 cycle들을 end_date
+      //반복문으로 업데이트? sequelize 이용하여 업데이트?
+      
+
+
+
+        personalWallet.forEach(async (v)=>{
+
+          console.log(v.dataValues,'v')
+          // const startdate = v.dataValues.start_date
+          const enddate =  v.dataValues.end_date
+
+          const calculateEnd_date = moment(enddate).add(v.dataValues.cycle,'d').format('YYYY-MM-DD')
+
+
+
+       const updateWallet =    await wallet.update({start_date:enddate,end_date:calculateEnd_date},{where:{name:v.dataValues.name}})
+
+       console.log(updateWallet)
+          
+        })
+
+        return res.status(200).send('날짜가 갱신되었습니다.')
+
+
+    }catch(err){
+      return res.status(500).send(err)
+    }
+
+  }
 };

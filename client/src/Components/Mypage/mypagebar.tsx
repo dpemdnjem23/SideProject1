@@ -11,7 +11,7 @@ const Mypagebar = () => {
   //한번더 클릭하면 원래대로 돌아가야한다.
   const { setDelUser, setEditUser, editUser, delUser } = showMypageState();
 // const {paymentDay , setPaymentDay}  = useState<number>(0)
-// const {cash , setCash} = useState<number>(0)
+const [cash , setCash] = useState<number>(0)
   const handleEditUser = () => {
     //마이페이지에서 같은 걸 한번더 클릭하면 원래대로 돌아오도록 한다.
     if (editUser === true) {
@@ -46,6 +46,10 @@ const Mypagebar = () => {
       },
       withCredentials:true
     }).then((res)=>{
+      //start_date+cycle cycle은 cycle 주기마다 cycle을 더해야한다
+      //그러면 today가 end_date(start+cycle)에 도달했을때 
+      //start_date 를 end_date로 바꾸고 다시 end_date를 정한다.
+
       console.log(res.data)
 
     }).catch((err)=>{
@@ -121,7 +125,7 @@ paymentManagement()
             <span className="Mypage_bar_top_section1_pay">결제금액</span>
             <br></br>
 
-            <span className="Mypage_bar_top_section2_pay"> 665456455465456546 원</span>
+            <span className="Mypage_bar_top_section2_pay"> {cash} 원</span>
           </div>
         </div>
         {/* <span>3-days / 2 (결제금액)</span> */}

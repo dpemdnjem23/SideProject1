@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from 'moment'
+
 
 import "./css/reset.css";
 import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
@@ -38,6 +40,7 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
+
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
 
@@ -89,7 +92,6 @@ const App = () => {
       .catch(() => {
         //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
         persistLogin(false);
-        console.log("리프레쉬 토큰 사라졋어");
 
         localStorage.removeItem("accessToken");
         // alert("로그인이 만료되었습니다. 다시 로그인해주세요");

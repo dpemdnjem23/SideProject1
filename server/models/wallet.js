@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       user_id: DataTypes.NUMBER,
       name: DataTypes.STRING,
       cost: DataTypes.NUMBER,
-      start_date: DataTypes.DATE,
+      start_date: DataTypes.STRING,
       cycle: DataTypes.NUMBER,
       image: DataTypes.STRING,
-      end_date:DataTypes.DATE
+      end_date:DataTypes.STRING
     },
     {
       sequelize,
