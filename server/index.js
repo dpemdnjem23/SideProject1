@@ -9,7 +9,8 @@ const authRouter = require('./routes/auth')
 require("dotenv").config();
 
 const userRouter = require('./routes/user');
-const walletRouter = require('./routes/wallet')
+const walletRouter = require('./routes/wallet');
+const schuduleDateControll = require("./utils/scheduler");
 app.use(express.json()); //미들웨어
 app.use(express.urlencoded({ extended: false })); //미들웨어
 
@@ -43,6 +44,7 @@ app.use('/wallet',walletRouter)
 // });
 
 app.listen(Port, () => {
+  schuduleDateControll
   console.log(`Server is Startin on ${Port}`);
 });
 

@@ -13,7 +13,8 @@ const WalletPageBottom = () =>{
                 <span>&nbsp; 원  &nbsp; </span>
 
                 <span>총 결제금액&nbsp;</span>
-                <span className='WallPage_Bottom_section_price2'>30,000원</span>
+                <span className='WallPage_Bottom_section_price2'>30,000</span>
+                &nbsp;원
                 
             </div>
 

@@ -2,6 +2,7 @@ require("dotenv").config();
 const moment = require('moment')
 const { Op } = require("sequelize");
 
+
 const { default: axios } = require("axios");
 const { authchecker } = require("../middleware/authChecker");
 // const { exit } = require("process");
@@ -119,55 +120,5 @@ module.exports = {
       return res.status(500).send(err);
     }
   },
-  walletDateControl: async (req,res) =>{
-
-
-     const today = moment().format('YYYY-MM-DD')
-console.log(typeof(today))
-
-
-    try{
-      console.log(req.user)
-
-
-
-      const personalWallet = await wallet.findAll({where:{user_id:req.user.userId ,start_date:{[Op.eq]:today}}})
-      
-      //start_date가 ===today 랑 같은 걸 find 한다.
-      //start_date === today 
-      //지갑에 있는 모든 구독을 불러온다.
-      // 
-
-
-      //today가 end_date에 도달하는 순간, 목록들을 불러온다. 
-      //불러온 목록들중 , cycle이 다 다르다. 이 다른 cycle들을 end_date
-      //반복문으로 업데이트? sequelize 이용하여 업데이트?
-      
-
-
-
-        personalWallet.forEach(async (v)=>{
-
-          console.log(v.dataValues,'v')
-          // const startdate = v.dataValues.start_date
-          const enddate =  v.dataValues.end_date
-
-          const calculateEnd_date = moment(enddate).add(v.dataValues.cycle,'d').format('YYYY-MM-DD')
-
-
-
-       const updateWallet =    await wallet.update({start_date:enddate,end_date:calculateEnd_date},{where:{name:v.dataValues.name}})
-
-       console.log(updateWallet)
-          
-        })
-
-        return res.status(200).send('날짜가 갱신되었습니다.')
-
-
-    }catch(err){
-      return res.status(500).send(err)
-    }
-
-  }
+  
 };

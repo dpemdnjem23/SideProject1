@@ -5,7 +5,6 @@ import { devtools, persist } from "zustand/middleware";
 
 
 export const accessToken: string | null = localStorage.getItem("accessToken");
-console.log(accessToken,'accessToken')
 
 type isSigninState = {
   userSignin: boolean;
@@ -56,6 +55,12 @@ type cycleState ={
   cycleCal:{year:string,month:string,day:string}
   setCycleCal:(input:{year:string,month:string,day:string}) =>void
 }
+
+
+
+
+
+
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
