@@ -16,7 +16,6 @@ const {
   checkRefreshToken,
   tokenExp,
 } = require("../utils/jwt");
-const { start } = require("repl");
 
 module.exports = {
   //1. 월렛을 불러온다.
@@ -79,28 +78,34 @@ module.exports = {
     if (!req.user) {
       return res.status(401).send("로그인 후");
     }
-    const { name, cost, start_date, cycle} = req.body;
+    const { name, cost, start_date, cycleDay,cycleMonth,cycleYear} = req.body;
 
     //cycle 은 1년인경우 365일, 1달인경우 30일로 계산되어야 한다.
     // => start date에 더해짐
 
-    if(!name||!cost||!start_date||!cycle){
+    if(!name||!cost||!start_date){
         return res.status(400).send('구독 정보는 전부 입력해야한다.')
     }
     try {
       const subscribes = await subscribe.findOne({ where: { sub_name: name } });
 
-      console.log(subscribes)
-      console.log(start_date)
-      const calculateEnd_date = moment(start_date).add(cycle,'d').format('YYYY-MM-DD')
-      console.log(calculateEnd_date)
+      const calculateEnd_date = moment(start_date).add(Number(cycleDay)+Number(cycleMonth)*30,Number(cycleYear)*365
+      ,'d').format('YYYY-MM-DD')
+
+
+
+      //cycle을 1년 1달 1일로 나타내고싶다.
+      
 
     const createWallet =   await wallet.create({
         user_id: req.user.userId,
         name: name,
         cost: cost,
         start_date: start_date,
-        cycle: cycle,
+        cycleDay:cycleDay,
+        cycleMonth:cycleMonth,
+        cycleYear:cycleYear,
+        // cycle: cycle,
         cost: cost,
         end_date:calculateEnd_date,
         image: subscribes.image,

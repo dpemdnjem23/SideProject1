@@ -33,7 +33,8 @@ const rule = `* * 0 * * *`
               // const startdate = v.dataValues.start_date
               const enddate =  v.dataValues.end_date
     
-              const calculateEnd_date = moment(enddate).add(v.dataValues.cycle,'d').format('YYYY-MM-DD')
+              const calculateEnd_date = moment(enddate).add(Number(v.dataValues.cycleDay)+Number(v.dataValues.cycleMonth)*30,Number(v.dataValues.cycleYear)*365
+              ,'d').format('YYYY-MM-DD')
     
     
     
