@@ -25,6 +25,38 @@ module.exports = {
   //5. 구독 목록을 불러온다.
   //6. 월렛의 date를 컨트롤 해야한다. 오늘날 end_date에 도달했을때,
   //7. start <-> end 를 해주고 start는 다시  
+  //8. start_date를 이용해 비용 계산
+
+  paymentControll:async (req,res) =>{
+
+
+    try{
+      //start_date 기간은 1달로 한다.
+      // start_date에 도달하면 기간이 gte인경우 결제금액을 +한다.
+      const today = moment().format('YYYY-MM-DD')
+
+
+      const findWallet = await wallet.findAll({
+        where: {start_date :{[Op.lte]:today}},
+        // attributes:['cost']
+        
+      });
+
+      if(!findWallet){
+        return res.status(400).send('수정할게 없다.')
+      }
+
+      return res.status(200).send({data:findWallet})
+
+
+
+
+    }catch(err){
+      return res.status(500).send(err)
+    }
+
+
+  },
 
   subscribesInfo: async (req, res) => {
     // console.log(req.user,'req.user')
@@ -86,34 +118,35 @@ module.exports = {
     if(!name||!cost||!start_date){
         return res.status(400).send('구독 정보는 전부 입력해야한다.')
     }
+    //데이만 입력하는경우
+    if(!cycleDay&&!cycleMonth&&!cycleYear){
+      return res.status(400).send('구독 정보는 전부 입력해야한다.')
+  }
+
     try {
       const subscribes = await subscribe.findOne({ where: { sub_name: name } });
 
-      const calculateEnd_date = moment(start_date).add(Number(cycleDay)+Number(cycleMonth)*30,Number(cycleYear)*365
+      const calculateEnd_date = moment(start_date).add(Number(cycleDay)+Number(cycleMonth)*30+Number(cycleYear)*365
       ,'d').format('YYYY-MM-DD')
 
 
+      console.log(req.body,calculateEnd_date,subscribes.image)
 
       //cycle을 1년 1달 1일로 나타내고싶다.
       
 
+
     const createWallet =   await wallet.create({
         user_id: req.user.userId,
         name: name,
-        cost: cost,
         start_date: start_date,
         cycleDay:cycleDay,
         cycleMonth:cycleMonth,
         cycleYear:cycleYear,
-        // cycle: cycle,
         cost: cost,
         end_date:calculateEnd_date,
         image: subscribes.image,
       });
-
-      console.log(createWallet,'create')
-
-
       if(!createWallet){
         return res.status(400).send('구독 목록 생성이 안되었습니다.')
       }

@@ -7,7 +7,7 @@ import { accessToken, cycleState, dateState, registSubInfoState } from "utils/st
 import "../../css/common/registButton.css";
 
 const RegistButton = () => {
-  const { cycle } = cycleState();
+  const { cycleCal } = cycleState();
   const { dateCal } = dateState();
   const { selected, subCash } = registSubInfoState();
 
@@ -22,11 +22,15 @@ const RegistButton = () => {
     const today = dateCal.format("YYYY-MM-DD");
 
     //end_date를 계산해서 넣는다.
+    
+    console.log(accessToken)
 
     fetch(`${process.env.REACT_APP_API_URI}/wallet/regist`, {
       method: "post",
       body: JSON.stringify({
-        cycle: cycle,
+        cycleYear:cycleCal.year,
+        cycleMonth:cycleCal.month,
+        cycleDay: cycleCal.day,
         start_date: today,
         name: selected,
         cost: number,
@@ -44,7 +48,7 @@ const RegistButton = () => {
   //           navigate('/')
 
   // }
-          throw new Error(res);
+          throw new Error(res.status);
         }
       
 
@@ -55,7 +59,6 @@ const RegistButton = () => {
         navigate("/mypage");
       })
       .catch((err) => {
-        console.log(err)
         // navigate('/')
         //지갑 등록에 실패한 경우
         alert("모든 정보를 입력해주세요");

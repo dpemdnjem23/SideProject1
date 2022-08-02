@@ -18,14 +18,14 @@ module.exports = {
       start_date: {
         type: Sequelize.STRING
       },
-      cycledDay: {
-        type: Sequelize.INTEGER
+      cycleDay: {
+        type: Sequelize.STRING
       },
       cycleMonth: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       cycleYear: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       image:{
         type:Sequelize.STRING

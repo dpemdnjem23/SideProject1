@@ -3,7 +3,6 @@ import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
 
-
 export const accessToken: string | null = localStorage.getItem("accessToken");
 
 type isSigninState = {
@@ -13,11 +12,10 @@ type isSigninState = {
   // mypageOn: (input: boolean) => void;
 };
 
-type dropDownListState ={
-
-  dropDownOpen:boolean;
-  setDropDownOpen:(input:boolean) =>void
-}
+type dropDownListState = {
+  dropDownOpen: boolean;
+  setDropDownOpen: (input: boolean) => void;
+};
 
 type showErrModalState = {
   showErrModal: boolean;
@@ -30,34 +28,53 @@ type showMypageState = {
   setEditUser: (input: boolean) => void;
   setDelUser: (input: boolean) => void;
 };
-type registSubInfoState={
-  selected:string|null;
-  setSelected:(input:string|null) =>void
-  subCash:string
-  setSubCash:(input:string) =>void
-
-
-
-
-}
+type registSubInfoState = {
+  selected: string | null;
+  setSelected: (input: string | null) => void;
+  subCash: string;
+  setSubCash: (input: string) => void;
+};
 //년 월 일 을 입력해야한다.
 //년월일을 나누지않고 통합 관리하는방법
 type dateState = {
-  dateCal:moment.Moment
-  setDateCal:(input:moment.Moment) =>void
+  dateCal: moment.Moment;
+  setDateCal: (input: moment.Moment) => void;
+};
 
-}
+type cycleState = {
+  cycle: number;
 
-type cycleState ={
- cycle:number
+  setCycle: (input: number) => void;
+  cycleCal: { year: string; month: string; day: string };
+  setCycleCal: (input: { year: string; month: string; day: string }) => void;
+};
 
-  setCycle:(input:number) =>void
-  cycleCal:{year:string,month:string,day:string}
-  setCycleCal:(input:{year:string,month:string,day:string}) =>void
-}
+type walletInfoState= {
 
+  walletInfo:{
+  id?: number;
 
+  name?: string;
+  cycle?: string;
+  cost?: number;
+  image?: string;
+  end_date?: string;
+  start_date?: string;
+  user_id: number;
+  }[]
+  setWalletInfo:(
+    input: {
+      id?: number;
 
+      name?: string;
+      cycle?: string;
+      cost?: number;
+      image?: string;
+      end_date?: string;
+      start_date?: string;
+      user_id?: number;
+    })=>void
+  };
 
 
 
@@ -87,43 +104,53 @@ export const showMypageState = create<showMypageState>()((set) => ({
   setEditUser: (input) => set({ editUser: input }),
 }));
 
+export const showDropDownList = create<dropDownListState>()((set) => ({
+  dropDownOpen: false,
+  setDropDownOpen: (input) => set({ dropDownOpen: input }),
+}));
 
-export const showDropDownList = create<dropDownListState>()((set)=>({
+export const registSubInfoState = create<registSubInfoState>()((set) => ({
+  selected: "",
+  setSelected: (input) => set({ selected: input }),
+  subCash: "",
+  setSubCash: (input) => set({ subCash: input }),
+}));
 
-  dropDownOpen:false,
-  setDropDownOpen:(input) => set({dropDownOpen:input})
-}))
-
-
-export const registSubInfoState = create<registSubInfoState>()((set)=>({
-
-  selected:'',
-  setSelected:(input) =>set({selected:input}),
-  subCash:'',
-  setSubCash:(input) =>set({subCash:input})
-}))
-
-
-
-export const dateState = create<dateState>()((set)=>({
-
-  dateCal:moment(),
-  setDateCal:(input) =>set({dateCal:input}),
+export const dateState = create<dateState>()((set) => ({
+  dateCal: moment(),
+  setDateCal: (input) => set({ dateCal: input }),
   // subStart:,
   // setSubStart:(input) => set({subStart:input})
-}))
+}));
 
-
-
-export const cycleState = create<cycleState>()((set)=>({
-
-  cycle:0,
-  setCycle:(input) =>set({cycle:input}),
-  cycleCal:{
-    year:'',
-    month:'',
-    day:''
+export const cycleState = create<cycleState>()((set) => ({
+  cycle: 0,
+  setCycle: (input) => set({ cycle: input }),
+  cycleCal: {
+    year: "",
+    month: "",
+    day: "",
   },
-  setCycleCal:(input) =>set({cycleCal:input})
+  setCycleCal: (input) => set({ cycleCal: input }),
+}));
 
-}))
+
+
+
+// export const walletInfoState = create<walletInfoState>()((set) => ({
+//   walletInfo:{
+//     id: 0,
+//     name: '',
+//     cycle: '',
+//     cost: 0,
+//     image: '',
+//     end_date: '',
+//     start_date:'',
+//     user_id:0
+//     },
+// setWalletInfo:(input) =>set({walletInfo:input})
+
+
+
+
+// }));

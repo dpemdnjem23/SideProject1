@@ -2,7 +2,7 @@ import WalletPageBottom from "Components/Wallet/walletPageBottom";
 import WalletPageCenter from "Components/Wallet/walletPageCenter";
 import WalletPageTop from "Components/Wallet/walletPageTop";
 import SubDetailModal from "Components/Modal/subDetailModal";
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, ReactNode } from "react";
 import axios from 'axios'
 import { accessToken } from "utils/state";
 
@@ -10,21 +10,23 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 
-type walletInfo ={
-  id?:number,
+// interface walletInfo {
+//     id?:number,
   
 
-  name:string,
-  cycle:string,
-  cost:number,
-  image:string,
-  end_date?:string,
-  start_date?:string,
-  user_id:number
-}
+//     name:string,
+//     cycle:string,
+//     cost:number,
+//     image:string,
+//     end_date?:string,
+//     start_date?:string,
+//     user_id?:number
+  
+  
+// }
 
 import "../css/pages/WalletPage.css";
-const WalletPage = () => {
+const WalletPage:React.FC = () => {
   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
@@ -32,7 +34,7 @@ const WalletPage = () => {
   const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
-  const [walletInfo , setWalletInfo] = useState<any>([])
+  const [walletInfo , setWalletInfo] = useState([])
 
   const openSubModal = () => {
     setShowSubDetail(true);
@@ -78,7 +80,6 @@ const WalletPage = () => {
   },[])
 
 
-  console.log(walletInfo)
 
   return (
     <div  id="WalletPage">
@@ -91,7 +92,10 @@ const WalletPage = () => {
         // showCancellation={showCancellation}
           openSubModal={openSubModal}
         />
-        <WalletPageBottom></WalletPageBottom>
+        <WalletPageBottom       
+        
+        // walletInfo={walletInfo}
+/>
       </div>
     </div>
   );

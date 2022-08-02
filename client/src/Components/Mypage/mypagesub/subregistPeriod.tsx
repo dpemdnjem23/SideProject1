@@ -34,11 +34,11 @@ console.log(cycle)
 // console.log(cycleCal)
   }
 
-  useEffect(()=>{
-    setCycle(Number(cycleCal.day)+Number(cycleCal.month)*30+Number(cycleCal.year)*365)
+  // useEffect(()=>{
+  //   setCycle(Number(cycleCal.day)+Number(cycleCal.month)*30+Number(cycleCal.year)*365)
 
 
-  },[cycleCal])
+  // },[cycleCal])
 //구독 주기를 입력 받아
 
  
