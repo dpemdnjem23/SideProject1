@@ -54,10 +54,11 @@ module.exports = {
   paymentManagementControll: async (req, res) => {
 
     const paymentArr = []
-    let paymenDate = 0
     const today = moment().format('YYYY-MM-DD')
 
     try {
+
+
       // const today = moment().format('YYYY-MM-DD')
 
       // 8월 2일이야,  8월 7일 이 결제일 findAll
@@ -65,8 +66,6 @@ module.exports = {
       const findWallet = await wallet.findAll({order: [["end_date", "ASC"]],
         where: {
           user_id: req.user.userId,
-
-        
         },  
       });
 
@@ -84,20 +83,14 @@ module.exports = {
         }
 
 
-       const s= paymentArr.reduce((pre,val)=>{
-         console.log(pre,val)
-          return pre.cost+val.cost
-        })
+      
 
-        console.log(s,'ssssssssssssssssssssss')
-
-        
-
-        
+        // console.log(s)
+              
      
-   paymentDate = Math.abs(moment(today).diff(findWallet[0].dataValues.end_date,'days'))
-
-      console.log(paymentArr,'pyam',paymenDate,s)
+   const paymenDate = Math.abs(moment(today).diff(findWallet[0].dataValues.end_date,'days'))
+console.log(findWallet[0].dataValues.end_date)
+     
       //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
       //그럼 똑같은 날짜를뽑아서 넘겨 준다.
 

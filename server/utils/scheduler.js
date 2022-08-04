@@ -1,7 +1,7 @@
 const schedule  =require('node-schedule')
 
-//매일 0시에 실핼되도록
-const rule = `* * 0 * * *`
+//매일 0시에 실행되도록
+const rule = ` 0 0 0 * * *`
 
  const schuduleDateControll = schedule.scheduleJob(rule , async (req,res) =>{
 
@@ -41,7 +41,7 @@ const rule = `* * 0 * * *`
            const updateWallet =    await wallet.update({start_date:enddate,end_date:calculateEnd_date},{where:{name:v.dataValues.name}})
     
     
-           console.log(updateWallet)
+          //  console.log(updateWallet)
     
            if(!updateWallet){
              return res.status(400).send('업데이트 실패')
