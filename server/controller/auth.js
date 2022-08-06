@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const {  axios } = require("axios");
+const   axios  = require("axios");
 const crypto = require("crypto");
 
 const { user } = require("../models");
@@ -217,20 +217,44 @@ try{
   
 
   googleControl: async (req, res) => {
-    const { code } = req.body;
+  
 
-    console.log(req.body)
+    // try {
 
-    try {
-      const getAccessToken = await axios.post(
+      const { code } = req.body;
+
+    
+
+      // const option ={
+      //   method:'post',
+      //   body:  qs.stringify({
+      //     grant_type:'authorization_code',
+      //     code:code ,
+      //     client_id:process.env.GOOGLE_CLIENT,
+      //     client_secret:process.env.GOOGLE_SECRET,
+      //     redirect_uri:process.env.GOOGLE_REDIRECT_URI
+      //   },
+      //   credential:'include',
+
+      // }
+
+      console.log(req.body)
+
+
+
+        try{
+
+     const getAccessToken = await axios.post(
         `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`,
         {
           headers: {
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-            Accept: "application/json",
           },
         }
-      );
+      )
+
+
+   
 
       const Token = getAccessToken.data.access_token;
 
@@ -271,9 +295,7 @@ try{
       }
 
       const google_id = getUserInfo.data.id;
-      console.log(google_id);
       const email = getUserInfo.data.email;
-      console.log(email);
 
       const googleUser = await user.findOne({
         where: { google_id: google_id },
@@ -290,16 +312,15 @@ try{
           nickname: randomItem(googleNickname),
           email: email,
           social_user: true,
+          isAdmin:false
         });
         console.log(newUser, "newUser");
 
         const accessToken = generateAccessToken(newUser.dataValues);
 
         const refreshToken = generateRefreshToken(newUser.dataValues);
-        console.log(refreshToken, "re");
 
         const accessExp = tokenExp(accessToken);
-        console.log(accessExp);
         const refreshExp = tokenExp(refreshToken);
 
         sendCookie(res, refreshToken);
@@ -312,6 +333,7 @@ try{
             google_id: google_id,
             nickname: newUser.nickname,
             social_user: true,
+            isAdmin:false
           },
           accessToken: accessToken,
         });
@@ -587,4 +609,43 @@ try{
       throw err;
     }
   },
+
+  passwordCheck:async(req,res) =>{
+    //비밀번호가 기존의 비밀번호와 맞는지 확인한다.
+
+    const {password} =req.body
+
+    try{
+
+
+      const salt = await user.findOne({
+        attributes: ["salt"],
+        where: { username },
+      });
+
+      if(!salt){
+        return res.status(401).send('유저를 찾을수 없다.')
+      }
+
+      console.log(salt)
+
+      //2. 유저 db에서 이메일 확인하기
+
+      crypto.pbkdf2(
+        password,
+        salt.dataValues.salt,
+        11011,
+        64,
+        "sha512",
+        async (err, key) => {
+          if (err) {
+            throw err;
+          }
+          const hardPassword = key.toString("base64");
+     
+
+    }catch(err){
+      return res.status(500).send('서버에러')
+    }
+  }
 };

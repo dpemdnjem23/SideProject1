@@ -12,7 +12,7 @@ const userRouter = require('./routes/user');
 const walletRouter = require('./routes/wallet');
 const schuduleDateControll = require("./utils/scheduler");
 app.use(express.json()); //미들웨어
-app.use(express.urlencoded({ extended: false })); //미들웨어
+app.use(express.urlencoded({ extended: true })); //미들웨어
 
 app.use(cookieParser()); // 미들웨어
 

@@ -70,5 +70,10 @@ try{
 
   editUserControl :async (req,res) =>{
 
+   const {nickname,password} = req.body
+    try{
+
+    }catch(err)
+
   }
 };
