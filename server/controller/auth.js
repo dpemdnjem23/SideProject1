@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const   axios  = require("axios");
+const axios = require("axios");
 const crypto = require("crypto");
 
 const { user } = require("../models");
@@ -63,18 +63,13 @@ module.exports = {
     }
   },
   signinControl: async (req, res) => {
-
- 
-
     // const body = JSON.stringify(req.body)
     // console.log(body)
 
     try {
-
       const { username, password } = req.body;
 
-      console.log(req.body.username,req.body,'login')
-  
+      console.log(req.body.username, req.body, "login");
 
       // console.log(username,password)
 
@@ -83,11 +78,11 @@ module.exports = {
         where: { username },
       });
 
-      if(!salt){
-        return res.status(401).send('유저를 찾을수 없다.')
+      if (!salt) {
+        return res.status(401).send("유저를 찾을수 없다.");
       }
 
-      console.log(salt)
+      console.log(salt);
 
       //2. 유저 db에서 이메일 확인하기
 
@@ -116,21 +111,21 @@ module.exports = {
           const userNick = getUserInfo.dataValues.nickname;
           const userId = getUserInfo.dataValues.id;
           const isSocial = getUserInfo.dataValues.social_user;
-          const isAdmin = getUserInfo.dataValues.isAdmin
+          const isAdmin = getUserInfo.dataValues.isAdmin;
           // const { email, nickname, id } = getUserInfo.dataValues;
           const accessToken = generateAccessToken({
             userUsername,
             userNick,
             userId,
             isAdmin,
-            isSocial
+            isSocial,
           });
           const refreshToken = generateRefreshToken({
             userUsername,
             userNick,
             userId,
             isAdmin,
-            isSocial
+            isSocial,
           });
           const accessExp = tokenExp(accessToken);
           const refreshExp = tokenExp(refreshToken);
@@ -147,8 +142,8 @@ module.exports = {
               id: userId,
               nickname: userNick,
               username: userUsername,
-              social_user:false,
-              isAdmin:false,
+              social_user: false,
+              isAdmin: false,
               accessExp: accessExp,
               refreshExp: refreshExp,
             },
@@ -159,7 +154,7 @@ module.exports = {
         }
       );
     } catch (err) {
-      return res.status(500).send(err)
+      return res.status(500).send(err);
     }
   },
 
@@ -168,7 +163,7 @@ module.exports = {
     // console.log(req.headers)
     //signout 시 토큰이 만료가 됐다.
 
-    const accessTokenData = req.user;    
+    const accessTokenData = req.user;
     // const token = req.access;
 
     // console.log(req.use)
@@ -186,7 +181,10 @@ module.exports = {
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {
-      return res.clearCookie("refreshToken").status(500).send("로그아웃 서버오류");
+      return res
+        .clearCookie("refreshToken")
+        .status(500)
+        .send("로그아웃 서버오류");
     }
     //로그 아웃은 토큰을 제거해준다.
     // authchecker(req,res,next)
@@ -198,63 +196,33 @@ module.exports = {
     //닉이 존재하지 않아야 한다.
     const { nickname } = req.body;
 
-try{
+    try {
+      const existNick = await user.findOne({ where: { nickname } });
 
+      if (!existNick) {
+        return res.status(200).send("닉네임 사용가능");
+      }
 
-    const existNick = await user.findOne({ where: { nickname } });
-
-    if (!existNick) {
-      return res.status(200).send("닉네임 사용가능");
+      return res.status(400).send("닉네임 사용불가");
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-    return res.status(400).send("닉네임 사용불가");
-
-
-  }catch(err){
-    return res.status(500).send(err)
-  }
   },
-  
 
   googleControl: async (req, res) => {
-  
+    const { code } = req.body;
 
-    // try {
+    console.log(req.body);
 
-      const { code } = req.body;
-
-    
-
-      // const option ={
-      //   method:'post',
-      //   body:  qs.stringify({
-      //     grant_type:'authorization_code',
-      //     code:code ,
-      //     client_id:process.env.GOOGLE_CLIENT,
-      //     client_secret:process.env.GOOGLE_SECRET,
-      //     redirect_uri:process.env.GOOGLE_REDIRECT_URI
-      //   },
-      //   credential:'include',
-
-      // }
-
-      console.log(req.body)
-
-
-
-        try{
-
-     const getAccessToken = await axios.post(
+    try {
+      const getAccessToken = await axios.post(
         `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&grant_type=authorization_code`,
         {
           headers: {
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }
-      )
-
-
-   
+      );
 
       const Token = getAccessToken.data.access_token;
 
@@ -312,7 +280,7 @@ try{
           nickname: randomItem(googleNickname),
           email: email,
           social_user: true,
-          isAdmin:false
+          isAdmin: false,
         });
         console.log(newUser, "newUser");
 
@@ -333,7 +301,7 @@ try{
             google_id: google_id,
             nickname: newUser.nickname,
             social_user: true,
-            isAdmin:false
+            isAdmin: false,
           },
           accessToken: accessToken,
         });
@@ -454,10 +422,8 @@ try{
     }
   },
   usernameCheckControl: async (req, res) => {
-      const { username } = req.body;
-      console.log(username);
-      try {
-
+    const { username } = req.body;
+    try {
       const existUsername = await user.findOne({ where: { username } });
 
       console.log(existUsername);
@@ -482,7 +448,6 @@ try{
     // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
 
-
     const refreshToken = req.cookies.refreshToken;
 
     console.log(refreshToken);
@@ -493,9 +458,7 @@ try{
       return res.status(401).send("토큰이 없어");
     }
 
-    try {    
-
-
+    try {
       const refreshTokenData = checkRefreshToken(refreshToken);
 
       if (!refreshTokenData) {
@@ -523,8 +486,16 @@ try{
       // isAdmin: false,
       // email: null,
 
-      const {username, email, nickname, id, kakao_id, google_id, social_user, isAdmin } =
-        getUserInfo.dataValues;
+      const {
+        username,
+        email,
+        nickname,
+        id,
+        kakao_id,
+        google_id,
+        social_user,
+        isAdmin,
+      } = getUserInfo.dataValues;
       //카카오 로그인
       if (kakao_id) {
         const accessToken = generateAccessToken({
@@ -610,24 +581,22 @@ try{
     }
   },
 
-  passwordCheck:async(req,res) =>{
+  passwordCheck: async (req, res) => {
     //비밀번호가 기존의 비밀번호와 맞는지 확인한다.
 
-    const {password} =req.body
+    const { password, username } = req.body;
 
-    try{
-
-
+    try {
       const salt = await user.findOne({
         attributes: ["salt"],
         where: { username },
       });
 
-      if(!salt){
-        return res.status(401).send('유저를 찾을수 없다.')
+      if (!salt) {
+        return res.status(401).send("유저를 찾을수 없다.");
       }
 
-      console.log(salt)
+      console.log(salt);
 
       //2. 유저 db에서 이메일 확인하기
 
@@ -642,10 +611,19 @@ try{
             throw err;
           }
           const hardPassword = key.toString("base64");
-     
 
-    }catch(err){
-      return res.status(500).send('서버에러')
+          const checkPassword = await user.findOne({
+            where: { password: hardPassword },
+          });
+          if (!checkPassword) {
+            return res.status(400).send("비밀번호가 일치하지 않습니다.");
+          }
+
+          return res.status(200).send('적합한 비밀번호 입니다.')
+        }
+      );
+    } catch (err) {
+      return res.status(500).send("서버에러");
     }
-  }
+  },
 };

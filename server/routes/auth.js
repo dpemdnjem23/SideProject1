@@ -10,5 +10,6 @@ router.post("/usernamecheck", controller.usernameCheckControl);
 router.post("/issueaccess", controller.accessTokenReissuaControl);
 router.post("/kakao", controller.kakaoControl);
 router.post("/google", controller.googleControl);
+router.post("/passcheck", controller.passwordCheck);
 
 module.exports = router;

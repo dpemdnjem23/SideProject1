@@ -69,11 +69,76 @@ try{
   },
 
   editUserControl :async (req,res) =>{
-
-   const {nickname,password} = req.body
+//닉네임 , 비밀번호 변경
+   const {nickname,password,id} = req.body
     try{
 
-    }catch(err)
+      //먼저 닉네임이 존재하는지 확인한다.
+      //닉네임이 
+      if(!password){
+        const nickcheck = await user.findOne({where:{
+          nickname
+        }})
+        if(!nickcheck){
+          return res.status(400).send('동일한 닉네임')
 
-  }
+        }
+        //동일한 닉네임이 없는경우 update
+        await user.update({nickname:nickname,where:{
+          id:id
+        }})
+
+        return res.status(200).send('닉네임 업데이트')
+
+
+        //
+      }
+      else{
+
+
+        crypto.randomBytes(64, (err, buf) => {
+          if (err) {
+            throw err;
+          } else {
+            const salt = buf.toString("base64");
+            crypto.pbkdf2(
+              password,
+              salt,
+              11011,
+              64,
+              "sha512",
+              async (err, key) => {
+                if (err) {
+                  throw err;
+                } else {
+                  const hardPassword = key.toString("base64");
+                  const insertUser = await user.update({
+                    password: hardPassword,
+                    salt: salt,
+                  where:{id:id}});
+                  if (!insertUser) {
+                    return res.status(400).send("변경실패");
+                  } 
+                    return res.status(201).send("패스워드 변경 성공");
+                  
+                }
+              }
+            );
+          }
+        });
+        //pw는 동일한 pw를 살필 필요는없다. 이미 앞에서 pw는 확인을 거친 상황
+
+
+      }
+  
+       
+
+    }catch(err){
+      return res.status(500).send(err)
+
+    }
+
+  
+
+}
 };
