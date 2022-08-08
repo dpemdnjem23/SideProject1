@@ -73,20 +73,21 @@ try{
    const {nickname,password,id} = req.body
     try{
 
+
       //먼저 닉네임이 존재하는지 확인한다.
       //닉네임이 
       if(!password){
-        const nickcheck = await user.findOne({where:{
-          nickname
-        }})
-        if(!nickcheck){
-          return res.status(400).send('동일한 닉네임')
+        console.log(req.body)
 
-        }
+        
         //동일한 닉네임이 없는경우 update
-        await user.update({nickname:nickname,where:{
-          id:id
+       const updateNick =  await user.update({nickname:nickname},{where:{
+          id:req.user.userId
         }})
+
+        if(!updateNick){
+          return res.status(400).send('업데이트가 되지 않습니다.')
+        }
 
         return res.status(200).send('닉네임 업데이트')
 

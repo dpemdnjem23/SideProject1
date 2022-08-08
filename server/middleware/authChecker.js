@@ -18,7 +18,7 @@ module.exports = {
       req.headers["Authorization"] || req.headers["authorization"];
     //accesstoken이 존재하지 않는경우 넘어간다.
 
-    console.log(authorization)
+    console.log(authorization,'uth')
     if (!authorization||!refreshToken) {
       
 

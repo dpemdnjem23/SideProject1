@@ -584,12 +584,12 @@ module.exports = {
   passwordCheck: async (req, res) => {
     //비밀번호가 기존의 비밀번호와 맞는지 확인한다.
 
-    const { password, username } = req.body;
+    const { password } = req.body;
 
     try {
       const salt = await user.findOne({
         attributes: ["salt"],
-        where: { username },
+        where: { username:req.user.userUsername },
       });
 
       if (!salt) {
