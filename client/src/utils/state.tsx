@@ -3,7 +3,7 @@ import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
 
-export const accessToken: string | null = localStorage.getItem("accessToken");
+export const accessToken = localStorage.getItem("accessToken")||null
 
 type isSigninState = {
   userSignin: boolean;
@@ -25,8 +25,12 @@ type showErrModalState = {
 type showMypageState = {
   editUser: boolean;
   delUser: boolean;
+  passEditUser:boolean;
+  socialEditUser:boolean
   setEditUser: (input: boolean) => void;
   setDelUser: (input: boolean) => void;
+  setPassEditUser:(input: boolean) => void;
+  setSocialEditUser:(input: boolean) => void;
 };
 type registSubInfoState = {
   selected: string | null;
@@ -49,33 +53,54 @@ type cycleState = {
   setCycleCal: (input: { year: string; month: string; day: string }) => void;
 };
 
-type walletInfoState= {
+type mypageSubCostState ={
 
-  walletInfo:{
-  id?: number;
+  subPayment:number;
+  subCost:number;
+  setPaymentCost:(input:number) => void
+  setSubCost:(input:number) =>void
 
-  name?: string;
-  cycle?: string;
-  cost?: number;
-  image?: string;
-  end_date?: string;
-  start_date?: string;
-  user_id: number;
-  }[]
-  setWalletInfo:(
-    input: {
-      id?: number;
 
-      name?: string;
-      cycle?: string;
-      cost?: number;
-      image?: string;
-      end_date?: string;
-      start_date?: string;
-      user_id?: number;
-    })=>void
-  };
+}  
 
+type walletPageCostState = {
+  walletSubCost:number;
+
+  walletPayment:number;
+  setWalletSubCost:(input:number) =>void
+  setWalletPayment:(input:number) =>void
+
+}
+
+type mypagePaymentManage ={
+  mypagePaymentManageDate:string;
+  mypagePaymentManageCost:number;
+
+  setMypagePaymentManageDate:(input:string) =>void
+  setMypagePaymentManageCost:(input:number) =>void
+
+
+}
+
+type mypageNotiModal = {
+
+  showNicknameNotiModal:boolean;
+  setShowNicknameNotiModal:(input:boolean) =>void
+  showPasswordNotiModal:boolean;
+  setShowPasswordNotilModal:(input:boolean)=>void
+
+}
+
+type mypageUserInfo ={
+
+  nickname:string;
+  password:string;
+  passwordCheck:string;
+  setNickname:(input:string) =>void
+  setPassword:(input:string) =>void
+  setPasswordCheck:(input:string) =>void
+
+}
 
 
 export const isSigninState = create<isSigninState>()(
@@ -100,6 +125,10 @@ export const showErrModalState = create<showErrModalState>()((set) => ({
 export const showMypageState = create<showMypageState>()((set) => ({
   editUser: false,
   delUser: false,
+  passEditUser:false,
+  socialEditUser:false,
+  setPassEditUser: (input) => set({ passEditUser: input }),
+  setSocialEditUser: (input) => set({socialEditUser: input }),
   setDelUser: (input) => set({ delUser: input }),
   setEditUser: (input) => set({ editUser: input }),
 }));
@@ -133,6 +162,67 @@ export const cycleState = create<cycleState>()((set) => ({
   },
   setCycleCal: (input) => set({ cycleCal: input }),
 }));
+
+export const mypageSubCostState = create<mypageSubCostState>()((set) => ({
+  
+
+  subCost:0,
+  subPayment:0,
+  setPaymentCost:(input) =>set({subPayment:input}),
+  setSubCost:(input) =>set ({subCost:input})
+}));
+
+
+export const walletPageCostState = create<walletPageCostState>()((set) => ({
+  
+
+  walletPayment:0,
+  walletSubCost:0,
+  setWalletSubCost:(input) =>set({walletPayment:input}),
+  setWalletPayment:(input) =>set ({walletPayment:input})
+}));
+
+export const mypagePaymentManagementState = create<mypagePaymentManage>()((set) => ({
+  
+
+
+  mypagePaymentManageDate:'',
+  mypagePaymentManageCost:0,
+  setMypagePaymentManageCost:(input) =>set({ mypagePaymentManageCost:input}),
+  setMypagePaymentManageDate:(input) =>set ({mypagePaymentManageDate:input})
+}));
+
+
+export const mypageNotiModalState = create<mypageNotiModal>()((set) => ({
+  
+
+
+showNicknameNotiModal:false,
+showPasswordNotiModal:false,
+setShowNicknameNotiModal:(input) =>set({showNicknameNotiModal:input}),
+setShowPasswordNotilModal:(input) =>set({showPasswordNotiModal:input})
+
+  
+}));
+
+export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
+  
+
+nickname:'',
+password:'',
+passwordCheck:'',
+setPasswordCheck:(input) => set({passwordCheck:input}),
+setPassword:(input) => set({password:input}),
+setNickname:(input) => set({nickname:input})
+    
+  }));
+  
+  
+  
+  
+
+
+
 
 
 

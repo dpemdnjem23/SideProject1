@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Mypagebar from "Components/Mypage/mypagebar";
 import Mypageuser from "Components/Mypage/mypageuser";
 import Mypagesub from "Components/Mypage/mypagesub";
+import MypagePassEdit from "Components/Mypage/mypagePassEdit";
+import NicknameNotificationModal from "Components/Modal/NicknameNotificationModal";
 import moment from "moment";
 
 import "../css/pages/Mypage.css";
@@ -15,23 +17,33 @@ import {
   dateState,
   cycleState,
   registSubInfoState,
+  mypageSubCostState,
+  mypagePaymentManagementState,
+  mypageNotiModalState,
 } from "utils/state";
 import axios from "axios";
+import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
+
+
 const MyPage = () => {
+  const userinfo = JSON.parse(
+    localStorage.getItem("subgatherUserInfo") || `{}`
+  );
 
-  const userinfo = JSON.parse(localStorage.getItem('subgatherUserInfo') ||`{}`)
 
 
+  const {showNicknameNotiModal} = mypageNotiModalState()
+  const accessToken:string|null= localStorage.getItem("accessToken")||null
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
   const openRegist = () => {
     setShowRegist(true);
   };
 
-  const { editUser, delUser } = showMypageState();
+  const { setDelUser, setEditUser, editUser, delUser,passEditUser } = showMypageState();
 
   const { setCycle, cycle, cycleCal, setCycleCal } = cycleState();
 
@@ -39,34 +51,111 @@ const MyPage = () => {
 
   const { setSelected, setSubCash } = registSubInfoState();
 
+  const { setPaymentCost, setSubCost } = mypageSubCostState();
+
+
+ const {setMypagePaymentManageCost,setMypagePaymentManageDate} =  mypagePaymentManagementState()
   //mypage 화면에 도달할때마다
+
+
+
   const resetState = () => {
     setCycleCal({ year: "", day: "", month: "" });
     setDateCal(moment());
     setSelected("");
     setSubCash("");
   };
-  //결제 현황 관리 결제일, 결제 금액 관리
-  //결제일은 가장 빠른 결제일 , 결제금액
-  const paymentManagement = () => {
-    axios.post(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`, 
-    {id:userinfo.id},
-    {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }).then((res)=>{
-      console.log(res.data)
 
-    }).catch((err)=>{
-err
-    })
+  const paymentManagement = () => {
+    let sum = 0;
+    //결제일과 결제금액 =>
+
+    //가장 적게남은 결제일 의 결제금액의 합을 보여준다
+
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/paymentmanage`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        //start_date+cycle cycle은 cycle 주기마다 cycle을 더해야한다
+        //그러면 today가 end_date(start+cycle)에 도달했을때
+        //start_date 를 end_date로 바꾸고 다시 end_date를 정한다.
+
+        const sumCostArr = res.data.data.map((el: { cost: number }) => {
+          return el.cost;
+        });
+
+        for (let i = 0; i < sumCostArr.length; i++) {
+          sum = sum + sumCostArr[i];
+        }
+
+        setMypagePaymentManageCost(sum);
+        setMypagePaymentManageDate(res.data.date);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
+  const calSubCost = () =>
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        const costSum = res.data.data.map((pre: { cost: number }) => {
+          return pre.cost;
+        });
+
+        let sum = 0;
+
+        for (let i = 0; i < costSum.length; i++) {
+          sum = sum + costSum[i];
+        }
+
+        setSubCost(sum);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  const calPaymentCost = () =>
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        const costSum = res.data.data.map((pre: { cost: number }) => {
+          return pre.cost;
+        });
+
+        let sum = 0;
+
+        for (let i = 0; i < costSum.length; i++) {
+          sum = sum + costSum[i];
+        }
+
+        setPaymentCost(sum);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   useEffect(() => {
+    paymentManagement();
+    calSubCost();
+    calPaymentCost();
     resetState();
   }, []);
 
+ 
   //가운데 메인 내정보
   //사이드 정보
 
@@ -74,25 +163,31 @@ err
 
   //유저 정보 수정을 누르면 useEdit으로 바뀐다.
 
-  //페이지에 wallet 정보를 불러온다. 불러온 정보로 구독 현황,
-  // 결제일, 결제금액 갱신
-  // 결제금액 -> 결제일과 매칭되는 금액
-  //결제완료는 총 금액- 결제금액, 지출 액은 총금액
+  //유저 정보 수정을 눌렀을때, socila_user가 true라면 socialEdit으로
 
   return (
     <div id="Mypage">
-      <div className="Mypage_background">
+
+
+  { showNicknameNotiModal?   <NicknameNotificationModal /> :null}
+
+
+            <div className="Mypage_background">
+
         <div className="Mypage_section">
           <div className="Mypage_info_section">
-            {editUser || delUser ? null : <Mypageuser />}
-            {editUser ? <MypageEdit /> : null}
+            {editUser || delUser||passEditUser ? null : <Mypageuser />}
+            {editUser&&userinfo.social_user===false ? <MypageEdit  /> : null}
             {delUser ? <MypageWithdrwal /> : null}
+            {editUser&&userinfo.social_user?<MypageSocialEdit />:null}
+            {passEditUser ? <MypagePassEdit></MypagePassEdit> :null} 
+
             {/* {paylist?<Myp} */}
 
             <Mypagesub openRegist={openRegist} />
           </div>
           <div className="Mypage_bar_section">
-            <Mypagebar />
+            <Mypagebar/>
           </div>
         </div>
       </div>

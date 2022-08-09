@@ -2,7 +2,7 @@ import axios from "axios";
 import { userInfo } from "os";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { accessToken, cycleState, dateState, registSubInfoState } from "utils/state";
+import {  cycleState, dateState, registSubInfoState } from "utils/state";
 
 import "../../css/common/registButton.css";
 
@@ -11,6 +11,7 @@ const RegistButton = () => {
   const { dateCal } = dateState();
   const { selected, subCash } = registSubInfoState();
 
+  const accessToken = localStorage.getItem("accessToken");
 
   //cost, cycle, localstorage =>id,
   const navigate = useNavigate();

@@ -5,11 +5,7 @@ import "../../css/components/MyPage/mypageuser.css";
 
 const Mypageuser = () => {
 
-  const [userEdit, setUsetEdit] = useState(false)
-
-  const changeUserEdit = () =>{
-    setUsetEdit(true)
-  }
+  
   const userNick:{nickname:string} = JSON.parse(localStorage.getItem('subgatherUserInfo')||'{}')
   return (
 

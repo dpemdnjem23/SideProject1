@@ -236,8 +236,7 @@ const Signup = () => {
 
     // console.log(validateCheckPassword())
 
-    console.log(validateAllCheck);
-    if (validateAllCheck) {
+        if (validateAllCheck) {
       fetch(`${process.env.REACT_APP_API_URI}/auth/signup`, {
 
 

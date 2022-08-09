@@ -4,7 +4,7 @@ import WalletPageTop from "Components/Wallet/walletPageTop";
 import SubDetailModal from "Components/Modal/subDetailModal";
 import React, { useState,useEffect, ReactNode } from "react";
 import axios from 'axios'
-import { accessToken } from "utils/state";
+import { accessToken, walletPageCostState } from "utils/state";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -26,7 +26,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // }
 
 import "../css/pages/WalletPage.css";
-const WalletPage:React.FC = () => {
+
+const WalletPage = () => {
   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
@@ -34,7 +35,10 @@ const WalletPage:React.FC = () => {
   const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
+  const{setWalletSubCost,setWalletPayment} =walletPageCostState()
   const [walletInfo , setWalletInfo] = useState([])
+
+  const accessToken:string|null = localStorage.getItem("accessToken");
 
   const openSubModal = () => {
     setShowSubDetail(true);
@@ -59,12 +63,11 @@ const WalletPage:React.FC = () => {
     setShowSubEdit(false);
   };
 
-  
   useEffect(()=>{
 
     axios.get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`,{
       headers:{
-        authorization:`Bearer ${accessToken}`
+        'authorization':`Bearer ${accessToken}`
       }
     })
     .then((res)=>{
@@ -76,6 +79,56 @@ const WalletPage:React.FC = () => {
       console.log(err)
 
     })
+
+    axios
+    .get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => {
+
+
+      let sum = 0;
+
+      const costSum = res.data.data.map((pre: { cost: number }) => {
+        return pre.cost;
+      });
+
+
+      for (let i = 0; i < costSum.length; i++) {
+        sum = sum + costSum[i];
+      }
+
+      console.log(sum)
+      setWalletSubCost(sum);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  axios
+    .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => {
+      const costSum = res.data.data.map((pre: { cost: number }) => {
+        return pre.cost;
+      });
+
+      let sum = 0;
+
+      for (let i = 0; i < costSum.length; i++) {
+        sum = sum + costSum[i];
+      }
+console.log(sum)
+      setWalletPayment(sum);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   },[])
 

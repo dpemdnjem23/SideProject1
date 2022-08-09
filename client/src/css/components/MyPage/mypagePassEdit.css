@@ -1,4 +1,4 @@
-.Mypage_useredit_section {
+.Mypage_passEdit_section {
   display: flex;
 
   background-color: white;
@@ -13,55 +13,50 @@
   margin-bottom: 30px;
 }
 
-.Mypage_useredit_title {
+.Mypage_passEdit_title {
   height: 21px;
   font-weight: bold;
   line-height: 28px;
   font-size: 18px;
   text-align: left;
 }
-.Mypgae_useredit_gap {
+
+.Mypage_passEdit_gap {
   width: 100%;
-  margin: 13px 0px;
+  margin: 17px 0px;
   height: 1px;
   background-color: rgb(227, 227, 227);
 }
-
-.section {
+.passsection {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.Mypage_useredit_nick {
-  margin-top: 10px;
-}
-
-
-.Mypage_useredit_pass{
-  padding-top: 20px;
-}
-
-/* .Mypgae_useredit_gap2 {
-  width: 100%;
-  margin-top: 20px;
+/* 
+.sts{
+    margin-top: 10px;
 } */
 
-.subsection {
-  display: flex;
+.passsubsection {
   align-items: center;
-}
 
-.Mypage_userdit_nick_sub{
-  margin-right: 50px;
+  display: flex;
+  margin-right: 90px;
 }
+.Mypage_passEdit_passcheck {
+  padding-top: 30px;
+}
+/* .Mypage_passEdit_pass{
+    padding-top: 10px;
+} */
 
-.Mypage_useredit_description {
+.Mypage_passEdit_description {
   color: gray;
 }
 
-.Mypage_useredit_contents {
+.Mypage_passEdit_contents {
   border: none;
   border-bottom: 1px solid black;
   font-size: 16px;
@@ -70,12 +65,17 @@
   margin-right: 24px;
 }
 
-.Mypage_useredit_bt {
-  cursor: pointer;
+.Mypage_passEdit_btsection {
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: end;
+
+  padding-top: 10px;
+}
+
+.Mypage_passEdit_bt {
+  cursor: pointer;
+
   color: blue;
   font-size: 14px;
   font-weight: bold;
@@ -86,9 +86,8 @@
   background-color: rgb(240, 240, 255);
 }
 
-
-.Mypage_useredit_nickErr{
-  color:red;
-  height: 10px;
+.Mypage_passEdit_err {
+  color: red;
+  height: 5px;
   font-size: 12px;
 }
