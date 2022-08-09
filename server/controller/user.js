@@ -116,7 +116,7 @@ try{
                   const insertUser = await user.update({
                     password: hardPassword,
                     salt: salt,
-                  where:{id:id}});
+                  where:{id:req.user.userId}});
                   if (!insertUser) {
                     return res.status(400).send("변경실패");
                   } 
