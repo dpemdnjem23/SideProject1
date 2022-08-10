@@ -75,7 +75,6 @@ const CallbackPage = () => {
       })
         .then((data) => {
 
-          console.log(data)
           
           navigate("/");
 

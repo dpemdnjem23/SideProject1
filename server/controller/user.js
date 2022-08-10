@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const axios  =  require('axios')
 const crypto = require("crypto");
+const { userInfo } = require("os");
 const { authchecker } = require("../middleware/authChecker");
 // const { exit } = require("process");
 
@@ -19,6 +20,34 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 module.exports = {
+
+  getUserInfo:async (req,res) =>{
+
+    try{
+      console.log(req.user.userId)
+
+      const userinfo = await user.findOne({where:{id:req.user.userId}})
+
+      if(!userinfo){
+        return res.status(400).send('존재하지 않습니다')
+      }
+
+    
+
+      return res.status(200).send({data:userinfo})
+
+
+
+
+    }catch(err){
+      return res.status(500).send(err)
+
+    }
+
+
+  },
+
+
   withdrawalControl: async (req, res) => {
       //회원탈퇴 아이디, 닉네임 ,id 가일치하는 정보를 찾아 로그아웃한다.
       //회원탈퇴할때 만약 id가없어 탈퇴할수가 없는경우. 고려하지 않는다 왜냐 id가 엇으면 탈퇴x

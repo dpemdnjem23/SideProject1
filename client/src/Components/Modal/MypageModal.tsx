@@ -19,6 +19,7 @@ import { isSigninState } from "utils/state";
 
 //로그아웃을 하면 쿠키제거, 로컬스토리지 제거 새로고침
 const MypageModal = () => {
+  const navigate = useNavigate()
   const { showMypageModalOn } = mainheaderuseStore();
   const { mypageOn }: any = useStore();
 
@@ -52,12 +53,13 @@ const MypageModal = () => {
         //       // window.location.reload();
       })
       .then((res) => {
-        console.log('로그아웃')
         persistLogin(false);
         showMypageModalOn(false);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("subgatherUserInfo");
+        localStorage.clear()
         isSigninState.persist.clearStorage();
+
+        navigate('/')
+        
 
         // window.location.reload();
       })

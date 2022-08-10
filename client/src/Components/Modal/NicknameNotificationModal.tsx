@@ -2,10 +2,12 @@ import React  , {useState} from "react";
 import { mypageNotiModalState, mypageUserInfoState, showMypageState } from "utils/state";
 import axios from "axios";
 import "../../css/common/modal/NicknameNotificationModal.css";
+import { useNavigate } from "react-router";
 
 const NicknameNotificationModal = () => {
 const {nickname} = mypageUserInfoState()
 
+const navigate = useNavigate()
 const accessToken:string|null = localStorage.getItem("accessToken")
 
 const [nickErrMessage , setNickErrMessage] = useState<string>('')
@@ -45,7 +47,7 @@ const{setEditUser,editUser} = showMypageState()
     ).then((res) =>{
       setShowNicknameNotiModal(false)
       setEditUser(false)
-
+      navigate('/')
       //userInfo storage에 닉네임 재할당
 
     }).catch((err)=>{
@@ -55,8 +57,6 @@ const{setEditUser,editUser} = showMypageState()
 
     })
   //변경하기를 누르는 순간 => 닉네임이 동일한지 체크해야된다.
-
- 
 
   };
   return (

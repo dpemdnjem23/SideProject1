@@ -12,11 +12,8 @@ const {nickname} = mypageUserInfoState()
 
 const accessToken:string|null = localStorage.getItem("accessToken")
 
-const [nickErrMessage , setNickErrMessage] = useState<string>('')
-const{setEditUser,editUser} = showMypageState()
-  const userInfo: {nickname:string } = JSON.parse(
-    localStorage.getItem("subgatherUserInfo") || `{}`
-  );
+const{setEditUser,editUser,setPassEditUser} = showMypageState()
+ 
   const { showPasswordNotiModal,setShowPasswordNotilModal} =
     mypageNotiModalState();
 
@@ -33,8 +30,7 @@ const{setEditUser,editUser} = showMypageState()
     
   };
 
-  const handleModifyNickname = () => {
-    //닉네임을 체크하고, 동일한 닉네임이 없다면 변경한다.
+  const handleModifyPass = () => {
     axios.patch(
       `${process.env.REACT_APP_API_URI}/user/edit`,
       {
@@ -49,13 +45,14 @@ const{setEditUser,editUser} = showMypageState()
     ).then((res) =>{
       setShowPasswordNotilModal(false)
       setEditUser(false)
+      setPassEditUser(false)
+      // console.log(res.date)
 
-      //userInfo storage에 닉네임 재할당
 
     }).catch((err)=>{
       //
+
       setShowPasswordNotilModal(false)
-      console.log(err)
 
     })
   //변경하기를 누르는 순간 => 닉네임이 동일한지 체크해야된다.
@@ -82,7 +79,7 @@ const{setEditUser,editUser} = showMypageState()
           >
             취소
           </button>
-          <button onClick={handleModifyNickname} className="PassNotificationModal_rightbt">확인</button>
+          <button onClick={handleModifyPass} className="PassNotificationModal_rightbt">확인</button>
         </div>
       </div>
     </div>

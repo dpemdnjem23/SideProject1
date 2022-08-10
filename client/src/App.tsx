@@ -93,7 +93,6 @@ const App = () => {
         return res.json();
       })
       .then((result) => {
-        console.log("재발급");
         //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
         localStorage.setItem("accessToken", result.data.accessToken);
         //res.data
@@ -104,6 +103,9 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
+
+        window.location.assign("/");
+
       });
   };
 

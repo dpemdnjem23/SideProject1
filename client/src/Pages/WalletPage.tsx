@@ -65,7 +65,7 @@ const WalletPage = () => {
 
   useEffect(()=>{
 
-    axios.get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`,{
+    axios.get(`${process.env.REACT_APP_API_URI}/wallet/info`,{
       headers:{
         'authorization':`Bearer ${accessToken}`
       }

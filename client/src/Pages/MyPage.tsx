@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-
+import moment from "moment";
 import Mypagebar from "Components/Mypage/mypagebar";
 import Mypageuser from "Components/Mypage/mypageuser";
 import Mypagesub from "Components/Mypage/mypagesub";
 import MypagePassEdit from "Components/Mypage/mypagePassEdit";
 import NicknameNotificationModal from "Components/Modal/NicknameNotificationModal";
-import moment from "moment";
 
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/Mypage/mypageuseredit";
-import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Outlet,useNavigate } from "react-router-dom";
 import RegisterPage from "./Mypage/SubReigstPage";
 import MypageWithdrwal from "Components/Mypage/mypageuserWithdrawal";
 import {
@@ -23,27 +22,40 @@ import {
 } from "utils/state";
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
+import PassNotificationModal from "Components/Modal/passwordNotificationModal";
+import { userInfo } from "os";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
 
-
 const MyPage = () => {
+
+  const navigate = useNavigate()
+  const [subLength, setSubLength] = useState<number>(0);
+
+
   const userinfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
 
+const [nick,setNick] = useState<string>('')
+  
 
-
-  const {showNicknameNotiModal} = mypageNotiModalState()
-  const accessToken:string|null= localStorage.getItem("accessToken")||null
+  const { showNicknameNotiModal, showPasswordNotiModal } =
+    mypageNotiModalState();
+  const accessToken: string | null =
+    localStorage.getItem("accessToken") || null;
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
   const openRegist = () => {
     setShowRegist(true);
   };
 
-  const { setDelUser, setEditUser, editUser, delUser,passEditUser } = showMypageState();
+  const today = moment().format('YYYY-MM-DD')
+
+
+  const { setDelUser, setEditUser, editUser, delUser, passEditUser } =
+    showMypageState();
 
   const { setCycle, cycle, cycleCal, setCycleCal } = cycleState();
 
@@ -53,11 +65,9 @@ const MyPage = () => {
 
   const { setPaymentCost, setSubCost } = mypageSubCostState();
 
-
- const {setMypagePaymentManageCost,setMypagePaymentManageDate} =  mypagePaymentManagementState()
+  const { setMypagePaymentManageCost, setMypagePaymentManageDate } =
+    mypagePaymentManagementState();
   //mypage 화면에 도달할때마다
-
-
 
   const resetState = () => {
     setCycleCal({ year: "", day: "", month: "" });
@@ -92,6 +102,9 @@ const MyPage = () => {
           sum = sum + sumCostArr[i];
         }
 
+        const paymenDate = Math.abs(moment(today).diff(findWallet[0].dataValues.end_date,'days'))||'[]'
+
+
         setMypagePaymentManageCost(sum);
         setMypagePaymentManageDate(res.data.date);
       })
@@ -102,7 +115,7 @@ const MyPage = () => {
 
   const calSubCost = () =>
     axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`, {
+      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
           authorization: `Bearer ${accessToken}`,
         },
@@ -117,6 +130,9 @@ const MyPage = () => {
         for (let i = 0; i < costSum.length; i++) {
           sum = sum + costSum[i];
         }
+
+
+                setSubLength(res.data.data.length);
 
         setSubCost(sum);
       })
@@ -148,14 +164,21 @@ const MyPage = () => {
         console.log(err);
       });
 
+
   useEffect(() => {
     paymentManagement();
     calSubCost();
     calPaymentCost();
     resetState();
+
+
   }, []);
 
- 
+  // useEffect(()=>{
+
+  // },)
+
+
   //가운데 메인 내정보
   //사이드 정보
 
@@ -167,27 +190,24 @@ const MyPage = () => {
 
   return (
     <div id="Mypage">
+      {showNicknameNotiModal ? <NicknameNotificationModal /> : null}
+      {showPasswordNotiModal ? <PassNotificationModal /> : null}
 
-
-  { showNicknameNotiModal?   <NicknameNotificationModal /> :null}
-
-
-            <div className="Mypage_background">
-
+      <div className="Mypage_background">
         <div className="Mypage_section">
           <div className="Mypage_info_section">
-            {editUser || delUser||passEditUser ? null : <Mypageuser />}
-            {editUser&&userinfo.social_user===false ? <MypageEdit  /> : null}
+            {editUser || delUser || passEditUser ? null : <Mypageuser subLength={subLength} />}
+            {editUser && userinfo.social_user === false ? <MypageEdit /> : null}
             {delUser ? <MypageWithdrwal /> : null}
-            {editUser&&userinfo.social_user?<MypageSocialEdit />:null}
-            {passEditUser ? <MypagePassEdit></MypagePassEdit> :null} 
+            {editUser && userinfo.social_user ? <MypageSocialEdit /> : null}
+            {passEditUser ? <MypagePassEdit></MypagePassEdit> : null}
 
             {/* {paylist?<Myp} */}
 
             <Mypagesub openRegist={openRegist} />
           </div>
           <div className="Mypage_bar_section">
-            <Mypagebar/>
+            <Mypagebar />
           </div>
         </div>
       </div>

@@ -112,7 +112,7 @@ const MypagePassEdit = () => {
         "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
       );
     }
-    if(regPassword.test(passwordCheck)&&!regPassword.test(password)&&password!==passwordCheck){
+    if(regPassword.test(passwordCheck)&&regPassword.test(password)&&password!==passwordCheck){
       setPassCheckErrMessage(
         '비밀번호가 일치하지 않습니다.'
       );

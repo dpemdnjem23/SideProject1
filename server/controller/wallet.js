@@ -55,7 +55,7 @@ module.exports = {
 
     const paymentArr = []
     const today = moment().format('YYYY-MM-DD')
-
+    const userId = req.user.userId ||req.user.id
     try {
 
 
@@ -65,9 +65,11 @@ module.exports = {
       // 8월 2일보단크고, 8월 7일보다는 작은값들을 찾으면된다.
       const findWallet = await wallet.findAll({order: [["end_date", "ASC"]],
         where: {
-          user_id: req.user.userId,
+          user_id: userId,
         },  
       });
+
+      console.log(findWallet,'find')
 
       
 
@@ -82,15 +84,22 @@ module.exports = {
           
         }
 
+        console.log(paymentArr,'paymentArr')
 
       
 
         // console.log(s)
+
+        if(paymentArr.length===0){
+          console.log('시작')
+          return res.status(200).send({data:paymentArr,date:paymenDate})
+
+        }
               
      
-   const paymenDate = Math.abs(moment(today).diff(findWallet[0].dataValues.end_date,'days'))
-console.log(findWallet[0].dataValues.end_date)
+
      
+   console.log(paymenDate,'date')
       //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
       //그럼 똑같은 날짜를뽑아서 넘겨 준다.
 
@@ -144,13 +153,12 @@ console.log(findWallet[0].dataValues.end_date)
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
 
-    if (!req.user) {
-      return res.status(400).send("로그인 후 볼수있다.");
-    }
+    const userId = req.user.userId ||req.user.id
+  
 
     try {
       const findWallet = await wallet.findAll({
-        where: { user_id: req.user.userId },
+        where: { user_id: userId },
       });
 
       if (!findWallet) {
