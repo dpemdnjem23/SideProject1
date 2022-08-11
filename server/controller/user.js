@@ -24,9 +24,11 @@ module.exports = {
   getUserInfo:async (req,res) =>{
 
     try{
-      console.log(req.user.userId)
 
-      const userinfo = await user.findOne({where:{id:req.user.userId}})
+
+      const userId = req.user.userId||req.user.id
+
+      const userinfo = await user.findOne({where:{id:userId}})
 
       if(!userinfo){
         return res.status(400).send('존재하지 않습니다')
@@ -52,9 +54,8 @@ module.exports = {
       //회원탈퇴 아이디, 닉네임 ,id 가일치하는 정보를 찾아 로그아웃한다.
       //회원탈퇴할때 만약 id가없어 탈퇴할수가 없는경우. 고려하지 않는다 왜냐 id가 엇으면 탈퇴x
      
-    const { id} = req.body;
-
-    const isUser = await user.findByPk(id);
+const userId = req.user.userId||req.user.id
+    const isUser = await user.findByPk(userId);
     //일반 유저인경우
     console.log(isUser)
 try{
@@ -63,7 +64,7 @@ try{
     if(isUser.social_user===false){
 
         if(isUser.username){
-           await user.destroy({where:{id:id}})
+           await user.destroy({where:{id:isUser.id}})
     
             return res.status(200).send('회원 탈퇴 완료')
         }
@@ -99,7 +100,7 @@ try{
 
   editUserControl :async (req,res) =>{
 //닉네임 , 비밀번호 변경
-   const {nickname,password,id} = req.body
+   const {nickname,password} = req.body
     try{
 
 

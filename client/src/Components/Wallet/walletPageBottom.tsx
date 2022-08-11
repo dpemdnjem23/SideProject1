@@ -8,10 +8,69 @@ import "../../css/components/WalletPage/walletPagebottom.css";
 import { mypageSubCostState, walletPageCostState } from "utils/state";
 const WalletPageBottom = () => {
   
-const {walletSubCost,walletPayment} = walletPageCostState()
+const {walletSubCost,walletPayment,setWalletPayment,setWalletSubCost} = walletPageCostState()
+
+const accessToken:string|null = localStorage.getItem("accessToken");
+
+
+useEffect(()=>{
+
+  axios
+.get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
+  headers: {
+    authorization: `Bearer ${accessToken}`,
+  },
+})
+.then((res) => {
+  const costSum = res.data.data.map((pre: { cost: number }) => {
+    return pre.cost;
+  });
+
+  let sum = 0;
+
+  for (let i = 0; i < costSum.length; i++) {
+    sum = sum + costSum[i];
+  }
+  console.log(sum,res.data.data)
+
+  setWalletPayment(sum);
+})
+.catch((err) => {
+  console.log(err);
+});
+
+
+axios
+.get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
+  headers: {
+    authorization: `Bearer ${accessToken}`,
+  },
+})
+.then((res) => {
+
+
+  let sum = 0;
+
+  const costSum = res.data.data.map((pre: { cost: number }) => {
+    return pre.cost;
+  });
+
+
+  for (let i = 0; i < costSum.length; i++) {
+    sum = sum + costSum[i];
+  }
+
+  console.log(sum)
+  setWalletSubCost(sum);
+})
+.catch((err) => {
+  console.log(err);
+});
 
 
 
+
+},[])
 
 
   //총 구독 가격은 현재 올라와있는 구독의 가격

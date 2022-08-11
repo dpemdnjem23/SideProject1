@@ -63,6 +63,9 @@ const [nick,setNick] = useState<string>('')
 
   const { setSelected, setSubCash } = registSubInfoState();
 
+  const [subPayment,setSubPayment] = useState<string>('')
+  const [subCost,setSubCost] = useState<string>('')
+
   const { setPaymentCost, setSubCost } = mypageSubCostState();
 
   const { setMypagePaymentManageCost, setMypagePaymentManageDate } =
@@ -94,6 +97,7 @@ const [nick,setNick] = useState<string>('')
         //그러면 today가 end_date(start+cycle)에 도달했을때
         //start_date 를 end_date로 바꾸고 다시 end_date를 정한다.
 
+        let paymentDate:any;
         const sumCostArr = res.data.data.map((el: { cost: number }) => {
           return el.cost;
         });
@@ -102,11 +106,21 @@ const [nick,setNick] = useState<string>('')
           sum = sum + sumCostArr[i];
         }
 
-        const paymenDate = Math.abs(moment(today).diff(findWallet[0].dataValues.end_date,'days'))||'[]'
+        console.log(sum,sumCostArr)
+
+        if(sumCostArr.length===0){
+         paymentDate = '0'
+
+        }
+        else{
+          paymentDate = Math.abs(moment(today).diff(sumCostArr[0].dataValues.end_date,'days'))||0
+
+        }
+
 
 
         setMypagePaymentManageCost(sum);
-        setMypagePaymentManageDate(res.data.date);
+        setMypagePaymentManageDate(paymentDate);
       })
       .catch((err) => {
         console.log(err);

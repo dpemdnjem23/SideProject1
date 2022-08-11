@@ -80,55 +80,7 @@ const WalletPage = () => {
 
     })
 
-    axios
-    .get(`${process.env.REACT_APP_API_URI}/wallet/walletinfo`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((res) => {
-
-
-      let sum = 0;
-
-      const costSum = res.data.data.map((pre: { cost: number }) => {
-        return pre.cost;
-      });
-
-
-      for (let i = 0; i < costSum.length; i++) {
-        sum = sum + costSum[i];
-      }
-
-      console.log(sum)
-      setWalletSubCost(sum);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  axios
-    .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((res) => {
-      const costSum = res.data.data.map((pre: { cost: number }) => {
-        return pre.cost;
-      });
-
-      let sum = 0;
-
-      for (let i = 0; i < costSum.length; i++) {
-        sum = sum + costSum[i];
-      }
-console.log(sum)
-      setWalletPayment(sum);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  
 
   },[])
 

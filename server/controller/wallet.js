@@ -29,6 +29,7 @@ module.exports = {
 
   walletDelete:async (req,res) =>{
   
+    //case 1 ,2 일반 유저, social 유저
 
     const {name} = req.body
     console.log(req.body)
@@ -36,10 +37,10 @@ module.exports = {
 
       // const walletInfo = await wall
 
-     const s=  await wallet.destroy({where:{user_id:req.user.userId}})
+     const walletDelete=  await wallet.destroy({where:{user_id:req.user.userId}})
 
 
-     if(!s) {
+     if(!walletDelete) {
        return res.status(400).send('삭제가안됨')
      }
 
@@ -54,7 +55,6 @@ module.exports = {
   paymentManagementControll: async (req, res) => {
 
     const paymentArr = []
-    const today = moment().format('YYYY-MM-DD')
     const userId = req.user.userId ||req.user.id
     try {
 
@@ -90,20 +90,13 @@ module.exports = {
 
         // console.log(s)
 
-        if(paymentArr.length===0){
-          console.log('시작')
-          return res.status(200).send({data:paymentArr,date:paymenDate})
-
-        }
-              
+      
      
 
-     
-   console.log(paymenDate,'date')
-      //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
+           //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
       //그럼 똑같은 날짜를뽑아서 넘겨 준다.
 
-      return res.status(200).send({data:paymentArr,date:paymenDate})
+      return res.status(200).send({data:paymentArr})
       //오늘과 가장가까운 결제일 찾기
       //그 결제일남은 기간 + cost를 찾는다
     } catch (err) {
@@ -112,15 +105,19 @@ module.exports = {
   },
 
   paymentControll: async (req, res) => {
+
+    const userId = req.user.userId ||req.user.id
     try {
       //start_date 기간은 1달로 한다.
       // start_date에 도달하면 기간이 gte인경우 결제금액을 +한다.
       const today = moment().format("YYYY-MM-DD");
 
       const findWallet = await wallet.findAll({
-        where: { start_date: { [Op.lte]: today } },
+        where: { user_id:userId,start_date: { [Op.lte]: today } },
         attributes: ["cost"],
       });
+
+      console.log(findWallet)
 
       if (!findWallet) {
         return res.status(400).send("수정할게 없다.");
@@ -157,9 +154,11 @@ module.exports = {
   
 
     try {
+      console.log(userId)
       const findWallet = await wallet.findAll({
         where: { user_id: userId },
       });
+
 
       if (!findWallet) {
         return res.status(400).send("회원을 찾을수가 없습니다.");

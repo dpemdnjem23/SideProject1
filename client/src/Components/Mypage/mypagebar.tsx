@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {mypagePaymentManagementState, mypageSubCostState, showMypageState } from "utils/state";
 import "../../css/components/MyPage/mypagebar.css";
 
@@ -14,7 +14,8 @@ const Mypagebar = () => {
 const {mypagePaymentManageCost,mypagePaymentManageDate} = mypagePaymentManagementState()
 const{subCost,subPayment} = mypageSubCostState()
 const { setDelUser, setEditUser, editUser, delUser,passEditUser,setPassEditUser,setSocialEditUser,socialEditUser } = showMypageState();
-
+const accessToken: string | null =
+localStorage.getItem("accessToken") || null;
   
 
 const handleEditUser = () => {
@@ -40,6 +41,7 @@ const handleDelUser = () => {
     setEditUser(false);
   }
 };
+
 
 
    
