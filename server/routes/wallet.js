@@ -7,7 +7,7 @@ router.post('/regist',controller.walletRegister)
 router.get('/info',controller.walletInfo)
 router.get('/payment',controller.paymentControll)
 router.get('/paymentmanage',controller.paymentManagementControll)
-router.delete('/walletdelete',controller.walletDelete)
+router.delete('/eliminate',controller.walletDelete)
 
 
 

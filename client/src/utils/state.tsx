@@ -3,7 +3,7 @@ import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
 
-export const accessToken = localStorage.getItem("accessToken")||null
+export const accessToken = localStorage.getItem("accessToken") || null;
 
 type isSigninState = {
   userSignin: boolean;
@@ -25,12 +25,12 @@ type showErrModalState = {
 type showMypageState = {
   editUser: boolean;
   delUser: boolean;
-  passEditUser:boolean;
-  socialEditUser:boolean
+  passEditUser: boolean;
+  socialEditUser: boolean;
   setEditUser: (input: boolean) => void;
   setDelUser: (input: boolean) => void;
-  setPassEditUser:(input: boolean) => void;
-  setSocialEditUser:(input: boolean) => void;
+  setPassEditUser: (input: boolean) => void;
+  setSocialEditUser: (input: boolean) => void;
 };
 type registSubInfoState = {
   selected: string | null;
@@ -53,55 +53,62 @@ type cycleState = {
   setCycleCal: (input: { year: string; month: string; day: string }) => void;
 };
 
-type mypageSubCostState ={
-
-  subPayment:number;
-  subCost:number;
-  setPaymentCost:(input:number) => void
-  setSubCost:(input:number) =>void
-
-
-}  
+type mypageSubCostState = {
+  subPayment: number;
+  subCost: number;
+  setPaymentCost: (input: number) => void;
+  setSubCost: (input: number) => void;
+};
 
 type walletPageCostState = {
-  walletSubCost:number;
+  walletSubCost: number;
 
-  walletPayment:number;
-  setWalletSubCost:(input:number) =>void
-  setWalletPayment:(input:number) =>void
+  walletPayment: number;
+  setWalletSubCost: (input: number) => void;
+  setWalletPayment: (input: number) => void;
+};
 
-}
+type mypagePaymentManage = {
+  mypagePaymentManageDate: string;
+  mypagePaymentManageCost: number;
 
-type mypagePaymentManage ={
-  mypagePaymentManageDate:string;
-  mypagePaymentManageCost:number;
-
-  setMypagePaymentManageDate:(input:string) =>void
-  setMypagePaymentManageCost:(input:number) =>void
-
-
-}
+  setMypagePaymentManageDate: (input: string) => void;
+  setMypagePaymentManageCost: (input: number) => void;
+};
 
 type mypageNotiModal = {
+  showNicknameNotiModal: boolean;
+  setShowNicknameNotiModal: (input: boolean) => void;
+  showPasswordNotiModal: boolean;
+  setShowPasswordNotilModal: (input: boolean) => void;
+};
 
-  showNicknameNotiModal:boolean;
-  setShowNicknameNotiModal:(input:boolean) =>void
-  showPasswordNotiModal:boolean;
-  setShowPasswordNotilModal:(input:boolean)=>void
+type mypageUserInfo = {
+  nickname: string;
+  password: string;
+  passwordCheck: string;
+  setNickname: (input: string) => void;
+  setPassword: (input: string) => void;
+  setPasswordCheck: (input: string) => void;
+};
 
-}
+type walletInfo = {
+  id: number;
+  name: string;
+  cycleDay: string;
+  cycleYear: string;
+  cycleMonth: string;
+  cost: number;
+  image: string;
+  end_date?: string;
+  start_date?: string;
+  user_id?: number;
+};
 
-type mypageUserInfo ={
-
-  nickname:string;
-  password:string;
-  passwordCheck:string;
-  setNickname:(input:string) =>void
-  setPassword:(input:string) =>void
-  setPasswordCheck:(input:string) =>void
-
-}
-
+type walletInfoState = {
+  walletInfo: walletInfo[];
+  setWalletInfo:(input:[]) =>void
+};
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -125,10 +132,10 @@ export const showErrModalState = create<showErrModalState>()((set) => ({
 export const showMypageState = create<showMypageState>()((set) => ({
   editUser: false,
   delUser: false,
-  passEditUser:false,
-  socialEditUser:false,
+  passEditUser: false,
+  socialEditUser: false,
   setPassEditUser: (input) => set({ passEditUser: input }),
-  setSocialEditUser: (input) => set({socialEditUser: input }),
+  setSocialEditUser: (input) => set({ socialEditUser: input }),
   setDelUser: (input) => set({ delUser: input }),
   setEditUser: (input) => set({ editUser: input }),
 }));
@@ -164,68 +171,63 @@ export const cycleState = create<cycleState>()((set) => ({
 }));
 
 export const mypageSubCostState = create<mypageSubCostState>()((set) => ({
-  
-
-  subCost:0,
-  subPayment:0,
-  setPaymentCost:(input) =>set({subPayment:input}),
-  setSubCost:(input) =>set ({subCost:input})
+  subCost: 0,
+  subPayment: 0,
+  setPaymentCost: (input) => set({ subPayment: input }),
+  setSubCost: (input) => set({ subCost: input }),
 }));
-
 
 export const walletPageCostState = create<walletPageCostState>()((set) => ({
-  
-
-  walletPayment:0,
-  walletSubCost:0,
-  setWalletSubCost:(input) =>set({walletPayment:input}),
-  setWalletPayment:(input) =>set ({walletPayment:input})
+  walletPayment: 0,
+  walletSubCost: 0,
+  setWalletSubCost: (input) => set({ walletPayment: input }),
+  setWalletPayment: (input) => set({ walletPayment: input }),
 }));
 
-export const mypagePaymentManagementState = create<mypagePaymentManage>()((set) => ({
-  
-
-
-  mypagePaymentManageDate:'',
-  mypagePaymentManageCost:0,
-  setMypagePaymentManageCost:(input) =>set({ mypagePaymentManageCost:input}),
-  setMypagePaymentManageDate:(input) =>set ({mypagePaymentManageDate:input})
-}));
-
+export const mypagePaymentManagementState = create<mypagePaymentManage>()(
+  (set) => ({
+    mypagePaymentManageDate: "",
+    mypagePaymentManageCost: 0,
+    setMypagePaymentManageCost: (input) =>
+      set({ mypagePaymentManageCost: input }),
+    setMypagePaymentManageDate: (input) =>
+      set({ mypagePaymentManageDate: input }),
+  })
+);
 
 export const mypageNotiModalState = create<mypageNotiModal>()((set) => ({
-  
-
-
-showNicknameNotiModal:false,
-showPasswordNotiModal:false,
-setShowNicknameNotiModal:(input) =>set({showNicknameNotiModal:input}),
-setShowPasswordNotilModal:(input) =>set({showPasswordNotiModal:input})
-
-  
+  showNicknameNotiModal: false,
+  showPasswordNotiModal: false,
+  setShowNicknameNotiModal: (input) => set({ showNicknameNotiModal: input }),
+  setShowPasswordNotilModal: (input) => set({ showPasswordNotiModal: input }),
 }));
 
 export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
-  
+  nickname: "",
+  password: "",
+  passwordCheck: "",
+  setPasswordCheck: (input) => set({ passwordCheck: input }),
+  setPassword: (input) => set({ password: input }),
+  setNickname: (input) => set({ nickname: input }),
+}));
 
-nickname:'',
-password:'',
-passwordCheck:'',
-setPasswordCheck:(input) => set({passwordCheck:input}),
-setPassword:(input) => set({password:input}),
-setNickname:(input) => set({nickname:input})
-    
-  }));
-  
-  
-  
-  
-
-
-
-
-
-
+export const useWalletStore = create<walletInfoState>()((set) => ({
+  walletInfo: [
+    // {
+    //   id: 0,
+    //   name: "",
+    //   cycleDay: "",
+    //   cycleYear: "",
+    //   cycleMonth: "",
+    //   cost: 0,
+    //   image: "",
+    //   end_date: "",
+    //   start_date: "",
+    //   user_id: 0,
+    // },
+  ],
+  setWalletInfo:(input) =>set({walletInfo:input})
+}));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{
@@ -239,8 +241,5 @@ setNickname:(input) => set({nickname:input})
 //     user_id:0
 //     },
 // setWalletInfo:(input) =>set({walletInfo:input})
-
-
-
 
 // }));

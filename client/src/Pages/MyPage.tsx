@@ -63,10 +63,10 @@ const [nick,setNick] = useState<string>('')
 
   const { setSelected, setSubCash } = registSubInfoState();
 
-  const [subPayment,setSubPayment] = useState<string>('')
-  const [subCost,setSubCost] = useState<string>('')
+  const [subPayment,setSubPayment] = useState<number>(0)
+  const [subCost,setSubCost] = useState<number>(0)
 
-  const { setPaymentCost, setSubCost } = mypageSubCostState();
+  // const { setPaymentCost, setSubCost } = mypageSubCostState();
 
   const { setMypagePaymentManageCost, setMypagePaymentManageDate } =
     mypagePaymentManagementState();
@@ -172,7 +172,7 @@ const [nick,setNick] = useState<string>('')
           sum = sum + costSum[i];
         }
 
-        setPaymentCost(sum);
+        // setPaymentCost(sum);
       })
       .catch((err) => {
         console.log(err);

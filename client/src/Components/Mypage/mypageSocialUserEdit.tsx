@@ -12,8 +12,8 @@ const MypageSocialEdit = () => {
     }
 
     const handleUserNick = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setNickname(e.target.value);
-      setNickErrMessage("");
+      // setNickname(e.target.value);
+      // setNickErrMessage("");
     };
   };
 
@@ -39,7 +39,7 @@ const MypageSocialEdit = () => {
           </div>
         </div>
       </div>
-      <span className="Mypage_useredit_nickErr">{nickErrMessage}</span>
+      {/* <span className="Mypage_useredit_nickErr">{nickErrMessage}</span> */}
 
     </div>
   );

@@ -31,13 +31,20 @@ module.exports = {
   
     //case 1 ,2 일반 유저, social 유저
 
-    const {name} = req.body
+    const {id} = req.body
+
+    const userId = req.user.userId||req.user.id
     console.log(req.body)
     try{
+      //id
+
+
+
+      // const walletInfo = await wallet.findOne({where:{user_id:userId,}})
 
       // const walletInfo = await wall
 
-     const walletDelete=  await wallet.destroy({where:{user_id:req.user.userId}})
+     const walletDelete=  await wallet.destroy({where:{user_id:req.user.userId,id:id}})
 
 
      if(!walletDelete) {

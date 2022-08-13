@@ -39,37 +39,6 @@ useEffect(()=>{
   console.log(err);
 });
 
-
-axios
-.get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-  headers: {
-    authorization: `Bearer ${accessToken}`,
-  },
-})
-.then((res) => {
-
-
-  let sum = 0;
-
-  const costSum = res.data.data.map((pre: { cost: number }) => {
-    return pre.cost;
-  });
-
-
-  for (let i = 0; i < costSum.length; i++) {
-    sum = sum + costSum[i];
-  }
-
-  console.log(sum)
-  setWalletSubCost(sum);
-})
-.catch((err) => {
-  console.log(err);
-});
-
-
-
-
 },[])
 
 

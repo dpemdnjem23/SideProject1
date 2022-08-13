@@ -2,17 +2,15 @@ import WalletPageBottom from "Components/Wallet/walletPageBottom";
 import WalletPageCenter from "Components/Wallet/walletPageCenter";
 import WalletPageTop from "Components/Wallet/walletPageTop";
 import SubDetailModal from "Components/Modal/subDetailModal";
-import React, { useState,useEffect, ReactNode } from "react";
-import axios from 'axios'
-import { accessToken, walletPageCostState } from "utils/state";
+import React, { useState, useEffect, ReactNode } from "react";
+import axios from "axios";
+import { accessToken, useWalletStore, walletPageCostState } from "utils/state";
+import { devtools, persist , subscribeWithSelector } from "zustand/middleware";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-
-
 // interface walletInfo {
 //     id?:number,
-  
 
 //     name:string,
 //     cycle:string,
@@ -21,27 +19,43 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //     end_date?:string,
 //     start_date?:string,
 //     user_id?:number
-  
-  
+
 // }
 
 import "../css/pages/WalletPage.css";
 
 const WalletPage = () => {
+  const {walletInfo,setWalletInfo} = useWalletStore()
   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
+
+  const [clickModalNum,setClickModalNum] = useState<number>(0)
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
   const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
-  const{setWalletSubCost,setWalletPayment} =walletPageCostState()
-  const [walletInfo , setWalletInfo] = useState([])
+  const [walletSubCost, setWalletSubCost] = useState<number>(0);
 
-  const accessToken:string|null = localStorage.getItem("accessToken");
+  const [walletPayment, setWalletPayment] = useState<number>(0);
+  // const{setWalletSubCost,setWalletPayment} =walletPageCostState()
 
-  const openSubModal = () => {
+  const accessToken: string | null = localStorage.getItem("accessToken");
+  // useEffect(() => {
+  //   if (!isLogin) {
+  //     window.location.assign('/signin');
+  //   }
+
+
+  // 각각의 모달을 나오게 하는법 =>
+  // 몇번째 모달을 눌렀는지 상태정보를 state에 저장한다
+
+  const openSubModal = (num:any) => {
+    setClickModalNum(num)
     setShowSubDetail(true);
+
+    console.log(clickModalNum)
+  
   };
 
   const closeSubModal = () => {
@@ -63,44 +77,78 @@ const WalletPage = () => {
     setShowSubEdit(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        let sum = 0;
 
-    axios.get(`${process.env.REACT_APP_API_URI}/wallet/info`,{
-      headers:{
-        'authorization':`Bearer ${accessToken}`
-      }
-    })
-    .then((res)=>{
+        const costSum = res.data.data.map((pre: { cost: number }) => {
+          return pre.cost;
+        });
 
+        for (let i = 0; i < costSum.length; i++) {
+          sum = sum + costSum[i];
+        }
 
-    setWalletInfo(res.data.data)
-    })
-    .catch((err)=>{
-      console.log(err)
+        console.log(res.data.data)
+        // console.log(sum);
+        setWalletSubCost(sum);
 
-    })
+        setWalletInfo(res.data.data);
+
+        console.log(walletInfo)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }, []);
+
+  return (
+    <div id="WalletPage">
+
+{showSubDetail?
+<SubDetailModal
+
+        // key={el.id}
+        // walletInfo={el}
+        clickModalNum={clickModalNum}
+        // walletInfo={walletInfo}
+          showSubEdit={showSubEdit}
+          closeCancellationModal={closeCancellationModal}
+          closeSubDetailEditModal={closeSubDetailEditModal}
+          oepnSubDetailEditModal={openSubDetailEditModal}
+          showCancellation={showCancellation}
+          openCancellationModal={openCancellationModal}
+          closeSubModal={closeSubModal}
+        ></SubDetailModal>
 
   
 
-  },[])
+:null}
 
+{/*     
+// })
 
-
-  return (
-    <div  id="WalletPage">
-    {showSubDetail ? <SubDetailModal showSubEdit ={showSubEdit} closeCancellationModal={ closeCancellationModal} closeSubDetailEditModal={closeSubDetailEditModal} oepnSubDetailEditModal={openSubDetailEditModal} showCancellation={showCancellation}  openCancellationModal={openCancellationModal} closeSubModal={closeSubModal}></SubDetailModal> : null}
+//      }) 
+//  }  */}
       <div className="WalletPage_background">
         <WalletPageTop></WalletPageTop>
 
         <WalletPageCenter
-      walletInfo={walletInfo}
-        // showCancellation={showCancellation}
+          // walletInfo={walletInfo}
+          // showCancellation={showCancellation}
           openSubModal={openSubModal}
         />
-        <WalletPageBottom       
-        
+        <WalletPageBottom
+
         // walletInfo={walletInfo}
-/>
+        />
       </div>
     </div>
   );

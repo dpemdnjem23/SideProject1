@@ -58,19 +58,22 @@ header > button {
   /* margin:auto; */
 }
 .SubDetail_Modal_sub_section {
-  padding: 5px 10px;
-  margin-top: 25px;
-  border-radius: 8px;
-  min-height: 100px;
-  min-width: 340px;
-  background-color: rgb(218, 234, 248);
+
+ text-align: center;
+  margin:10px 0px;
+  /* background-color: rgb(218, 234, 248); */
 }
 
 .SubDetail_Modal_sub_section_text {
+
+
+  /* margin-bottom: 10px; */
+
   color: rgb(112, 112, 112);
   font-size: 12px;
 }
 .SubDetail_Modal_sub_section_text2 {
+   margin-top: 5px;
   font-size: 18px;
   font-weight: bold;
   display: block;

@@ -1,39 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { accessToken } from "utils/state";
+import { accessToken, useWalletStore } from "utils/state";
 import "../../css/components/WalletPage/walletPageCenter.css";
 
 type walletPageCenter = {
-  openSubModal: () => void;
-  walletInfo: walletInfo[];
+  openSubModal: (el:any) => void;
 };
 
-type walletInfo = {
-  id: string;
-
-  name: string;
-  cycleDay: string;
-  cycleYear: string;
-  cycleMonth: string;
-  cost: number;
-  image: string;
-  end_date?: string;
-  start_date?: string;
-  user_id?: number;
-};
 
 const WalletPageCenter: React.FC<walletPageCenter> = ({
   openSubModal,
-  walletInfo,
 }) => {
+
+  const{walletInfo} = useWalletStore()
+
+  // console.log(walletInfo)
   return (
     <div className="WalletPage_center_section">
-      {walletInfo.map((el) => {
+      {walletInfo.map((el,index) => {
+
+        console.log(el)
         
         return (
           <div
             key={el.id}
-            onClick={() => openSubModal()}
+            onClick={() => openSubModal(el.id)}
             className="WalletPage_center_sub_box"
           >
             <img src={el.image} />

@@ -1,17 +1,25 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import CancellationModal from "./cancellationModal";
 import "../../css/common/modal/subDetailModal.css";
 import SubDetailEditModal from "./subDetailEditModal";
+import { useWalletStore } from "utils/state";
+import axios from "axios";
 
 type modal = {
   closeSubModal: () => void;
   openCancellationModal: () => void;
   showCancellation: boolean;
   oepnSubDetailEditModal: () => void;
-  closeSubDetailEditModal:() => void;
-  showSubEdit:boolean;
-  closeCancellationModal:() =>void
+  closeSubDetailEditModal: () => void;
+  showSubEdit: boolean;
+  closeCancellationModal: () => void;
+  // walletInfo:{
+  //   name:string
+  //   cost:number
+  //   image:string
+  // }
+  clickModalNum: number;
 };
 const SubDetailModal: React.FC<modal> = ({
   oepnSubDetailEditModal,
@@ -19,35 +27,61 @@ const SubDetailModal: React.FC<modal> = ({
   closeSubModal,
   openCancellationModal,
   showSubEdit,
-  closeCancellationModal
-  ,closeSubDetailEditModal
+  closeCancellationModal,
+  closeSubDetailEditModal,
+  // walletInfo,
+  clickModalNum,
+  // id
 }) => {
-
- 
-
+  const { walletInfo, setWalletInfo } = useWalletStore();
 
 
-  
+
+
   return (
     <div onClick={() => closeSubModal()} id="SubDetail_Modal">
       <div
         onClick={(e) => e.stopPropagation()}
         className="SubDetail_Modal_section"
       >
-        {showCancellation ? <CancellationModal closeCancellationModal={closeCancellationModal}/> : null}
-        {showSubEdit? <SubDetailEditModal closeSubDetailEditModal={closeSubDetailEditModal}/> : null}
+        {showCancellation ? (
+          <CancellationModal clickModalNum={clickModalNum} closeCancellationModal={closeCancellationModal} />
+        ) : null}
+        {showSubEdit ? (
+          <SubDetailEditModal
+            closeSubDetailEditModal={closeSubDetailEditModal}
+          />
+        ) : null}
+
         <header>
           <button onClick={() => closeSubModal()} className="close">
             X
           </button>
         </header>
-        <img src="./images/netflex.png" />
-        <span>넷플릭스</span>
+        {/* {clickModalNum? */}
 
-        <div className={`SubDetail_Modal_sub_secton ` }>
+        <img src={walletInfo[clickModalNum].image} />
+        <span>{walletInfo[clickModalNum].name}</span>
+        {/* 
+        <span>{el.cycleYear ? el.cycleYear + "년" : ""}</span>
+            <span>&nbsp;{ el.cycleMonth ? el.cycleMonth + "달" : ""}</span>
+            <span>&nbsp;{el.cycleDay ? el.cycleDay + "일" : ""}</span> */}
+
+        <div className="SubDetail_Modal_sub_section">
           <span className="SubDetail_Modal_sub_section_text">
-            {" "}
-            50,000원 / 1달{" "}
+            {walletInfo[clickModalNum].cost} /{" "}
+            {walletInfo[clickModalNum].cycleYear
+              ? walletInfo[clickModalNum].cycleYear + "년"
+              : ""}
+                &nbsp;{" "}
+            {walletInfo[clickModalNum].cycleMonth
+              ? walletInfo[clickModalNum].cycleMonth + "달"
+              : ""}
+            &nbsp;{" "}
+            {walletInfo[clickModalNum].cycleDay
+              ? walletInfo[clickModalNum].cycleDay + "일"
+              : ""}
+          
           </span>
           <span className="SubDetail_Modal_sub_section_text2">
             1일 남았어요!
@@ -69,16 +103,7 @@ const SubDetailModal: React.FC<modal> = ({
           </button>
         </div>
 
-        <div>
-          <span>최근 기록을 보여줍니다.</span>
-
-          <div>
-            <span>그림</span>
-            <span>트위치</span>
-            <span>가격</span>
-            <span>날짜</span>
-          </div>
-        </div>
+        <div></div>
       </div>
     </div>
   );
