@@ -4,7 +4,7 @@ import { accessToken, useWalletStore } from "utils/state";
 import "../../css/components/WalletPage/walletPageCenter.css";
 
 type walletPageCenter = {
-  openSubModal: (el:any) => void;
+  openSubModal: (el:number,id:number) => void;
 };
 
 
@@ -24,7 +24,7 @@ const WalletPageCenter: React.FC<walletPageCenter> = ({
         return (
           <div
             key={el.id}
-            onClick={() => openSubModal(el.id)}
+            onClick={() => openSubModal(index,el.id)}
             className="WalletPage_center_sub_box"
           >
             <img src={el.image} />

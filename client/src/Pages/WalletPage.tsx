@@ -25,14 +25,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../css/pages/WalletPage.css";
 
 const WalletPage = () => {
-  const {walletInfo,setWalletInfo} = useWalletStore()
+  const {walletInfo,setWalletInfo,setShowSubEdit,showSubEdit} = useWalletStore()
   const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
 
   const [clickModalNum,setClickModalNum] = useState<number>(0)
+  const [arrIndex,setArrIndex] = useState<number>(0)
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
-  const [showSubEdit, setShowSubEdit] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
   const [walletSubCost, setWalletSubCost] = useState<number>(0);
@@ -50,8 +50,9 @@ const WalletPage = () => {
   // 각각의 모달을 나오게 하는법 =>
   // 몇번째 모달을 눌렀는지 상태정보를 state에 저장한다
 
-  const openSubModal = (num:any) => {
-    setClickModalNum(num)
+  const openSubModal = (num:any,id:number) => {
+    setArrIndex(num)
+    setClickModalNum(id)
     setShowSubDetail(true);
 
     console.log(clickModalNum)
@@ -70,13 +71,7 @@ const WalletPage = () => {
   const closeCancellationModal = () => {
     setShowCancellation(false);
   };
-  const openSubDetailEditModal = () => {
-    setShowSubEdit(true);
-  };
-  const closeSubDetailEditModal = () => {
-    setShowSubEdit(false);
-  };
-
+ 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
@@ -117,12 +112,12 @@ const WalletPage = () => {
 
         // key={el.id}
         // walletInfo={el}
+        arrIndex={arrIndex}
         clickModalNum={clickModalNum}
+        
         // walletInfo={walletInfo}
-          showSubEdit={showSubEdit}
           closeCancellationModal={closeCancellationModal}
-          closeSubDetailEditModal={closeSubDetailEditModal}
-          oepnSubDetailEditModal={openSubDetailEditModal}
+       
           showCancellation={showCancellation}
           openCancellationModal={openCancellationModal}
           closeSubModal={closeSubModal}

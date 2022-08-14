@@ -8,6 +8,7 @@ router.get('/info',controller.walletInfo)
 router.get('/payment',controller.paymentControll)
 router.get('/paymentmanage',controller.paymentManagementControll)
 router.delete('/eliminate',controller.walletDelete)
+router.patch('/edit',)
 
 
 

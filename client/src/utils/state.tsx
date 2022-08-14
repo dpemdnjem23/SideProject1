@@ -43,12 +43,10 @@ type registSubInfoState = {
 type dateState = {
   dateCal: moment.Moment;
   setDateCal: (input: moment.Moment) => void;
+  clearDateCal:() =>void
 };
 
 type cycleState = {
-  cycle: number;
-
-  setCycle: (input: number) => void;
   cycleCal: { year: string; month: string; day: string };
   setCycleCal: (input: { year: string; month: string; day: string }) => void;
 };
@@ -107,7 +105,9 @@ type walletInfo = {
 
 type walletInfoState = {
   walletInfo: walletInfo[];
-  setWalletInfo:(input:[]) =>void
+  setWalletInfo:(input:[]) =>void;
+  setShowSubEdit:(input:boolean) =>void;
+  showSubEdit:boolean;
 };
 
 export const isSigninState = create<isSigninState>()(
@@ -155,13 +155,12 @@ export const registSubInfoState = create<registSubInfoState>()((set) => ({
 export const dateState = create<dateState>()((set) => ({
   dateCal: moment(),
   setDateCal: (input) => set({ dateCal: input }),
+  clearDateCal:() =>set({dateCal:moment()})
   // subStart:,
   // setSubStart:(input) => set({subStart:input})
 }));
 
 export const cycleState = create<cycleState>()((set) => ({
-  cycle: 0,
-  setCycle: (input) => set({ cycle: input }),
   cycleCal: {
     year: "",
     month: "",
@@ -212,21 +211,10 @@ export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
 }));
 
 export const useWalletStore = create<walletInfoState>()((set) => ({
-  walletInfo: [
-    // {
-    //   id: 0,
-    //   name: "",
-    //   cycleDay: "",
-    //   cycleYear: "",
-    //   cycleMonth: "",
-    //   cost: 0,
-    //   image: "",
-    //   end_date: "",
-    //   start_date: "",
-    //   user_id: 0,
-    // },
-  ],
-  setWalletInfo:(input) =>set({walletInfo:input})
+  walletInfo: [],
+  showSubEdit:false,
+  setWalletInfo:(input) =>set({walletInfo:input}),
+  setShowSubEdit:(input) =>({showSubEdit:input})
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

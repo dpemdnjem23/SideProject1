@@ -16,11 +16,11 @@
   box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
   border-radius: 6px;
 }
-header {
+.SubDetail_Modal_section > header {
   width: 100%;
   text-align: end;
 }
-header > button {
+.SubDetail_Modal_section>header > button {
   background-color: white;
   /* color:blue; */
   outline: none;

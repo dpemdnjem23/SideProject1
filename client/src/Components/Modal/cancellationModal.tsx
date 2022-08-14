@@ -31,7 +31,9 @@ const CancellationModal:React.FC<cancellationModal> = ({closeCancellationModal,c
       },withCredentials:true}
       )
       .then((res)=>{
+
         navigate('/wallet')
+        window.location.reload()
         alert('구독목록이 삭제되었습니다.')
 
       }).catch((err)=>{

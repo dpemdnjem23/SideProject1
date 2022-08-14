@@ -10,33 +10,29 @@ type modal = {
   closeSubModal: () => void;
   openCancellationModal: () => void;
   showCancellation: boolean;
-  oepnSubDetailEditModal: () => void;
-  closeSubDetailEditModal: () => void;
-  showSubEdit: boolean;
   closeCancellationModal: () => void;
-  // walletInfo:{
-  //   name:string
-  //   cost:number
-  //   image:string
-  // }
+
   clickModalNum: number;
+
+  arrIndex: number;
 };
 const SubDetailModal: React.FC<modal> = ({
-  oepnSubDetailEditModal,
   showCancellation,
   closeSubModal,
   openCancellationModal,
-  showSubEdit,
   closeCancellationModal,
-  closeSubDetailEditModal,
-  // walletInfo,
+  arrIndex,
   clickModalNum,
   // id
 }) => {
-  const { walletInfo, setWalletInfo } = useWalletStore();
+  const { walletInfo, setWalletInfo, setShowSubEdit, showSubEdit } =
+    useWalletStore();
 
+  const openSubDetailEditModal = () => {
+    setShowSubEdit(true);
+    console.log('문열어',showSubEdit)
 
-
+  };
 
   return (
     <div onClick={() => closeSubModal()} id="SubDetail_Modal">
@@ -45,23 +41,22 @@ const SubDetailModal: React.FC<modal> = ({
         className="SubDetail_Modal_section"
       >
         {showCancellation ? (
-          <CancellationModal clickModalNum={clickModalNum} closeCancellationModal={closeCancellationModal} />
-        ) : null}
-        {showSubEdit ? (
-          <SubDetailEditModal
-            closeSubDetailEditModal={closeSubDetailEditModal}
+          <CancellationModal
+            clickModalNum={clickModalNum}
+            closeCancellationModal={closeCancellationModal}
           />
         ) : null}
+        {showSubEdit ? <SubDetailEditModal arrIndex={arrIndex} /> : null}
 
         <header>
           <button onClick={() => closeSubModal()} className="close">
             X
           </button>
         </header>
-        {/* {clickModalNum? */}
+        {/* {arrIndex? */}
 
-        <img src={walletInfo[clickModalNum].image} />
-        <span>{walletInfo[clickModalNum].name}</span>
+        <img src={walletInfo[arrIndex].image} />
+        <span>{walletInfo[arrIndex].name}</span>
         {/* 
         <span>{el.cycleYear ? el.cycleYear + "년" : ""}</span>
             <span>&nbsp;{ el.cycleMonth ? el.cycleMonth + "달" : ""}</span>
@@ -69,19 +64,18 @@ const SubDetailModal: React.FC<modal> = ({
 
         <div className="SubDetail_Modal_sub_section">
           <span className="SubDetail_Modal_sub_section_text">
-            {walletInfo[clickModalNum].cost} /{" "}
-            {walletInfo[clickModalNum].cycleYear
-              ? walletInfo[clickModalNum].cycleYear + "년"
-              : ""}
-                &nbsp;{" "}
-            {walletInfo[clickModalNum].cycleMonth
-              ? walletInfo[clickModalNum].cycleMonth + "달"
+            {walletInfo[arrIndex].cost} /{" "}
+            {walletInfo[arrIndex].cycleYear
+              ? walletInfo[arrIndex].cycleYear + "년"
               : ""}
             &nbsp;{" "}
-            {walletInfo[clickModalNum].cycleDay
-              ? walletInfo[clickModalNum].cycleDay + "일"
+            {walletInfo[arrIndex].cycleMonth
+              ? walletInfo[arrIndex].cycleMonth + "달"
               : ""}
-          
+            &nbsp;{" "}
+            {walletInfo[arrIndex].cycleDay
+              ? walletInfo[arrIndex].cycleDay + "일"
+              : ""}
           </span>
           <span className="SubDetail_Modal_sub_section_text2">
             1일 남았어요!
@@ -96,7 +90,7 @@ const SubDetailModal: React.FC<modal> = ({
             삭제하기
           </button>
           <button
-            onClick={() => oepnSubDetailEditModal()}
+            onClick={openSubDetailEditModal}
             className="SubDetail_Modal_bt_modify"
           >
             변경하기

@@ -6,14 +6,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 // declare module 'react-calendar'
 import "../../css/common/modal/subDetailEditModal.css";
+import { cycleState, dateState, useWalletStore } from "utils/state";
 
 interface subDetailEdit {
-  closeSubDetailEditModal: () => void;
+  arrIndex:number
 }
 const SubDetailEditModal: React.FC<subDetailEdit> = ({
-  closeSubDetailEditModal,
+  arrIndex
 }) => {
   const today = moment();
+
+
+  const {walletInfo,setWalletInfo,setShowSubEdit} = useWalletStore()
+
+  const {dateCal,setDateCal,clearDateCal} =dateState()
+
+  const {cycleCal,setCycleCal} = cycleState()
+
+
+  const closeSubDetailEditModal = () => {
+    setShowSubEdit(false);
+  };
+
+
+  // const [cycleCal,setCycleCal]= useState<{day:string,year:string,month:string}>({day:'',year:'',month:''})
+
+  const handleCycleInfo =(e:React.ChangeEvent<HTMLInputElement>) =>{
+
+    // setCycleCal(e.target.value)
+    // 주기는 계속 반복되어야 한다
+if(e.target.id==='year'){
+  setCycleCal({...cycleCal, year:e.target.value})
+}
+if(e.target.id==='month'){
+  setCycleCal({...cycleCal, month:e.target.value})
+}
+if(e.target.id==='day'){
+  setCycleCal({...cycleCal, day:e.target.value})
+}
+// dateCal.add
+// console.log(cycleCal.day,cycleCal.month*30,cycleCal.year)
+
+// console.log(cycleCal)
+  }
 
   // const[value,setValue] = useState<Mom>(new Date())
 
@@ -40,16 +75,16 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
             </span>
             <input
               className="SubDetailEdit_modal_section_sub_pay_pay"
-              placeholder="3,000원"
+              placeholder={walletInfo[arrIndex].cost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")+' 원'}
             ></input>
           </div>
           <div className="SubDetailEdit_modal_section_sub_cycle">
             <div className="cycle_text">
               <span>주기</span>
             </div>
-            <input placeholder="년"></input>
-            <input placeholder="월"></input>
-            <input placeholder="일"></input>
+            <input value={cycleCal.year} type='number' id='year' onChange={handleCycleInfo} placeholder="년"></input>
+            <input value={cycleCal.month} type='number' id='month' onChange={handleCycleInfo} placeholder="월"></input>
+            <input value={cycleCal.day} type='number' id='day' onChange={handleCycleInfo} placeholder="일"></input>
           </div>
 
           <div className="SubDetailEdit_modal_section_sub_start">
@@ -58,8 +93,8 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
             <Link to="/calendarselect">
               <div>
                 <span>
-                  {today.format("yyyy")} 년 {today.format("mm")} 월 {' '}
-                  {today.format("d")} 일
+                  {dateCal.locale("ko").format("YYYY")} 년 {dateCal.locale("ko").format("MM")} 월 {' '}
+                  {dateCal.locale("ko").format("DD")} 일
                 </span>
                 <FontAwesomeIcon icon={faArrowRight}></FontAwesomeIcon>
                 {/* </div> */}

@@ -27,83 +27,70 @@ module.exports = {
   //8. start_date를 이용해 비용 계산
   //9. 결제현황 관리
 
-  walletDelete:async (req,res) =>{
-  
+  walletDelete: async (req, res) => {
     //case 1 ,2 일반 유저, social 유저
 
-    const {id} = req.body
+    const { id } = req.body;
 
-    const userId = req.user.userId||req.user.id
-    console.log(req.body)
-    try{
+    const userId = req.user.userId || req.user.id;
+    console.log(req.body);
+    try {
       //id
-
-
 
       // const walletInfo = await wallet.findOne({where:{user_id:userId,}})
 
       // const walletInfo = await wall
 
-     const walletDelete=  await wallet.destroy({where:{user_id:req.user.userId,id:id}})
+      const walletDelete = await wallet.destroy({
+        where: { user_id: userId, id: id },
+      });
 
+      if (!walletDelete) {
+        return res.status(400).send("삭제가안됨");
+      }
 
-     if(!walletDelete) {
-       return res.status(400).send('삭제가안됨')
-     }
-
-
-      return res.status(200).send('삭제되었씁니다.')
-    }catch(err){
-      return res.status(500).send(err)
+      return res.status(200).send("삭제되었씁니다.");
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
   },
 
   paymentManagementControll: async (req, res) => {
-
-    const paymentArr = []
-    const userId = req.user.userId ||req.user.id
+    const paymentArr = [];
+    const userId = req.user.userId || req.user.id;
     try {
-
-
       // const today = moment().format('YYYY-MM-DD')
 
       // 8월 2일이야,  8월 7일 이 결제일 findAll
       // 8월 2일보단크고, 8월 7일보다는 작은값들을 찾으면된다.
-      const findWallet = await wallet.findAll({order: [["end_date", "ASC"]],
+      const findWallet = await wallet.findAll({
+        order: [["end_date", "ASC"]],
         where: {
           user_id: userId,
-        },  
+        },
       });
 
-      console.log(findWallet,'find')
+      console.log(findWallet, "find");
 
-      
+      //기준점이되는 날짜 가장빠름
 
-
-        //기준점이되는 날짜 가장빠름
-
-        for(let i = 0 ; i<findWallet.length;i++){
-          if(findWallet[0].dataValues.end_date===findWallet[i].dataValues.end_date){
-
-            paymentArr.push(findWallet[i].dataValues)
-          }
-          
+      for (let i = 0; i < findWallet.length; i++) {
+        if (
+          findWallet[0].dataValues.end_date ===
+          findWallet[i].dataValues.end_date
+        ) {
+          paymentArr.push(findWallet[i].dataValues);
         }
+      }
 
-        console.log(paymentArr,'paymentArr')
+      console.log(paymentArr, "paymentArr");
 
-      
+      // console.log(s)
 
-        // console.log(s)
-
-      
-     
-
-           //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
+      //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
       //그럼 똑같은 날짜를뽑아서 넘겨 준다.
 
-      return res.status(200).send({data:paymentArr})
+      return res.status(200).send({ data: paymentArr });
       //오늘과 가장가까운 결제일 찾기
       //그 결제일남은 기간 + cost를 찾는다
     } catch (err) {
@@ -112,19 +99,18 @@ module.exports = {
   },
 
   paymentControll: async (req, res) => {
-
-    const userId = req.user.userId ||req.user.id
+    const userId = req.user.userId || req.user.id;
     try {
       //start_date 기간은 1달로 한다.
       // start_date에 도달하면 기간이 gte인경우 결제금액을 +한다.
       const today = moment().format("YYYY-MM-DD");
 
       const findWallet = await wallet.findAll({
-        where: { user_id:userId,start_date: { [Op.lte]: today } },
+        where: { user_id: userId, start_date: { [Op.lte]: today } },
         attributes: ["cost"],
       });
 
-      console.log(findWallet)
+      console.log(findWallet);
 
       if (!findWallet) {
         return res.status(400).send("수정할게 없다.");
@@ -157,15 +143,13 @@ module.exports = {
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
 
-    const userId = req.user.userId ||req.user.id
-  
+    const userId = req.user.userId || req.user.id;
 
     try {
-      console.log(userId)
+      console.log(userId);
       const findWallet = await wallet.findAll({
         where: { user_id: userId },
       });
-
 
       if (!findWallet) {
         return res.status(400).send("회원을 찾을수가 없습니다.");
@@ -181,7 +165,7 @@ module.exports = {
     //같은 이름을가진 구독상품은 존재x
     //user를 확인하고, 구독상품을 만들어야 한다.
     //토큰이 존재해야한다. => middleware
-  
+
     const { name, cost, start_date, cycleDay, cycleMonth, cycleYear } =
       req.body;
 
@@ -199,8 +183,8 @@ module.exports = {
     try {
       const subscribes = await subscribe.findOne({ where: { sub_name: name } });
 
-      if(!subscribes){
-        return res.status(400).send('존재하지 않습니다.')
+      if (!subscribes) {
+        return res.status(400).send("존재하지 않습니다.");
       }
       const calculateEnd_date = moment(start_date)
         .add(
@@ -208,8 +192,6 @@ module.exports = {
           "d"
         )
         .format("YYYY-MM-DD");
-
-      console.log(req.body, calculateEnd_date, subscribes.image);
 
       //cycle을 1년 1달 1일로 나타내고싶다.
 
@@ -230,6 +212,42 @@ module.exports = {
       //지갑에 들어갈 목록 생성
 
       return res.status(200).send("구독목록이 생성 되었습니다.");
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  },
+  walletEdit: async (req, res) => {
+    const { id, cost, cycleDay, cycleMonth, cycleYear, start_date } = req.body;
+
+    try {
+      //cycle, cost , start_date , end_date
+
+      const userId = req.user.userId || req.user.id;
+
+      const calculateEnd_date = moment(start_date)
+        .add(
+          Number(cycleDay) + Number(cycleMonth) * 30 + Number(cycleYear) * 365,
+          "d"
+        )
+        .format("YYYY-MM-DD");
+
+      const walletEditPeriod = await wallet.patch(
+        {
+          cost: cost,
+          start_date: start_date,
+          cycleDay: cycleDay,
+          cycleMonth: cycleMonth,
+          cycleYear: cycleYear,
+          end_date:calculateEnd_date
+        },
+        { where: { user_id: userId, id: id } }
+
+        
+      );
+
+      if(walletEditPeriod){
+        return res.status(400).send('변경이 불가능')
+      }
     } catch (err) {
       return res.status(500).send(err);
     }

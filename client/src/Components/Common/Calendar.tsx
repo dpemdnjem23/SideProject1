@@ -7,11 +7,12 @@ import {useNavigate} from 'react-router-dom'
 
 import "../../css/common/Calendar.css";
 import "moment/locale/ko";
-import { dateState } from "utils/state";
+import { dateState, useWalletStore } from "utils/state";
 
 const Calendar = () => {
   const {dateCal,setDateCal} =dateState()
-  console.log(dateCal)
+  const { walletInfo, setWalletInfo, setShowSubEdit,showSubEdit} = useWalletStore()
+
 
   const back = useNavigate()
 //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
@@ -22,9 +23,22 @@ const Calendar = () => {
 
 
   const handleDayClick = (current: moment.Moment) => {
+    //모달일땐 어떻게 해야하는가.
 
-    back(-1)
-    setDateCal(current)
+    //모달창이 띄워져 있다면,  모달창은 그대로, back을 해야한다.
+    if(showSubEdit){
+      back(-1)
+setShowSubEdit(true)
+setDateCal(current)
+
+
+    }
+    else{
+
+      back(-1)
+      setDateCal(current)
+  
+    }
 
     //달력에서 day를 클릭할경우 => 년 월 일 을 받아서 subRegister에 뿌려준다.
   }

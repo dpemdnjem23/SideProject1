@@ -57,7 +57,7 @@ const [nick,setNick] = useState<string>('')
   const { setDelUser, setEditUser, editUser, delUser, passEditUser } =
     showMypageState();
 
-  const { setCycle, cycle, cycleCal, setCycleCal } = cycleState();
+  const {cycleCal, setCycleCal } = cycleState();
 
   const { dateCal, setDateCal } = dateState();
 
