@@ -30,7 +30,6 @@ const SubDetailModal: React.FC<modal> = ({
 
   const openSubDetailEditModal = () => {
     setShowSubEdit(true);
-    console.log('문열어',showSubEdit)
 
   };
 
@@ -46,7 +45,8 @@ const SubDetailModal: React.FC<modal> = ({
             closeCancellationModal={closeCancellationModal}
           />
         ) : null}
-        {showSubEdit ? <SubDetailEditModal arrIndex={arrIndex} /> : null}
+        {showSubEdit ? <SubDetailEditModal             clickModalNum={clickModalNum}
+ arrIndex={arrIndex} /> : null}
 
         <header>
           <button onClick={() => closeSubModal()} className="close">

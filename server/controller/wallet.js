@@ -33,7 +33,6 @@ module.exports = {
     const { id } = req.body;
 
     const userId = req.user.userId || req.user.id;
-    console.log(req.body);
     try {
       //id
 
@@ -83,7 +82,6 @@ module.exports = {
         }
       }
 
-      console.log(paymentArr, "paymentArr");
 
       // console.log(s)
 
@@ -110,7 +108,6 @@ module.exports = {
         attributes: ["cost"],
       });
 
-      console.log(findWallet);
 
       if (!findWallet) {
         return res.status(400).send("수정할게 없다.");
@@ -219,35 +216,86 @@ module.exports = {
   walletEdit: async (req, res) => {
     const { id, cost, cycleDay, cycleMonth, cycleYear, start_date } = req.body;
 
+    let varCost = cost
+
+
     try {
+
+      let calculateEnd_date ;
       //cycle, cost , start_date , end_date
+
+      //3가지경우 => start_date는 항상 값이 주어져 있다.
+      //1. 가격만 변경하는경우
+      //2 cycle에서 cycle year,cyclmonth, cycleday 
+      //가격 +cycle 모두 변경하는경우
+      //wallet 을 찾아서 cost,cycle이 존재하지 않으면 => 그대로 사용
+      //
 
       const userId = req.user.userId || req.user.id;
 
-      const calculateEnd_date = moment(start_date)
-        .add(
-          Number(cycleDay) + Number(cycleMonth) * 30 + Number(cycleYear) * 365,
-          "d"
-        )
-        .format("YYYY-MM-DD");
+      const walletInfo = await wallet.findOne({where:{user_id:userId,id:id}})
 
-      const walletEditPeriod = await wallet.patch(
-        {
-          cost: cost,
-          start_date: start_date,
-          cycleDay: cycleDay,
-          cycleMonth: cycleMonth,
-          cycleYear: cycleYear,
-          end_date:calculateEnd_date
-        },
-        { where: { user_id: userId, id: id } }
 
-        
-      );
+console.log(cost,'cost')
+    if(!cost){
 
-      if(walletEditPeriod){
-        return res.status(400).send('변경이 불가능')
-      }
+      varCost = walletInfo.cost
+      console.log(varCost,walletInfo.cost,'co')
+
+          }
+if(cycleDay||cycleMonth||cycleYear){
+
+  calculateEnd_date = moment(start_date)
+  .add(
+    Number(cycleDay) + Number(cycleMonth) * 30 + Number(cycleYear) * 365,
+    "d"
+  )
+  .format("YYYY-MM-DD");
+}
+
+else if(!cycleDay&&!cycleMonth&&!cycleYear){
+  
+
+  calculateEnd_date = moment(start_date)
+  .add(
+    Number(walletInfo.cycleDay) + Number(walletInfo.cycleMonth) * 30 + Number(walletInfo.cycleYear) * 365,
+    "d"
+  )
+  .format("YYYY-MM-DD");
+
+
+
+}
+        //입력된 값이 들어온다면, 그값을쓰고
+        //만약에 그렇지 않다면 info 값ㅇ르 쓴다.
+
+        // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
+          
+
+          const walletEdit = await wallet.patch(
+            {
+              cost: varCost,
+              start_date: start_date,
+              cycleDay: cycleDay,
+              cycleMonth: cycleMonth,
+              cycleYear: cycleYear,
+              end_date:calculateEnd_date
+            },
+          
+            { where: { user_id: userId, id: id } }
+    
+          );
+          console.log(walletEdit)
+
+          if(walletEdit){
+            return res.status(400).send('변경이 불가능')
+          }
+
+          return res.status(200).send('변경되었습니다.')
+        // }
+
+     
+     
     } catch (err) {
       return res.status(500).send(err);
     }

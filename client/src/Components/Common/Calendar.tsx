@@ -11,7 +11,7 @@ import { dateState, useWalletStore } from "utils/state";
 
 const Calendar = () => {
   const {dateCal,setDateCal} =dateState()
-  const { walletInfo, setWalletInfo, setShowSubEdit,showSubEdit} = useWalletStore()
+  const { walletInfo, setWalletInfo, setShowSubEdit,setShowSubDetail,showSubEdit} = useWalletStore()
 
 
   const back = useNavigate()
@@ -27,7 +27,9 @@ const Calendar = () => {
 
     //모달창이 띄워져 있다면,  모달창은 그대로, back을 해야한다.
     if(showSubEdit){
+      console.log('이게뭐야 살려줘')
       back(-1)
+      setShowSubDetail(true)
 setShowSubEdit(true)
 setDateCal(current)
 

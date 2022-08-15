@@ -99,8 +99,34 @@ cursor: pointer;
   animation: slide 1s ease-in-out 0s 1 normal forwards;
 } */
 
+.SubDetailEdit_modal_bt_section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
 
+.SubDetailEdit_modal_bt_section  > button {
+  /* border: 1px solid red; */
+  border-radius: 10px;
+  width: 100px;
+  height: 40px;
+  margin: 0px 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.SubDetailEdit_modal_bt_modify{
+  background-color: rgb(194, 194, 194);
+  border: none;
 
+}
+.SubDetailEdit_modal_bt_cancel{
+  background-color: white;
+  border: 1px solid red;
+  color: red;
+
+}
   @keyframes modal-show {
     from {
       opacity: 0;

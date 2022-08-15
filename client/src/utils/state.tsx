@@ -108,6 +108,8 @@ type walletInfoState = {
   setWalletInfo:(input:[]) =>void;
   setShowSubEdit:(input:boolean) =>void;
   showSubEdit:boolean;
+  showSubDetail:boolean;
+  setShowSubDetail:(input:boolean) =>void
 };
 
 export const isSigninState = create<isSigninState>()(
@@ -213,8 +215,11 @@ export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
 export const useWalletStore = create<walletInfoState>()((set) => ({
   walletInfo: [],
   showSubEdit:false,
+  showSubDetail:false,
   setWalletInfo:(input) =>set({walletInfo:input}),
-  setShowSubEdit:(input) =>({showSubEdit:input})
+  setShowSubEdit:(input) =>set({showSubEdit:input}),
+  setShowSubDetail:(input) =>set({showSubDetail:input})
+
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

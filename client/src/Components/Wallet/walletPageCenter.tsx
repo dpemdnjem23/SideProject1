@@ -19,7 +19,6 @@ const WalletPageCenter: React.FC<walletPageCenter> = ({
     <div className="WalletPage_center_section">
       {walletInfo.map((el,index) => {
 
-        console.log(el)
         
         return (
           <div

@@ -25,8 +25,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../css/pages/WalletPage.css";
 
 const WalletPage = () => {
-  const {walletInfo,setWalletInfo,setShowSubEdit,showSubEdit} = useWalletStore()
-  const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
+  const {walletInfo,setWalletInfo,setShowSubEdit,showSubDetail,showSubEdit,setShowSubDetail} = useWalletStore()
+  // const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
 
@@ -50,12 +50,11 @@ const WalletPage = () => {
   // 각각의 모달을 나오게 하는법 =>
   // 몇번째 모달을 눌렀는지 상태정보를 state에 저장한다
 
-  const openSubModal = (num:any,id:number) => {
+  const openSubModal = (num:number,id:number) => {
     setArrIndex(num)
     setClickModalNum(id)
     setShowSubDetail(true);
 
-    console.log(clickModalNum)
   
   };
 

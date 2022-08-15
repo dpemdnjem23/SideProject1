@@ -16,13 +16,11 @@ const SubRegisterPage = () => {
 
   const closeToggling = () => {
     setDropDownOpen(false);
-    console.log(dropDownOpen);
   };
-useEffect(()=>{
+// useEffect(()=>{
   
-  console.log('axios')
 
-})
+// })
 
 
 
