@@ -32,7 +32,7 @@ useEffect(()=>{
     sum = sum + costSum[i];
   }
   console.log(sum,res.data.data)
-
+// setWalletSubCost(sum)
   setWalletPayment(sum);
 })
 .catch((err) => {
@@ -54,7 +54,7 @@ useEffect(()=>{
     <div className="WalletPage_Bottom_section">
       <span> 총 구독가격 &nbsp;</span>
       <span className="WallPage_Bottom_section_price">
-        {walletSubCost}
+        {walletSubCost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
       </span>
       <span>&nbsp; 원 &nbsp; </span>
       <span>총 결제금액&nbsp;</span>

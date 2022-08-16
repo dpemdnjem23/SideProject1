@@ -43,7 +43,7 @@ type registSubInfoState = {
 type dateState = {
   dateCal: moment.Moment;
   setDateCal: (input: moment.Moment) => void;
-  clearDateCal:() =>void
+  clearDateCal: () => void;
 };
 
 type cycleState = {
@@ -105,11 +105,11 @@ type walletInfo = {
 
 type walletInfoState = {
   walletInfo: walletInfo[];
-  setWalletInfo:(input:[]) =>void;
-  setShowSubEdit:(input:boolean) =>void;
-  showSubEdit:boolean;
-  showSubDetail:boolean;
-  setShowSubDetail:(input:boolean) =>void
+  setWalletInfo: (input: []) => void;
+  setShowSubEdit: (input: boolean) => void;
+  showSubEdit: boolean;
+  showSubDetail: boolean;
+  setShowSubDetail: (input: boolean) => void;
 };
 
 export const isSigninState = create<isSigninState>()(
@@ -157,7 +157,7 @@ export const registSubInfoState = create<registSubInfoState>()((set) => ({
 export const dateState = create<dateState>()((set) => ({
   dateCal: moment(),
   setDateCal: (input) => set({ dateCal: input }),
-  clearDateCal:() =>set({dateCal:moment()})
+  clearDateCal: () => set({ dateCal: moment() }),
   // subStart:,
   // setSubStart:(input) => set({subStart:input})
 }));
@@ -181,7 +181,7 @@ export const mypageSubCostState = create<mypageSubCostState>()((set) => ({
 export const walletPageCostState = create<walletPageCostState>()((set) => ({
   walletPayment: 0,
   walletSubCost: 0,
-  setWalletSubCost: (input) => set({ walletPayment: input }),
+  setWalletSubCost: (input) => set({ walletSubCost: input }),
   setWalletPayment: (input) => set({ walletPayment: input }),
 }));
 
@@ -214,12 +214,11 @@ export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
 
 export const useWalletStore = create<walletInfoState>()((set) => ({
   walletInfo: [],
-  showSubEdit:false,
-  showSubDetail:false,
-  setWalletInfo:(input) =>set({walletInfo:input}),
-  setShowSubEdit:(input) =>set({showSubEdit:input}),
-  setShowSubDetail:(input) =>set({showSubDetail:input})
-
+  showSubEdit: false,
+  showSubDetail: false,
+  setWalletInfo: (input) => set({ walletInfo: input }),
+  setShowSubEdit: (input) => set({ showSubEdit: input }),
+  setShowSubDetail: (input) => set({ showSubDetail: input }),
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

@@ -34,10 +34,9 @@ const WalletPage = () => {
   const [arrIndex,setArrIndex] = useState<number>(0)
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
+  const {walletSubCost,walletPayment,setWalletPayment,setWalletSubCost} = walletPageCostState()
 
-  const [walletSubCost, setWalletSubCost] = useState<number>(0);
 
-  const [walletPayment, setWalletPayment] = useState<number>(0);
   // const{setWalletSubCost,setWalletPayment} =walletPageCostState()
 
   const accessToken: string | null = localStorage.getItem("accessToken");
@@ -90,8 +89,11 @@ const WalletPage = () => {
         }
 
         console.log(res.data.data)
-        // console.log(sum);
+
+        console.log(sum,'sdfasdf')
+      
         setWalletSubCost(sum);
+        console.log(walletSubCost)
 
         setWalletInfo(res.data.data);
 

@@ -1,6 +1,6 @@
 require("dotenv").config();
 const moment = require("moment");
-const { Op } = require("sequelize");
+const { Op,Sequelize } = require("sequelize");
 
 const { default: axios } = require("axios");
 const { authchecker } = require("../middleware/authChecker");
@@ -217,6 +217,9 @@ module.exports = {
     const { id, cost, cycleDay, cycleMonth, cycleYear, start_date } = req.body;
 
     let varCost = cost
+    let varCycleDay= cycleDay
+    let varCycleMonth=cycleMonth
+    let varCycleYear = cycleYear
 
 
     try {
@@ -236,11 +239,9 @@ module.exports = {
       const walletInfo = await wallet.findOne({where:{user_id:userId,id:id}})
 
 
-console.log(cost,'cost')
     if(!cost){
 
       varCost = walletInfo.cost
-      console.log(varCost,walletInfo.cost,'co')
 
           }
 if(cycleDay||cycleMonth||cycleYear){
@@ -262,32 +263,39 @@ else if(!cycleDay&&!cycleMonth&&!cycleYear){
     "d"
   )
   .format("YYYY-MM-DD");
-
+  varCycleDay=walletInfo.cycleDay
+  varCycleMonth=walletInfo.cycleMonth
+cvarCycleYear=walletInfo.cycleYear
 
 
 }
+  console.log(varCost,start_date,cycleDay,cycleMonth,cycleYear,calculateEnd_date)
+
         //입력된 값이 들어온다면, 그값을쓰고
         //만약에 그렇지 않다면 info 값ㅇ르 쓴다.
 
         // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
           
 
-          const walletEdit = await wallet.patch(
+
+
+
+          const walletEdit = await wallet.update(
             {
               cost: varCost,
               start_date: start_date,
-              cycleDay: cycleDay,
-              cycleMonth: cycleMonth,
-              cycleYear: cycleYear,
+              cycleDay: varCycleDay,
+              cycleMonth: varCycleMonth,
+              cycleYear: varCycleYear,
               end_date:calculateEnd_date
             },
           
             { where: { user_id: userId, id: id } }
     
           );
-          console.log(walletEdit)
+          console.log(walletEdit,'walletEdit')
 
-          if(walletEdit){
+          if(!walletEdit){
             return res.status(400).send('변경이 불가능')
           }
 
@@ -300,4 +308,35 @@ else if(!cycleDay&&!cycleMonth&&!cycleYear){
       return res.status(500).send(err);
     }
   },
+
+  walletRenewalPeriod : async(req,res) =>{
+
+
+    const userId = req.user.userId || req.user.id
+
+    try{
+
+
+     const topTwoPeriod =  await wallet.findAll({where:{user_id:userId},order:[['end_date',"ASC"]],limit:2,  attributes: [
+      // specify an array where the first element is the SQL function and the second is the alias
+      [Sequelize.fn('DISTINCT', Sequelize.col('end_date')) ,'end_date'],
+
+      // specify any additional columns, e.g. country_code
+      // 'country_code'
+
+  ]})
+     console.log(topTwoPeriod[0])
+
+     const walletInfo = await wallet.findAll({where:{[Op.or]:[{end_date:topTwoPeriod[0].dataValues.end_date},{end_date:topTwoPeriod[1].dataValues.end_date}]}})
+
+
+     
+     return res.status(200).send({data:topTwoPeriod,wallet:walletInfo})
+    }catch(err){
+
+      return res.status(500).send(err)
+    }
+
+  }
+  
 };

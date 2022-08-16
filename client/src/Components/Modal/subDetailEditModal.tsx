@@ -79,7 +79,6 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
   const handelModifyWallet = () => {
     const number = subCash.replace(/,/g, "");
     const today = dateCal.format("YYYY-MM-DD");
-    console.log(clickModalNum, number, today);
 
     axios
       .patch(
@@ -102,6 +101,8 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
       )
       .then((res) => {
         navigate("/wallet");
+        location.reload()
+        
       })
       .catch((err) => {
         alert("변경에 실패하였습니다.");
