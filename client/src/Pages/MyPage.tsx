@@ -79,53 +79,7 @@ const [nick,setNick] = useState<string>('')
     setSubCash("");
   };
 
-  const paymentManagement = () => {
-    let sum = 0;
-    //결제일과 결제금액 =>
-
-    //가장 적게남은 결제일 의 결제금액의 합을 보여준다
-
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/paymentmanage`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        //start_date+cycle cycle은 cycle 주기마다 cycle을 더해야한다
-        //그러면 today가 end_date(start+cycle)에 도달했을때
-        //start_date 를 end_date로 바꾸고 다시 end_date를 정한다.
-
-        let paymentDate:any;
-        const sumCostArr = res.data.data.map((el: { cost: number }) => {
-          return el.cost;
-        });
-
-        for (let i = 0; i < sumCostArr.length; i++) {
-          sum = sum + sumCostArr[i];
-        }
-
-        console.log(sum,sumCostArr)
-
-        if(sumCostArr.length===0){
-         paymentDate = '0'
-
-        }
-        else{
-          paymentDate = Math.abs(moment(today).diff(sumCostArr[0].dataValues.end_date,'days'))||0
-
-        }
-
-
-
-        setMypagePaymentManageCost(sum);
-        setMypagePaymentManageDate(paymentDate);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+ 
 
   const calSubCost = () =>
     axios
@@ -180,7 +134,6 @@ const [nick,setNick] = useState<string>('')
 
 
   useEffect(() => {
-    paymentManagement();
     calSubCost();
     calPaymentCost();
     resetState();

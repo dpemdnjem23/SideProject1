@@ -317,8 +317,7 @@ cvarCycleYear=walletInfo.cycleYear
     try{
 
 
-     const topTwoPeriod =  await wallet.findAll({where:{user_id:userId},order:[['end_date',"ASC"]],limit:2,  attributes: [
-      // specify an array where the first element is the SQL function and the second is the alias
+     const topTwoPeriod =  await wallet.findAll({where:{user_id:userId},order:[['end_date',"ASC"]],limit:2,  attributes: [      // specify an array where the first element is the SQL function and the second is the alias
       [Sequelize.fn('DISTINCT', Sequelize.col('end_date')) ,'end_date'],
 
       // specify any additional columns, e.g. country_code

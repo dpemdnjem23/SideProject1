@@ -1,21 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {mypagePaymentManagementState, mypageSubCostState, showMypageState } from "utils/state";
+import {mypagePaymentManagementState, mypageSubCostState, showMypageState, walletPageCostState } from "utils/state";
 import "../../css/components/MyPage/mypagebar.css";
-
+import moment from "moment";
 // const s = document.getElemnetsByClassName()
 
 const Mypagebar = () => {
   //
+  const today = moment().format('YYYY-MM-DD')
 
   //한번더 클릭하면 원래대로 돌아가야한다.
   // const { setDelUser, setEditUser, editUser, delUser } = showMypageState();
 // const {paymentDay , setPaymentDay}  = useState<number>(0)
-const {mypagePaymentManageCost,mypagePaymentManageDate} = mypagePaymentManagementState()
-const{subCost,subPayment} = mypageSubCostState()
+
+const {walletSubCost,walletPayment} =walletPageCostState()
+
+const [subManageDate,setSubManageDate ] = useState<number>(0)
+const [ subManageCost,setSubManageCost] = useState<number>(0)
+
 const { setDelUser, setEditUser, editUser, delUser,passEditUser,setPassEditUser,setSocialEditUser,socialEditUser } = showMypageState();
 const accessToken: string | null =
-localStorage.getItem("accessToken") || null;
+localStorage.getItem("accessToken")
   
 
 const handleEditUser = () => {
@@ -42,10 +47,64 @@ const handleDelUser = () => {
   }
 };
 
+const paymentManagement = () => {
+  let sum = 0;
+  //결제일과 결제금액 =>
+
+  //가장 적게남은 결제일 의 결제금액의 합을 보여준다
+
+  axios
+    .get(`${process.env.REACT_APP_API_URI}/wallet/paymentmanage`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    })
+    .then((res) => {
+      //start_date+cycle cycle은 cycle 주기마다 cycle을 더해야한다
+      //그러면 today가 end_date(start+cycle)에 도달했을때
+      //start_date 를 end_date로 바꾸고 다시 end_date를 정한다.
+
+      let paymentDate:any;
+      const sumCostArr = res.data.data.map((el: { cost: number }) => {
+        return el.cost;
+      });
+
+      for (let i = 0; i < sumCostArr.length; i++) {
+        sum = sum + sumCostArr[i];
+      }
+
+      console.log(sum,sumCostArr)
+
+      if(sumCostArr.length===0){
+       paymentDate = '0'
+
+      }
+      else{
+        paymentDate = Math.abs(moment(today).diff(sumCostArr[0].dataValues.end_date,'days'))||0
+
+      }
+
+
+
+      setSubManageCost(sum);
+      setSubManageDate(paymentDate);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+useEffect(()=>{
+  // paymentManagement ()
+},[])
+
 
 
    
-//결제완료는 start_date가 지난 것만따진다
+//결제완룡 walletPayment
+//지출 총액은 전체 구독금액ㄷ에서
+//구독금액이 10만원, 결제완료가 5만원 5만원
   return (
     <>
       <div className="Mypage_bar_top container">
@@ -54,7 +113,7 @@ const handleDelUser = () => {
           <div className="Mypage_bar_top_section1">
             <span className="Mypage_bar_top_section1_days">결제 일 </span>
             <br></br>
-            <span className="Mypage_bar_top_section1_day">{mypagePaymentManageDate} 일</span>
+            <span className="Mypage_bar_top_section1_day">{subManageDate} 일</span>
  
             {/* <span className="Mypage_bar_top_section1_pay2">결제 금액</span>
              */}
@@ -68,7 +127,7 @@ const handleDelUser = () => {
             <span className="Mypage_bar_top_section1_pay">결제 금액</span>
             <br></br>
 
-            <span className="Mypage_bar_top_section2_pay"> {mypagePaymentManageCost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 원</span>
+            <span className="Mypage_bar_top_section2_pay"> {subManageCost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 원</span>
           </div>
         </div>
         {/* <span>3-days / 2 (결제금액)</span> */}
@@ -81,7 +140,7 @@ const handleDelUser = () => {
             <span className="Mypage_bar_center_section1_comp">결제 완료</span>
             <br></br>
 
-            <div className="Mypage_bar_center_section1_comp2">{subCost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 원</div>
+            <div className="Mypage_bar_center_section1_comp2">{walletSubCost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 원</div>
           </div>
 
           <div className="Mypage_bar_center_section2">
@@ -92,7 +151,7 @@ const handleDelUser = () => {
             <span className="Mypage_bar_center_section1_pay">지출 총액</span>
             <br></br>
 
-            <span className="Mypage_bar_center_section1_pay2">{subPayment.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 원</span>
+            <span className="Mypage_bar_center_section1_pay2">{walletPayment.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 원</span>
           </div>
         </div>
         <div className="Mypage_bar_gap"></div>

@@ -57,7 +57,7 @@ const RegistButton = () => {
         //지갑 등록에 성공한경우 mypage로
       })
       .then((result) => {
-        navigate("/mypage");
+        navigate("/wallet");
       })
       .catch((err) => {
         // navigate('/')

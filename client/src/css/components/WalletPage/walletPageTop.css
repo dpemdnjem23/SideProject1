@@ -1,11 +1,19 @@
 .WalletPage_Top_section_sub_title>p{
   font-size: 25px;
   font-weight: bold;
+  color:blue;
+
+}
+.WalletPage_Top_section_sub_title>span{
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 50px;
   color:black;
+
 }
 
 .WalletPage_Top_section {
-  margin-top: 30px;
+  margin-top: 10px;
 display: grid;
 min-height: 200px;
 grid-template-columns: 140px 140px ;
@@ -24,7 +32,4 @@ gap: 10px;
   /* position: relative; */
 
   /* width: 30px; */
-}
-.WalletPage_Top_section_sub>span{
-
 }
