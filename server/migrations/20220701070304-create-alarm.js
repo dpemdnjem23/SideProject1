@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      user_id:{
+        type: Sequelize.NUMBER
+
+
+      },
    
       description: {
         type: Sequelize.STRING

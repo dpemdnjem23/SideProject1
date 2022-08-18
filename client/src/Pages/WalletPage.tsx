@@ -29,12 +29,12 @@ const WalletPage = () => {
   // const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
+  const [ walletSubCost,setWalletSubCost] = useState<number>(0)
 
   const [clickModalNum,setClickModalNum] = useState<number>(0)
   const [arrIndex,setArrIndex] = useState<number>(0)
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
-  const {walletSubCost,walletPayment,setWalletPayment,setWalletSubCost} = walletPageCostState()
 
 
   // const{setWalletSubCost,setWalletPayment} =walletPageCostState()
@@ -88,16 +88,11 @@ const WalletPage = () => {
           sum = sum + costSum[i];
         }
 
-        console.log(res.data.data)
-
-        console.log(sum,'sdfasdf')
       
         setWalletSubCost(sum);
-        console.log(walletSubCost)
-
+              
         setWalletInfo(res.data.data);
 
-        console.log(walletInfo)
       })
       .catch((err) => {
         console.log(err);
@@ -142,7 +137,7 @@ const WalletPage = () => {
           openSubModal={openSubModal}
         />
         <WalletPageBottom
-
+        walletSubCost = {walletSubCost}
         // walletInfo={walletInfo}
         />
       </div>

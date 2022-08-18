@@ -5,7 +5,9 @@ import "../../css/components/WalletPage/walletPageTop.css";
 const WalletPageTop = () => {
   const [walletPeriod, setWalletPeriod] = useState([]);
 
-  const [walletImageInfo, setWalletImageInfo] = useState<{name:string}[]>([]);
+  const [walletImageInfo, setWalletImageInfo] = useState<{ name: string }[]>(
+    []
+  );
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const WalletPageTop = () => {
     <>
       <div className="WalletPage_Top_section_sub_title">
         {/* <p> {walletImageInfo[0].name},</p> */}
-       <span>갱신이 얼마 남지 않았어요!</span>
+        <span>갱신이 얼마 남지 않았어요!</span>
       </div>
       <div className="WalletPage_Top_section">
         {walletPeriod.map((el: any, index: number) => {
@@ -49,12 +51,12 @@ const WalletPageTop = () => {
               </span>
               {walletImageInfo.map((el2: any) => {
                 //이미지를 end_date에 맞게 분류 한다.
-                if (el.end_date === el2.end_date){
-
-                
+                if (el.end_date === el2.end_date) {
                   return (
-                    <div key={el2.id}>
-                      <img src={el2.image}></img>
+                    <div>
+                      <div className="WalletPage_Top_imgsec" key={el2.id}>
+                        <img src={el2.image}></img>
+                      </div>
                     </div>
                   );
                 }

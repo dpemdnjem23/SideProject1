@@ -5,10 +5,13 @@ import axios from "axios";
 import moment from "moment";
 
 import "../../css/components/WalletPage/walletPagebottom.css";
-import { mypageSubCostState, walletPageCostState } from "utils/state";
-const WalletPageBottom = () => {
+const WalletPageBottom = ({walletSubCost}:any) => {
+
+
+
+  const [walletPayment,setWalletPayment ] =useState<number>(0)
   
-const {walletSubCost,walletPayment,setWalletPayment,setWalletSubCost} = walletPageCostState()
+// const {} = walletPageCostState()
 
 const accessToken:string|null = localStorage.getItem("accessToken");
 
@@ -18,6 +21,7 @@ useEffect(()=>{
   axios
 .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
   headers: {
+    'Content-Type':'application/json',
     authorization: `Bearer ${accessToken}`,
   },
 })

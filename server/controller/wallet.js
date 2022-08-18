@@ -1,6 +1,6 @@
 require("dotenv").config();
 const moment = require("moment");
-const { Op,Sequelize } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 const { default: axios } = require("axios");
 const { authchecker } = require("../middleware/authChecker");
@@ -69,7 +69,9 @@ module.exports = {
         },
       });
 
-      console.log(findWallet, "find");
+      console.log(findWallet)
+
+      // console.log(findWallet, "find");
 
       //기준점이되는 날짜 가장빠름
 
@@ -82,13 +84,11 @@ module.exports = {
         }
       }
 
-
-      // console.log(s)
-
+          
       //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
       //그럼 똑같은 날짜를뽑아서 넘겨 준다.
 
-      return res.status(200).send({ data: paymentArr });
+      return res.status(200).send({ data: paymentArr});
       //오늘과 가장가까운 결제일 찾기
       //그 결제일남은 기간 + cost를 찾는다
     } catch (err) {
@@ -107,7 +107,6 @@ module.exports = {
         where: { user_id: userId, start_date: { [Op.lte]: today } },
         attributes: ["cost"],
       });
-
 
       if (!findWallet) {
         return res.status(400).send("수정할게 없다.");
@@ -216,126 +215,122 @@ module.exports = {
   walletEdit: async (req, res) => {
     const { id, cost, cycleDay, cycleMonth, cycleYear, start_date } = req.body;
 
-    let varCost = cost
-    let varCycleDay= cycleDay
-    let varCycleMonth=cycleMonth
-    let varCycleYear = cycleYear
-
+    let varCost = cost;
+    let varCycleDay = cycleDay;
+    let varCycleMonth = cycleMonth;
+    let varCycleYear = cycleYear;
 
     try {
-
-      let calculateEnd_date ;
+      let calculateEnd_date;
       //cycle, cost , start_date , end_date
 
       //3가지경우 => start_date는 항상 값이 주어져 있다.
       //1. 가격만 변경하는경우
-      //2 cycle에서 cycle year,cyclmonth, cycleday 
+      //2 cycle에서 cycle year,cyclmonth, cycleday
       //가격 +cycle 모두 변경하는경우
       //wallet 을 찾아서 cost,cycle이 존재하지 않으면 => 그대로 사용
       //
 
       const userId = req.user.userId || req.user.id;
 
-      const walletInfo = await wallet.findOne({where:{user_id:userId,id:id}})
+      const walletInfo = await wallet.findOne({
+        where: { user_id: userId, id: id },
+      });
 
+      if (!cost) {
+        varCost = walletInfo.cost;
+      }
+      if (cycleDay || cycleMonth || cycleYear) {
+        calculateEnd_date = moment(start_date)
+          .add(
+            Number(cycleDay) +
+              Number(cycleMonth) * 30 +
+              Number(cycleYear) * 365,
+            "d"
+          )
+          .format("YYYY-MM-DD");
+      } else if (!cycleDay && !cycleMonth && !cycleYear) {
+        calculateEnd_date = moment(start_date)
+          .add(
+            Number(walletInfo.cycleDay) +
+              Number(walletInfo.cycleMonth) * 30 +
+              Number(walletInfo.cycleYear) * 365,
+            "d"
+          )
+          .format("YYYY-MM-DD");
+        varCycleDay = walletInfo.cycleDay;
+        varCycleMonth = walletInfo.cycleMonth;
+        cvarCycleYear = walletInfo.cycleYear;
+      }
+      console.log(
+        varCost,
+        start_date,
+        cycleDay,
+        cycleMonth,
+        cycleYear,
+        calculateEnd_date
+      );
 
-    if(!cost){
+      //입력된 값이 들어온다면, 그값을쓰고
+      //만약에 그렇지 않다면 info 값ㅇ르 쓴다.
 
-      varCost = walletInfo.cost
+      // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
 
-          }
-if(cycleDay||cycleMonth||cycleYear){
+      const walletEdit = await wallet.update(
+        {
+          cost: varCost,
+          start_date: start_date,
+          cycleDay: varCycleDay,
+          cycleMonth: varCycleMonth,
+          cycleYear: varCycleYear,
+          end_date: calculateEnd_date,
+        },
 
-  calculateEnd_date = moment(start_date)
-  .add(
-    Number(cycleDay) + Number(cycleMonth) * 30 + Number(cycleYear) * 365,
-    "d"
-  )
-  .format("YYYY-MM-DD");
-}
+        { where: { user_id: userId, id: id } }
+      );
+      console.log(walletEdit, "walletEdit");
 
-else if(!cycleDay&&!cycleMonth&&!cycleYear){
-  
+      if (!walletEdit) {
+        return res.status(400).send("변경이 불가능");
+      }
 
-  calculateEnd_date = moment(start_date)
-  .add(
-    Number(walletInfo.cycleDay) + Number(walletInfo.cycleMonth) * 30 + Number(walletInfo.cycleYear) * 365,
-    "d"
-  )
-  .format("YYYY-MM-DD");
-  varCycleDay=walletInfo.cycleDay
-  varCycleMonth=walletInfo.cycleMonth
-cvarCycleYear=walletInfo.cycleYear
-
-
-}
-  console.log(varCost,start_date,cycleDay,cycleMonth,cycleYear,calculateEnd_date)
-
-        //입력된 값이 들어온다면, 그값을쓰고
-        //만약에 그렇지 않다면 info 값ㅇ르 쓴다.
-
-        // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
-          
-
-
-
-
-          const walletEdit = await wallet.update(
-            {
-              cost: varCost,
-              start_date: start_date,
-              cycleDay: varCycleDay,
-              cycleMonth: varCycleMonth,
-              cycleYear: varCycleYear,
-              end_date:calculateEnd_date
-            },
-          
-            { where: { user_id: userId, id: id } }
-    
-          );
-          console.log(walletEdit,'walletEdit')
-
-          if(!walletEdit){
-            return res.status(400).send('변경이 불가능')
-          }
-
-          return res.status(200).send('변경되었습니다.')
-        // }
-
-     
-     
+      return res.status(200).send("변경되었습니다.");
+      // }
     } catch (err) {
       return res.status(500).send(err);
     }
   },
 
-  walletRenewalPeriod : async(req,res) =>{
+  walletRenewalPeriod: async (req, res) => {
+    const userId = req.user.userId || req.user.id;
 
+    try {
+      const topTwoPeriod = await wallet.findAll({
+        where: { user_id: userId },
+        order: [["end_date", "ASC"]],
+        limit: 2,
+        attributes: [
+          // specify an array where the first element is the SQL function and the second is the alias
+          [Sequelize.fn("DISTINCT", Sequelize.col("end_date")), "end_date"],
 
-    const userId = req.user.userId || req.user.id
+          // specify any additional columns, e.g. country_code
+          // 'country_code'
+        ],
+      });
+      console.log(topTwoPeriod[0]);
 
-    try{
+      const walletInfo = await wallet.findAll({
+        where: {
+          [Op.or]: [
+            { end_date: topTwoPeriod[0].dataValues.end_date },
+            { end_date: topTwoPeriod[1].dataValues.end_date },
+          ],
+        },
+      });
 
-
-     const topTwoPeriod =  await wallet.findAll({where:{user_id:userId},order:[['end_date',"ASC"]],limit:2,  attributes: [      // specify an array where the first element is the SQL function and the second is the alias
-      [Sequelize.fn('DISTINCT', Sequelize.col('end_date')) ,'end_date'],
-
-      // specify any additional columns, e.g. country_code
-      // 'country_code'
-
-  ]})
-     console.log(topTwoPeriod[0])
-
-     const walletInfo = await wallet.findAll({where:{[Op.or]:[{end_date:topTwoPeriod[0].dataValues.end_date},{end_date:topTwoPeriod[1].dataValues.end_date}]}})
-
-
-     
-     return res.status(200).send({data:topTwoPeriod,wallet:walletInfo})
-    }catch(err){
-
-      return res.status(500).send(err)
+      return res.status(200).send({ data: topTwoPeriod, wallet: walletInfo });
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-  }
-  
+  },
 };

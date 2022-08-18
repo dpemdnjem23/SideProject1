@@ -33,3 +33,14 @@ gap: 10px;
 
   /* width: 30px; */
 }
+.WalletPage_Top_imgsec{
+  position: relative;
+}
+.WalletPage_Top_imgsec>img{
+
+
+margin: auto;
+  position: absolute;
+  width: 30px;
+  border-radius: 50%;
+}
