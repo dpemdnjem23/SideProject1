@@ -18,6 +18,7 @@ display: grid;
 min-height: 200px;
 grid-template-columns: 140px 140px ;
 gap: 10px;
+word-wrap: break-word;
 
   /* background-color: rgb(219, 217, 217); */
   
@@ -35,12 +36,16 @@ gap: 10px;
 }
 .WalletPage_Top_imgsec{
   position: relative;
+  max-width: 10px;
+  max-height: 20px;
 }
+
+
 .WalletPage_Top_imgsec>img{
 
 
 margin: auto;
-  position: absolute;
+  /* position: absolute; */
   width: 30px;
   border-radius: 50%;
 }

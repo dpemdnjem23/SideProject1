@@ -49,14 +49,18 @@ const WalletPageTop = () => {
                   el.end_date.substr(8, 2) +
                   "일"}
               </span>
-              {walletImageInfo.map((el2: any) => {
+              {walletImageInfo.map((el2: any,indexx) => {
                 //이미지를 end_date에 맞게 분류 한다.
                 if (el.end_date === el2.end_date) {
+                //   style={{position: 'absolute'
+
+                // style={{position: 'relative',
+                //                  right:`${indexx*5+20}px`}}
+           
+                // }} 
                   return (
-                    <div>
-                      <div className="WalletPage_Top_imgsec" key={el2.id}>
-                        <img src={el2.image}></img>
-                      </div>
+                      <div className="WalletPage_Top_imgsec" >
+                        <img key={el2.id}  className={'WalletPage_Top_img'+indexx} src={el2.image}></img>
                     </div>
                   );
                 }
