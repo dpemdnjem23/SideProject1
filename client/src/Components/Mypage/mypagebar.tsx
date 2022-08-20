@@ -12,7 +12,7 @@ import moment from "moment";
 
 const Mypagebar = () => {
   //
-  const today: any = moment().format("YYYY-MM-DD");
+  const today: string|number = moment().format("YYYY-MM-DD");
 
   //한번더 클릭하면 원래대로 돌아가야한다.
   // const { setDelUser, setEditUser, editUser, delUser } = showMypageState();

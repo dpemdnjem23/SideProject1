@@ -1,83 +1,86 @@
 #Full_callndar_Section {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
+  display: flex;
+  flex-direction: row;
 
-    display: flex;
-    flex-direction: row;
-   
-   
-    align-items: center;
-  }
-  .Full_calendar_head_section{
+  align-items: center;
+}
+.Full_calendar_head_section {
+  width: 100%;
+  height: 100%;
+  margin: 10px 0px 10px 0px;
+}
 
-    width: 100%;
-    height: 100%;
-    margin: 10px 0px 10px 0px;
-      
-  
-  }
-  
-  .Full_calendar_util-button>button{
+.Full_calendar_util-button > button {
+  cursor: pointer;
 
-    cursor: pointer;
-  
-    border: none;
-    height: 30px;
-    /* outline: none; */
-  
-      
-  }
+  border: none;
+  height: 30px;
+  /* outline: none; */
+}
 
-  .grabbing{
-    /* color: red;
-    background-color: blue;
-    width: 80px;
-    height: 20px; */
-  }
-  .divided{
-    display: flex;
-    flex-direction: column;
-    height: 50px;
-    width: 100px;
-    color:red;
-    background-color: green;
-  }
-  .left{
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-  }
-  .right{
-    
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  .Full_fas{
-    width: 40px;
-    color:white;
-    background-color: rgb(0, 0, 114);
-  
-  }
- .Full_calendar_today{
-   background-color: rgb(167, 167, 167);
-   font-weight: 500;
-   color:white;
-   border-radius: 5px;
+.grabbing {
+  border-radius: 50%;
+  width: 30px;
+}
+
+.divided {
+  display: grid;
+  grid-template-columns: repeat(4, 20px);
+  height: 40px;
+  /* gap: 10px; */
+  max-width: 10px;
+
+  /* background-color: green; */
+}
+
+.FullCalendar_section_sub {
+}
+
+.divided > li > div > img {
+  width: 30px;
+  border-radius: 50%;
+}
+.divided > li > div {
+  max-width: 5px;
+  max-height: 10px;
+}
+
+.left {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.right {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.Full_fas {
+  width: 40px;
+  color: white;
+  background-color: rgb(0, 0, 114);
+}
+.Full_calendar_today {
+  background-color: rgb(167, 167, 167);
+  font-weight: 500;
+  color: white;
+  border-radius: 5px;
 
   margin-right: 15px;
- }
-  .Full_calendar_head_title{
-    font-size: 19px;
-    font-weight: bold;
-  }
-  .Full_calendar_head{
-      margin-left: 20px;
-    display: flex;
-    /* width: 100%; */
-    flex-direction: row;
+}
+.Full_calendar_head_title {
+  font-size: 19px;
+  font-weight: bold;
+}
+.Full_calendar_head {
+  margin-left: 20px;
+  display: flex;
+  /* width: 100%; */
+  flex-direction: row;
 
-    justify-content:space-between;
-  }
+  justify-content: space-between;
+}
 /* 
   .row{
     color: white;
@@ -87,51 +90,47 @@
     flex-direction: row;
   } */
 
-.Full_calendar_body_box{
+.Full_calendar_body_box {
+  /* cursor: pointer; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  width: 100%;
+  max-width: 100vw;
+  height: 100%;
+  min-height: 20px;
+  font-size: 13px;
 
-    /* cursor: pointer; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border: 1px solid #ddd;
 
-    width: 100%;
-    max-width:100vw;
-    height: 100%;
-    min-height: 20px;
-    font-size: 13px;
-
-    border: 1px solid #ddd;
-
-
-    color:rgb(109, 109, 109);
-    /* min-height: 40px; */
+  color: rgb(109, 109, 109);
+  /* min-height: 40px; */
   /* font-weight: bold; */
 }
 .Full_calendar_body_box_days {
-    padding-top: 5px;
-    padding-right: 5px;
-    text-align: right;
-width: 100%;
-max-width: 100vw;
-height: 100%;
-min-height: 150px;
-border: 1px solid #ddd;
-
+  padding-top: 5px;
+  padding-right: 5px;
+  text-align: right;
+  width: 100%;
+  max-width: 100vw;
+  height: 100%;
+  min-height: 150px;
+  border: 1px solid #ddd;
 }
-.Fullselected{
-    background-color: rgb(255, 235, 198);
+.Fullselected {
+  background-color: rgb(255, 235, 198);
 }
-.blanked{
-    color: blue;
-    /* background-color: red; */
-    pointer-events: none;
-}
-
-.Full_calendar_body_box_text{
-color:black
+.blanked {
+  color: blue;
+  /* background-color: red; */
+  pointer-events: none;
 }
 
-.blanked>span{
-  color:white;
+.Full_calendar_body_box_text {
+  color: black;
+}
+
+.blanked > span {
+  color: white;
 }

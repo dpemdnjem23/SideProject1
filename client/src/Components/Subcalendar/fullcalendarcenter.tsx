@@ -1,24 +1,47 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
+import axios from "axios";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import "moment/locale/ko";
 
 import "../../css/components/CallendarPage/fullcalendarcenter.css";
-
-
-const SocialNetworks = [
-  { title: "Twitter", color: "white", backgroundColor: "Red" },
-  { title: "Facebook", color: "black", backgroundColor: "Orange" },
-  { title: "Line", color: "black", backgroundColor: "Yellow" } 
-];
+import { useWalletStore } from "utils/state";
 
 const FullCalendarCenter = () => {
-  const [lists, setLists] = useState<any>(SocialNetworks);
-  const [grab, setGrab] = useState<any>(null);
+  //start_date랑 같은 날짜에 해당하는 것만 map을 이용하여 달력에 나타낸다
 
+  const [grab, setGrab] = useState<any>(null);
+  const { walletInfo, setWalletInfo } = useWalletStore();
+  // const [listWallet,]
+  const accessToken: string | null = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        let sum = 0;
+
+        const costSum = res.data.data.map((pre: { cost: number }) => {
+          return pre.cost;
+        });
+
+        for (let i = 0; i < costSum.length; i++) {
+          sum = sum + costSum[i];
+        }
+
+        setWalletInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const onDragOver = (e: any) => {
     e.preventDefault();
@@ -35,15 +58,20 @@ const FullCalendarCenter = () => {
 
     e.dataTransfer.dropEffect = "move";
   };
-
+//놓앗을때 start_end를 
   const onDrop = (e: any) => {
     const grabPosition = Number(grab.dataset.position);
     const targetPosition = Number(e.target.dataset.position);
+    //드랍한 곳으로 start_date를 변경한다.
+    const list=[...walletInfo]
+    list[grabPosition] = list.splice(targetPosition,1,list[grabPosition])[0]
 
-    const list = [...lists];
-    list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
+    // setWalletInfo(list)
 
-    setLists(list);
+    // const list = [...lists];
+    // list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
+
+    // setLists(list);
   };
 
   //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
@@ -117,25 +145,29 @@ const FullCalendarCenter = () => {
                     {current.format("D")}
                   </span>
                   <ul className="divided">
-                    {lists.map((sns:any,index:number)=>
-                    
-                    <li
-                    key={index}
-                    data-position={index}
-
-                      draggable="true"
-                      onDrop={onDrop}
-                      onDragStart={onDragStart}
-                      onDragOver={onDragOver}
-                      
-                      onDragEnd={onDragEnd}
-
-                  
-                    >
-                  {sns.title}
-                    </li>
-
-)}
+                    {walletInfo.map((el: any, index: number) => {
+                      // console.log(current.format("YYYYMMDD"))
+                      if (current.format("YYYY-MM-DD") === el.start_date) {
+                        // console.log(current.format("YYYY-MM-DD") )
+                        return (
+                          <li 
+                          className="FullCalendar_section_sub"
+                            key={index}
+                            data-position={index}
+                            draggable="true"
+                            onDrop={onDrop}
+                            onDragStart={onDragStart}
+                            onDragOver={onDragOver}
+                            onDragEnd={onDragEnd}
+                          >
+                            <div className="fullCalendar_imgsec">
+                              <img  src={el.image} />
+                            </div>
+                            {/* {el.name} */}
+                          </li>
+                        );
+                      }
+                    })}
                   </ul>
                 </div>
               );

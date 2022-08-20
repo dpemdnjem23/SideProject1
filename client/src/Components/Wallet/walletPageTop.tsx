@@ -22,7 +22,7 @@ const WalletPageTop = () => {
         setWalletPeriod(res.data.data);
         setWalletImageInfo(res.data.wallet);
         console.log(walletPeriod);
-        console.log(walletImageInfo[0].name);
+        console.log(walletImageInfo);
       })
       .catch((err) => {
         console.log(err);
@@ -59,8 +59,8 @@ const WalletPageTop = () => {
            
                 // }} 
                   return (
-                      <div className="WalletPage_Top_imgsec" >
-                        <img key={el2.id}  className={'WalletPage_Top_img'+indexx} src={el2.image}></img>
+                      <div key={el2.id} className="WalletPage_Top_imgsec" >
+                        <img  className={'WalletPage_Top_img'+indexx} src={el2.image}></img>
                     </div>
                   );
                 }
