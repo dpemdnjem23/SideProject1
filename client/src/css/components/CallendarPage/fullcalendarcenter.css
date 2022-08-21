@@ -25,6 +25,9 @@
   border-radius: 50%;
   width: 30px;
 }
+.Full_calendar_head_img{
+  width: 30px;
+}
 
 .divided {
   display: grid;

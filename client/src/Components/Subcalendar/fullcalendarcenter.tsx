@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import axios from "axios";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "moment/locale/ko";
 
@@ -15,6 +15,7 @@ const FullCalendarCenter = () => {
 
   const [grab, setGrab] = useState<any>(null);
   const { walletInfo, setWalletInfo } = useWalletStore();
+  // const [walletData , setWalletDate] = useState<number>(0)
   // const [listWallet,]
   const accessToken: string | null = localStorage.getItem("accessToken");
 
@@ -48,23 +49,29 @@ const FullCalendarCenter = () => {
   };
   const onDragStart = (e: any) => {
     setGrab(e.target);
+    console.log(grab)
     e.target.classList.add("grabbing");
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", e.target);
+    // e.dataTransfer.setData("text/html", e.target);
+    // console.log(e.dataTransfer.setData("text/html", e.target))
   };
 
   const onDragEnd = (e: any) => {
     e.target.classList.remove("grabbing");
+    
+
+    
 
     e.dataTransfer.dropEffect = "move";
   };
-//놓앗을때 start_end를 
+  //놓앗을때 start_end를
   const onDrop = (e: any) => {
     const grabPosition = Number(grab.dataset.position);
     const targetPosition = Number(e.target.dataset.position);
-    //드랍한 곳으로 start_date를 변경한다.
-    const list=[...walletInfo]
-    list[grabPosition] = list.splice(targetPosition,1,list[grabPosition])[0]
+    console.log(grabPosition, targetPosition);
+    //드랍한 곳으로 start_date를 변경한다.k
+    const list = [...walletInfo];
+    list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
 
     // setWalletInfo(list)
 
@@ -134,8 +141,16 @@ const FullCalendarCenter = () => {
               const isBlanked =
                 current.format("MM") !== today.format("MM") ? "blanked" : "";
 
+                // const isToday = 
+                // current.format("YYYYMMDD") === today.format("YYYYMMDD") ? "today" : "";
+
+
               return (
                 <div
+                onDrop={onDrop}
+                onDragEnd={onDragEnd}
+
+
                   onClick={() => handleDayClick(current)}
                   className={`Full_calendar_body_box_days ${isSelected}${isBlanked}`}
                   key={i}
@@ -150,18 +165,15 @@ const FullCalendarCenter = () => {
                       if (current.format("YYYY-MM-DD") === el.start_date) {
                         // console.log(current.format("YYYY-MM-DD") )
                         return (
-                          <li 
-                          className="FullCalendar_section_sub"
+                          <li
+                            className="FullCalendar_section_sub"
                             key={index}
-                            data-position={index}
                             draggable="true"
-                            onDrop={onDrop}
                             onDragStart={onDragStart}
                             onDragOver={onDragOver}
-                            onDragEnd={onDragEnd}
                           >
                             <div className="fullCalendar_imgsec">
-                              <img  src={el.image} />
+                              <img src={el.image} />
                             </div>
                             {/* {el.name} */}
                           </li>
@@ -180,12 +192,17 @@ const FullCalendarCenter = () => {
   return (
     <div id="Full_calendar_section">
       <div className="Full_calendar_head_section">
+      
+
         <div className="Full_calendar_head">
           <span className="Full_calendar_head_title">
             {date.locale("ko").format("YYYY") +
               " 년 " +
               date.locale("ko").format("MM") +
               " 월"}
+                <Link to="/">
+          <img className="Full_calendar_head_img" src="/images/2.png" />
+        </Link>
           </span>
           <div className="Full_calendar_util-button">
             <button className="Full_calendar_today" onClick={returnToday}>

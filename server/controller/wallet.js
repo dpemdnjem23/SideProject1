@@ -26,6 +26,51 @@ module.exports = {
   //7. start <-> end 를 해주고 start는 다시
   //8. start_date를 이용해 비용 계산
   //9. 결제현황 관리
+  //10. start_date 변경
+
+  walletStartDate:async (req,res) =>{
+  const {start_date,id} =req.body
+
+
+
+   // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
+try{
+
+let calculateEnd_date;
+
+
+    const userId = req.user.user_id||req.user.id
+
+    const walletInfo = await wallet.findOne({where:{id:id,user_id:userId}})
+
+
+    calculateEnd_date = moment(start_date)
+    .add(
+      Number(walletInfo.cycleDay) +
+        Number(walletInfo.cycleMonth) * 30 +
+        Number(walletInfo.cycleYear) * 365,
+      "d"
+    )
+    .format("YYYY-MM-DD");
+
+
+    const walletEdit = await wallet.update(
+      {
+        start_date: start_date,
+       
+        end_date: calculateEnd_date,
+      },
+
+      { where: { user_id: userId, id: id } }
+    );
+
+  }catch(err){
+    return res.status(500).send(err)
+  }
+
+
+  },
+
 
   walletDelete: async (req, res) => {
     //case 1 ,2 일반 유저, social 유저
