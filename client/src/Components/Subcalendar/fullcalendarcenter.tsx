@@ -48,33 +48,37 @@ const FullCalendarCenter = () => {
     e.preventDefault();
   };
   const onDragStart = (e: any) => {
-    setGrab(e.target);
-    console.log(grab)
     e.target.classList.add("grabbing");
     e.dataTransfer.effectAllowed = "move";
     // e.dataTransfer.setData("text/html", e.target);
+    e.dataTransfer.setData("text/html", e.target.id);
+
     // console.log(e.dataTransfer.setData("text/html", e.target))
   };
 
   const onDragEnd = (e: any) => {
     e.target.classList.remove("grabbing");
-    
-
-    
-
     e.dataTransfer.dropEffect = "move";
   };
   //놓앗을때 start_end를
   const onDrop = (e: any) => {
-    const grabPosition = Number(grab.dataset.position);
-    const targetPosition = Number(e.target.dataset.position);
-    console.log(grabPosition, targetPosition);
+
+    //drop한 곳의 정보를 가져온다.
+setGrab(e.target.id)
+
+
+
+
+
+    const data = e.dataTransfer.getData("text/html"); // img태그 아이디를 가져옴
+// console.log(date.format("YYYYMMDD"))
+axios.patch(`${process.env.REACT_APP_API_URI}`)
+
+    // axios.patch(`${process.env.REACT_APP_API_URI}`)
+
     //드랍한 곳으로 start_date를 변경한다.k
-    const list = [...walletInfo];
-    list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
 
-    // setWalletInfo(list)
-
+    
     // const list = [...lists];
     // list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
 
@@ -133,6 +137,7 @@ const FullCalendarCenter = () => {
                 .startOf("week")
                 .add(n + i, "day");
 
+
               const isSelected =
                 today.format("YYYYMMDD") === current.format("YYYYMMDD")
                   ? "Fullselected"
@@ -140,17 +145,15 @@ const FullCalendarCenter = () => {
 
               const isBlanked =
                 current.format("MM") !== today.format("MM") ? "blanked" : "";
-
-                // const isToday = 
-                // current.format("YYYYMMDD") === today.format("YYYYMMDD") ? "today" : "";
-
+//오늘 날짜를 마킹한다. 
+              // const isToday = today.format("YYYYMMDD") ? "todays" : "";
 
               return (
+                
                 <div
-                onDrop={onDrop}
-                onDragEnd={onDragEnd}
-
-
+                id={current.format("YYYY-MM-DD") }
+                  onDrop={onDrop}
+                  onDragOver={onDragOver}
                   onClick={() => handleDayClick(current)}
                   className={`Full_calendar_body_box_days ${isSelected}${isBlanked}`}
                   key={i}
@@ -166,14 +169,18 @@ const FullCalendarCenter = () => {
                         // console.log(current.format("YYYY-MM-DD") )
                         return (
                           <li
+                          
                             className="FullCalendar_section_sub"
                             key={index}
+                            onDragEnd={onDragEnd}
                             draggable="true"
                             onDragStart={onDragStart}
-                            onDragOver={onDragOver}
                           >
                             <div className="fullCalendar_imgsec">
-                              <img src={el.image} />
+                              <img 
+                                                          id={el.id}
+
+                              src={el.image} />
                             </div>
                             {/* {el.name} */}
                           </li>
@@ -192,17 +199,15 @@ const FullCalendarCenter = () => {
   return (
     <div id="Full_calendar_section">
       <div className="Full_calendar_head_section">
-      
-
         <div className="Full_calendar_head">
           <span className="Full_calendar_head_title">
             {date.locale("ko").format("YYYY") +
               " 년 " +
               date.locale("ko").format("MM") +
               " 월"}
-                <Link to="/">
-          <img className="Full_calendar_head_img" src="/images/2.png" />
-        </Link>
+            <Link to="/">
+              <img className="Full_calendar_head_img" src="/images/2.png" />
+            </Link>
           </span>
           <div className="Full_calendar_util-button">
             <button className="Full_calendar_today" onClick={returnToday}>

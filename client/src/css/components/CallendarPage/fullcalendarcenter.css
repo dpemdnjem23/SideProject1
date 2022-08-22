@@ -28,7 +28,9 @@
 .Full_calendar_head_img{
   width: 30px;
 }
-
+.todays{
+  background-color: aqua;
+}
 .divided {
   display: grid;
   grid-template-columns: repeat(4, 20px);
