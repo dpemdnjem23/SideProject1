@@ -7,7 +7,7 @@ import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
 import { useNavigate } from "react-router";
 import "./App.css";
 
-import Mainheader, { mainheaderuseStore } from "Components/Common/mainHeader";
+import Mainheader from "Components/Common/mainHeader";
 import MainPage from "Pages/MainPage";
 import WalletPage from "Pages/WalletPage";
 import SharePage from "Pages/SharePage";
@@ -20,7 +20,7 @@ import SigninPage from "./Pages/SigninPage";
 import MainHeaderLogo from "Components/Common/mainHeaderLogo";
 import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
-import { accessToken, isSigninState, showErrModalState } from "utils/state";
+import { accessToken, isSigninState,mainheaderuseStore, showErrModalState } from "utils/state";
 import { useStore } from "Components/Login/Login";
 import ErrModal from "Components/Modal/errorModal";
 import CallbackPage from "Pages/CallbackPage";

@@ -10,6 +10,7 @@ router.get('/paymentmanage',controller.paymentManagementControll)
 router.delete('/eliminate',controller.walletDelete)
 router.patch('/edit',controller.walletEdit)
 router.get('/toptwo',controller.walletRenewalPeriod)
+router.patch('/startdate',controller.walletStartDate)
 
 
 

@@ -1,56 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "../../css/common/mainHeader.css";
 import MainPage from "../../Pages/MainPage";
-import { Route, BrowserRouter, Link, Routes, Outlet,useNavigate } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter,
+  Link,
+  Routes,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
 import { useStore } from "Components/Login/Login";
 import MypageModal from "Components/Modal/MypageModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import create from "zustand";
-import { isSigninState, showErrModalState } from "utils/state";
-
-
-type showModaleState = {
-  showMypageModal: boolean;
-  showMypageModalOn: (input: boolean) => void;
-
-  // mypageOn: (input: boolean) => void;
-};
-
-export const mainheaderuseStore = create<showModaleState>((set) => ({
-  showMypageModal: false,
-  showMypageModalOn: (input) =>
-    set(() => ({
-      showMypageModal: input,
-    })),
-}));
+import {
+  isSigninState,
+  mainheaderuseStore,
+  showErrModalState,
+  useWalletStore,
+} from "utils/state";
 
 const Mainheader = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
   const { userSignin } = isSigninState();
+  const { setShowSubEdit, setShowSubDetail } = useWalletStore();
 
-const {setShowErrModal} = showErrModalState()
+  const { setShowErrModal } = showErrModalState();
 
+  const handleErrModal = () => {
+    setShowSubDetail(false);
+    setShowSubEdit(false);
+    if (localStorage.getItem("accessToken")) {
+      setShowErrModal(false);
+    } else {
+      navigate("/");
+      setShowErrModal(true);
+    }
+  };
 
-const handleErrModal  =() =>{
-  if(localStorage.getItem('accessToken')){
-    
-    setShowErrModal(false)
-
-      }
-      else{
-
-        navigate('/')
-        setShowErrModal(true)
-
-      }
-
-}
- 
- 
- 
   const openShowMypageModal = () => {
     if (showMypageModal === false) {
       showMypageModalOn(true);
@@ -82,29 +72,35 @@ const handleErrModal  =() =>{
             <li className="menu">
               <Link to="/">메인페이지</Link>
             </li>
-            <li onClick = {handleErrModal} className="menu">
+            <li onClick={handleErrModal} className="menu">
               <Link to="/wallet">구독지갑</Link>
             </li>
-            <li  className="menu">
+            <li className="menu">
               <Link to="/share">구독공유</Link>
             </li>
-            <li onClick = {handleErrModal} className="menu">
+            <li onClick={handleErrModal} className="menu">
               <Link to="/callendar">구독달력</Link>
             </li>
             {userSignin ? (
               <li className="menu">
-                <FontAwesomeIcon className="menu_bell" icon={faBell} />
+                <div>
+                  <FontAwesomeIcon
+                    width="60"
+                    className="menu_bell"
+                    icon={faBell}
+                  />
+                </div>
                 <img
                   onClick={openShowMypageModal}
                   width="60"
                   src="./images/wallet-6551548.svg"
                 ></img>
               </li>
-             ) : (
+            ) : (
               <li className="menu">
                 <Link to="/login"> 로그인</Link>
               </li>
-             )} 
+            )}
           </ul>
           {showMypageModal ? <MypageModal></MypageModal> : null}
         </div>

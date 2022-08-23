@@ -83,8 +83,19 @@ margin-left: 16px;
   border-radius: 50%;
 }
 .menu_bell{
-  margin:0px 15px;
-  width: 30px;
+  /* margin:0px 15px; */
+  width: 100px;
   cursor: pointer;
+
+}
+.menu>div {
+  display: flex;
+width: 45px;
+height: 40px;
+justify-content: center;
+
+align-items: center;
+/* margin-left: 12px; */
+
 
 }

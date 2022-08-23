@@ -31,6 +31,8 @@ module.exports = {
   walletStartDate:async (req,res) =>{
   const {start_date,id} =req.body
 
+  console.log(start_date,id)
+
 
 
    // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
@@ -39,10 +41,15 @@ try{
 let calculateEnd_date;
 
 
-    const userId = req.user.user_id||req.user.id
+    const userId = req.user.userId||req.user.id
 
     const walletInfo = await wallet.findOne({where:{id:id,user_id:userId}})
 
+    console.log(walletInfo.start_date,start_date)
+
+    if(walletInfo.start_date===start_date){
+      return res.status(400).send('같은날짜로는 변경할수 없습니다.')
+    }
 
     calculateEnd_date = moment(start_date)
     .add(
@@ -63,6 +70,12 @@ let calculateEnd_date;
 
       { where: { user_id: userId, id: id } }
     );
+
+    if(!walletEdit){
+      return res.status(400).send('휴')
+    }
+
+    return res.status(200).send('변경완료')
 
   }catch(err){
     return res.status(500).send(err)
@@ -264,8 +277,13 @@ let calculateEnd_date;
     let varCycleDay = cycleDay;
     let varCycleMonth = cycleMonth;
     let varCycleYear = cycleYear;
+    const userId = req.user.userId || req.user.id;
+
+    console.log(start_date)
+    console.log(userId,id,'널 너무나 사랑해서 ')
 
     try {
+
       let calculateEnd_date;
       //cycle, cost , start_date , end_date
 
@@ -276,11 +294,16 @@ let calculateEnd_date;
       //wallet 을 찾아서 cost,cycle이 존재하지 않으면 => 그대로 사용
       //
 
-      const userId = req.user.userId || req.user.id;
+      
 
       const walletInfo = await wallet.findOne({
         where: { user_id: userId, id: id },
       });
+      console.log(walletInfo,'wall')
+
+      if(!walletInfo){
+        return res.status(400).send('찾을수 없습니다.')
+      }
 
       if (!cost) {
         varCost = walletInfo.cost;

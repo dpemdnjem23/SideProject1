@@ -1,55 +1,54 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import moment from "moment";
-import { faAngleLeft , faAngleRight} from "@fortawesome/free-solid-svg-icons";
-import {useNavigate} from 'react-router-dom'
-
+import moment, { Moment } from "moment";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 import "../../css/common/Calendar.css";
 import "moment/locale/ko";
 import { dateState, useWalletStore } from "utils/state";
 
 const Calendar = () => {
-  const {dateCal,setDateCal} =dateState()
-  const { walletInfo, setWalletInfo, setShowSubEdit,setShowSubDetail,showSubEdit} = useWalletStore()
+  const { dateCal, setDateCal } = dateState();
+  // const [s,setS] = useState<Moment>(moment)
+  const {
+    walletInfo,
+    setWalletInfo,
+    setShowSubEdit,
+    setShowSubDetail,
+    showSubEdit,
+  } = useWalletStore();
 
+  const back = useNavigate();
+  //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
+  //2. 클릭할 경우 뒤로가기 edit인경우 edit으로 subregister인 경우 subregister로 이동
 
-  const back = useNavigate()
-//1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
-//2. 클릭할 경우 뒤로가기 edit인경우 edit으로 subregister인 경우 subregister로 이동
-
-  const [date, setDate] = useState<moment.Moment>(()=> moment());
+  const [date, setDate] = useState<moment.Moment>(() => moment());
   //moment는 객체로 반환된다.
-
 
   const handleDayClick = (current: moment.Moment) => {
     //모달일땐 어떻게 해야하는가.
 
     //모달창이 띄워져 있다면,  모달창은 그대로, back을 해야한다.
-    if(showSubEdit){
-      console.log('이게뭐야 살려줘')
-      back(-1)
-      setShowSubDetail(true)
-setShowSubEdit(true)
-setDateCal(current)
-
-
-    }
-    else{
-
-      back(-1)
-      setDateCal(current)
-  
+    if (showSubEdit) {
+      back(-1);
+      // setShowSubDetail(true)
+      setShowSubEdit(true);
+      setDateCal(current);
+    } else {
+      back(-1);
+      setDateCal(current);
     }
 
     //달력에서 day를 클릭할경우 => 년 월 일 을 받아서 subRegister에 뿌려준다.
-  }
-  
-  const returnToday = () => setDate(moment());
-  const jumpToMonth = (num:number) =>{
-    num? setDate(date.clone().add(30,'day')) :setDate(date.clone().subtract(30,'day'))
+  };
 
-  }
+  const returnToday = () => setDate(moment());
+  const jumpToMonth = (num: number) => {
+    num
+      ? setDate(date.clone().add(30, "day"))
+      : setDate(date.clone().subtract(30, "day"));
+  };
   //캘린더 생성
   const generate = () => {
     //초기값 설정
@@ -68,8 +67,6 @@ setDateCal(current)
         ? 53
         : today.clone().endOf("month").week();
 
-
-      
     const calendar = [];
 
     //시작주부터 마지막 주까지 +1
@@ -87,8 +84,6 @@ setDateCal(current)
                 .startOf("week")
                 .add(n + i, "day");
 
-              
-
               const isSelected =
                 today.format("YYYYMMDD") === current.format("YYYYMMDD")
                   ? "selected"
@@ -99,8 +94,7 @@ setDateCal(current)
 
               return (
                 <div
-                
-                  onClick={()=>handleDayClick(current)}
+                  onClick={() => handleDayClick(current)}
                   className={`calendarbody_box ${isSelected}${isBlanked}`}
                   key={i}
                   //   onClick={() => handleDayClick(current)}
@@ -120,30 +114,29 @@ setDateCal(current)
     <div id="calendarSection">
       <div className="calendarHead">
         <div className="calendarHaed_head">
-        <button  onClick = {() =>jumpToMonth(0)}className='fas'>
-              <FontAwesomeIcon icon={faAngleLeft}/>
-          
-            </button>
+          <button onClick={() => jumpToMonth(0)} className="fas">
+            <FontAwesomeIcon icon={faAngleLeft} />
+          </button>
           <span onClick={returnToday} className="calendarHead_title">
             {date.locale("ko").format("YYYY") +
               " 년 " +
               date.locale("ko").format("MM") +
               " 월"}
           </span>
-          <button onClick={()=>jumpToMonth(1)} className='fas'>
-            <FontAwesomeIcon icon={faAngleRight}/>
-            </button>
+          <button onClick={() => jumpToMonth(1)} className="fas">
+            <FontAwesomeIcon icon={faAngleRight} />
+          </button>
           {/* <div className="util-button"> */}
-           
-            {/* <button className = 'today'onClick={returnToday}>Today</button> */}
-         
+
+          {/* <button className = 'today'onClick={returnToday}>Today</button> */}
+
           {/* </div> */}
         </div>
       </div>
       <div className="calendarBody">
         <div className="row">
           {["일", "월", "화", "수", "목", "금", "토"].map((el) => (
-            <div className={`calendarbody_box ${el}` } key={el}>
+            <div className={`calendarbody_box ${el}`} key={el}>
               <span className="calendarbody_text">{el}</span>
             </div>
           ))}

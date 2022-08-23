@@ -4,16 +4,16 @@ import React from "react";
 import axios from 'axios'
 import "../../css/common/modal/cancellationModal.css";
 import { useNavigate } from "react-router";
+import { useWalletStore } from "utils/state";
 
 
 interface cancellationModal {
-clickModalNum:number
     closeCancellationModal: () =>void
 }
 
-const CancellationModal:React.FC<cancellationModal> = ({closeCancellationModal,clickModalNum}) => {
+const CancellationModal:React.FC<cancellationModal> = ({closeCancellationModal}) => {
 
-
+const {clickModalNum} = useWalletStore()
   const navigate = useNavigate()
   const accessToken:string|null = localStorage.getItem('accessToken')
 

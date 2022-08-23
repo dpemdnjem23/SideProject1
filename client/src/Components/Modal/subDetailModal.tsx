@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import CancellationModal from "./cancellationModal";
 import "../../css/common/modal/subDetailModal.css";
 import SubDetailEditModal from "./subDetailEditModal";
-import { useWalletStore } from "utils/state";
+import { dateState, useWalletStore } from "utils/state";
 import axios from "axios";
 
 type modal = {
@@ -12,7 +12,7 @@ type modal = {
   showCancellation: boolean;
   closeCancellationModal: () => void;
 
-  clickModalNum: number;
+  // clickModalNum: number;
 
   arrIndex: number;
 };
@@ -22,16 +22,24 @@ const SubDetailModal: React.FC<modal> = ({
   openCancellationModal,
   closeCancellationModal,
   arrIndex,
-  clickModalNum,
   // id
 }) => {
   const { walletInfo, setWalletInfo, setShowSubEdit, showSubEdit } =
     useWalletStore();
 
+    const {clearDateCal} = dateState()
+
   const openSubDetailEditModal = () => {
     setShowSubEdit(true);
+    clearDateCal()
+
 
   };
+
+
+// useEffect(()=>{
+// },[])
+
 
   return (
     <div onClick={() => closeSubModal()} id="SubDetail_Modal">
@@ -41,11 +49,10 @@ const SubDetailModal: React.FC<modal> = ({
       >
         {showCancellation ? (
           <CancellationModal
-            clickModalNum={clickModalNum}
             closeCancellationModal={closeCancellationModal}
           />
         ) : null}
-        {showSubEdit ? <SubDetailEditModal             clickModalNum={clickModalNum}
+        {showSubEdit ? <SubDetailEditModal             
  arrIndex={arrIndex} /> : null}
 
         <header>

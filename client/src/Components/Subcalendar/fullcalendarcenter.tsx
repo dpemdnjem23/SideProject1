@@ -11,13 +11,85 @@ import "../../css/components/CallendarPage/fullcalendarcenter.css";
 import { useWalletStore } from "utils/state";
 
 const FullCalendarCenter = () => {
+  const navigate = useNavigate();
+
   //start_date랑 같은 날짜에 해당하는 것만 map을 이용하여 달력에 나타낸다
 
-  const [grab, setGrab] = useState<any>(null);
+  const [grab, setGrab] = useState<any>('');
   const { walletInfo, setWalletInfo } = useWalletStore();
   // const [walletData , setWalletDate] = useState<number>(0)
   // const [listWallet,]
   const accessToken: string | null = localStorage.getItem("accessToken");
+
+  const onDragOver = (e: any) => {
+    e.preventDefault();
+  };
+  const onDragStart = (e: any) => {
+    e.target.classList.add("grabbing");
+    e.dataTransfer.effectAllowed = "move";
+    // e.dataTransfer.setData("text/html", e.target);
+    e.dataTransfer.setData("text/html", e.target.id);
+    setGrab('')
+   
+    // console.log(e.dataTransfer.setData("text/html", e.target))
+  };
+
+  const onDragEnd = (e: any) => {
+    e.target.classList.remove("grabbing");
+    e.dataTransfer.dropEffect = "move";
+    // setGrab(true)
+
+  };
+  //놓앗을때 start_end를
+  const onDrop = (e: any) => {
+    const startDate = e.target.id;
+    //drop한 곳의 정보를 가져온다.
+
+
+    const data = e.dataTransfer.getData("text/html"); // img태그 아이디를 가져옴
+    // console.log(date.format("YYYYMMDD"))'
+
+    // console.log(typeof(startDate),startDate.length, data);
+
+    // if (startDate === typeof start)
+    if (startDate.length >= 10) {
+    
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URI}/wallet/startdate`,
+          {
+            id: data,
+            start_date: startDate,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res)=>{
+          setGrab(res);
+    
+        })
+        .catch((err) => {
+          setGrab(false);
+
+          console.log(err);
+        });
+    } else {
+      return;
+    }
+
+    // axios.patch(`${process.env.REACT_APP_API_URI}`)
+
+    //드랍한 곳으로 start_date를 변경한다.k
+
+    // const list = [...lists];
+    // list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
+
+    // setLists(list);
+  };
 
   useEffect(() => {
     axios
@@ -42,50 +114,9 @@ const FullCalendarCenter = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [grab]);
 
-  const onDragOver = (e: any) => {
-    e.preventDefault();
-  };
-  const onDragStart = (e: any) => {
-    e.target.classList.add("grabbing");
-    e.dataTransfer.effectAllowed = "move";
-    // e.dataTransfer.setData("text/html", e.target);
-    e.dataTransfer.setData("text/html", e.target.id);
-
-    // console.log(e.dataTransfer.setData("text/html", e.target))
-  };
-
-  const onDragEnd = (e: any) => {
-    e.target.classList.remove("grabbing");
-    e.dataTransfer.dropEffect = "move";
-  };
-  //놓앗을때 start_end를
-  const onDrop = (e: any) => {
-
-    //drop한 곳의 정보를 가져온다.
-setGrab(e.target.id)
-
-
-
-
-
-    const data = e.dataTransfer.getData("text/html"); // img태그 아이디를 가져옴
-// console.log(date.format("YYYYMMDD"))
-axios.patch(`${process.env.REACT_APP_API_URI}`)
-
-    // axios.patch(`${process.env.REACT_APP_API_URI}`)
-
-    //드랍한 곳으로 start_date를 변경한다.k
-
-    
-    // const list = [...lists];
-    // list[grabPosition] = list.splice(targetPosition, 1, list[grabPosition])[0];
-
-    // setLists(list);
-  };
-
-  //1. 달력에서 날짜를 클릭하면 그 요소를 담아서 subperiod와 edit에 보내줘야한다
+  //1. 달력에서 날짜를 클릭하면 그 요소를 담아서subperiod와 edit에 보내줘야한다
   //2. 클릭할 경우 뒤로가기 edit인경우 edit으로 subregister인 경우 subregister로 이동
 
   const [date, setDate] = useState<moment.Moment>(() => moment());
@@ -137,7 +168,6 @@ axios.patch(`${process.env.REACT_APP_API_URI}`)
                 .startOf("week")
                 .add(n + i, "day");
 
-
               const isSelected =
                 today.format("YYYYMMDD") === current.format("YYYYMMDD")
                   ? "Fullselected"
@@ -145,13 +175,12 @@ axios.patch(`${process.env.REACT_APP_API_URI}`)
 
               const isBlanked =
                 current.format("MM") !== today.format("MM") ? "blanked" : "";
-//오늘 날짜를 마킹한다. 
+              //오늘 날짜를 마킹한다.
               // const isToday = today.format("YYYYMMDD") ? "todays" : "";
 
               return (
-                
                 <div
-                id={current.format("YYYY-MM-DD") }
+                  id={current.format("YYYY-MM-DD")}
                   onDrop={onDrop}
                   onDragOver={onDragOver}
                   onClick={() => handleDayClick(current)}
@@ -169,7 +198,6 @@ axios.patch(`${process.env.REACT_APP_API_URI}`)
                         // console.log(current.format("YYYY-MM-DD") )
                         return (
                           <li
-                          
                             className="FullCalendar_section_sub"
                             key={index}
                             onDragEnd={onDragEnd}
@@ -177,10 +205,7 @@ axios.patch(`${process.env.REACT_APP_API_URI}`)
                             onDragStart={onDragStart}
                           >
                             <div className="fullCalendar_imgsec">
-                              <img 
-                                                          id={el.id}
-
-                              src={el.image} />
+                              <img id={el.id} src={el.image} />
                             </div>
                             {/* {el.name} */}
                           </li>

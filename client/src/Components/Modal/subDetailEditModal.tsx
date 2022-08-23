@@ -16,21 +16,26 @@ import axios from "axios";
 
 interface subDetailEdit {
   arrIndex: number;
-  clickModalNum: number;
+  // clickModalNum: number;
 }
 const SubDetailEditModal: React.FC<subDetailEdit> = ({
   arrIndex,
-  clickModalNum,
+  
 }) => {
+
   const navigate = useNavigate();
   const accessToken: string | null = localStorage.getItem("accessToken");
-  const { walletInfo, setWalletInfo, setShowSubEdit } = useWalletStore();
+  const { walletInfo, setWalletInfo,clickModalNum, setShowSubEdit } = useWalletStore();
 
   const { dateCal, setDateCal, clearDateCal } = dateState();
 
   const { cycleCal, setCycleCal } = cycleState();
 
+  const [walletDate,setWalletDate] = useState<string>(moment().format('YYYY-MM-DD'))
+
   const { setSubCash, subCash } = registSubInfoState();
+  console.log(clickModalNum,'cliick')
+
 
   useEffect(() => {
     //에딧 모달에 들어오면
@@ -79,6 +84,7 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
   const handelModifyWallet = () => {
     const number = subCash.replace(/,/g, "");
     const today = dateCal.format("YYYY-MM-DD");
+    console.log(clickModalNum,today)
 
     axios
       .patch(

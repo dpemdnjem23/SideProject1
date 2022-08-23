@@ -11,8 +11,7 @@ import "../../css/common/modal/MypageModal.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "Components/Login/Login";
-import { mainheaderuseStore } from "Components/Common/mainHeader";
-import { isSigninState } from "utils/state";
+import { isSigninState , mainheaderuseStore } from "utils/state";
 //로그아웃을 누르면 로그아웃이 되면서 로그인 해제
 
 //모달 닫기버튼은 app.js로 넘기고싶다.

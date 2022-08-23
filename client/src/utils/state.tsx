@@ -50,6 +50,13 @@ type cycleState = {
   cycleCal: { year: string; month: string; day: string };
   setCycleCal: (input: { year: string; month: string; day: string }) => void;
 };
+type showModaleState = {
+  showMypageModal: boolean;
+  showMypageModalOn: (input: boolean) => void;
+
+  // mypageOn: (input: boolean) => void;
+};
+
 
 type mypageSubCostState = {
   subPayment: number;
@@ -105,6 +112,8 @@ type walletInfo = {
 
 type walletInfoState = {
   walletInfo: walletInfo[];
+  clickModalNum:number;
+  setClickModalNum:(input:number) =>void;
   setWalletInfo: (input: []) => void;
   setShowSubEdit: (input: boolean) => void;
   showSubEdit: boolean;
@@ -214,12 +223,25 @@ export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
 
 export const useWalletStore = create<walletInfoState>()((set) => ({
   walletInfo: [],
+  clickModalNum:0,
   showSubEdit: false,
   showSubDetail: false,
+  setClickModalNum:(input) => set({clickModalNum:input}),
   setWalletInfo: (input) => set({ walletInfo: input }),
   setShowSubEdit: (input) => set({ showSubEdit: input }),
   setShowSubDetail: (input) => set({ showSubDetail: input }),
 }));
+
+
+
+export const mainheaderuseStore = create<showModaleState>((set) => ({
+  showMypageModal: false,
+  showMypageModalOn: (input) =>
+    set(() => ({
+      showMypageModal: input,
+    })),
+}));
+
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{
