@@ -21,6 +21,7 @@ import {
   showErrModalState,
   useWalletStore,
 } from "utils/state";
+import AlarmModal from "Components/Modal/alarmModal";
 
 const Mainheader = () => {
   const navigate = useNavigate();
@@ -103,6 +104,8 @@ const Mainheader = () => {
             )}
           </ul>
           {showMypageModal ? <MypageModal></MypageModal> : null}
+          <AlarmModal></AlarmModal>
+
         </div>
       </div>
       <Outlet></Outlet>
