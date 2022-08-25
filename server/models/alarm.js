@@ -19,10 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   alarm.init({
-    description: DataTypes.STRING,
+    image: DataTypes.STRING,
+    user_id:DataTypes.NUMBER,
     title: DataTypes.STRING,
-    read: DataTypes.BOOLEAN,
-    read_date: DataTypes.DATE
+    read_on: DataTypes.BOOLEAN,
+    
   }, {
     sequelize,
     modelName: 'alarm',

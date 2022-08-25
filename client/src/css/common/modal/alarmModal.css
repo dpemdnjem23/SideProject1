@@ -78,43 +78,112 @@ width: 100%;
     display: flex;
     align-items: center;
 }
-.AlarmModal_header_newAlarm{
-    cursor: pointer;
+.oldAlarm{
     width: 63px;
     height: 20px;
     display: flex;
     align-items: center;
-    color: rgb(34, 34, 34);
+    color: rgb(185, 185, 185);
     margin-right: 20px;
+
 }
-.AlarmModal_header_oldAlarm{
-    cursor: pointer;
+/* .newAlarm:first-child{
+    margin-right: 20px;
+} */
+.newAlarm{
     width: 63px;
     height: 20px;
     display: flex;
     align-items: center;
+    color: black;
+    margin-right: 20px;
+
+   
+    
+}
+.newAlarm>span{
+    cursor: pointer;
+
+    font-weight: bold;
+    color: black;
+    font-size: 16px;
+    /* color: rgb(185, 185, 185); */
+
+}
+.oldAlarm>span{
+    cursor: pointer;
+
+    font-weight: bold;
+    font-size: 16px;
+    color: rgb(185, 185, 185);
+
+}
+
+
+.AlarmModal_section_body{
+    width: 100%;
+    max-height: calc(501px);
+    height: 100%;
+    margin-top: 59px;
+    overflow-y: hidden;
+}
+
+
+.AlarmModal_section_body_textbox{
+    display: flex;
+
+    flex-direction: column;
+    /* -webkit-box-align: center; */
+    
+    align-items: center;
+    margin-top: 80px;
+}
+
+.AlarmModal_section_body_textbox>h1{
+
+
+    height: 17px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: center;
     color: rgb(34, 34, 34);
-}
-
-.AlarmModal_header_newAlarm>span{
-    font-weight: bold;
-    color: rgb(185, 185, 185);
-    font-size: 16px;
 
 }
+.AlarmModal_section_body_textbox>p{
 
-.AlarmModal_header_oldAlarm>span{
-    font-weight: bold;
-    color: rgb(185, 185, 185);
-    font-size: 16px;
+
+    margin-top: 12px;
+        height: 36px;
+        font-size: 13px;
+        line-height: 19.5px;
+        text-align: center;
+        color: rgb(101, 101, 101);
+        white-space: pre-line;
+
+
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+
 }
 
-.AlarmModal_header_oldAlarm>span:hover{
+.AlarmModal_header_Element>span:hover{
     color: black;
 }
 
-.AlarmModal_header_newAlarm>span:hover{
- color: black;
+.AlarmModal_section_body_text_old{
+    padding-left: 48px;
+    width: 100%;
+    height: 44px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(246, 246, 246);
+    font-size: 13px;
+    line-height: 19.5px;
+    text-align: left;
+    color: rgb(74, 74, 74);
 }
-
-
