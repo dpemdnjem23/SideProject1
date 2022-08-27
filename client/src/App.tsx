@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import "./css/reset.css";
 import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
-
+import io from 'socket.io-client'
 import { useNavigate } from "react-router";
 import "./App.css";
 
@@ -25,6 +25,7 @@ import { useStore } from "Components/Login/Login";
 import ErrModal from "Components/Modal/errorModal";
 import CallbackPage from "Pages/CallbackPage";
 import { WindowScrollController } from "@fullcalendar/common";
+import { disconnectSocket, initSocketConnection,sendSocketMessage,socketInfoReceived } from "socketio";
 
 // import {
 //   MainPage,
@@ -39,6 +40,57 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
+//!
+
+useEffect(()=>{
+  initSocketConnection()
+
+  // return() =>{
+  //   disconnectSocket()
+  // }
+
+
+},[])
+
+const socketData = (cmd:any, body:any) => {
+  sendSocketMessage(cmd, body);
+  socketInfoReceived(104, (err:any, ret:any) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    if (ret.cmd === 119) {
+      // do something... 
+    }
+   });
+};
+
+
+useEffect(() => {
+  const body:any = { userIdx: 1 };
+  socketData(118, body);
+  
+  return () => {
+    sendSocketMessage(120, body);
+  };
+}, []);
+
+
+
+// useEffect(() => {
+//   const body = { userIdx: Number(userIdx) };
+//   socketData(118, body);
+  
+//   return () => {
+//     sendSocketMessage(120, body);
+//   };
+// }, [userIdx]);
+
+// ...
+
+
+//!
+
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
 

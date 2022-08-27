@@ -25,6 +25,7 @@ import AlarmModal from "Components/Modal/alarmModal";
 
 const Mainheader = () => {
   const navigate = useNavigate();
+  const [showAlarmModal , setShowAlarmModal] = useState<boolean>(false)
   const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
@@ -49,6 +50,21 @@ const Mainheader = () => {
       showMypageModalOn(false);
     }
   };
+
+  const openAlarmModal = () =>{
+    setShowAlarmModal(true)
+
+    if(showAlarmModal){
+      setShowAlarmModal(false)
+    }
+
+  }
+
+  const closeAlarmModal = () =>{
+    setShowAlarmModal(false)
+
+    
+  }
 
   // const closeShowMypageModal = () =>{
 
@@ -86,6 +102,7 @@ const Mainheader = () => {
               <li className="menu">
                 <div>
                   <FontAwesomeIcon
+                  onClick={openAlarmModal}
                     width="60"
                     className="menu_bell"
                     icon={faBell}
@@ -104,7 +121,7 @@ const Mainheader = () => {
             )}
           </ul>
           {showMypageModal ? <MypageModal></MypageModal> : null}
-          <AlarmModal></AlarmModal>
+          {showAlarmModal? <AlarmModal closeAlarmModal={closeAlarmModal}></AlarmModal> :null }
 
         </div>
       </div>

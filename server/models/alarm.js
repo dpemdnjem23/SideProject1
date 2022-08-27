@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     user_id:DataTypes.NUMBER,
     title: DataTypes.STRING,
-    read_on: DataTypes.BOOLEAN,
+    read: DataTypes.BOOLEAN,
     
   }, {
     sequelize,

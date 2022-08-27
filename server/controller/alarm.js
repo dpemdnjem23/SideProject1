@@ -23,13 +23,41 @@ module.exports = {
 
 
   alarmRegister:async(req,res) =>{
+    const {title,} =req.body
 
+    try{
+
+      const userId = req.user.userId||req.user.id
+
+   const alarm = await alarm.create({where:{user_id:userId}})
+   
+
+   return res.status(200).send({data:alarmInfo})
+
+    }catch(err){
+      return res.status(500).send(err)
+    }
 
 
   
   
   },
   alarmInfo:async(req,res) =>{
+
+
+
+    try{
+
+      const userId = req.user.userId||req.user.id
+
+   const alarmInfo = await alarm.findAll({where:{user_id:userId}})
+   
+
+   return res.status(200).send({data:alarmInfo})
+
+    }catch(err){
+      return res.status(500).send(err)
+    }
 
   }
 

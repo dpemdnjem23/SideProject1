@@ -25,6 +25,7 @@
     "react-scripts": "5.0.0",
     "sass": "^1.49.9",
     "scheduler-react": "^2.0.20",
+    "socket.io-client": "^4.5.1",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4",
     "zustand": "^4.0.0-rc.1"

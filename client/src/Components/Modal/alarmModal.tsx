@@ -1,9 +1,15 @@
+import e from "express";
 import { useEffect } from "preact/hooks";
 import React, { useState } from "react";
 
 import "../../css/common/modal/alarmModal.css";
 
-const AlarmModal = () => {
+type alarmModal = {
+
+  closeAlarmModal: () =>void
+}
+
+const AlarmModal:React.FC<alarmModal> = ({closeAlarmModal}) => {
   const [alarmMode, setAlarmMode] = useState<boolean>(false);
   const [alarmInfo,setAlarmInfo] = useState()
 
@@ -28,9 +34,9 @@ const AlarmModal = () => {
   const isSelected2 = alarmMode ? "oldAlarm" : "newAlarm";
 
   return (
-    <div id="AlarmModal">
+    <div onClick={() => closeAlarmModal()} id="AlarmModal">
       <div className="AlarmModal_background">
-        <div className="AlarmModal_section">
+        <div onClick = {(e)=>e.stopPropagation()} className="AlarmModal_section">
           {/* <div className="AlarmModal_section"> */}
           <div className="AlarmModal_section_contents">
             <div className="AlarmModal_header">
