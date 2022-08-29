@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const controller = require("../controller/auth");
+const controller = require("../controller/alarm");
 // const authChecker = require('../middleware/authChecker')
-// router.get()
+router.post('/register',controller.alarmRegister)
 
 module.exports = router;

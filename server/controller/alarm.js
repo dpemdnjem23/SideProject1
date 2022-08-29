@@ -23,16 +23,20 @@ module.exports = {
 
 
   alarmRegister:async(req,res) =>{
-    const {title,} =req.body
+    // const {title,image} =req.body
+    // console.log(req.body)
 
     try{
 
       const userId = req.user.userId||req.user.id
 
-   const alarm = await alarm.create({where:{user_id:userId}})
+      const walletInfo = await wallet.findAll({where:{user_id:userId}})
+
+
+   const alarm = await alarm.create({user_id:userId,title:title,image:image})
    
 
-   return res.status(200).send({data:alarmInfo})
+   return res.status(200).send('알람이 생성 되었습니다.')
 
     }catch(err){
       return res.status(500).send(err)

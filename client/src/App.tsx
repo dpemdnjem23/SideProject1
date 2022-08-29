@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import "./css/reset.css";
 import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
-import io from 'socket.io-client'
+import io from "socket.io-client";
 import { useNavigate } from "react-router";
 import "./App.css";
 
@@ -20,12 +20,16 @@ import SigninPage from "./Pages/SigninPage";
 import MainHeaderLogo from "Components/Common/mainHeaderLogo";
 import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
-import { accessToken, isSigninState,mainheaderuseStore, showErrModalState } from "utils/state";
+import {
+  isSigninState,
+  mainheaderuseStore,
+  showErrModalState,
+  useWalletStore,
+} from "utils/state";
 import { useStore } from "Components/Login/Login";
 import ErrModal from "Components/Modal/errorModal";
 import CallbackPage from "Pages/CallbackPage";
-import { WindowScrollController } from "@fullcalendar/common";
-import { disconnectSocket, initSocketConnection,sendSocketMessage,socketInfoReceived } from "socketio";
+import { stringify } from "querystring";
 
 // import {
 //   MainPage,
@@ -40,56 +44,13 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const App = () => {
-//!
+  //!
 
-useEffect(()=>{
-  initSocketConnection()
+  const { walletInfo, setWalletInfo } = useWalletStore();
 
-  // return() =>{
-  //   disconnectSocket()
-  // }
+  const accessToken = localStorage.getItem("accessToken");
 
-
-},[])
-
-const socketData = (cmd:any, body:any) => {
-  sendSocketMessage(cmd, body);
-  socketInfoReceived(104, (err:any, ret:any) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    if (ret.cmd === 119) {
-      // do something... 
-    }
-   });
-};
-
-
-useEffect(() => {
-  const body:any = { userIdx: 1 };
-  socketData(118, body);
-  
-  return () => {
-    sendSocketMessage(120, body);
-  };
-}, []);
-
-
-
-// useEffect(() => {
-//   const body = { userIdx: Number(userIdx) };
-//   socketData(118, body);
-  
-//   return () => {
-//     sendSocketMessage(120, body);
-//   };
-// }, [userIdx]);
-
-// ...
-
-
-//!
+  //!
 
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
@@ -157,7 +118,6 @@ useEffect(() => {
         console.log(err);
 
         window.location.assign("/");
-
       });
   };
 
@@ -168,6 +128,42 @@ useEffect(() => {
     issueAccessToken();
   }
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data)
+        
+        fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
+          method: "post",
+          body: JSON.stringify(
+         res.data.data
+
+          ),
+          credentials:'include',
+          headers:{
+            'Content-Type':'application/json',
+             authorization:`Bearer ${accessToken}`
+          }
+        }).then((res:any)=>{
+          if(!res.ok){
+            throw new Error(res.status)
+          }
+
+        }).catch((err)=>{
+          console.log(err)
+
+        })
+        setWalletInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
 
