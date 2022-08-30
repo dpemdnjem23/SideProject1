@@ -141,8 +141,7 @@ const App = () => {
         fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
           method: "post",
           body: JSON.stringify(
-         res.data.data
-
+res.data.data
           ),
           credentials:'include',
           headers:{

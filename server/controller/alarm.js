@@ -33,7 +33,7 @@ module.exports = {
       const walletInfo = await wallet.findAll({where:{user_id:userId}})
 
 
-   const alarm = await alarm.create({user_id:userId,title:title,image:image})
+   const alarm = await alarm.bulkCreate({user_id:userId,title:title,image:image})
    
 
    return res.status(200).send('알람이 생성 되었습니다.')
