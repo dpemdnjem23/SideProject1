@@ -136,28 +136,27 @@ const App = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data)
-        
-        fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
-          method: "post",
-          body: JSON.stringify(
-res.data.data
-          ),
-          credentials:'include',
-          headers:{
-            'Content-Type':'application/json',
-             authorization:`Bearer ${accessToken}`
-          }
-        }).then((res:any)=>{
-          if(!res.ok){
-            throw new Error(res.status)
-          }
+        console.log(res.data.data);
 
-        }).catch((err)=>{
-          console.log(err)
-
-        })
         setWalletInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
+      method: "post",
+
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res: any) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
       })
       .catch((err) => {
         console.log(err);
