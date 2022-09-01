@@ -17,11 +17,15 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
       },
+
       read: {
         type: Sequelize.BOOLEAN,
-        defaultValue:true
+        defaultValue:false
       },
-
+      remain_time:{
+        type:Sequelize.INTEGER
+      }
+,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
