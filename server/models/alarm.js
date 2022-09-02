@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     user_id:DataTypes.NUMBER,
     title: DataTypes.STRING,
     read: DataTypes.BOOLEAN,
+    remain_time:DataTypes.NUMBER
     
   }, {
     sequelize,

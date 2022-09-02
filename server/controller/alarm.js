@@ -19,6 +19,37 @@ const {
 module.exports = {
   //1. 알람정보를 불러온다.
   //2, 알람정보를 등록한다.
+  //3. read값을 바꿔준다.
+  //4. 알람 정보를 삭제한다.
+
+
+  alarmReadUpdate:async(req,res) =>{
+
+    const {id} =req.body
+
+    try{
+
+      const userId = req.user.userId || req.user.id;
+
+      const alarmUpdate = await alarm.update({read:true},{where:{id:id,user_id:userId}})
+
+      
+      if(!alarmUpdate){
+        return res.status(400).send('안돼')
+      }
+
+      return res.status(200).send('변경되었습니다.')
+
+
+
+    }catch(err){
+      return res.status(500).send(err);
+
+
+    }
+
+
+  },
 
   alarmRegister: async (req, res) => {
     // console.log(req.body)
@@ -30,7 +61,7 @@ module.exports = {
     
 
       const userId = req.user.userId || req.user.id;
-
+console.log(userId)
       const walletInfo = await wallet.findAll({
         where: { user_id: userId },
       });
@@ -68,6 +99,12 @@ module.exports = {
 }
   
 
+
+        }
+        else{
+
+          return res.status(200).send("이미 알람이 생성되었습니다.");
+          //존재하면 생성할 필요 없다.
 
         }
 
