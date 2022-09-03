@@ -10,6 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
+models.alarm.belongsTo(models.wallet,{
+  foreignKey:'wallet_id',
+  sourceKey:'id',
+  
+})
+
       models.alarm.belongsTo(models.user,{
         foreignKey:'user_id',
         sourceKey:'id',

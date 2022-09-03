@@ -121,6 +121,23 @@ type walletInfoState = {
   setShowSubDetail: (input: boolean) => void;
 };
 
+type alarmInfo ={
+
+  title:string,
+  image:string,
+  remain_time:number,
+  read:boolean
+
+}
+
+
+type alarmInfoState = {
+
+  alarmInfo:alarmInfo[] 
+  setAlarmInfo: (input: []) => void;
+
+}
+
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -241,6 +258,16 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
       showMypageModal: input,
     })),
 }));
+
+
+export const alarmInfouseStore = create<alarmInfoState>((set) => ({
+
+
+  alarmInfo:[],
+  setAlarmInfo: (input) => set({ alarmInfo: input }),
+
+}));
+
 
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

@@ -32,6 +32,20 @@ module.exports = {
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
     });
+
+  await queryInterface.addColumn("alarms", "wallet_id", {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    references: {
+      model: "wallets", // Users 모델에서
+      key: "id", // 그 아이디 값을 참고합니다.
+    },
+    onUpdate: "CASCADE",
+  });
+
+
+   
+
     /**
      * Add altering commands here.
      *

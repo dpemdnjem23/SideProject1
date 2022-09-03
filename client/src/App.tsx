@@ -136,7 +136,6 @@ const App = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
 
         setWalletInfo(res.data.data);
       })
@@ -145,8 +144,8 @@ const App = () => {
       });
 
     fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
-      method: "post",
-
+      method: "POST",
+      
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
@@ -157,6 +156,9 @@ const App = () => {
         if (!res.ok) {
           throw new Error(res.status);
         }
+      })
+      .then((result)=>{
+        console.log('결과')
       })
       .catch((err) => {
         console.log(err);

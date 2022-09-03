@@ -15,7 +15,7 @@ module.exports = {
       title: {
         type: Sequelize.STRING,
       },
-
+    
       read: {
         type: Sequelize.BOOLEAN,
         defaultValue:false
