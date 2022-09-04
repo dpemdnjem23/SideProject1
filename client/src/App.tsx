@@ -21,6 +21,7 @@ import MainHeaderLogo from "Components/Common/mainHeaderLogo";
 import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
 import {
+  alarmInfouseStore,
   isSigninState,
   mainheaderuseStore,
   showErrModalState,
@@ -42,11 +43,13 @@ import { stringify } from "querystring";
 axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.get["Content-Type"] = "application/json";
 
 const App = () => {
   //!
 
   const { walletInfo, setWalletInfo } = useWalletStore();
+  const {setAlarmInfo  } = alarmInfouseStore()
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -132,12 +135,27 @@ const App = () => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
+          
           authorization: `Bearer ${accessToken}`,
         },
       })
       .then((res) => {
 
         setWalletInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
+      .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+
+        setAlarmInfo(res.data.data)
       })
       .catch((err) => {
         console.log(err);

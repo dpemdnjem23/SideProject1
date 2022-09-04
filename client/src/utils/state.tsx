@@ -57,7 +57,6 @@ type showModaleState = {
   // mypageOn: (input: boolean) => void;
 };
 
-
 type mypageSubCostState = {
   subPayment: number;
   subCost: number;
@@ -112,8 +111,8 @@ type walletInfo = {
 
 type walletInfoState = {
   walletInfo: walletInfo[];
-  clickModalNum:number;
-  setClickModalNum:(input:number) =>void;
+  clickModalNum: number;
+  setClickModalNum: (input: number) => void;
   setWalletInfo: (input: []) => void;
   setShowSubEdit: (input: boolean) => void;
   showSubEdit: boolean;
@@ -121,22 +120,18 @@ type walletInfoState = {
   setShowSubDetail: (input: boolean) => void;
 };
 
-type alarmInfo ={
-
-  title:string,
-  image:string,
-  remain_time:number,
-  read:boolean
-
-}
-
+type alarmInfo = {
+  title: string;
+  id: number;
+  image: string;
+  remain_time: number;
+  read: boolean;
+};
 
 type alarmInfoState = {
-
-  alarmInfo:alarmInfo[] 
+  alarmInfo: alarmInfo[];
   setAlarmInfo: (input: []) => void;
-
-}
+};
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -240,16 +235,14 @@ export const mypageUserInfoState = create<mypageUserInfo>()((set) => ({
 
 export const useWalletStore = create<walletInfoState>()((set) => ({
   walletInfo: [],
-  clickModalNum:0,
+  clickModalNum: 0,
   showSubEdit: false,
   showSubDetail: false,
-  setClickModalNum:(input) => set({clickModalNum:input}),
+  setClickModalNum: (input) => set({ clickModalNum: input }),
   setWalletInfo: (input) => set({ walletInfo: input }),
   setShowSubEdit: (input) => set({ showSubEdit: input }),
   setShowSubDetail: (input) => set({ showSubDetail: input }),
 }));
-
-
 
 export const mainheaderuseStore = create<showModaleState>((set) => ({
   showMypageModal: false,
@@ -259,16 +252,10 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
     })),
 }));
 
-
 export const alarmInfouseStore = create<alarmInfoState>((set) => ({
-
-
-  alarmInfo:[],
+  alarmInfo: [],
   setAlarmInfo: (input) => set({ alarmInfo: input }),
-
 }));
-
-
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{

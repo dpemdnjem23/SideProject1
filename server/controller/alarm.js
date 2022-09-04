@@ -85,15 +85,18 @@ module.exports = {
 
             // 없을경우 생성한다. 만약, 존재한다면?
 
-            return res.status(200).send("알람이 생성 되었습니다.");
           }
         } else {
-          //존재하면 생성할 필요 없다.
+          //존재하면 생성할 필요 없다. 여러개의 wallet이 들어올수도
+          //있음으로
 
+          continue;
           
-          return res.status(200).send("이미 알람이 생성되었습니다.");
         }
       }
+
+      return res.status(200).send("알람이 생성 되었습니다.");
+
 
       //3일 이하가 남앗을때 작동한다
     } catch (err) {
