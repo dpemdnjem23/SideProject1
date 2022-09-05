@@ -31,6 +31,7 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
 
   const isSelected = alarmMode ? "newAlarm" : "oldAlarm";
   const isSelected2 = alarmMode ? "oldAlarm" : "newAlarm";
+  const isSelectedAlarm = alarmInfo.length <= 0 ? "" : "newTextBox";
 
   return (
     <div onClick={() => closeAlarmModal()} id="AlarmModal">
@@ -67,28 +68,29 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
                   알림은 30일동안만 보관됩니다.
                 </div>
               ) : (
-                <div className="AlarmModal_section_body_textbox">
-                  {
-                  
-                    alarmInfo.length >= 0 ? (
-                      <>
-                        <h1>현재 도착한 새알림이 없습니다.</h1>
-                        <p>
-                          현재 구독 에 대한 알림만 진행하고 있습니다.<br></br>
-                          새로운 구독 정보나 갱신이 되면 알려드리겠습니다.
-                        </p>
-                      </>
-                    ) : (
-
-                      alarmInfo.map((el) => {
-                      <div key={el.id} >
-                        <img src={el.image} />
-                        <div>{el.title}</div>
-                      </div>
-                    );
-                  })}
-
-                    
+                <div
+                  className={`AlarmModal_section_body_textbox ${isSelectedAlarm}`}
+                >
+                  {alarmInfo.length <= 0 ? (
+                    <>
+                      <h1>현재 도착한 새알림이 없습니다.</h1>
+                      <p>
+                        현재 구독 에 대한 알림만 진행하고 있습니다.<br></br>
+                        새로운 구독 정보나 갱신이 되면 알려드리겠습니다.
+                      </p>
+                    </>
+                  ) : (
+                    alarmInfo.map((el) => {
+                      return (
+                        <div className="alarmInfo" key={el.id}>
+                          <div className="alarmInfo_Section1">
+                            <img src={el.image} />
+                            <div>{el.title}</div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               )}
             </div>

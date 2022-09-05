@@ -187,3 +187,40 @@ width: 100%;
     text-align: left;
     color: rgb(74, 74, 74);
 }
+
+
+.alarmInfo{
+    /* margin-bottom: 80px; */
+    text-align: start;
+    
+    width: 100%;
+    height: 70px;
+    border-bottom: gray 1px solid;
+}
+.alarmInfo_Section1>div{
+    /* vertical-align: baseline; */
+
+    
+}
+.alarmInfo_Section1>img{
+    width: 30px;
+    border-radius: 50%;
+    
+
+    
+}
+.alarmInfo_Section1{
+    display: flex;
+    flex-direction: row;
+    align-items:baseline;
+
+    /* display: block; */
+    margin:auto 0px;
+    /* justify-content: center; */
+    
+    
+}
+
+.newTextBox{
+    margin-top: 0px;
+}
