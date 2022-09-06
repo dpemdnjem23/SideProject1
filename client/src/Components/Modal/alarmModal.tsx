@@ -12,7 +12,7 @@ type alarmModal = {
 const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   const [alarmMode, setAlarmMode] = useState<boolean>(false);
 
-  const { alarmInfo } = alarmInfouseStore();
+  const { alarmInfo,setAlarmInfo } = alarmInfouseStore();
   //새 알림을 클릭하면 새알림의 색깔이 black , 콘텐츠
   // 읽은 알림 을 클릭하면 읽은 알림의 색깔이 black , 콘텐츠
 
@@ -27,7 +27,8 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   const handleOldClick = () => {
     setAlarmMode(true);
   };
-  console.log(alarmInfo);
+  console.log(alarmInfo[0].createdAt.substr(5,2)+'월'+alarmInfo[0].createdAt.substr(8,2)+'일');
+
 
   const isSelected = alarmMode ? "newAlarm" : "oldAlarm";
   const isSelected2 = alarmMode ? "oldAlarm" : "newAlarm";
@@ -84,8 +85,16 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
                       return (
                         <div className="alarmInfo" key={el.id}>
                           <div className="alarmInfo_Section1">
-                            <img src={el.image} />
-                            <div>{el.title}</div>
+                            <div className="alarmInfo_Section1_imgarea">
+                              <img src={el.image} />
+                            </div>
+                            <div className="alarmInfo_Section1_contentarea">
+                              <div className="alarmInfo_Section1_contentarea_title">
+                                {el.title}
+                              </div>
+                              <div>갱신까지 {el.remain_time}일 남았습니다. 확인해주세요 </div>
+                              <div>{el.createdAt.substr(5,2)+'월'+el.createdAt.substr(8,2)+'일'}</div>
+                            </div>
                           </div>
                         </div>
                       );

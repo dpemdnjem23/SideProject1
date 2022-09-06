@@ -195,16 +195,30 @@ width: 100%;
     
     width: 100%;
     height: 70px;
-    border-bottom: gray 1px solid;
+    border-bottom: rgb(211, 211, 211) 1px solid;
 }
-.alarmInfo_Section1>div{
-    /* vertical-align: baseline; */
+
+.alarmInfo_Section1_contentarea{
+
+}
+.alarmInfo_Section1_contentarea_title{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
 
     
+
 }
-.alarmInfo_Section1>img{
-    width: 30px;
+.alarmInfo_Section1_imgarea{
+    padding-top: 20px;
+    padding-right: 20px;
+
+
+}
+.alarmInfo_Section1_imgarea>img{
+    width: 40px;
     border-radius: 50%;
+   vertical-align: middle;
     
 
     
@@ -212,7 +226,7 @@ width: 100%;
 .alarmInfo_Section1{
     display: flex;
     flex-direction: row;
-    align-items:baseline;
+    text-align: center;
 
     /* display: block; */
     margin:auto 0px;

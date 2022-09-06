@@ -121,6 +121,7 @@ type walletInfoState = {
 };
 
 type alarmInfo = {
+  createdAt:string;
   title: string;
   id: number;
   image: string;

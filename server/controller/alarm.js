@@ -47,6 +47,8 @@ module.exports = {
     // console.log(req.body)
     //end_date, start_date
 
+    const today = moment().format('YYYY-MM-DD')
+
     try {
       const userId = req.user.userId || req.user.id;
       // console.log(userId);
@@ -57,7 +59,7 @@ module.exports = {
 
       for (let i = 0; i < walletInfo.length; i++) {
         const day = moment(walletInfo[i].end_date).diff(
-          walletInfo[i].start_date,
+          today,
           "days"
         );
 
