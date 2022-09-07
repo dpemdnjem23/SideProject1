@@ -50,6 +50,7 @@ const App = () => {
 
   const { walletInfo, setWalletInfo } = useWalletStore();
   const {setAlarmInfo  } = alarmInfouseStore()
+  const {userSignin} = isSigninState()
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -181,7 +182,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userSignin]);
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
 

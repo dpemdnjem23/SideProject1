@@ -26,6 +26,7 @@ module.exports = {
     const { id } = req.body;
 
     try {
+      console.log(id)
       const userId = req.user.userId || req.user.id;
 
       const alarmUpdate = await alarm.update(
