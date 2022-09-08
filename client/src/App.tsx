@@ -148,41 +148,50 @@ const App = () => {
         console.log(err);
       });
 
-      axios
-      .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+      fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
+        method: "POST",
+        
+        credentials: "include",
         headers: {
+          "Content-Type": "application/json",
           authorization: `Bearer ${accessToken}`,
         },
       })
-      .then((res) => {
+        .then((res: any) => {
+          if (!res.ok) {
+            throw new Error(res.status);
+          }
+        })
+        .then((result)=>{
+          console.log('결과')
 
-        setAlarmInfo(res.data.data)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          axios
+          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((res) => {
+            console.log('리스트 나타내기')
+    
+            setAlarmInfo(res.data.data)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
-      method: "POST",
-      
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          throw new Error(res.status);
-        }
-      })
-      .then((result)=>{
-        console.log('결과')
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+     
+   
   }, [userSignin]);
+
+  // useEffect(()=>{
+
+  // },[])
   //1. 새로고침, 이동할때마다 통신을 하여 리프레쉬 토큰이 만료된경우 -> 로그아웃
   //2. 만약 액세스 토큰이 만료된경우라면 만료되기전에 다시 access를 재발급 한다.
 

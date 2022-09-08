@@ -10,28 +10,87 @@ type alarmModal = {
   closeAlarmModal: () => void;
 };
 
-
-
 const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   const [alarmMode, setAlarmMode] = useState<boolean>(false);
 
   const { alarmInfo, setAlarmInfo } = alarmInfouseStore();
 
-  const accessToken = localStorage.getItem('accessToken')
+  const accessToken = localStorage.getItem("accessToken");
   //새 알림을 클릭하면 새알림의 색깔이 black , 콘텐츠
   // 읽은 알림 을 클릭하면 읽은 알림의 색깔이 black , 콘텐츠
 
   // useEffect(()=>{
 
   // },[])
-  const handleReadClick = (el:number) => {
-    axios.patch(
+const handlebulkReadClick = () =>{
+
+
+  //버튼 클릭시 alarm에 존재하는 read update
+  axios
+    .patch(
       `${process.env.REACT_APP_API_URI}/alarm/update`,
-      {id:el},
-      { headers: { "Content-Type": "application/json",
-      authorization:`Bearer ${accessToken}`
-     } }
-    );
+      // { id: el },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    .then((res) => {
+      console.log(res)
+
+    //   axios
+    //     .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+    //       headers: {
+    //         authorization: `Bearer ${accessToken}`,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       setAlarmInfo(res.data.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+}
+
+  const handleReadClick = (el: number) => {
+    console.log(el);
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URI}/alarm/update`,
+        { id: el },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res)
+
+        axios
+          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((res) => {
+            setAlarmInfo(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleNewClick = () => {
@@ -41,7 +100,7 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   const handleOldClick = () => {
     setAlarmMode(true);
   };
-  
+
   const isSelected = alarmMode ? "newAlarm" : "oldAlarm";
   const isSelected2 = alarmMode ? "oldAlarm" : "newAlarm";
   const isSelectedAlarm = alarmInfo.length <= 0 ? "" : "newTextBox";
@@ -70,65 +129,49 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
                   <span>읽은 알림</span>
                 </div>
               </div>
-              <div className="AlarmModal_header_contents"></div>
 
-              <div></div>
+              <div className="AlarmModal_header_contents">
+                <div onClick = {handlebulkReadClick} className="AlarmModal_header_contents_read">모두 읽음 처리</div>
+              </div>
             </div>
 
             <div className="AlarmModal_section_body">
               {alarmMode ? (
+                alarmInfo.map((el) => {
+                  if (el.read === true) {
+                    return (
+                      <div className="alarmInfo_old" key={el.id}>
+                        <div className="alarmInfo_Section1">
+                          <div className="alarmInfo_Section1_imgarea">
+                            <img src={el.image} />
+                          </div>
+                          <div className="alarmInfo_Section1_contentarea">
+                            <div>
+                              <div className="alarmInfo_Section1_contentarea_title">
+                                {el.title}
+                              </div>
+                            </div>
 
-                
-
-
-          //  alarmInfo.map((el) => {
-
-          //   {el.read ===false? 
-          //    <>
-              
-            <div className="AlarmModal_section_body_text_old">
-            알림은 30일동안만 보관됩니다.
-            
-          </div>
-
-
-            // <div className="alarmInfo" key={el.id}>
-              
-            //   <div className="alarmInfo_Section1">
-            //     <div className="alarmInfo_Section1_imgarea">
-            //       <img src={el.image} />
-            //     </div>
-            //     <div className="alarmInfo_Section1_contentarea">
-            //       <div>
-            //         <div className="alarmInfo_Section1_contentarea_title">
-            //           {el.title}
-            //         </div>
-            //       </div>
-      
-            //       <div>
-            //         갱신까지 {el.remain_time}일 남았습니다.
-            //         확인해주세요{" "}
-            //       </div>
-            //       {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
-            //     </div>
-            //     <div className="alarmInfo_Section1_contentarea2">
-            //       <span>
-            //         {el.createdAt.substr(5, 2) +
-            //           "월 " +
-            //           el.createdAt.substr(8, 2) +
-            //           "일"}
-            //       </span>
-            //       <div onClick={()=>handleReadClick(el.id)}>읽음</div>
-            //     </div>
-            //   </div>
-            // </div>
-            // </>
-                    
-        //   :null
-        // } )
-              
-       )
-        : (
+                            <div>
+                              갱신까지 {el.remain_time}일 남았습니다.
+                              확인해주세요{" "}
+                            </div>
+                            {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
+                          </div>
+                          <div className="alarmInfo_Section1_contentarea2">
+                            <span>
+                              {el.createdAt.substr(5, 2) +
+                                "월 " +
+                                el.createdAt.substr(8, 2) +
+                                "일"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                })
+              ) : (
                 <div
                   className={`AlarmModal_section_body_textbox ${isSelectedAlarm}`}
                 >
@@ -142,40 +185,42 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
                     </>
                   ) : (
                     alarmInfo.map((el) => {
-                      return (
-                        <div className="alarmInfo" key={el.id}>
-                          
-                          <div className="alarmInfo_Section1">
-                            <div className="alarmInfo_Section1_imgarea">
-                              <img src={el.image} />
-                            </div>
-                            <div className="alarmInfo_Section1_contentarea">
-                              <div>
-                                <div className="alarmInfo_Section1_contentarea_title">
-                                  {el.title}
+                      if (el.read === false) {
+                        return (
+                          <div className="alarmInfo" key={el.id}>
+                            <div className="alarmInfo_Section1">
+                              <div className="alarmInfo_Section1_imgarea">
+                                <img src={el.image} />
+                              </div>
+                              <div className="alarmInfo_Section1_contentarea">
+                                <div>
+                                  <div className="alarmInfo_Section1_contentarea_title">
+                                    {el.title}
+                                  </div>
+                                </div>
+
+                                <div>
+                                  갱신까지 {el.remain_time}일 남았습니다.
+                                  확인해주세요{" "}
+                                </div>
+                                {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
+                              </div>
+                              <div className="alarmInfo_Section1_contentarea2">
+                                <span>
+                                  {el.createdAt.substr(5, 2) +
+                                    "월 " +
+                                    el.createdAt.substr(8, 2) +
+                                    "일"}
+                                </span>
+                                <div onClick={() => handleReadClick(el.id)}>
+                                  읽음
                                 </div>
                               </div>
-
-                              <div>
-                                갱신까지 {el.remain_time}일 남았습니다.
-                                확인해주세요{" "}
-                              </div>
-                              {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
-                            </div>
-                            <div className="alarmInfo_Section1_contentarea2">
-                              <span>
-                                {el.createdAt.substr(5, 2) +
-                                  "월 " +
-                                  el.createdAt.substr(8, 2) +
-                                  "일"}
-                              </span>
-                              <div onClick={()=>handleReadClick(el.id)}>읽음</div>
                             </div>
                           </div>
-                        </div>
-                      );
+                        );
+                      }
                     })
-
                   )}
                 </div>
               )}
