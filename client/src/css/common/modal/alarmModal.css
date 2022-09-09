@@ -108,6 +108,9 @@
   font-size: 16px;
   color: rgb(185, 185, 185);
 }
+.AlarmModal_newTextBox{
+    margin-top: 80px;
+}
 
 .AlarmModal_section_body {
   width: 100%;
@@ -124,7 +127,6 @@
   /* -webkit-box-align: center; */
 
   align-items: center;
-  margin-top: 80px;
 }
 
 .AlarmModal_section_body_textbox > h1 {
