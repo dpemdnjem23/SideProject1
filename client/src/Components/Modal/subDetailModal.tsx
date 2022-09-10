@@ -5,6 +5,7 @@ import "../../css/common/modal/subDetailModal.css";
 import SubDetailEditModal from "./subDetailEditModal";
 import { dateState, useWalletStore } from "utils/state";
 import axios from "axios";
+import moment from 'moment'
 
 type modal = {
   closeSubModal: () => void;
@@ -34,7 +35,9 @@ const SubDetailModal: React.FC<modal> = ({
     clearDateCal()
 
 
-  };
+  };   
+   const today = moment().format("YYYY-MM-DD");
+
 
 
 // useEffect(()=>{
@@ -85,7 +88,7 @@ const SubDetailModal: React.FC<modal> = ({
               : ""}
           </span>
           <span className="SubDetail_Modal_sub_section_text2">
-            1일 남았어요!
+            {moment(walletInfo[arrIndex].end_date).diff(today,'days')}일 남았어요!
           </span>
           {/* <CancellationButton></CancellationButton> */}
         </div>

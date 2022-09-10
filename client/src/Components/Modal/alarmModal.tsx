@@ -1,7 +1,5 @@
 import axios from "axios";
-import e from "express";
-import { useEffect } from "preact/hooks";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { alarmInfouseStore } from "utils/state";
 
 import "../../css/common/modal/alarmModal.css";
@@ -15,13 +13,13 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
 
   const { alarmInfo, setAlarmInfo } = alarmInfouseStore();
 
+  const [alarmText, setAlarmText] = useState<boolean>(false);
+
   const accessToken = localStorage.getItem("accessToken");
   //새 알림을 클릭하면 새알림의 색깔이 black , 콘텐츠
   // 읽은 알림 을 클릭하면 읽은 알림의 색깔이 black , 콘텐츠
 
-  // useEffect(()=>{
-
-  // },[])
+  //반복문을 통해서 단한개의 false도 존재하지 않는
   const handlebulkReadClick = () => {
     //버튼 클릭시 alarm에 존재하는 read update
     axios
@@ -96,6 +94,17 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
     setAlarmMode(true);
   };
 
+  useEffect(() => {
+    for (let i = 0; i < alarmInfo.length; i++) {
+      if (alarmInfo[i].read === false) {
+        setAlarmText(false);
+      } else {
+        setAlarmText(true);
+      }
+    }
+    console.log(alarmText);
+  }, []);
+
   //알람을 가져와서 표현을할때에 존재하지 않으면,
 
   // <h1>현재 도착한 새알림이 없습니다.</h1>
@@ -105,7 +114,7 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   // </p>
   const isSelected = alarmMode ? "newAlarm" : "oldAlarm";
   const isSelected2 = alarmMode ? "oldAlarm" : "newAlarm";
-  // const isSelectedAlarm = alarmInfo.length <= 0 ? "" : "newTextBox";
+  const isSelectedAlarm = alarmText ? "newTextBox" : "";
 
   return (
     <div onClick={() => closeAlarmModal()} id="AlarmModal">
@@ -143,20 +152,31 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
             </div>
 
             <div className="AlarmModal_section_body">
-              {alarmMode ? (
-                <div className="AlarmModal_section_body_text_old ">
-                  알림은 7일 동안 보관됩니다.
-                </div>
-              ) : (
-                <div className={`AlarmModal_section_body_textbox`}>
-                  <h1>현재 도착한 새알림이 없습니다.</h1>
-                  <p>
-                    현재 구독 에 대한 알림만 진행하고 있습니다.
-                    <br></br>
-                    새로운 구독 정보나 갱신이 되면 알려드리겠습니다.
-                  </p>
-                </div>
-              )}
+              {
+                alarmMode ? (
+                  <div className="AlarmModal_section_body_text_old ">
+                    알림은 7일 동안 보관됩니다.
+                  </div>
+                ) : alarmText ? (
+                  <div className={`AlarmModal_section_body_textbox ${isSelectedAlarm}`}>
+                    <h1>현재 도착한 새알림이 없습니다.</h1>
+                    <p>
+                      현재 구독 에 대한 알림만 진행하고 있습니다.
+                      <br></br>
+                      새로운 구독 정보나 갱신이 되면 알려드리겠습니다.
+                    </p>
+                  </div>
+                ) : null
+
+                // <div className={`AlarmModal_section_body_textbox`}>
+                //   <h1>현재 도착한 새알림이 없습니다.</h1>
+                //   <p>
+                //     현재 구독 에 대한 알림만 진행하고 있습니다.
+                //     <br></br>
+                //     새로운 구독 정보나 갱신이 되면 알려드리겠습니다.
+                //   </p>
+                // </div>
+              }
 
               {alarmMode
                 ? alarmInfo.map((el) => {

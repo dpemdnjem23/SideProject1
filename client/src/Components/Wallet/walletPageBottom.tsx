@@ -3,9 +3,13 @@ import axios from "axios";
 // import { accessToken } from 'utils/state'
 
 import moment from "moment";
+type walletPageBottom = {
+
+  walletSubCost:number
+}
 
 import "../../css/components/WalletPage/walletPagebottom.css";
-const WalletPageBottom = ({walletSubCost}:any) => {
+const WalletPageBottom:React.FC<walletPageBottom> = ({walletSubCost}) => {
 
 
 
@@ -35,7 +39,6 @@ useEffect(()=>{
   for (let i = 0; i < costSum.length; i++) {
     sum = sum + costSum[i];
   }
-  console.log(sum,res.data.data)
 // setWalletSubCost(sum)
   setWalletPayment(sum);
 })

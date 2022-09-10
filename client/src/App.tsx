@@ -148,46 +148,51 @@ const App = () => {
         console.log(err);
       });
 
-      fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
-        method: "POST",
-        
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            throw new Error(res.status);
-          }
-        })
-        .then((result)=>{
-          console.log('결과')
+    
+   
+  }, []);
 
-          axios
-          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((res) => {
-            console.log('리스트 나타내기')
-    
-            setAlarmInfo(res.data.data)
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    
+  useEffect(()=>{
+
+
+    fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
+      method: "POST",
+      
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res: any) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+      })
+      .then((result)=>{
+
+        axios
+        .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
+  
+          setAlarmInfo(res.data.data)
         })
         .catch((err) => {
           console.log(err);
         });
+  
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-     
    
-  }, [userSignin]);
+
+  },[userSignin])
 
   // useEffect(()=>{
 

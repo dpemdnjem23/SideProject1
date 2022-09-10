@@ -21,8 +21,7 @@ const WalletPageTop = () => {
       .then((res) => {
         setWalletPeriod(res.data.data);
         setWalletImageInfo(res.data.wallet);
-        console.log(walletPeriod);
-        console.log(walletImageInfo);
+       
       })
       .catch((err) => {
         console.log(err);
