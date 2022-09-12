@@ -82,10 +82,44 @@ margin-left: 16px;
   top: 50px;
   border-radius: 50%;
 }
+.menu_bell_number{
+  position: absolute;
+  display: inline-block;
+  border-radius: 22px;
+  font-weight: bold;
+  line-height: 16px;
+  font-size: 8px;
+  right: 6px;
+  /* left: -1px; */
+
+  top:0px;
+  text-align: center;
+  
+  width: 20px;
+  /* max-width: 20px; */
+  padding: 0 3px;
+
+  height: 25px;
+
+  border:  2px solid rgba(255,255,255,0.98);
+  height:20px;
+  background-color: red;
+  color:white;
+  z-index: 11;
+}
+.menu_bell_section{
+  display: inline-block;
+  color: #606060;
+  position: relative;
+  padding: 0;
+}
+
 .menu_bell{
   /* margin:0px 15px; */
+  background-color: white;
   width: 100px;
   cursor: pointer;
+  z-index: 10;
 
 }
 .menu>div {

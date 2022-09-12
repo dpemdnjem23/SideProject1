@@ -132,7 +132,11 @@ type alarmInfo = {
 type alarmInfoState = {
   alarmInfo: alarmInfo[];
   setAlarmInfo: (input: []) => void;
+  alarmText:boolean
+  setAlarmText:(input:boolean)=>void
 };
+
+
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -256,6 +260,8 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
 export const alarmInfouseStore = create<alarmInfoState>((set) => ({
   alarmInfo: [],
   setAlarmInfo: (input) => set({ alarmInfo: input }),
+  alarmText:false,
+  setAlarmText:(input) =>set({alarmText:input})
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

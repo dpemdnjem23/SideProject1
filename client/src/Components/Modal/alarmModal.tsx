@@ -11,9 +11,8 @@ type alarmModal = {
 const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   const [alarmMode, setAlarmMode] = useState<boolean>(false);
 
-  const { alarmInfo, setAlarmInfo } = alarmInfouseStore();
+  const { alarmInfo, setAlarmInfo,alarmText, setAlarmText } = alarmInfouseStore();
 
-  const [alarmText, setAlarmText] = useState<boolean>(false);
 
   const accessToken = localStorage.getItem("accessToken");
   //새 알림을 클릭하면 새알림의 색깔이 black , 콘텐츠
@@ -102,7 +101,7 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
         setAlarmText(true);
       }
     }
-    console.log(alarmText);
+    
   }, []);
 
   //알람을 가져와서 표현을할때에 존재하지 않으면,

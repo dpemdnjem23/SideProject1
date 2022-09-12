@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import create from "zustand";
 import {
+  alarmInfouseStore,
   isSigninState,
   mainheaderuseStore,
   showErrModalState,
@@ -25,12 +26,18 @@ import AlarmModal from "Components/Modal/alarmModal";
 
 const Mainheader = () => {
   const navigate = useNavigate();
-  const [showAlarmModal , setShowAlarmModal] = useState<boolean>(false)
+  const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
   const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
+  const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
+    alarmInfouseStore();
+  const [showNumber, setShowNumber] = useState<boolean>(true);
 
   const { setShowErrModal } = showErrModalState();
+
+  let number;
+  let sum;
 
   const handleErrModal = () => {
     setShowSubDetail(false);
@@ -51,19 +58,25 @@ const Mainheader = () => {
     }
   };
 
-  const openAlarmModal = () =>{
-    setShowAlarmModal(true)
+  const openAlarmModal = () => {
+    setShowAlarmModal(true);
+    setShowNumber(false);
 
-    if(showAlarmModal){
-      setShowAlarmModal(false)
+  
+  
+  };
+
+  const closeAlarmModal = () => {
+    setShowAlarmModal(false);
+    setShowNumber(true);
+    console.log(showNumber);
+  };
+
+  //alarmInfo중 false만 나오도록
+  for (let i = 0; i < alarmInfo.length; i++) {
+    if (alarmInfo[i].read === false) {
+  
     }
-
-  }
-
-  const closeAlarmModal = () =>{
-    setShowAlarmModal(false)
-
-    
   }
 
   // const closeShowMypageModal = () =>{
@@ -100,13 +113,16 @@ const Mainheader = () => {
             </li>
             {userSignin ? (
               <li className="menu">
-                <div>
+                <div className="menu_bell_section">
                   <FontAwesomeIcon
-                  onClick={openAlarmModal}
+                    onClick={openAlarmModal}
                     width="60"
                     className="menu_bell"
                     icon={faBell}
                   />
+                  {showNumber ? (
+                    <div className="menu_bell_number">{number}</div>
+                  ) : null}
                 </div>
                 <img
                   onClick={openShowMypageModal}
@@ -121,10 +137,12 @@ const Mainheader = () => {
             )}
           </ul>
           {showMypageModal ? <MypageModal></MypageModal> : null}
-          {showAlarmModal? <AlarmModal closeAlarmModal={closeAlarmModal}></AlarmModal> :null }
-
         </div>
       </div>
+      {showAlarmModal ? (
+        <AlarmModal closeAlarmModal={closeAlarmModal}></AlarmModal>
+      ) : null}
+
       <Outlet></Outlet>
     </>
   );
