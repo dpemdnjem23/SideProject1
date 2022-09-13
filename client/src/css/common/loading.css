@@ -1,0 +1,24 @@
+#loading_background{
+
+width:100vw;
+height: 100vh;
+top:0px;
+background-color:gray;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+
+}
+
+#loading_background>img{
+    background-color: rgb(238, 238, 238);
+
+}
+#loading_background>span{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 600;
+
+}

@@ -33,12 +33,11 @@ const Mainheader = () => {
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
     alarmInfouseStore();
   const [showNumber, setShowNumber] = useState<boolean>(true);
+  const [number,setNumber] = useState<number>(0)
 
   const { setShowErrModal } = showErrModalState();
 
-  let number;
-  let sum;
-
+  
   const handleErrModal = () => {
     setShowSubDetail(false);
     setShowSubEdit(false);
@@ -69,15 +68,18 @@ const Mainheader = () => {
   const closeAlarmModal = () => {
     setShowAlarmModal(false);
     setShowNumber(true);
-    console.log(showNumber);
   };
+
+  let sum=0;
 
   //alarmInfo중 false만 나오도록
   for (let i = 0; i < alarmInfo.length; i++) {
+
     if (alarmInfo[i].read === false) {
-  
+      sum++
     }
   }
+  // setNumber(sum)
 
   // const closeShowMypageModal = () =>{
 
@@ -121,7 +123,7 @@ const Mainheader = () => {
                     icon={faBell}
                   />
                   {showNumber ? (
-                    <div className="menu_bell_number">{number}</div>
+                    <div className="menu_bell_number">{sum}</div>
                   ) : null}
                 </div>
                 <img

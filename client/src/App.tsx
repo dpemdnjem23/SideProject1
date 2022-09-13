@@ -31,6 +31,7 @@ import { useStore } from "Components/Login/Login";
 import ErrModal from "Components/Modal/errorModal";
 import CallbackPage from "Pages/CallbackPage";
 import { stringify } from "querystring";
+import Loading from "Components/Common/loading";
 
 // import {
 //   MainPage,
@@ -49,10 +50,11 @@ const App = () => {
   //!
 
   const { walletInfo, setWalletInfo } = useWalletStore();
-  const {setAlarmInfo  } = alarmInfouseStore()
-  const {userSignin} = isSigninState()
+  const { setAlarmInfo } = alarmInfouseStore();
+  const { userSignin } = isSigninState();
 
   const accessToken = localStorage.getItem("accessToken");
+  const [loading, setLoading] = useState<boolean>(true);
 
   //!
 
@@ -117,6 +119,7 @@ const App = () => {
           "subgatherUserInfo",
           JSON.stringify(result.data.data)
         );
+        setLoading(true);
       })
       .catch((err) => {
         console.log(err);
@@ -136,28 +139,22 @@ const App = () => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
-          
           authorization: `Bearer ${accessToken}`,
         },
       })
       .then((res) => {
-
         setWalletInfo(res.data.data);
+        setLoading(true);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    
-   
   }, []);
 
-  useEffect(()=>{
-
-
+  useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
       method: "POST",
-      
+
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
@@ -169,30 +166,26 @@ const App = () => {
           throw new Error(res.status);
         }
       })
-      .then((result)=>{
-
+      .then((result) => {
         axios
-        .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((res) => {
-  
-          setAlarmInfo(res.data.data)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  
+          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((res) => {
+            setLoading(true);
+
+            setAlarmInfo(res.data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
-
-   
-
-  },[userSignin])
+  }, [userSignin]);
 
   // useEffect(()=>{
 
@@ -209,7 +202,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
-        {showErrModal ? <ErrModal></ErrModal> : null}
+        {loading ? <Loading></Loading> : null}
+
+        {/* {showErrModal ? <ErrModal></ErrModal> : null} */}
+
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
