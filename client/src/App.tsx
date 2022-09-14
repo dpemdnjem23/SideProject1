@@ -48,6 +48,7 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 
 const App = () => {
   //!
+  // 로딩은 로그인할때만 작동하도록
 
   const { walletInfo, setWalletInfo } = useWalletStore();
   const { setAlarmInfo } = alarmInfouseStore();
@@ -119,7 +120,6 @@ const App = () => {
           "subgatherUserInfo",
           JSON.stringify(result.data.data)
         );
-        setLoading(true);
       })
       .catch((err) => {
         console.log(err);
@@ -144,7 +144,7 @@ const App = () => {
       })
       .then((res) => {
         setWalletInfo(res.data.data);
-        setLoading(true);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -174,7 +174,7 @@ const App = () => {
             },
           })
           .then((res) => {
-            setLoading(true);
+            
 
             setAlarmInfo(res.data.data);
           })

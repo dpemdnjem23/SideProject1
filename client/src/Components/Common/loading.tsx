@@ -7,6 +7,7 @@ const Loading = () => {
     <div id='loading_background'>
       <span>Loading...</span>
       <img src="/Filled fading balls.gif"></img>
+
     </div>
   );
 };

@@ -2,8 +2,7 @@
 
 width:100vw;
 height: 100vh;
-top:0px;
-background-color:gray;
+
 display: flex;
 align-items: center;
 justify-content: center;
@@ -12,13 +11,17 @@ flex-direction: column;
 }
 
 #loading_background>img{
-    background-color: rgb(238, 238, 238);
+    width: 50px;
+    background-color:#d0d0d0;
+    /* filter: opacity(0.4) drop-shadow(0 0 0 gray);  */
 
 }
+
+
 #loading_background>span{
     display: block;
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 600;
 
 }
