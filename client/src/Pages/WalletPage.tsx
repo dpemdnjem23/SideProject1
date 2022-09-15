@@ -23,6 +23,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // }
 
 import "../css/pages/WalletPage.css";
+import Loading from "Components/Common/loading";
 
 const WalletPage = () => {
 
@@ -37,6 +38,9 @@ const WalletPage = () => {
   const [arrIndex,setArrIndex] = useState<number>(0)
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState<boolean>(true);
+
 
 
   // const{setWalletSubCost,setWalletPayment} =walletPageCostState()
@@ -96,6 +100,9 @@ const WalletPage = () => {
         setWalletSubCost(sum);
               
         setWalletInfo(res.data.data);
+        setLoading(false)
+
+
 
       })
       .catch((err) => {
@@ -106,6 +113,7 @@ const WalletPage = () => {
 
   return (
     <div id="WalletPage">
+  {loading? <Loading></Loading>:null }
 
 {showSubDetail?
 <SubDetailModal

@@ -55,7 +55,8 @@ const App = () => {
   const { userSignin } = isSigninState();
 
   const accessToken = localStorage.getItem("accessToken");
-  const [loading, setLoading] = useState<boolean>(true);
+
+// 로그인했을때만 로딩 하도록한다.
 
   //!
 
@@ -144,7 +145,6 @@ const App = () => {
       })
       .then((res) => {
         setWalletInfo(res.data.data);
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -202,7 +202,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
-        {loading ? <Loading></Loading> : null}
 
         {/* {showErrModal ? <ErrModal></ErrModal> : null} */}
 
