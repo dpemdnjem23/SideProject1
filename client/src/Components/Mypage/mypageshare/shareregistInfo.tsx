@@ -29,14 +29,16 @@ const ShareRegistInfo = () => {
       <div className="ShareRegistInfo_section_sub2">
         {button ? (
           <div className="ShareRegistInfo_bt_section">
-            <div onClick={importData}>버튼</div>
+            <button onClick={importData}>구독 불러오기</button>
           </div>
         ) : (
-          <div className="ShareRegistInfo_subscribe_section" >
+          <div className="ShareRegistInfo_subscribe_section">
             {walletInfo.map((el) => {
-              return <div key={el.id}>
-                {el.name}
-              </div>;
+              return (
+                <div key={el.id}>
+                  <span >{el.name}  </span>
+                </div>
+              );
             })}
           </div>
         )}
