@@ -26,13 +26,12 @@
   height: 100%;
 
   max-width: 450px;
-  max-height: 150px;
+  max-height: 200px;
 
   margin: 30px 0px;
 
   overflow-y: auto;
 
-  background-color: gray;
 }
 
 .ShareRegistInfo_section_sub3 {
@@ -57,18 +56,75 @@
   text-align: center;
   min-height: 30px;
   min-width: 100px;
-  cursor: pointer;
-  background-color: beige;
+  /* cursor: pointer; */
+  /* background-color: beige; */
+}
+
+.ShareRegistInfo_section_sub2>button{
+    /* appearance: none; */
+    margin: 0;
+
+    font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+
+    text-decoration: none;
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    color: white;
+    background-color:blue;
+
+}
+.ShareRegistInfo_section_sub2>button:hover{
+    background-color:rgb(0, 0, 150);
 }
 .ShareRegistInfo_subscribe_section{
+border: 1px solid black;
 
-    color: white;
+    /* color: white; */
 }
 
 .ShareRegistInfo_subscribe_section>div{
-    display: inline;
+  
+    margin-bottom: 10px;
+    text-align: center;
+    padding-top: 5px;
 
-    /* max-width: 30px; */
-    height: 30px;
+    min-width: 30px;
+    height: 40px;
     background-color: blue;
+}
+.ShareRegistInfo_subscribe_section>div>span{
+     
+  cursor: pointer;
+
+    color:white;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    white-space: normal;
+}
+
+.ShareRegistInfo_section>button{
+    margin: 0;
+
+    font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+
+    display: inline-block;
+    width: 450px;
+    height: 50px;
+    border-radius: 5px;
+
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+
+
+    /* color: w */
+    /* background-color:blue; */
+
 }

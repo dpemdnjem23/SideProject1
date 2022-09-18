@@ -23,7 +23,6 @@ import {
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
 import PassNotificationModal from "Components/Modal/passwordNotificationModal";
-import { userInfo } from "os";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";

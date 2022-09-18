@@ -12,9 +12,15 @@ const ShareRegistInfo = () => {
   const [button, setButton] = useState(true);
   const { walletInfo, setWalletInfo } = useWalletStore();
 
+
   const importData = () => {
     setButton(false);
   };
+
+  const deleteData = () => {
+    setButton(true);
+  };
+
 
   return (
     <div className="ShareRegistInfo_section">
@@ -28,21 +34,28 @@ const ShareRegistInfo = () => {
 
       <div className="ShareRegistInfo_section_sub2">
         {button ? (
-          <div className="ShareRegistInfo_bt_section">
             <button onClick={importData}>구독 불러오기</button>
-          </div>
         ) : (
           <div className="ShareRegistInfo_subscribe_section">
+
             {walletInfo.map((el) => {
               return (
                 <div key={el.id}>
-                  <span >{el.name}  </span>
+                  <span >{el.name} X</span>
                 </div>
               );
             })}
+
           </div>
+
+
         )}
       </div>
+
+      {button ? 
+
+     null: <button onClick={deleteData}>되돌아 가기</button>}
+
     </div>
   );
 };

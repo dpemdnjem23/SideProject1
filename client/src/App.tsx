@@ -149,7 +149,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [setWalletInfo]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
@@ -181,6 +181,19 @@ const App = () => {
           .catch((err) => {
             console.log(err);
           });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
+      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        setWalletInfo(res.data.data);
       })
       .catch((err) => {
         console.log(err);
