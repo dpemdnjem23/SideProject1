@@ -16,7 +16,6 @@ import "../../../css/components/MyPage/MypageSub/mypageSelectBox.css";
 import { registSubInfoState, showDropDownList } from "utils/state";
 
 const MypageSelectBox = () => {
-  const navigate = useNavigate();
   // const {subName} = e.target as HTMLElement
 
   const { setDropDownOpen, dropDownOpen } = showDropDownList();
@@ -46,7 +45,7 @@ const MypageSelectBox = () => {
 
   const openToggling = () => {
     setDropDownOpen(true);
-    console.log(dropDownOpen);
+    
     if (dropDownOpen) {
       setDropDownOpen(false);
     }
