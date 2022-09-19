@@ -21,6 +21,8 @@
 .SharRegisterPage_bt {
   width: 100%;
   max-width: 520px;
+  margin: 30px 0px;
+ 
   display: flex;
   flex-direction: row;
   justify-content: space-between;

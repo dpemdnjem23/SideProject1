@@ -3,9 +3,9 @@ import React from "react";
 import "../../../css/components/MyPage/MypageShare/shareregistBoard.css";
 const ShareRegistBoard = () => {
   return (
-    <div id="shareregistBoard">
+    <div className="shareregistBoard">
       <div className="shareregistBoard_title">
-        <div>글 남기기</div>
+        <span>공유를 위한 짧은 글</span>
       </div>
 
       <div className="shareregistBoard_section">

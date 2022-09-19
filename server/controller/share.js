@@ -19,6 +19,29 @@ const {
 
 module.exports = {
 
+    //페이지 네이션, 
+
+    registerShare: async (req,res) =>{
+
+        const { title,list_sub} = req.body
+
+
+        try{
+
+            await share.create
+
+
+        }catch(err){
+            return res.status(500).send(err)
+        }
+
+
+
+    }
+
+    ,
+
+
 
     
 
