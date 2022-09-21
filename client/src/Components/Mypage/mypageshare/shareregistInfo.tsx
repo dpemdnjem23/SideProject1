@@ -1,28 +1,7 @@
-import React, { useState } from "react";
-import { useWalletStore } from "utils/state";
+import React, { useEffect, useState } from "react";
+import { shareRegisteruseStore, useWalletStore } from "utils/state";
 
 import "../../../css/components/MyPage/MypageShare/shareregistInfo.css";
-
-
-
-type subInfo = {
-  id: number;
-  // image?: string;
-  name: string;
-  // cost?: number;
-  // cycleDay?:number;
-  // cycleMonth?:number;
-
-  // cycleYear?:number;
-  // start_date?:string;
-  // end_datae?:string;
-  // updatedAt?:string;
-  // createdAt?:string
-
-  // user_id?:number;
-};
-
-
 
 const ShareRegistInfo = () => {
   //구독 정보 를 불러모으는 버튼이 있다.
@@ -32,43 +11,33 @@ const ShareRegistInfo = () => {
 
   const [button, setButton] = useState<boolean>(true);
   const { walletInfo, setWalletInfo } = useWalletStore();
+  const {setUpdateWallet,updateWallet} = shareRegisteruseStore()
 
-  const [newArr, setNewArr] = useState<subInfo[]>([]);
-
+  // const [newArr, setNewArr] = useState<subInfo[]>([]);
 
   const importData = () => {
     setButton(false);
-    setNewArr(walletInfo)
+    setUpdateWallet(walletInfo);
 
-    console.log(walletInfo)
-
-    
   };
 
   const deleteData = () => {
     setButton(true);
   };
 
-  const updateWalletInfo = (e:any) =>{
+  const updateWalletInfo = (e: any) => {
+    //해당되는 id만 요소에서 제거해준다.
 
-    
+    const chooseList = updateWallet.filter((item) => {
+      return item.id !== e;
+    });
 
-
-//해당되는 id만 요소에서 제거해준다.
-
-const chooseList = newArr.filter((item)=>{
-  return item.id!==e
-})
-
-setNewArr([...chooseList])
-console.log(chooseList)
+    setUpdateWallet([...chooseList]);
 
     //새로 만들어서 , 복사를 해서 제거하도록한다
-    //다시클릭시 원상복구 
+    //다시클릭시 원상복구
+  };
 
-    
-
-  }
 
 
   return (
@@ -83,28 +52,23 @@ console.log(chooseList)
 
       <div className="ShareRegistInfo_section_sub2">
         {button ? (
-            <button onClick={importData}>구독 불러오기</button>
+          <button onClick={importData}>구독 불러오기</button>
         ) : (
           <div className="ShareRegistInfo_subscribe_section">
-
-            {newArr.map((el) => {
+            {updateWallet.map((el) => {
               return (
                 <div key={el.id}>
-                  <span onClick = {() =>updateWalletInfo(el.id)}  >{el.name} X</span>
+                  <span onClick={() => updateWalletInfo(el.id)}>
+                    {el.name} X
+                  </span>
                 </div>
               );
             })}
-
           </div>
-
-
         )}
       </div>
 
-      {button ? 
-
-     null: <button onClick={deleteData}>되돌아 가기</button>}
-
+      {button ? null : <button onClick={deleteData}>되돌아 가기</button>}
     </div>
   );
 };

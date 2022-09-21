@@ -136,6 +136,24 @@ type alarmInfoState = {
   setAlarmText:(input:boolean)=>void
 };
 
+type shareInfo = {
+  id: number;
+  name: string;
+  
+};
+
+type shareState = {
+  updateWallet:shareInfo[]
+  setUpdateWallet:(input:shareInfo[]) =>void
+  
+}
+type sharerBoardState = {
+  shareTitle:string;
+  shareBoard:string;
+  setShareTitle:(input:string)=>void
+  setShareBoard:(input:string)=>void
+}
+
 
 
 export const isSigninState = create<isSigninState>()(
@@ -263,6 +281,26 @@ export const alarmInfouseStore = create<alarmInfoState>((set) => ({
   alarmText:false,
   setAlarmText:(input) =>set({alarmText:input})
 }));
+
+export const shareRegisteruseStore = create<shareState>((set) => ({
+
+
+  updateWallet:[],
+  setUpdateWallet:(input) => set({updateWallet:input})
+}));
+
+export const shareBoarduseStore = create<sharerBoardState>((set) => ({
+
+
+  shareBoard:'',
+  shareTitle:'',
+  setShareBoard:(input) =>set ({shareBoard:input}),
+  setShareTitle:(input) => set({shareTitle:input})
+
+}));
+
+
+
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{

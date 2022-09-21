@@ -25,10 +25,18 @@ module.exports = {
 
         const { title,list_sub} = req.body
 
+        console.log(title,list_sub)
+
+
+
 
         try{
 
-            await share.create
+         const shareRegister = await share.create({title:title,list_sub:list_sub})
+
+         if(!shareRegister){
+             return res.status(400).send('공유가 생성되지않았습니다.')
+         }
 
 
         }catch(err){

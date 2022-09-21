@@ -12,6 +12,7 @@ require("dotenv").config();
 const alarmRouter = require('./routes/alarm')
 const userRouter = require('./routes/user');
 const walletRouter = require('./routes/wallet');
+const shareRouter = require('./routes/share')
 const schuduleDateControll = require("./utils/scheduler");
 
 const socketIo = require('socket.io');
@@ -54,6 +55,7 @@ app.use('/auth',authRouter)
 app.use('/user',userRouter)
 app.use('/wallet',walletRouter)
 app.use('/alarm',alarmRouter)
+app.use('/share',shareRouter)
 
 
 

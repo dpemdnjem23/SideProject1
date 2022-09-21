@@ -11,7 +11,17 @@
   font-weight: bold;
   font-size: 18px;
 }
-.shareregistBoard_section > textarea {
+
+textarea:nth-child(1){
+width: 100%;
+  min-width: 450px;
+
+  font-size: 15px;
+  height: 30px;
+
+
+}
+textarea:nth-child(2) {
   width: 100%;
   height: 100%;
 
