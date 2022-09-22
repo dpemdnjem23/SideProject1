@@ -6,35 +6,52 @@ import React, { useEffect } from "react";
 
 import "../../css/pages/ShareRegisterPage.css";
 import { shareBoarduseStore, shareRegisteruseStore } from "utils/state";
+import { useNavigate } from "react-router";
 const ShareRegisterPage = () => {
-
-  const {setUpdateWallet,updateWallet} = shareRegisteruseStore()
-  const {shareBoard,shareTitle} = shareBoarduseStore()
-  const accessToken:string |null = localStorage.getItem('accessToken')
+  const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
+  const { shareBoard, shareTitle } = shareBoarduseStore();
+  const accessToken: string | null = localStorage.getItem("accessToken");
 
   // useEffect(()=>{
 
-  console.log(updateWallet)
+    const navigate = useNavigate()
 
-  const handleShareRegister = () =>{
+  const handleShareRegister = () => {
 
-    fetch(`${process.env.REACT_APP_API_URI}/share/register`,{
-
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        authorization:`Bearer ${accessToken}`
+    fetch(`${process.env.REACT_APP_API_URI}/share/register`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${accessToken}`,
       },
-      credentials:'include',
-      body:JSON.stringify({description:shareBoard,title:shareTitle,list_sub})
+      credentials: "include",
+      body: JSON.stringify({
+        description: shareBoard,
+        title: shareTitle,
+        list_sub: updateWallet,
+      }),
+    }
     
-      
+    )
+    .then((res:any)=>{
+
+      if(!res.ok){
+        throw new Error(res.status)
+      }
+      return res.json()
+
     })
+    .then((result)=>{
 
-  }
-   
+navigate('/')
+
+    }).catch((err)=>{
+              
+      console.log(err)
+    })
+  };
+
   // })
-
 
   //버튼을 누르면
 

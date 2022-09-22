@@ -18,7 +18,6 @@ const ShareRegistBoard = () => {
 
   const handleBoard = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setShareBoard(e.target.value);
-    console.log(e.target.value)
   };
 
   // const handle
