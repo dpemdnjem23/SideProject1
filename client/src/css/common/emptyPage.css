@@ -1,0 +1,30 @@
+.emptyPage{
+  
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+
+}
+.emptyPage_image>img{
+    width: 80px;
+}
+.emptyPage_contents{
+    margin-top: 20px;
+}
+
+.emptyPage_contents>span{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.emptyPage_contents>div{
+
+    text-align: center;
+    font-size: 12px;
+    color:rgb(99, 99, 99)
+
+}

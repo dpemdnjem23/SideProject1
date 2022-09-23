@@ -4,8 +4,13 @@ import WalletPageTop from "Components/Wallet/walletPageTop";
 import SubDetailModal from "Components/Modal/subDetailModal";
 import React, { useState, useEffect, ReactNode } from "react";
 import axios from "axios";
-import { accessToken, dateState, useWalletStore, walletPageCostState } from "utils/state";
-import { devtools, persist , subscribeWithSelector } from "zustand/middleware";
+import {
+  accessToken,
+  dateState,
+  useWalletStore,
+  walletPageCostState,
+} from "utils/state";
+import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -24,24 +29,30 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import "../css/pages/WalletPage.css";
 import Loading from "Components/Common/loading";
+import EmptyPage from "Components/Common/emptyPage";
 
 const WalletPage = () => {
-
-
-  const {walletInfo,setWalletInfo,setShowSubEdit,clickModalNum,showSubDetail,setClickModalNum,showSubEdit,setShowSubDetail} = useWalletStore()
+  const {
+    walletInfo,
+    setWalletInfo,
+    setShowSubEdit,
+    clickModalNum,
+    showSubDetail,
+    setClickModalNum,
+    showSubEdit,
+    setShowSubDetail,
+  } = useWalletStore();
   // const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
-  const [ walletSubCost,setWalletSubCost] = useState<number>(0)
+  const [walletSubCost, setWalletSubCost] = useState<number>(0);
 
   // const [clickModalNum,setClickModalNum] = useState<number>(0)
-  const [arrIndex,setArrIndex] = useState<number>(0)
+  const [arrIndex, setArrIndex] = useState<number>(0);
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
   const [showRegist, setShowRegist] = useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(true);
-
-
 
   // const{setWalletSubCost,setWalletPayment} =walletPageCostState()
 
@@ -57,12 +68,10 @@ const WalletPage = () => {
   // 각각의 모달을 나오게 하는법 =>
   // 몇번째 모달을 눌렀는지 상태정보를 state에 저장한다
 
-  const openSubModal = (num:number,id:number) => {
-    setArrIndex(num)
-    setClickModalNum(id)
+  const openSubModal = (num: number, id: number) => {
+    setArrIndex(num);
+    setClickModalNum(id);
     setShowSubDetail(true);
-
-  
   };
 
   const closeSubModal = () => {
@@ -77,7 +86,7 @@ const WalletPage = () => {
   const closeCancellationModal = () => {
     setShowCancellation(false);
   };
- 
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
@@ -96,50 +105,41 @@ const WalletPage = () => {
           sum = sum + costSum[i];
         }
 
-      
         setWalletSubCost(sum);
-              
+
         setWalletInfo(res.data.data);
-        setLoading(false)
-
-
-
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-
   }, []);
 
   return (
     <div id="WalletPage">
-  {loading? <Loading></Loading>:null }
+      {loading ? <Loading></Loading> : null}
+      
+      {walletInfo.length<=1? <EmptyPage></EmptyPage>:
+      
+(
+  <>
 
-{showSubDetail?
-<SubDetailModal
+ {/* showSubDetail ?  */}
 
-        // key={el.id}
-        // walletInfo={el}
-        arrIndex={arrIndex}
-        
-        
-        // walletInfo={walletInfo}
+        <SubDetailModal
+          // key={el.id}
+          // walletInfo={el}
+          arrIndex={arrIndex}
+          // walletInfo={walletInfo}
           closeCancellationModal={closeCancellationModal}
-       
           showCancellation={showCancellation}
           openCancellationModal={openCancellationModal}
           closeSubModal={closeSubModal}
         ></SubDetailModal>
+       {/* : null */}
 
-  
 
-:null}
-
-{/*     
-// })
-
-//      }) 
-//  }  */}
+      
       <div className="WalletPage_background">
         <WalletPageTop></WalletPageTop>
 
@@ -149,10 +149,17 @@ const WalletPage = () => {
           openSubModal={openSubModal}
         />
         <WalletPageBottom
-        walletSubCost = {walletSubCost}
-        // walletInfo={walletInfo}
+          walletSubCost={walletSubCost}
+          // walletInfo={walletInfo}
         />
+        
       </div>
+
+      </>
+)
+    }
+
+
     </div>
   );
 };

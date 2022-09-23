@@ -16,6 +16,8 @@ const ShareRegisterPage = () => {
 
     const navigate = useNavigate()
 
+    console.log(shareBoard,shareTitle,updateWallet)
+
   const handleShareRegister = () => {
 
     fetch(`${process.env.REACT_APP_API_URI}/share/register`, {
@@ -47,6 +49,7 @@ navigate('/')
 
     }).catch((err)=>{
               
+      alert('제목과 글을 입력해주세요')
       console.log(err)
     })
   };
