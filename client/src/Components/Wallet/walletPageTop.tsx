@@ -19,6 +19,7 @@ const WalletPageTop = () => {
         },
       })
       .then((res) => {
+        
         setWalletPeriod(res.data.data);
         setWalletImageInfo(res.data.wallet);
        
@@ -28,6 +29,7 @@ const WalletPageTop = () => {
       });
   }, []);
 
+  console.log(walletPeriod)
   //갱신기간은 어떻게? 똑같은 것끼리 top2
   //가장빠른 end_date 2개만 가져온다
   //end_date에 해당하는 구독을 표시한다. 어떻게? 몰라 일단해봐

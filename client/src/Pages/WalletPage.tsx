@@ -119,12 +119,12 @@ const WalletPage = () => {
     <div id="WalletPage">
       {loading ? <Loading></Loading> : null}
       
-      {walletInfo.length<=1? <EmptyPage></EmptyPage>:
+      {walletInfo.length<0? <EmptyPage></EmptyPage>:
       
 (
   <>
 
- {/* showSubDetail ?  */}
+ {showSubDetail ? 
 
         <SubDetailModal
           // key={el.id}
@@ -136,7 +136,7 @@ const WalletPage = () => {
           openCancellationModal={openCancellationModal}
           closeSubModal={closeSubModal}
         ></SubDetailModal>
-       {/* : null */}
+        : null }
 
 
       

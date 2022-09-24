@@ -369,23 +369,23 @@ let calculateEnd_date;
     }
   },
 
-  walletRenewalPeriod: async (req, res) => {
+  TopTwo: async (req, res) => {
     const userId = req.user.userId || req.user.id;
+    console.log(userId)
 
     try {
+
+      
       const topTwoPeriod = await wallet.findAll({
         where: { user_id: userId },
         order: [["end_date", "ASC"]],
-        limit: 2,
+        // limit: 2,
         attributes: [
           // specify an array where the first element is the SQL function and the second is the alias
           [Sequelize.fn("DISTINCT", Sequelize.col("end_date")), "end_date"],
-
-          // specify any additional columns, e.g. country_code
-          // 'country_code'
         ],
       });
-      console.log(topTwoPeriod[0]);
+      console.log(topTwoPeriod,'period');
 
       const walletInfo = await wallet.findAll({
         where: {
@@ -395,6 +395,7 @@ let calculateEnd_date;
           ],
         },
       });
+      console.log(walletInfo,'walet')
 
       return res.status(200).send({ data: topTwoPeriod, wallet: walletInfo });
     } catch (err) {
