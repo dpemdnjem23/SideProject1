@@ -97,7 +97,6 @@ module.exports = {
         const day = moment(walletInfo[i].end_date).diff(today, "days");
 
         if (day <= 3) {
-          console.log(day);
 
           const alarmInfo = await alarm.findOne({
             where: {
@@ -105,7 +104,8 @@ module.exports = {
             },
           });
 
-          console.log(alarmInfo, "alarmInfo");
+          // console.log(alarmInfo, "alarmInfo");
+
           //존재하는 알람인지 확인
           //존재하지 않는경우 생성해준다.
           if (!alarmInfo) {

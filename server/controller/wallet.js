@@ -28,62 +28,55 @@ module.exports = {
   //9. 결제현황 관리
   //10. start_date 변경
 
-  walletStartDate:async (req,res) =>{
-  const {start_date,id} =req.body
+  walletStartDate: async (req, res) => {
+    const { start_date, id } = req.body;
 
-  console.log(start_date,id)
+    console.log(start_date, id);
 
+    // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
+    try {
+      let calculateEnd_date;
 
+      const userId = req.user.userId || req.user.id;
 
-   // if(cost&&!cycleDay&&!cycleMonth&!cycleYear){
-try{
+      const walletInfo = await wallet.findOne({
+        where: { id: id, user_id: userId },
+      });
 
-let calculateEnd_date;
+      console.log(walletInfo.start_date, start_date);
 
+      if (walletInfo.start_date === start_date) {
+        return res.status(400).send("같은날짜로는 변경할수 없습니다.");
+      }
 
-    const userId = req.user.userId||req.user.id
+      calculateEnd_date = moment(start_date)
+        .add(
+          Number(walletInfo.cycleDay) +
+            Number(walletInfo.cycleMonth) * 30 +
+            Number(walletInfo.cycleYear) * 365,
+          "d"
+        )
+        .format("YYYY-MM-DD");
 
-    const walletInfo = await wallet.findOne({where:{id:id,user_id:userId}})
+      const walletEdit = await wallet.update(
+        {
+          start_date: start_date,
 
-    console.log(walletInfo.start_date,start_date)
+          end_date: calculateEnd_date,
+        },
 
-    if(walletInfo.start_date===start_date){
-      return res.status(400).send('같은날짜로는 변경할수 없습니다.')
+        { where: { user_id: userId, id: id } }
+      );
+
+      if (!walletEdit) {
+        return res.status(400).send("휴");
+      }
+
+      return res.status(200).send("변경완료");
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-    calculateEnd_date = moment(start_date)
-    .add(
-      Number(walletInfo.cycleDay) +
-        Number(walletInfo.cycleMonth) * 30 +
-        Number(walletInfo.cycleYear) * 365,
-      "d"
-    )
-    .format("YYYY-MM-DD");
-
-
-    const walletEdit = await wallet.update(
-      {
-        start_date: start_date,
-       
-        end_date: calculateEnd_date,
-      },
-
-      { where: { user_id: userId, id: id } }
-    );
-
-    if(!walletEdit){
-      return res.status(400).send('휴')
-    }
-
-    return res.status(200).send('변경완료')
-
-  }catch(err){
-    return res.status(500).send(err)
-  }
-
-
   },
-
 
   walletDelete: async (req, res) => {
     //case 1 ,2 일반 유저, social 유저
@@ -127,7 +120,7 @@ let calculateEnd_date;
         },
       });
 
-      console.log(findWallet)
+      console.log(findWallet);
 
       // console.log(findWallet, "find");
 
@@ -142,11 +135,10 @@ let calculateEnd_date;
         }
       }
 
-          
       //날짜별로 select를 한다. 가장 빠른날짜가 앞에있겠지.
       //그럼 똑같은 날짜를뽑아서 넘겨 준다.
 
-      return res.status(200).send({ data: paymentArr});
+      return res.status(200).send({ data: paymentArr });
       //오늘과 가장가까운 결제일 찾기
       //그 결제일남은 기간 + cost를 찾는다
     } catch (err) {
@@ -279,11 +271,10 @@ let calculateEnd_date;
     let varCycleYear = cycleYear;
     const userId = req.user.userId || req.user.id;
 
-    console.log(start_date)
-    console.log(userId,id,'널 너무나 사랑해서 ')
+    console.log(start_date);
+    console.log(userId, id, "널 너무나 사랑해서 ");
 
     try {
-
       let calculateEnd_date;
       //cycle, cost , start_date , end_date
 
@@ -294,15 +285,13 @@ let calculateEnd_date;
       //wallet 을 찾아서 cost,cycle이 존재하지 않으면 => 그대로 사용
       //
 
-      
-
       const walletInfo = await wallet.findOne({
         where: { user_id: userId, id: id },
       });
-      console.log(walletInfo,'wall')
+      console.log(walletInfo, "wall");
 
-      if(!walletInfo){
-        return res.status(400).send('찾을수 없습니다.')
+      if (!walletInfo) {
+        return res.status(400).send("찾을수 없습니다.");
       }
 
       if (!cost) {
@@ -371,33 +360,57 @@ let calculateEnd_date;
 
   TopTwo: async (req, res) => {
     const userId = req.user.userId || req.user.id;
-    console.log(userId)
 
     try {
-
-      
       const topTwoPeriod = await wallet.findAll({
         where: { user_id: userId },
         order: [["end_date", "ASC"]],
-        // limit: 2,
+        limit: 2,
         attributes: [
           // specify an array where the first element is the SQL function and the second is the alias
           [Sequelize.fn("DISTINCT", Sequelize.col("end_date")), "end_date"],
         ],
       });
-      console.log(topTwoPeriod,'period');
+      console.log(topTwoPeriod, "period");
+      if (!topTwoPeriod) {
+        return res.status(400).send("날짜를 알수없다.");
+      }
+      //이게 문제네 2개일경우만 나타남
 
-      const walletInfo = await wallet.findAll({
-        where: {
-          [Op.or]: [
-            { end_date: topTwoPeriod[0].dataValues.end_date },
-            { end_date: topTwoPeriod[1].dataValues.end_date },
-          ],
-        },
-      });
-      console.log(walletInfo,'walet')
+      if (topTwoPeriod.length === 1) {
+        const walletInfo = await wallet.findAll({
+          where: {
+            end_date: topTwoPeriod[0].dataValues.end_date,
+          },
+        });
 
-      return res.status(200).send({ data: topTwoPeriod, wallet: walletInfo });
+        if (!walletInfo) {
+          return res.status(400).send("walletInfo err");
+        }
+
+        return res
+          .status(200)
+          .send({ data: topTwoPeriod.dataValues, wallet: walletInfo });
+      } else {
+        
+        const walletInfo = await wallet.findAll({
+          where: {
+            [Op.or]: [
+              { end_date: topTwoPeriod[0].dataValues.end_date },
+              { end_date: topTwoPeriod[1].dataValues.end_date },
+            ],
+          },
+        });
+
+        if (!walletInfo) {
+          return res.status(400).send("walletInfo err");
+        }
+
+        return res
+          .status(200)
+          .send({ data: topTwoPeriod.dataValues, wallet: walletInfo });
+      }
+
     } catch (err) {
       return res.status(500).send(err);
     }

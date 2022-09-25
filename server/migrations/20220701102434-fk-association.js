@@ -33,18 +33,14 @@ module.exports = {
       onDelete: "CASCADE",
     });
 
-  await queryInterface.addColumn("alarms", "wallet_id", {
-    type: Sequelize.INTEGER,
-    allowNull: true,
-    references: {
-      model: "wallets", // Users 모델에서
-      key: "id", // 그 아이디 값을 참고합니다.
-    },
-    onUpdate: "CASCADE",
-  });
-
-
-   
+    await queryInterface.addColumn("alarms", "wallet_id", {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: "wallets", // Users 모델에서
+        key: "id", // 그 아이디 값을 참고합니다.
+      },
+    });
 
     /**
      * Add altering commands here.
@@ -55,22 +51,16 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-
-
-
     await queryInterface.removeColumn(
-      'wallets', // name of Source model
-      'user_Id' // key we want to remove
+      "wallets", // name of Source model
+      "user_Id" // key we want to remove
     );
+    await queryInterface.removeColumn("alarms", "user_id");
     await queryInterface.removeColumn(
-      'alarms', 
-      'user_id', 
+      "shares", // name of Source model
+      "user_id" // key we want to remove
     );
-    await queryInterface.removeColumn(
-      'shares', // name of Source model
-      'user_id' // key we want to remove
-    );
-   
+
     /**
      * Add reverting commands here.
      *

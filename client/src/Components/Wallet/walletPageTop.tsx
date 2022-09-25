@@ -19,6 +19,7 @@ const WalletPageTop = () => {
         },
       })
       .then((res) => {
+        console.log(res.data.data,res.data.wallet)
         
         setWalletPeriod(res.data.data);
         setWalletImageInfo(res.data.wallet);
@@ -29,7 +30,7 @@ const WalletPageTop = () => {
       });
   }, []);
 
-  console.log(walletPeriod)
+  // console.log(walletPeriod,walletImageInfo)
   //갱신기간은 어떻게? 똑같은 것끼리 top2
   //가장빠른 end_date 2개만 가져온다
   //end_date에 해당하는 구독을 표시한다. 어떻게? 몰라 일단해봐
@@ -38,7 +39,7 @@ const WalletPageTop = () => {
     <>
       <div className="WalletPage_Top_section_sub_title">
         {/* <p> {walletImageInfo[0].name},</p> */}
-        <span>갱신이 얼마 남지 않았어요!</span>
+    {walletPeriod.length>0?   <span>갱신이 얼마 남지 않았어요!</span>:null}
       </div>
       <div className="WalletPage_Top_section">
         {walletPeriod.map((el: any, index: number) => {
