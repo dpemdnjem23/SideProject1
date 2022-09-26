@@ -45,7 +45,7 @@ const ShareRegisterPage = () => {
     })
     .then((result)=>{
 
-navigate('/')
+navigate('/share')
 
     }).catch((err)=>{
               

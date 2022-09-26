@@ -24,6 +24,8 @@ module.exports = {
 
     console.log(title, list_sub, description, "makemeStrong");
 
+    const userId = req.user.userId || req.user.id;
+
     try {
       const arr = [];
 
@@ -47,6 +49,7 @@ module.exports = {
 
       const shareRegister = await share.create({
         title: title,
+        user_id:userId,
         description: description,
         list_sub: arr,
       });
@@ -58,4 +61,26 @@ module.exports = {
       return res.status(500).send(err);
     }
   },
+
+
+  shareInfo: async(req,res) =>{
+      
+
+    try{
+
+   const shareInfo = await share.findAll({})
+
+   return res.status(200).send(shareInfo)
+
+    }catch(err){
+        return res.status(500).send(err)
+    }
+
+
+
+  },
+
+  shareSelectInfo: async(req,res) =>{
+      
+  }
 };

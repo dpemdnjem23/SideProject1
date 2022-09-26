@@ -83,12 +83,10 @@ const Mypagebar = () => {
         const sumCostArr = res.data.data.map((el: { cost: number }) => {
           return el.cost;
         });
-        console.log(sumCostArr);
 
         for (let i = 0; i < sumCostArr.length; i++) {
           sum = sum + sumCostArr[i];
         }
-        console.log(sum);
 
         if (sumCostArr.length === 0) {
           paymentDate = 0;
@@ -97,8 +95,7 @@ const Mypagebar = () => {
             moment(today).diff(moment(res.data.data[0].end_date), "days")
           );
         }
-        console.log(paymentDate);
-        console.log(today, res.data.data,sumCostArr);
+       
         setSubManageCost(sum);
         setSubManageDate(paymentDate);
       })

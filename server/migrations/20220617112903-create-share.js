@@ -15,7 +15,6 @@ module.exports = {
       list_sub: {
         allowNull:false,
         type: Sequelize.JSON,
-        defaultValue:{}
       },
       description: {
         type: Sequelize.STRING

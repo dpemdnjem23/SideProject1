@@ -52,7 +52,6 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
   };
 
   const handleReadClick = (el: number) => {
-    console.log(el);
     axios
       .patch(
         `${process.env.REACT_APP_API_URI}/alarm/update`,

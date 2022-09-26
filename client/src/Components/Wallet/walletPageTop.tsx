@@ -19,7 +19,6 @@ const WalletPageTop = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data,res.data.wallet)
         
         setWalletPeriod(res.data.data);
         setWalletImageInfo(res.data.wallet);

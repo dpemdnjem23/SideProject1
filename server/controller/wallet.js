@@ -371,18 +371,20 @@ module.exports = {
           [Sequelize.fn("DISTINCT", Sequelize.col("end_date")), "end_date"],
         ],
       });
-      console.log(topTwoPeriod, "period");
       if (!topTwoPeriod) {
         return res.status(400).send("날짜를 알수없다.");
       }
       //이게 문제네 2개일경우만 나타남
 
       if (topTwoPeriod.length === 1) {
+
+
         const walletInfo = await wallet.findAll({
           where: {
             end_date: topTwoPeriod[0].dataValues.end_date,
           },
         });
+
 
         if (!walletInfo) {
           return res.status(400).send("walletInfo err");
@@ -390,9 +392,9 @@ module.exports = {
 
         return res
           .status(200)
-          .send({ data: topTwoPeriod.dataValues, wallet: walletInfo });
+          .send({ data: topTwoPeriod, wallet: walletInfo });
       } else {
-        
+
         const walletInfo = await wallet.findAll({
           where: {
             [Op.or]: [
@@ -408,7 +410,7 @@ module.exports = {
 
         return res
           .status(200)
-          .send({ data: topTwoPeriod.dataValues, wallet: walletInfo });
+          .send({ data: topTwoPeriod, wallet: walletInfo });
       }
 
     } catch (err) {
