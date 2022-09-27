@@ -3,7 +3,6 @@ import axios from "axios";
 import moment from "moment";
 import "./css/reset.css";
 import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
-import io from "socket.io-client";
 import { useNavigate } from "react-router";
 import "./App.css";
 
@@ -225,10 +224,13 @@ const App = () => {
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/wallet" element={<WalletPage />} />
+            
             <Route
               path="/mypage/*"
               element={<Navigate replace to="/mypage" />}
             />
+
+            <Route path = "/share" element={<SharePage></SharePage>} />
           </Route>
 
           <Route element={<MainHeaderLogo />}>
@@ -260,6 +262,12 @@ const App = () => {
 
           {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
+
+        <div className="App_main">
+
+
+        </div>
+
       </div>
     </BrowserRouter>
   );

@@ -1,12 +1,15 @@
-
+import React from 'react'
 
 
 const SharePage = () =>{
-    const a = 's'
-    console.log(a)
 
+    // background-color: rgb(247, 249, 250);
     return(
-        undefined
+        <div id='sharePage'>
+
+            
+        </div>
+
     )
 
 }
