@@ -55,7 +55,7 @@ const App = () => {
 
   const accessToken = localStorage.getItem("accessToken");
 
-// 로그인했을때만 로딩 하도록한다.
+  // 로그인했을때만 로딩 하도록한다.
 
   //!
 
@@ -173,8 +173,6 @@ const App = () => {
             },
           })
           .then((res) => {
-            
-
             setAlarmInfo(res.data.data);
           })
           .catch((err) => {
@@ -185,7 +183,7 @@ const App = () => {
         console.log(err);
       });
 
-      axios
+    axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
           authorization: `Bearer ${accessToken}`,
@@ -214,7 +212,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
-
         {/* {showErrModal ? <ErrModal></ErrModal> : null} */}
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
@@ -224,13 +221,13 @@ const App = () => {
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/wallet" element={<WalletPage />} />
-            
+
             <Route
               path="/mypage/*"
               element={<Navigate replace to="/mypage" />}
             />
 
-            <Route path = "/share" element={<SharePage></SharePage>} />
+            <Route path="/share" element={<SharePage></SharePage>} />
           </Route>
 
           <Route element={<MainHeaderLogo />}>
@@ -262,11 +259,10 @@ const App = () => {
 
           {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
-
-        <div className="App_main">
-
+        <div className ='Bottom'>
 
         </div>
+
 
       </div>
     </BrowserRouter>
