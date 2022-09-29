@@ -19,6 +19,11 @@ const {
 module.exports = {
   //페이지 네이션,
 
+  shareDelete:async (req,res) =>{
+
+  },
+
+
   registerShare: async (req, res) => {
     const { title, list_sub, description } = req.body;
 
@@ -69,6 +74,9 @@ module.exports = {
     try{
 
    const shareInfo = await share.findAll({})
+
+   //닉네임은 어쩌지? user_id를 참조해놨으니
+   //user_id에 해당하는 
 
    return res.status(200).send(shareInfo)
 
