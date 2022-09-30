@@ -14,12 +14,11 @@ const ShareRegisterPage = () => {
 
   // useEffect(()=>{
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    console.log(shareBoard,shareTitle,updateWallet)
+  // console.log(shareBoard,shareTitle,updateWallet)
 
   const handleShareRegister = () => {
-
     fetch(`${process.env.REACT_APP_API_URI}/share/register`, {
       method: "post",
       headers: {
@@ -32,26 +31,24 @@ const ShareRegisterPage = () => {
         title: shareTitle,
         list_sub: updateWallet,
       }),
-    }
-    
-    )
-    .then((res:any)=>{
-
-      if(!res.ok){
-        throw new Error(res.status)
-      }
-      return res.json()
-
     })
-    .then((result)=>{
+      .then((res: any) => {
 
-navigate('/share')
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.text();
+      })
+      .then((result) => {
 
-    }).catch((err)=>{
-              
-      alert('제목과 글을 입력해주세요')
-      console.log(err)
-    })
+        console.log(result);
+
+        navigate("/share");
+      })
+      .catch((err) => {
+        alert("제목과 글을 입력해주세요");
+        console.log(err);
+      });
   };
 
   // })
@@ -63,8 +60,10 @@ navigate('/share')
       <ShareRegistInfo />
       <ShareRegistBoard />
 
+
       <div className="SharRegisterPage_bt">
         <CancellationButton />
+
 
         <div onClick={handleShareRegister} className="regist_bt_section">
           <span>등록하기</span>

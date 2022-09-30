@@ -19,10 +19,7 @@ const {
 module.exports = {
   //페이지 네이션,
 
-  shareDelete:async (req,res) =>{
-
-  },
-
+  shareDelete: async (req, res) => {},
 
   registerShare: async (req, res) => {
     const { title, list_sub, description } = req.body;
@@ -54,41 +51,42 @@ module.exports = {
 
       const shareRegister = await share.create({
         title: title,
-        user_id:userId,
+        user_id: userId,
         description: description,
         list_sub: arr,
       });
 
+      console.log(shareRegister)
+
       if (!shareRegister) {
         return res.status(400).send("공유가 생성되지않았습니다.");
       }
+      return res.status(200).send('공유에 성공하였습니다. ')
     } catch (err) {
       return res.status(500).send(err);
     }
   },
 
+  shareInfo: async (req, res) => {
+    try {
+      //userid를 1대1 매칭시켜서 nickname으로
+      const shareInfo = await share.findAll({
+        include: [{ model: user, attributes: ["id"] }],
+      });
 
-  shareInfo: async(req,res) =>{
-      
 
-    try{
+      console.log(shareInfo,'shareInfo')
+      //닉네임은 어쩌지? user_id를 참조해놨으니
+      //user_id에 해당하는
 
-   const shareInfo = await share.findAll({})
-
-   //닉네임은 어쩌지? user_id를 참조해놨으니
-   //user_id에 해당하는 
-
-   return res.status(200).send(shareInfo)
-
-    }catch(err){
-        return res.status(500).send(err)
+      // return res.status(200).send(shareInfo);
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-
-
   },
 
-  shareSelectInfo: async(req,res) =>{
-      
-  }
+  shareSelectInfo: async (req, res) => {
+    //선택한 share의 인포를 보여준다.
+    //만약, 나의 share라면 수정, 삭제 가 가능하도록 한다
+  },
 };
