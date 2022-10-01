@@ -71,15 +71,14 @@ module.exports = {
     try {
       //userid를 1대1 매칭시켜서 nickname으로
       const shareInfo = await share.findAll({
-        include: [{ model: user, attributes: ["id"] }],
+        include: [{ model: user, attributes: ["nickname"] }],
       });
 
 
-      console.log(shareInfo,'shareInfo')
       //닉네임은 어쩌지? user_id를 참조해놨으니
       //user_id에 해당하는
 
-      // return res.status(200).send(shareInfo);
+      return res.status(200).send(shareInfo);
     } catch (err) {
       return res.status(500).send(err);
     }
