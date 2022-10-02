@@ -17,6 +17,8 @@ body {
 
 #root {
   height: 100%;
+  overflow-x: scroll;
+
 }
 #App {
   height: 100%;
@@ -33,4 +35,5 @@ body {
     align-items: center;
     padding: 60px 0px 0px 20px;
     overflow: hidden;
+    overflow-x: hidden;
 }

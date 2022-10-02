@@ -16,7 +16,6 @@ const ShareCard = () => {
     axios(`${process.env.REACT_APP_API_URI}/share/info`, {
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${accessToken}`,
       },
     })
       .then((res) => {
@@ -34,12 +33,13 @@ const ShareCard = () => {
   return (
     <div className="ShareCard">
         {shareInfo.map((el:any)=>{
-          console.log(el.list_sub)
+          console.log(el.user)
             return(
                 <div key={el.id}>
-                  <div>{el.title}</div>
-                  <div>{el.description}</div>
-                  <div className="ShareCard_subList">{el.list_sub.join(' ')}</div>
+                  <div className="ShareCard_title">{el.title}</div>
+                  <div className="ShareCard_text">{el.description.substr(0,37)+"..."}</div>
+                  <div className="ShareCard_subList"> {el.list_sub.join(' ')}</div>
+                  <div className="ShareCard_nick" >{el.user.nickname}</div>
 
                 </div>
             )

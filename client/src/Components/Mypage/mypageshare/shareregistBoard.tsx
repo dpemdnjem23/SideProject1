@@ -30,8 +30,8 @@ const ShareRegistBoard = () => {
 
       <div className="shareregistBoard_section">
         <textarea
-          maxLength={30}
-          placeholder="제목(30자)"
+          maxLength={20}
+          placeholder="제목(20자)"
           className="shareRegistTitle"
           onChange={handleTitle}
         ></textarea>
