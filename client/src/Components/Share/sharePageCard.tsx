@@ -1,4 +1,5 @@
 import axios from "axios";
+import Loading from "Components/Common/loading";
 import React, { useState,useEffect } from "react";
 
 import "../../css/components/SharePage/shareCard.css";
@@ -7,9 +8,7 @@ const ShareCard = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const [shareInfo, setShareInfo] = useState<any>([]);
-  const [limit, setLimit] = useState<number>(6);
-  const [page, setPage] = useState<number>(1);
-  const offset = (page - 1) * limit;
+
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -20,6 +19,7 @@ const ShareCard = () => {
     })
       .then((res) => {
         setShareInfo(res.data)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err);
@@ -32,8 +32,8 @@ const ShareCard = () => {
   // background-color: rgb(247, 249, 250);
   return (
     <div className="ShareCard">
+      {loading ? <Loading></Loading>:null}
         {shareInfo.map((el:any)=>{
-          console.log(el.user)
             return(
                 <div key={el.id}>
                   <div className="ShareCard_title">{el.title}</div>
