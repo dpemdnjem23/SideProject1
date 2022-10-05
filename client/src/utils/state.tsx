@@ -121,7 +121,7 @@ type walletInfoState = {
 };
 
 type alarmInfo = {
-  createdAt:string;
+  createdAt: string;
   title: string;
   id: number;
   image: string;
@@ -132,29 +132,43 @@ type alarmInfo = {
 type alarmInfoState = {
   alarmInfo: alarmInfo[];
   setAlarmInfo: (input: []) => void;
-  alarmText:boolean
-  setAlarmText:(input:boolean)=>void
+  alarmText: boolean;
+  setAlarmText: (input: boolean) => void;
 };
 
 type shareInfo = {
   id: number;
   name: string;
-  
 };
 
 type shareState = {
-  updateWallet:shareInfo[]
-  setUpdateWallet:(input:shareInfo[]) =>void
-  
-}
+  updateWallet: shareInfo[];
+  setUpdateWallet: (input: shareInfo[]) => void;
+};
 type sharerBoardState = {
-  shareTitle:string;
-  shareBoard:string;
-  setShareTitle:(input:string)=>void
-  setShareBoard:(input:string)=>void
-}
+  shareTitle: string;
+  shareBoard: string;
+  setShareTitle: (input: string) => void;
+  setShareBoard: (input: string) => void;
+};
 
+type pagination = {
+  id: number;
+  title: string;
+  description: string;
+  list_sub: [string];
+  user: { nickname: string };
+};
 
+type paginationState = {
+  limit: number;
+  page: number;
+  shareInfo:pagination[];
+
+  setPage: (input: number) => void;
+  setLimit: (input: number) => void;
+  setShareInfo: (input:[]) => void;
+};
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -278,29 +292,30 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
 export const alarmInfouseStore = create<alarmInfoState>((set) => ({
   alarmInfo: [],
   setAlarmInfo: (input) => set({ alarmInfo: input }),
-  alarmText:false,
-  setAlarmText:(input) =>set({alarmText:input})
+  alarmText: false,
+  setAlarmText: (input) => set({ alarmText: input }),
 }));
 
 export const shareRegisteruseStore = create<shareState>((set) => ({
-
-
-  updateWallet:[],
-  setUpdateWallet:(input) => set({updateWallet:input})
+  updateWallet: [],
+  setUpdateWallet: (input) => set({ updateWallet: input }),
 }));
 
 export const shareBoarduseStore = create<sharerBoardState>((set) => ({
-
-
-  shareBoard:'',
-  shareTitle:'',
-  setShareBoard:(input) =>set ({shareBoard:input}),
-  setShareTitle:(input) => set({shareTitle:input})
-
+  shareBoard: "",
+  shareTitle: "",
+  setShareBoard: (input) => set({ shareBoard: input }),
+  setShareTitle: (input) => set({ shareTitle: input }),
 }));
 
-
-
+export const paginationuseStore = create<paginationState>((set) => ({
+  page: 1,
+  limit: 6,
+  shareInfo:[],
+  setLimit: (input) => set({ limit: input }),
+  setPage: (input) => set({ page: input }),
+  setShareInfo:(input) => set({shareInfo:input})
+}));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{

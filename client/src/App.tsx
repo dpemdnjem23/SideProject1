@@ -259,9 +259,9 @@ const App = () => {
 
           {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
-        <div className ='Bottom'>
+        {/* <div className ='Bottom'>
 
-        </div>
+        </div> */}
 
 
       </div>
