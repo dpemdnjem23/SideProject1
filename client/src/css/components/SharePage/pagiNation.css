@@ -1,63 +1,111 @@
 .pagination{
-    /* padding: 50px 0px; */
-   /* margin: 50px 0px; */
+  padding-bottom: 20px;
+padding-top: 10px;
     display: flex;
     flex-direction: row;
+    font-size: 17px;
+    align-items: center;
+    justify-content: center;
+    
     
 }
 
-.pagination_firsbt{
+.pagination_firstbt{
+    letter-spacing: 0;
     /* margin-top: 6px; */
     cursor: pointer;
     height: 30px;
-    width: 60px;
+    min-width: 30px;
+    margin: 0 2px 4px;
     border:1px solid transparent;
     background-color:rgb(247, 249, 250);
     border-radius: 2px;
+    color:black;
+    font-weight: 200;
+
     
 
 
 }
 .pagination_secondbt{
+    letter-spacing: -1px;
+    display: inline-block;
     cursor: pointer;
-    margin:0px 7px;
+    padding:0px 10px;
+    margin: 0 3px;
+    font-weight: 600;
     height: 30px;
-    min-width:30px;
-    border-radius: 5px;
+    min-width:12px;
+    border-radius: 2px;
     border:1px solid transparent;
     background-color:rgb(247, 249, 250);
+    color: gray;
 }
 
 
 
 .pagination_thirdbt{
-    /* margin-top: 6px; */
+    letter-spacing: 0;
+    /* margin-top: 60px; */
     cursor: pointer;
     height: 30px;
-    width: 60px;
+    min-width: 12px;
+    font-weight: 400;
+     margin-left: 4px;
+     margin-bottom: 2px;
     border:1px solid transparent;
     background-color:rgb(247, 249, 250);
     border-radius: 2px;
+    font-weight: 200;
+
+    
     
 
+}
+.pagination_icon{
 }
 
 .pagination_thirdbt:hover{
     border-color: #aaa;
     background-color: #f9f9f9;
+    transition-duration: 0.5s;
+
+    /* color: #555; */
+}
+
+.pagination_firstbt:hover{
+    border-color: #aaa;
+    background-color: #f9f9f9;
+    transition-duration: 0.5s;
+
     /* color: #555; */
 }
 .pagination_thirdbt:disabled{
- cursor: none;
-    /* color: #555; */
+    cursor: grab;
+    border:1px solid transparent;
+    background-color:rgb(247, 249, 250);
+        color: #555;
 }
 
 .pagination_firstbt:disabled{
-    cursor: none;
-       /* color: #555; */
+    cursor: grab;
+    border:1px solid transparent;
+    background-color:rgb(247, 249, 250);
+        color: #555;
    }
 
 .pagination_secondbt:focus{
+    color: black;
+    font-weight: 600;
     border-color: #aaa;
     background-color: #f9f9f9;
+}
+
+
+.pagination_secondbt:hover{
+    border-color: #aaa;
+    color: black;
+    font-weight: 600;
+    background-color: #f9f9f9;
+    transition-duration: 0.5s;
 }
