@@ -6,26 +6,42 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 // import{faAngleLeft,faAngleRight} from '@fortawesome/free-regular-svg-icons'
 // import {fa-thin}
 import "../../css/components/SharePage/pagiNation.css";
+import e from "express";
 const SharePagiNation = () => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const { page, setPage, limit, setLimit, shareInfo } = paginationuseStore();
   const numPages = 8;
+  // let chaneFocus;
+  const changeFocus = [];
+
+  for (let i = 0; i < numPages; i++) {
+    changeFocus.push(`<li `);
+  }
+
   // const numPages = Math.ceil(shareInfo.length / limit);
-//페이지는 게시물수에 따른다.
+  //페이지는 게시물수에 따른다.
 
-if(buttonRef.current !==null){
-  console.log(buttonRef)
-}
+  //페이지
 
-const buttonFocus = 
-//페이지 네이션 page 번호를 누를때 포커스가 유지되어야 한다
+  // for(let i = 0; i<numPages;i++){}
 
-//페이지 를 바꿀때 
+  // const addtoRef = (el:any) =>{
+  //   buttonRef.current.push(el)
+  //   console.log(buttonRef)
+
+  // }
+  // const buttonFocus =
+  //페이지 네이션 page 번호를 누를때 포커스가 유지되어야 한다
+
+  //페이지 를 바꿀때
   const handleChangePage = (val: number) => {
     setPage(val);
+    
+    // chaneFocus=
   };
 
   //다음을 누르는경우
+  //버튼을 클릭하면 해당 버튼은 div로 바뀐다.
+  //
 
   const handleChangeIndexUp = () => {
     setPage(page + 1);
@@ -53,13 +69,31 @@ const buttonFocus =
           .map((v, i) => {
             return (
               <button
-                ref={buttonRef}
+                // id={i+1}
+                // ref={el=>{buttonRef}}
+                // onFocus
                 className="pagination_secondbt"
                 onClick={() => handleChangePage(i + 1)}
                 key={i + 1}
               >
                 {i + 1}
               </button>
+            );
+          })}
+              {Array(numPages)
+          .fill(0)
+          .map((v, i) => {
+            return (
+              <div
+                // id={i+1}
+                // ref={el=>{buttonRef}}
+                // onFocus
+                className="pagination_secondText"
+                onClick={() => handleChangePage(i + 1)}
+                key={i + 1}
+              >
+                {i + 1}
+              </div>
             );
           })}
       </div>

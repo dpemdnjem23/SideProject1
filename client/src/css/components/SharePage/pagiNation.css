@@ -94,11 +94,19 @@ padding-top: 10px;
         color: #555;
    }
 
-.pagination_secondbt:focus{
+/* .pagination_secondbt:focus{
     color: black;
     font-weight: 600;
     border-color: #aaa;
     background-color: #f9f9f9;
+} */
+.pagination_secondText{
+    color: black;
+    font-weight: 600;
+    border-color: #aaa;
+    background-color: #f9f9f9;
+
+
 }
 
 
