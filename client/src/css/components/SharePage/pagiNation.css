@@ -93,13 +93,15 @@ padding-top: 10px;
     background-color:rgb(247, 249, 250);
         color: #555;
    }
+   .btfocus{
+    border:1px solid #aaa;
 
-/* .pagination_secondbt:focus{
     color: black;
     font-weight: 600;
-    border-color: #aaa;
     background-color: #f9f9f9;
-} */
+   }
+
+
 .pagination_secondText{
     color: black;
     font-weight: 600;

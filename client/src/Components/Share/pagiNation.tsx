@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { paginationuseStore } from "utils/state";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -6,36 +6,40 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 // import{faAngleLeft,faAngleRight} from '@fortawesome/free-regular-svg-icons'
 // import {fa-thin}
 import "../../css/components/SharePage/pagiNation.css";
-import e from "express";
 const SharePagiNation = () => {
   const { page, setPage, limit, setLimit, shareInfo } = paginationuseStore();
-  const numPages = 8;
-  // let chaneFocus;
-  const changeFocus = [];
+  // const numPages:number |null= 20;
+  const numPages = Math.ceil(60 / limit);
 
-  for (let i = 0; i < numPages; i++) {
-    changeFocus.push(`<li `);
+
+const pageNumbers:number[] = []
+useEffect(()=>{
+   for (let i = 1; i <= numPages; i++) {
+
+   
+
+    pageNumbers.push(i)
+
+
+    if(i===numPages){
+      // pageNumbers.push('...')
+
+
+    }
   }
 
-  // const numPages = Math.ceil(shareInfo.length / limit);
+
+},[numPages])
+
+ 
   //페이지는 게시물수에 따른다.
 
-  //페이지
-
-  // for(let i = 0; i<numPages;i++){}
-
-  // const addtoRef = (el:any) =>{
-  //   buttonRef.current.push(el)
-  //   console.log(buttonRef)
-
-  // }
-  // const buttonFocus =
   //페이지 네이션 page 번호를 누를때 포커스가 유지되어야 한다
 
   //페이지 를 바꿀때
   const handleChangePage = (val: number) => {
     setPage(val);
-    
+
     // chaneFocus=
   };
 
@@ -64,15 +68,15 @@ const SharePagiNation = () => {
         <span>이전</span>
       </button>
       <div>
-        {Array(numPages)
-          .fill(0)
+        {pageNumbers
           .map((v, i) => {
             return (
               <button
                 // id={i+1}
                 // ref={el=>{buttonRef}}
                 // onFocus
-                className="pagination_secondbt"
+                
+                className={page==i+1? 'pagination_secondbt btfocus' :'pagination_secondbt'}
                 onClick={() => handleChangePage(i + 1)}
                 key={i + 1}
               >
@@ -80,9 +84,10 @@ const SharePagiNation = () => {
               </button>
             );
           })}
-              {Array(numPages)
-          .fill(0)
+        {/* {changeFocus
           .map((v, i) => {
+            if(page===i+1){
+              
             return (
               <div
                 // id={i+1}
@@ -95,7 +100,10 @@ const SharePagiNation = () => {
                 {i + 1}
               </div>
             );
-          })}
+
+          }
+
+          })} */}
       </div>
       {/* <div>1 2 3 4 5 6 7 8</div> */}
       <button
