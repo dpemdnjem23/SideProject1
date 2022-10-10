@@ -13,7 +13,6 @@ const SharePagiNation = () => {
 
 
 const pageNumbers:number[] = []
-useEffect(()=>{
    for (let i = 1; i <= numPages; i++) {
 
    
@@ -29,7 +28,8 @@ useEffect(()=>{
   }
 
 
-},[numPages])
+
+console.log(pageNumbers)
 
  
   //페이지는 게시물수에 따른다.

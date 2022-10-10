@@ -1,12 +1,11 @@
 import axios from "axios";
-import Loading from "Components/Common/loading";
 import React, { useState,useEffect } from "react";
 import { paginationuseStore} from "utils/state";
 
 import "../../css/components/SharePage/shareCard.css";
 const ShareCard = () => {
     
-  const {page,limit,setShareInfo,shareInfo} = paginationuseStore()
+  const {page,limit,setShareInfo,shareInfo,setLoading} = paginationuseStore()
   const offset = (page - 1) * limit;
 
 
@@ -14,7 +13,8 @@ const ShareCard = () => {
 
 
 
-  const [loading, setLoading] = useState<boolean>(true);
+
+
 
   useEffect(() => {
     axios(`${process.env.REACT_APP_API_URI}/share/info`, {
@@ -35,8 +35,8 @@ const ShareCard = () => {
 
   // background-color: rgb(247, 249, 250);
   return (
+
     <div className="ShareCard">
-      {loading ? <Loading></Loading>:null}
         {shareInfo.slice(offset,offset+limit).map((el)=>{
             return(
                 <div key={el.id}>
@@ -86,6 +86,7 @@ const ShareCard = () => {
         <div>닉네임</div>
       </div> */}
     </div>
+
   );
 };
 

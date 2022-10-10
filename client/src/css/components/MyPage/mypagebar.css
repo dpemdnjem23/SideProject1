@@ -10,10 +10,14 @@
   /* margin-top: 20px; */
 
   text-align: left;
-  max-width: 250px;
+  max-width: 260px;
   height: 100%;
-  max-height: 140px;
+  max-height: 170px;
   align-items: left;
+  overflow-y:hidden;
+  /* overflow-y: scroll; */
+
+
 }
 .Mypage_bar_gap {
   width: 100%;
@@ -32,14 +36,13 @@
 }
 
 .Mypage_bar_top_section {
-  overflow-y:auto;
 
   /* text-align: left; */
   display: flex;
   flex-direction: row;
   padding-left: 5px;
 
-  margin-top: 8px;
+  padding-top: 12px;
 
   /* height:20px; */
 }
@@ -94,6 +97,7 @@
   padding-left: 5px;
   margin-top: 8px;
   height: 100%;
+  max-height: 100px;
   /* margin-top: 8px; */
 }
 
@@ -113,12 +117,12 @@
 .Mypage_bar_center_section1 {
   word-break: break-all;
   width: 100%;
-  max-width: 70px;
+  max-width: 90px;
 }
 .Mypage_bar_center_section3 {
   word-break: break-all;
   width: 100%;
-  max-width: 70px;
+  max-width: 90px;
 }
 
 .Mypage_bar_center_section1_pay2 {

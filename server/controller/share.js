@@ -47,16 +47,14 @@ module.exports = {
         }
       }
 
-      console.log(arr);
 
       const shareRegister = await share.create({
         title: title,
         user_id: userId,
         description: description,
-        list_sub: arr,
+        list_sub: {list_sub:arr},
       });
 
-      console.log(shareRegister)
 
       if (!shareRegister) {
         return res.status(400).send("공유가 생성되지않았습니다.");
@@ -73,7 +71,7 @@ module.exports = {
       const shareInfo = await share.findAll({
         include: [{ model: user, attributes: ["nickname"] }],
       });
-
+console.log(shareInfo)
 
       //닉네임은 어쩌지? user_id를 참조해놨으니
       //user_id에 해당하는

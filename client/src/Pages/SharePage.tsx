@@ -1,13 +1,19 @@
 import SharePagiNation from "Components/Share/pagiNation";
 import PagiNation from "Components/Share/pagiNation";
 import ShareCard from "Components/Share/sharePageCard";
-import React from "react";
+import React, { useState } from "react";
+import Loading from "Components/Common/loading";
+import { paginationuseStore } from "utils/state";
 
 import "../css/pages/SharePage.css";
 const SharePage = () => {
+  const { loading } = paginationuseStore();
+
   // background-color: rgb(247, 249, 250);
   return (
     <div id="sharePage">
+      {loading ? <Loading></Loading> : null}
+
       <div className="sharePage_section">
         <div className="sharePage_text">
           <h1>구독공유</h1>

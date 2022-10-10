@@ -164,10 +164,11 @@ type paginationState = {
   limit: number;
   page: number;
   shareInfo:pagination[];
-
+  loading:boolean;
   setPage: (input: number) => void;
   setLimit: (input: number) => void;
   setShareInfo: (input:[]) => void;
+  setLoading:(input:boolean) =>void;
 };
 
 export const isSigninState = create<isSigninState>()(
@@ -312,9 +313,11 @@ export const paginationuseStore = create<paginationState>((set) => ({
   page: 1,
   limit: 6,
   shareInfo:[],
+  loading:true,
   setLimit: (input) => set({ limit: input }),
   setPage: (input) => set({ page: input }),
-  setShareInfo:(input) => set({shareInfo:input})
+  setShareInfo:(input) => set({shareInfo:input}),
+  setLoading:(input) =>set({loading:input})
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

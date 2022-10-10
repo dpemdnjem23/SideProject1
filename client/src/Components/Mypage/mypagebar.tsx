@@ -229,6 +229,7 @@ const Mypagebar = () => {
       <div className="Mypage_bar_bottom container">
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
+          <div>구독 모음 관리 </div>
           <div onClick={handleEditUser}>회원 정보 수정</div>
           <div onClick={handleDelUser}>회원탈퇴</div>
         </div>
