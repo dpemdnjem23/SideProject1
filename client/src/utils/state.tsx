@@ -145,14 +145,15 @@ type shareState = {
   updateWallet: shareInfo[];
   setUpdateWallet: (input: shareInfo[]) => void;
 };
-type sharerBoardState = {
+type shareBoardState = {
   shareTitle: string;
   shareBoard: string;
   setShareTitle: (input: string) => void;
   setShareBoard: (input: string) => void;
 };
 
-type pagination = {
+
+type shareCard = {
   id: number;
   title: string;
   description: string;
@@ -160,15 +161,25 @@ type pagination = {
   user: { nickname: string };
 };
 
+
+type shareCardState = {
+  loading: boolean;
+  shareInfo: shareCard[];
+  cardIndex: number;
+  clickModalNum: number;
+  setClickModalNum: (input: number) => void;
+  setCardIndex: (input: number) => void;
+  setLoading: (input: boolean) => void;
+
+  setShareInfo: (input: []) => void;
+};
+
 type paginationState = {
   limit: number;
   page: number;
-  shareInfo:pagination[];
-  loading:boolean;
-  setPage: (input: number) => void;
   setLimit: (input: number) => void;
-  setShareInfo: (input:[]) => void;
-  setLoading:(input:boolean) =>void;
+
+  setPage: (input: number) => void;
 };
 
 export const isSigninState = create<isSigninState>()(
@@ -302,22 +313,29 @@ export const shareRegisteruseStore = create<shareState>((set) => ({
   setUpdateWallet: (input) => set({ updateWallet: input }),
 }));
 
-export const shareBoarduseStore = create<sharerBoardState>((set) => ({
+export const shareBoarduseStore = create<shareBoardState>((set) => ({
   shareBoard: "",
   shareTitle: "",
   setShareBoard: (input) => set({ shareBoard: input }),
   setShareTitle: (input) => set({ shareTitle: input }),
 }));
+export const shareCarduseStroe = create<shareCardState>((set) => ({
+  shareInfo: [],
+  loading: true,
+  cardIndex: 0,
+  clickModalNum: 0,
+  setClickModalNum: (input) => set({ clickModalNum: input }),
+  setCardIndex: (input) => set({ cardIndex: input }),
+  setShareInfo: (input) => set({ shareInfo: input }),
+  setLoading: (input) => set({ loading: input }),
+}));
 
 export const paginationuseStore = create<paginationState>((set) => ({
   page: 1,
   limit: 6,
-  shareInfo:[],
-  loading:true,
+
   setLimit: (input) => set({ limit: input }),
   setPage: (input) => set({ page: input }),
-  setShareInfo:(input) => set({shareInfo:input}),
-  setLoading:(input) =>set({loading:input})
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

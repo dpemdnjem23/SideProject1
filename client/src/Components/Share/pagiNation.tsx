@@ -1,13 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import { paginationuseStore } from "utils/state";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { paginationuseStore, shareCarduseStroe} from "utils/state";
+
 
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 // import{faAngleLeft,faAngleRight} from '@fortawesome/free-regular-svg-icons'
 // import {fa-thin}
 import "../../css/components/SharePage/pagiNation.css";
 const SharePagiNation = () => {
-  const { page, setPage, limit, setLimit, shareInfo } = paginationuseStore();
+  const { page, setPage } = paginationuseStore();
+  const {setShareInfo, setLoading,shareInfo} = shareCarduseStroe()
+  
+  const limit =6
   // const numPages:number |null= 20;
   const numPages = Math.ceil(60 / limit);
 

@@ -31,6 +31,7 @@ import ErrModal from "Components/Modal/errorModal";
 import CallbackPage from "Pages/CallbackPage";
 import { stringify } from "querystring";
 import Loading from "Components/Common/loading";
+import NoticeBoardManage from "Pages/NoticeBoardManage";
 
 // import {
 //   MainPage,
@@ -221,7 +222,10 @@ const App = () => {
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/wallet" element={<WalletPage />} />
-
+            <Route
+              path="noticeBoard"
+              element={<NoticeBoardManage></NoticeBoardManage>}
+            />
             <Route
               path="/mypage/*"
               element={<Navigate replace to="/mypage" />}
@@ -262,8 +266,6 @@ const App = () => {
         {/* <div className ='Bottom'>
 
         </div> */}
-
-
       </div>
     </BrowserRouter>
   );

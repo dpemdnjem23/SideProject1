@@ -8,11 +8,17 @@ import {
 } from "utils/state";
 import "../../css/components/MyPage/mypagebar.css";
 import moment from "moment";
+import {
+  Route,
+  BrowserRouter,
+  Link,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 // const s = document.getElemnetsByClassName()
 
 const Mypagebar = () => {
-  //
-  const today: string|number = moment().format("YYYY-MM-DD");
+  const today: string | number = moment().format("YYYY-MM-DD");
 
   //한번더 클릭하면 원래대로 돌아가야한다.
   // const { setDelUser, setEditUser, editUser, delUser } = showMypageState();
@@ -95,7 +101,7 @@ const Mypagebar = () => {
             moment(today).diff(moment(res.data.data[0].end_date), "days")
           );
         }
-       
+
         setSubManageCost(sum);
         setSubManageDate(paymentDate);
       })
@@ -229,9 +235,11 @@ const Mypagebar = () => {
       <div className="Mypage_bar_bottom container">
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
-          <div>구독 모음 관리 </div>
-          <div onClick={handleEditUser}>회원 정보 수정</div>
-          <div onClick={handleDelUser}>회원탈퇴</div>
+          <Link to="/noticeBoard">
+            <div className='Mypage_bar_bottom_section_text'>구독 모음 관리</div>
+          </Link>
+          <div className='Mypage_bar_bottom_section_text' onClick={handleEditUser}>회원 정보 수정</div>
+          <div className='Mypage_bar_bottom_section_text' onClick={handleDelUser}>회원탈퇴</div>
         </div>
       </div>
       <div></div>

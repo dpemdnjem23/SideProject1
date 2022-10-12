@@ -147,7 +147,7 @@
   text-align: left;
   font-weight: 500;
 }
-.Mypage_bar_bottom_section > div {
+.Mypage_bar_bottom_section_text {
   width: 100%;
   min-width: 200px;
   height: 30px;
@@ -158,7 +158,7 @@
   cursor: pointer;
 }
 
-.Mypage_bar_bottom_section > div:hover {
+.Mypage_bar_bottom_section_text:hover {
   background-color: rgb(226, 226, 226);
   border-radius: 10px;
 }
