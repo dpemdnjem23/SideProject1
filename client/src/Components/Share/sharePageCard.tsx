@@ -1,14 +1,22 @@
 import axios from "axios";
 import React, { useState,useEffect } from "react";
-import { paginationuseStore, shareCarduseStroe} from "utils/state";
+import { paginationuseStore, shareCarduseStore} from "utils/state";
 
 import "../../css/components/SharePage/shareCard.css";
 const ShareCard = () => {
     
   const {page} = paginationuseStore()
-  const {setShareInfo, setLoading,shareInfo} = shareCarduseStroe()
+  const {setShareInfo, setLoading,shareInfo,setCardIndex,setClickModalNum,setCardModal} = shareCarduseStore()
   const limit =6 
   const offset = (page - 1) * limit;
+
+  const openCardModal=(index:number,el:number) =>{
+    setCardIndex(el)
+    setClickModalNum(index)
+    setCardModal(true)
+
+
+  }
 
 
 
@@ -39,10 +47,10 @@ const ShareCard = () => {
   return (
 
     <div className="ShareCard">
-        {shareInfo.slice(offset,offset+limit).map((el)=>{
+        {shareInfo.slice(offset,offset+limit).map((el,index)=>{
             return(
                 <div
-                onClick={()=>openCardModal(el.id)}
+                onClick={()=>openCardModal(index,el.id)}
                  key={el.id}>
                   <div className="ShareCard_title">{el.title}</div>
                   <div className="ShareCard_text">{el.description.substr(0,37)+"..."}</div>

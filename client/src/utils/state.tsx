@@ -167,6 +167,8 @@ type shareCardState = {
   shareInfo: shareCard[];
   cardIndex: number;
   clickModalNum: number;
+  cardModal:boolean;
+  setCardModal:(input:boolean) =>void;
   setClickModalNum: (input: number) => void;
   setCardIndex: (input: number) => void;
   setLoading: (input: boolean) => void;
@@ -319,11 +321,14 @@ export const shareBoarduseStore = create<shareBoardState>((set) => ({
   setShareBoard: (input) => set({ shareBoard: input }),
   setShareTitle: (input) => set({ shareTitle: input }),
 }));
-export const shareCarduseStroe = create<shareCardState>((set) => ({
+export const shareCarduseStore = create<shareCardState>((set) => ({
   shareInfo: [],
   loading: true,
   cardIndex: 0,
   clickModalNum: 0,
+  cardModal:false,
+  setCardModal:(input) =>set({cardModal:input}),
+
   setClickModalNum: (input) => set({ clickModalNum: input }),
   setCardIndex: (input) => set({ cardIndex: input }),
   setShareInfo: (input) => set({ shareInfo: input }),

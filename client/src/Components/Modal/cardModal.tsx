@@ -1,5 +1,6 @@
 import React from 'react'
 
+import '../../css/common/modal/cardModal.css'
 const CardModal = () =>{
 
     return(
