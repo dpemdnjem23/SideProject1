@@ -35,7 +35,8 @@
     margin: 0 auto;
     border-radius: 0.3rem;
   
-    animation: move 3s;
+
+    animation: move 2s;
     overflow: hidden;
 
 }
@@ -44,8 +45,7 @@
 
     0% {
 
-        right:200px;
-        position: relative;
+  
         max-width: 0px;
         max-height: 0px;
     }
