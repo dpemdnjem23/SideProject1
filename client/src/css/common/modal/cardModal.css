@@ -27,18 +27,66 @@
     width: 100%;
     height: 100%;
   
-    max-width: 350px;
-    max-height: 450px;
+    max-width: 450px;
+    max-height: 550px;
     background-color: #fff;
     border: 1px solid beige;
     box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
     margin: 0 auto;
     border-radius: 0.3rem;
   
+    /* padding: 20px; */
 
-    animation: move 2s;
+    animation: move 0.5s;
     overflow: hidden;
 
+}
+
+.CardModal_section_Xbutton{
+    width: 100%;
+    text-align: right;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+.CardModal_section_Xbutton>button{
+    
+    border: none;
+    background-color: transparent;
+
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    
+}
+.CardModal_section_top{
+    width: 100%;
+    height: 70px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+}
+.CardModal_section_top_title{
+
+    font-size: 20px;
+    font-weight: bold;
+}
+.CardModal_section_top_nick{
+    text-align: right;
+    
+}
+
+.CardModal_section_center{
+    padding: 0px 20px;
+    text-align: left;
+    width: 100%;
+    height: 300px;
+
+}
+
+.CardModal_section_center>div{
 }
 @keyframes move{
 
@@ -49,8 +97,5 @@
         max-width: 0px;
         max-height: 0px;
     }
-    25%{
-        /* right:100px; */
-
-    }
+ 
 }
