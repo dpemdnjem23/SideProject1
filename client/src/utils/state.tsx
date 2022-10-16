@@ -157,7 +157,7 @@ type shareCard = {
   id: number;
   title: string;
   description: string;
-  list_sub: [string];
+  list_sub: {list_sub:[string]};
   user: { nickname: string };
 };
 

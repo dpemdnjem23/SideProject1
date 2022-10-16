@@ -47,19 +47,17 @@ module.exports = {
         }
       }
 
-
       const shareRegister = await share.create({
         title: title,
         user_id: userId,
         description: description,
-        list_sub: {list_sub:arr},
+        list_sub: { list_sub: arr },
       });
-
 
       if (!shareRegister) {
         return res.status(400).send("공유가 생성되지않았습니다.");
       }
-      return res.status(200).send('공유에 성공하였습니다. ')
+      return res.status(200).send("공유에 성공하였습니다. ");
     } catch (err) {
       return res.status(500).send(err);
     }
@@ -69,10 +67,12 @@ module.exports = {
     try {
       //userid를 1대1 매칭시켜서 nickname으로
       const shareInfo = await share.findAll({
+        // limit: 6,
         include: [{ model: user, attributes: ["nickname"] }],
+        order: [["createdAt", "DESC"]],
       });
-console.log(shareInfo)
 
+      console.log(shareInfo)
       //닉네임은 어쩌지? user_id를 참조해놨으니
       //user_id에 해당하는
 

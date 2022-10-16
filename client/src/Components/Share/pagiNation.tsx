@@ -13,7 +13,7 @@ const SharePagiNation = () => {
   
   const limit =6
   // const numPages:number |null= 20;
-  const numPages = Math.ceil(60 / limit);
+  const numPages = Math.ceil(40 / limit);
 
 
 const pageNumbers:number[] = []
@@ -88,28 +88,8 @@ console.log(pageNumbers)
               </button>
             );
           })}
-        {/* {changeFocus
-          .map((v, i) => {
-            if(page===i+1){
-              
-            return (
-              <div
-                // id={i+1}
-                // ref={el=>{buttonRef}}
-                // onFocus
-                className="pagination_secondText"
-                onClick={() => handleChangePage(i + 1)}
-                key={i + 1}
-              >
-                {i + 1}
-              </div>
-            );
 
-          }
-
-          })} */}
       </div>
-      {/* <div>1 2 3 4 5 6 7 8</div> */}
       <button
         onClick={handleChangeIndexUp}
         className="pagination_thirdbt"

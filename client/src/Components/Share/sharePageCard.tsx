@@ -42,6 +42,8 @@ const ShareCard = () => {
 
   }, []);
 
+  console.log(shareInfo[0].list_sub.list_sub.join(' '))
+
 
   // background-color: rgb(247, 249, 250);
   return (
@@ -54,7 +56,7 @@ const ShareCard = () => {
                  key={el.id}>
                   <div className="ShareCard_title">{el.title}</div>
                   <div className="ShareCard_text">{el.description.substr(0,37)+"..."}</div>
-                  <div className="ShareCard_subList"> {el.list_sub.join(' ')}</div>
+                  <div className="ShareCard_subList"> {el.list_sub.list_sub.join(' ')}</div>
                   <div className="ShareCard_nick" >{el.user.nickname}</div>
 
                 </div>

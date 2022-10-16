@@ -5,10 +5,11 @@ module.exports = {
     await queryInterface.bulkInsert("shares", [
       {
         id: 1,
-        title: "무서운 이야기",
+        title: "나의 추천 리스트",
         description:
           "제가 어제 말했던 리스트 입니다. 참고해주시기 바랍니다 전 이렇게가 좋더라구요",
         list_sub: { list_sub: ["넷플릭스", "현대셀렉션", "쿠팡"] },
+        nickname: '대머리친구들',
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -16,10 +17,10 @@ module.exports = {
 
       {
         id: 2,
-        title: "난 이게 좋더라...",
+        title: "어제 새로 구독 해봤는데요 저는 아직 좋은거같아요",
         description:
           "이제 추천안해요~ ",
-        list_sub: { list_sub: ["넷플릭스", "현대셀렉션", "쿠팡", "해피문데이"] },
+        list_sub: { list_sub: ["해피문데이"] },
         createdAt: new Date(),
         updatedAt: new Date(),
       },
