@@ -25,8 +25,8 @@ const CardModal = () => {
         <div className="CardModal_section_center">
           <div>{shareInfo[clickModalNum].description}</div>
         </div>
-        <div>
-          <div>{shareInfo[clickModalNum].list_sub}</div>
+        <div className="CardModal_section_bottom">
+          <div># {shareInfo[clickModalNum].list_sub.list_sub.join(' ')}</div>
         </div>
       </div>
     </div>

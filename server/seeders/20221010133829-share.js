@@ -34,10 +34,10 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 1,
-        title: "무서운 이야기",
+        id: 4,
+        title: "아아 마이크 테스트 입니다...",
         description:
-          "제가 어제 말했던 리스트 입니다. 참고해주시기 바랍니다 전 이렇게가 좋더라구요",
+          "왜애ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ",
         list_sub: { list_sub: ["넷플릭스", "현대셀렉션", "쿠팡", ""] },
         createdAt: new Date(),
         updatedAt: new Date(),

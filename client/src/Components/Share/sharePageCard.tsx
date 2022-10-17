@@ -42,7 +42,7 @@ const ShareCard = () => {
 
   }, []);
 
-  console.log(shareInfo[0].list_sub.list_sub.join(' '))
+  // console.log(shareInfo[0].list_sub.list_sub.join(' '))
 
 
   // background-color: rgb(247, 249, 250);
