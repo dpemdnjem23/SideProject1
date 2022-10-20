@@ -4,7 +4,7 @@ import ShareCard from "Components/Share/sharePageCard";
 import React, { useState } from "react";
 import Loading from "Components/Common/loading";
 import { paginationuseStore,shareCarduseStore } from "utils/state";
-
+import moment from 'moment'
 import "../css/pages/SharePage.css";
 import CardModal from "Components/Modal/cardModal";
 const SharePage = () => {
@@ -13,6 +13,8 @@ const SharePage = () => {
   const closeCardModal = () =>{
     setCardModal(false)
   }
+  console.log('monet',moment().format)
+  console.log(new Date(2021,7,20,1,33,54))
 //  const [loading, setLoading] =useState(true)
 
   // background-color: rgb(247, 249, 250);

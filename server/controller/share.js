@@ -65,6 +65,10 @@ module.exports = {
 
   shareInfo: async (req, res) => {
     try {
+      let start=1;
+      //req.query 페이지 번호
+
+      
       //userid를 1대1 매칭시켜서 nickname으로
       const shareInfo = await share.findAll({
         // limit: 6,

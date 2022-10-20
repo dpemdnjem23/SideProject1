@@ -13,7 +13,7 @@ const SharePagiNation = () => {
   
   const limit =6
   // const numPages:number |null= 20;
-  const numPages = Math.ceil(40 / limit);
+  const numPages = Math.ceil(shareInfo.length / limit);
 
 
 const pageNumbers:number[] = []
