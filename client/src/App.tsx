@@ -23,6 +23,7 @@ import {
   alarmInfouseStore,
   isSigninState,
   mainheaderuseStore,
+  paginationuseStore,
   showErrModalState,
   useWalletStore,
 } from "utils/state";
@@ -49,6 +50,10 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 const App = () => {
   //!
   // 로딩은 로그인할때만 작동하도록
+  const {page} = paginationuseStore()
+
+  const limit =6 
+  const offset = (page ) * limit;
 
   const { walletInfo, setWalletInfo } = useWalletStore();
   const { setAlarmInfo } = alarmInfouseStore();
@@ -231,7 +236,7 @@ const App = () => {
               element={<Navigate replace to="/mypage" />}
             />
 
-            <Route path="/share" element={<SharePage></SharePage>} />
+            <Route path={`/share`} element={<SharePage></SharePage>} />
           </Route>
 
           <Route element={<MainHeaderLogo />}>

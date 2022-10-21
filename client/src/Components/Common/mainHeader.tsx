@@ -19,12 +19,18 @@ import {
   alarmInfouseStore,
   isSigninState,
   mainheaderuseStore,
+  paginationuseStore,
   showErrModalState,
   useWalletStore,
 } from "utils/state";
 import AlarmModal from "Components/Modal/alarmModal";
 
 const Mainheader = () => {
+  const {page} = paginationuseStore()
+
+  const limit =6 
+  const offset = (page ) * limit;
+
   const navigate = useNavigate();
   const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
   const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
@@ -108,7 +114,7 @@ const Mainheader = () => {
               <Link to="/wallet">구독지갑</Link>
             </li>
             <li className="menu">
-              <Link to="/share">구독공유</Link>
+              <Link to={`/share`}>구독공유</Link>
             </li>
             <li onClick={handleErrModal} className="menu">
               <Link to="/callendar">구독달력</Link>

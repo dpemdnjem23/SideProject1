@@ -9,7 +9,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import "../../css/components/SharePage/pagiNation.css";
 const SharePagiNation = () => {
   const { page, setPage } = paginationuseStore();
-  const {setShareInfo, setLoading,shareInfo} = shareCarduseStore()
+  const {setShareInfo, setLoading,shareInfo,loading} = shareCarduseStore()
   
   const limit =6
   // const numPages:number |null= 20;
@@ -24,11 +24,6 @@ const pageNumbers:number[] = []
     pageNumbers.push(i)
 
 
-    if(i===numPages){
-      // pageNumbers.push('...')
-
-
-    }
   }
 
 
@@ -59,7 +54,12 @@ console.log(pageNumbers)
     setPage(page - 1);
   };
   return (
+    <>
+
+    {loading? null :
+      
     <div className="pagination">
+   
       <button
         onClick={handleChangeIndexDown}
         className="pagination_firstbt"
@@ -101,7 +101,11 @@ console.log(pageNumbers)
           icon={faAngleRight}
         ></FontAwesomeIcon>
       </button>
+      
     </div>
+    
+}
+</>
   );
 };
 

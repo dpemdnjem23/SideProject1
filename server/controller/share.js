@@ -15,6 +15,7 @@ const {
   checkRefreshToken,
   tokenExp,
 } = require("../utils/jwt");
+const { off } = require("process");
 
 module.exports = {
   //페이지 네이션,
@@ -65,22 +66,32 @@ module.exports = {
 
   shareInfo: async (req, res) => {
     try {
-      let start=1;
       //req.query 페이지 번호
+      let pageNum = Number(req.query.page)
+      let offset =0
+      // const offset = start
+      console.log(Number(req.query.page))
+
+      if(pageNum>1){
+        offset = 6*(pageNum-1);
+      }
 
       
       //userid를 1대1 매칭시켜서 nickname으로
       const shareInfo = await share.findAll({
-        // limit: 6,
+    
+        limit:6,
+
+        offset:offset,
         include: [{ model: user, attributes: ["nickname"] }],
         order: [["createdAt", "DESC"]],
       });
+      const countShareInfo = await share.findAll({}).length
 
-      console.log(shareInfo)
       //닉네임은 어쩌지? user_id를 참조해놨으니
       //user_id에 해당하는
 
-      return res.status(200).send(shareInfo);
+      return res.status(200).send({shareInfo:shareInfo,countShareInfo:countShareInfo});
     } catch (err) {
       return res.status(500).send(err);
     }

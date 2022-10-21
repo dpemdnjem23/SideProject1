@@ -1,4 +1,5 @@
 import axios from "axios";
+import Loading from "Components/Common/loading";
 import React, { useState,useEffect } from "react";
 import { paginationuseStore, shareCarduseStore} from "utils/state";
 
@@ -6,7 +7,8 @@ import "../../css/components/SharePage/shareCard.css";
 const ShareCard = () => {
     
   const {page} = paginationuseStore()
-  const {setShareInfo, setLoading,shareInfo,setCardIndex,setClickModalNum,setCardModal} = shareCarduseStore()
+  const [countPage,setCountPage] = useState<number>(0)
+  const {setShareInfo, setLoading,shareInfo,setCardIndex,setClickModalNum,setCardModal,loading} = shareCarduseStore()
   const limit =6 
   const offset = (page - 1) * limit;
 
@@ -15,15 +17,7 @@ const ShareCard = () => {
     setClickModalNum(index)
     setCardModal(true)
 
-
   }
-
-
-
-
-
-
-
 
 
   useEffect(() => {
@@ -31,24 +25,44 @@ const ShareCard = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      params:{page:offset}
+    
     })
       .then((res) => {
-        setShareInfo(res.data)
+        setShareInfo(res.data.shareInfo)
         setLoading(false)
+        
       })
       .catch((err) => {
         console.log(err);
       });
 
-  }, []);
+  }, [page]);
+
+
+  // setLoading(false)
+
+
+  console.log('통과')
+
+
+
+
+
+
+  console.log(shareInfo)
 
   // console.log(shareInfo[0].list_sub.list_sub.join(' '))
 
 
   // background-color: rgb(247, 249, 250);
   return (
+    <>
+    {loading?<Loading></Loading>:
 
     <div className="ShareCard">
+
+
         {shareInfo.slice(offset,offset+limit).map((el,index)=>{
             return(
                 <div
@@ -65,7 +79,8 @@ const ShareCard = () => {
         })}
    
     </div>
-
+}
+</>
   );
 };
 
