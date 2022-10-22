@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState,  useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { paginationuseStore, shareCarduseStore} from "utils/state";
 
@@ -7,14 +7,15 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 // import{faAngleLeft,faAngleRight} from '@fortawesome/free-regular-svg-icons'
 // import {fa-thin}
 import "../../css/components/SharePage/pagiNation.css";
+import axios from "axios";
 const SharePagiNation = () => {
   const { page, setPage } = paginationuseStore();
   const {setShareInfo, setLoading,shareInfo,loading} = shareCarduseStore()
-  
+  const [countPage,setCountPage] = useState<number>(0)
+
   const limit =6
   // const numPages:number |null= 20;
-  const numPages = Math.ceil(shareInfo.length / limit);
-
+  const numPages = Math.ceil(countPage / limit);
 
 const pageNumbers:number[] = []
    for (let i = 1; i <= numPages; i++) {
@@ -26,9 +27,23 @@ const pageNumbers:number[] = []
 
   }
 
+  useEffect(() => {
+    axios(`${process.env.REACT_APP_API_URI}/share/info`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    
+    })
+      .then((res) => {
+        setCountPage(res.data.countShareInfo)
+        
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-
-console.log(pageNumbers)
+  }, []);
 
  
   //페이지는 게시물수에 따른다.

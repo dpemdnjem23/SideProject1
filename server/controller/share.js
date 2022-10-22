@@ -67,7 +67,7 @@ module.exports = {
   shareInfo: async (req, res) => {
     try {
       //req.query 페이지 번호
-      let pageNum = Number(req.query.page)
+      let pageNum = Number(req.query.page||1)
       let offset =0
       // const offset = start
       console.log(Number(req.query.page))
@@ -86,12 +86,12 @@ module.exports = {
         include: [{ model: user, attributes: ["nickname"] }],
         order: [["createdAt", "DESC"]],
       });
-      const countShareInfo = await share.findAll({}).length
+      const countShareInfo = await share.findAll({})
 
-      //닉네임은 어쩌지? user_id를 참조해놨으니
-      //user_id에 해당하는
+      // console.log(shareInfo)
 
-      return res.status(200).send({shareInfo:shareInfo,countShareInfo:countShareInfo});
+      
+      return res.status(200).send({shareInfo:shareInfo,countShareInfo:countShareInfo.length});
     } catch (err) {
       return res.status(500).send(err);
     }
