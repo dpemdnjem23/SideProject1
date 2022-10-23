@@ -6,10 +6,19 @@ const CardModal = () => {
   const { shareInfo, cardIndex, clickModalNum, setCardModal } =
     shareCarduseStore();
 
+
+
+  const closeCardModal = () => {
+    console.log('클릭')
+    setCardModal(false);
+
+  };
+
   console.log(shareInfo[0].createdAt);
 
   return (
-    <div id="CardModal">
+    <div     onClick={closeCardModal}
+     id="CardModal">
       <div onClick={(e) => e.stopPropagation()} className="CardModal_section">
         <div className="CardModal_section_Xbutton">
           <button onClick={() => setCardModal(false)}>X</button>

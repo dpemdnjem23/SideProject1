@@ -21,16 +21,13 @@ const SharePage = () => {
   } = shareCarduseStore();
 
 
-  const closeCardModal = () => {
-    setCardModal(false);
-  };
-
+// onClick={(e) => e.stopPropagation()}
 
   //  const [loading, setLoading] =useState(true)
 
   // background-color: rgb(247, 249, 250);
   return (
-    <div onClick={closeCardModal} id="sharePage">
+    <div  id="sharePage">
 
       <div onClick={(e) => e.stopPropagation()} className="sharePage_section">
         {/* <> */}

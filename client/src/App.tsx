@@ -33,6 +33,7 @@ import CallbackPage from "Pages/CallbackPage";
 import { stringify } from "querystring";
 import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
+import BottomBar from "Components/Common/footer";
 
 // import {
 //   MainPage,
@@ -218,7 +219,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
-        {/* {showErrModal ? <ErrModal></ErrModal> : null} */}
+        {showErrModal ? <ErrModal></ErrModal> : null}
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
@@ -268,10 +269,9 @@ const App = () => {
 
           {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
-        {/* <div className ='Bottom'>
-
-        </div> */}
       </div>
+      <BottomBar></BottomBar>
+
     </BrowserRouter>
   );
 };

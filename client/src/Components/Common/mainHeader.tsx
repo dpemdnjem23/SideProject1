@@ -85,17 +85,12 @@ const Mainheader = () => {
       sum++
     }
   }
-  // setNumber(sum)
 
-  // const closeShowMypageModal = () =>{
+//   const clickToNotSign= () =>{
+// alert()
+    
+//   }
 
-  //   showMypageModalOn(false)
-  // }
-
-  // console.log( disabledSifa34 gnin)
-  //로그인(로그아웃), 메인 페이지 , 구독 모음, 개인정보(회원탈퇴), 구독 공유, 구독 달력
-  // console.log(disabledSignin)
-  // console.log(disabledSignin)
   return (
     <>
       <div id="header">
