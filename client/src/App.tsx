@@ -34,6 +34,7 @@ import { stringify } from "querystring";
 import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
+import MainPageContents1 from "Components/Main/MainPageContents1";
 
 // import {
 //   MainPage,
@@ -220,11 +221,19 @@ const App = () => {
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
         {showErrModal ? <ErrModal></ErrModal> : null}
+<div className=''>
+<MainPageContents1></MainPageContents1>
+
+</div>
+
+
+
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
           <Route element={<Mainheader />}>
+
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/wallet" element={<WalletPage />} />
@@ -271,6 +280,7 @@ const App = () => {
         </Routes>
       </div>
       <BottomBar></BottomBar>
+
 
     </BrowserRouter>
   );

@@ -1,0 +1,12 @@
+.MainPageContents1{
+
+    height: 600px;
+    background: linear-gradient(to right, rgb(92, 92, 240), rgb(124, 122, 238), rgb(170, 159, 255));
+    padding: 0px 20px;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw !important;
+    display: flex !important;
+}
