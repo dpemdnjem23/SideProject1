@@ -10,3 +10,18 @@
     width: 100vw !important;
     display: flex !important;
 }
+
+.MainPageContents1_section{
+    flex: 2 1 0%;
+    max-width: calc(720px);
+    width: 100% !important;
+}
+
+.MainPageContents1_section_p{
+    font-size: 30px;
+    font-weight: bold;
+    word-break: keep-all;
+    line-height: 72px;
+    text-align: left;
+    color: white;
+}

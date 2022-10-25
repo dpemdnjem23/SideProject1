@@ -52,10 +52,10 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 const App = () => {
   //!
   // 로딩은 로그인할때만 작동하도록
-  const {page} = paginationuseStore()
+  const { page } = paginationuseStore();
 
-  const limit =6 
-  const offset = (page ) * limit;
+  const limit = 6;
+  const offset = page * limit;
 
   const { walletInfo, setWalletInfo } = useWalletStore();
   const { setAlarmInfo } = alarmInfouseStore();
@@ -221,19 +221,11 @@ const App = () => {
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
         {showErrModal ? <ErrModal></ErrModal> : null}
-<div className=''>
-<MainPageContents1></MainPageContents1>
-
-</div>
-
-
-
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
           <Route element={<Mainheader />}>
-
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/wallet" element={<WalletPage />} />
@@ -279,9 +271,11 @@ const App = () => {
           {/* <Route path="/collect/ion" element={<SharePage />} /> */}
         </Routes>
       </div>
+      <div className="App_MainContents">
+        <MainPageContents1></MainPageContents1>
+      </div>
+
       <BottomBar></BottomBar>
-
-
     </BrowserRouter>
   );
 };
