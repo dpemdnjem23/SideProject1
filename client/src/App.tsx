@@ -35,6 +35,7 @@ import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MainPageContents1 from "Components/Main/MainPageContents1";
+import MainPageSlickList from "Components/Main/MainPageSlickList";
 
 // import {
 //   MainPage,
@@ -273,6 +274,7 @@ const App = () => {
       </div>
       <div className="App_MainContents">
         <MainPageContents1></MainPageContents1>
+        <MainPageSlickList></MainPageSlickList>
       </div>
 
       <BottomBar></BottomBar>
