@@ -7,24 +7,54 @@ const MainPageSlickList = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 3,
+    autoplay: true,
+    speed: 5000,
+    autoplaySpeed: 500,
+    slidesToShow: 5,
     slidesToScroll: 1,
-
-    initialSlide: 1,
+    cssEase: "linear",
   };
   return (
     <div className="MainPageSlickList">
       <Slider {...settings}>
         <div className="MainPageSlickList_items">
-            <div className="MainPageSlickList_items"></div>
+          <div className="MainPageSlickList_items"></div>
         </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/트위치.png"></img>
         </div>{" "}
         <div className="MainPageSlickList_items">
-          {/* <img src="./넷플릭스.png"></img> */}
-        </div>
+          <img src="./subscribes/청소연구소.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/지니.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/유튜브 프리미엄.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/윌라.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/위클리셔츠.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/현대셀렉션.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/필리.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/티빙.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/라프텔.png"></img>
+        </div>{" "}
+        <div className="MainPageSlickList_items">
+          <img src="./subscribes/런드리고.png"></img>
+        </div>{" "}
+        
+     
       </Slider>
     </div>
   );

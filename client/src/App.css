@@ -11,14 +11,26 @@ body {
   font-family: "Spoqa Han Sans Neo", sans-serif;
   font-size: 15px;
   height: 100%;
-  overflow-x: hidden;
   line-height: 1.8rem;
 }
 
 #root {
   height: 100%;
-  overflow-x: scroll;
+  
+}
+body::-webkit-scrollbar{
+  width: 10px;
+  z-index: 999;
 
+  /* background-color: black; */
+}
+
+body::-webkit-scrollbar-thumb{
+  background-color: aquamarine;
+  border-radius: 10px;
+  height: 20px;
+
+  /* background-color: black; */
 }
 .App_MainContents{
   padding-top: 80px;
