@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../css/components/MainPage/MainPageSlickList.css";
 const MainPageSlickList = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     autoplay: true,
     speed: 5000,
@@ -13,6 +13,7 @@ const MainPageSlickList = () => {
     slidesToShow: 5,
     slidesToScroll: 1,
     cssEase: "linear",
+    draggable: false,
   };
   return (
     <div className="MainPageSlickList">
@@ -22,39 +23,37 @@ const MainPageSlickList = () => {
         </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/트위치.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/청소연구소.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/지니.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/유튜브 프리미엄.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/윌라.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/위클리셔츠.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/현대셀렉션.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/필리.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/티빙.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/라프텔.png"></img>
-        </div>{" "}
+        </div>
         <div className="MainPageSlickList_items">
           <img src="./subscribes/런드리고.png"></img>
-        </div>{" "}
-        
-     
+        </div>
       </Slider>
     </div>
   );
