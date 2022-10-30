@@ -1,0 +1,15 @@
+.MainPageContents3 {
+    max-width: 100vw;
+    width: 100%;
+    height: 796px;
+    background-color: rgb(255, 255, 255);
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    z-index: 4;
+  }
+ 

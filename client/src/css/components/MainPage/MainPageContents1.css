@@ -48,7 +48,7 @@
     width: 100%;
 }
 
-.MainPageContents1_bt_section>button{
+.MainPageContents1_bt_section>a{
     border: 0;
     cursor: pointer;
     width: 100%;
@@ -64,4 +64,6 @@
     line-height: 31.5px;
     text-align: center;
     color: rgb(64,64,120);
+    background-color: rgb(255, 255, 255);
+
 }

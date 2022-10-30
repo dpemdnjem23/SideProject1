@@ -34,8 +34,6 @@ import { stringify } from "querystring";
 import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
-import MainPageContents1 from "Components/Main/MainPageContents1";
-import MainPageSlickList from "Components/Main/MainPageSlickList";
 
 // import {
 //   MainPage,
@@ -223,7 +221,6 @@ const App = () => {
       <div onClick={closeShowMypageModal} id="App">
         {showErrModal ? <ErrModal></ErrModal> : null}
 
-
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
           {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
@@ -268,20 +265,11 @@ const App = () => {
             path="/calendarselect"
             element={<CalendarSelect></CalendarSelect>}
           ></Route>
-          {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
 
-          {/* <Route path="/collect/ion" element={<SharePage />} /> */}
+          <Route path="/" element={<MainPage></MainPage>}></Route>
         </Routes>
       </div>
 
-
-      <div className="App_MainContents">
-        <MainPageContents1></MainPageContents1>
-        <MainPageSlickList></MainPageSlickList>
-      </div>
-    
-
-      <BottomBar></BottomBar>
     </BrowserRouter>
   );
 };
