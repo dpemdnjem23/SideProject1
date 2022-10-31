@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   Route,
@@ -9,18 +9,48 @@ import {
   Outlet,
   useNavigate,
 } from "react-router-dom";
-import '../../css/components/MainPage/MainPageLoginBt.css'
+import "../../css/components/MainPage/MainPageLoginBt.css";
 import { faSnowflake } from "@fortawesome/free-regular-svg-icons";
-const MainPageLoginBt = () =>{
+const MainPageLoginBt = () => {
+  const options = {
+    root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    rootMargin: "10px", // rootMargin을 '10px 10px 10px 10px'로 설정
+    threshold: [0, 0.5, 1], // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+  };
 
-    return(
-        <div data-aos-mirror="true" className='MainPageLoginBt'>
-        <Link to='/login'>
-        <FontAwesomeIcon icon={faSnowflake}/> 섭개더 시작하기</Link>
+  const io = new IntersectionObserver((entries, observer) => {
+      // entry와 observer 출력
+      entries.forEach((entry) => {
+
+        if(entry.intersectionRatio>0){
+          entry.target.classList.remove('zoom-out')
+
+            entry.target.classList.add("zoom-in")
+          
+        }
+        else{
+          entry.target.classList.remove('zoom-in')
+
+            entry.target.classList.add('zoom-out')
+        }
+        console.log(observer,'observer')
+      
+        
+      });
+  }, options);
+
+  const button:any = document.querySelector('.MainPageLoginBt')
+
+  // io.observe(button)
+
+    // io.observe(button);
+     return (
+    <div className="MainPageLoginBt zoom-in zoom-out">
+      <Link to="/login">
+        <FontAwesomeIcon icon={faSnowflake} /> 섭개더 시작하기
+      </Link>
     </div>
-    )
+  );
+};
 
-
-}
-
-export default MainPageLoginBt
+export default MainPageLoginBt;
