@@ -24,12 +24,13 @@
 
 }
 .zoom-in{
-    animation : zoom-in 1s
+    animation : zoom-in 2s
 
 }
 
 .zoom-out{
     animation: zoom-out 1s;
+    display: none;
 }
 
     @keyframes zoom-in {
