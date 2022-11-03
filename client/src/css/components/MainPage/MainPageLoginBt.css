@@ -19,7 +19,9 @@
     line-height: 31.5px;
     text-align: center;
     color: rgb(255, 255, 255);
-    animation : zoom-in 1s
+
+    animation: zoom-out 2s;
+
 
 
 }
@@ -27,11 +29,10 @@
     animation : zoom-in 2s
 
 }
-
+/* 
 .zoom-out{
-    animation: zoom-out 1s;
     display: none;
-}
+} */
 
     @keyframes zoom-in {
         0% {
