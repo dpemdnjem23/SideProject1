@@ -32,7 +32,7 @@ const MainPageLoginBt = () => {
 
 
     const options = {
-      root: doc, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+      root: document.querySelector('.MainPageContents1'), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
       rootMargin: "50px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
       threshold: 1, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
     };
@@ -44,9 +44,8 @@ const MainPageLoginBt = () => {
           entries.forEach((entry)=>{
             checkScrollDirection(prevYposition);
             
-            if ((direction === 'down' &&entry.isIntersecting)
-            || (direction === 'up' && entry.isIntersecting)) {
-              console.log(entry.isIntersecting)
+            if (entry.isIntersecting){
+      console.log('true')
                setIsVisible(true);
          }
           })
@@ -77,7 +76,7 @@ const MainPageLoginBt = () => {
 
   // io.observe(button);
   return (
-    
+
     <div ref={MainPageLoginBtRef} className={`MainPageLoginBt ${visible}`}>
       <Link to="/login">
         <FontAwesomeIcon icon={faSnowflake} /> 섭개더 시작하기
