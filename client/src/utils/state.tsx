@@ -185,6 +185,11 @@ type paginationState = {
   setPage: (input: number) => void;
 };
 
+type MainPageState = {
+  visible:boolean;
+  setVisible:(input:boolean) =>void
+}
+
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -343,6 +348,14 @@ export const paginationuseStore = create<paginationState>((set) => ({
   setLimit: (input) => set({ limit: input }),
   setPage: (input) => set({ page: input }),
 }));
+
+
+export const MainPageUseStore = create<MainPageState>((set) => ({
+visible:false,
+setVisible:(input) =>set({visible:input})
+
+}));
+
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{
