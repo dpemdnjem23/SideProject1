@@ -26,9 +26,9 @@ const MainPageContents1 = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
 
-        console.log(entries)
         if (entries[0].isIntersecting) {
           setVisible(entry.isIntersecting)
+         
 
 
         console.log(entry.isIntersecting) // entry is 'IntersectionObserverEntry'
@@ -37,7 +37,7 @@ const MainPageContents1 = () => {
           setVisible(entry.isIntersecting)
 
 
-        console.log(entry.isIntersecting) // entry is 'IntersectionObserverEntry'
+    // entry is 'IntersectionObserverEntry'
         }
       })
 

@@ -16,17 +16,17 @@ const MainPageLoginBt = () => {
   const {visible,setVisible} =MainPageUseStore()
   // io.observe(button);
 
-  const FadeButton = visible? '':'zoom-in'
+  const FadeButton = visible? 'zoom-out':'zoom-in'
   return (
     <>
-    {visible?null:
+    {/* {visible?null: */}
     <div  className={`MainPageLoginBt ${FadeButton}`}>
       <Link to="/login">
         <FontAwesomeIcon icon={faSnowflake} /> 섭개더 시작하기
       </Link>
     </div>
     
-    }
+    {/* } */}
     </>
   );
 };
