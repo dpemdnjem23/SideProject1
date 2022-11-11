@@ -17,10 +17,11 @@ const MainPageLoginBt = () => {
   // io.observe(button);
 
   const FadeButton = visible? 'zoom-out':'zoom-in'
+  const StandBy = visible? 'stand' : ''
   return (
     <>
     {/* {visible?null: */}
-    <div  className={`MainPageLoginBt ${FadeButton}`}>
+    <div  className={`MainPageLoginBt ${StandBy} ${FadeButton}`}>
       <Link to="/login">
         <FontAwesomeIcon icon={faSnowflake} /> 섭개더 시작하기
       </Link>

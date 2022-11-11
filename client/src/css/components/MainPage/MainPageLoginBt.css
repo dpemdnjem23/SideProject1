@@ -20,31 +20,36 @@
     text-align: center;
     color: rgb(255, 255, 255);
 
-    animation: zoom-out 1s;
+    /* transform: scale(.6); */
 
 
 
 }
 .zoom-in{
-    animation : zoom-in 2s
+  opacity: 1 !important;
 
+ animation: zoom-in 1s;
 }
-/* 
+
 .zoom-out{
-    display: none;
-} */
+    animation: zoom-out .5s;
+  }
+  .stand{
+  opacity: 0;
+    transform: scale(.6);
+  }
 
     @keyframes zoom-in {
         0% {
           opacity: 0;
-          transform: translateZ(0) scale(1)
+          transform: scale(.6)
         }
         /* 50% {
           transform: scale(0.5, 0.5);
         } */
         100% {
           opacity: 1;
-          /* transform: scale(1, 1); */
+          transform: scale(1, 1);
         }
 
 
@@ -53,17 +58,19 @@
 
     @keyframes zoom-out {
         0% {
-          opacity: 0;
+          opacity: 1;
 
-          transform: scale(1, 1);
+          transform: scale(1);
         }
         /* 50% {
           transform: scale(0.5, 0.5);
         } */
         100% {
-          opacity: 1;
+          opacity: 0;
 
-          transform: scale(0, 0);
+
+          transform: scale(.6)
+
         }
 
 
