@@ -12,3 +12,40 @@
   align-items: center;
   z-index: 4;
 }
+.MainPageContents2_section {
+  max-width: 990px;
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.MainPageContents2_section_text {
+  position: relative;
+  z-index: 1;
+  width: 450px;
+  margin: 0 10px;
+}
+
+.MainPageContents2_section_text_category {
+  color: #ee495a;
+  font-size: 22px;
+  font-weight: bold;
+}
+.MainPageContents2_section_text_title{
+  font-size: 44px;
+  font-weight: bold;
+  line-height: 66px;
+  text-align: left;
+  color: rgb(34, 34, 34);
+  
+}
+
+margin-top: 24
+px
+;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    text-align: left;
