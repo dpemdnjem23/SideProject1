@@ -11,7 +11,7 @@ import {
 import { MainPageUseStore } from "utils/state";
 import "../../css/components/MainPage/MainPageContents1.css";
 const MainPageContents1 = () => {
-  const target = useRef<any>();
+  const target = useRef<HTMLDivElement|null|undefined>(null);
 
 
   const {visible,setVisible} =MainPageUseStore()
@@ -64,7 +64,7 @@ const MainPageContents1 = () => {
 
   
   return (
-    <div ref={target} className="MainPageContents1">
+    <div ref={target  as React.RefObject<HTMLDivElement>} className="MainPageContents1">
       <div className="MainPageContents1_section">
           <div className="MainPageCotents1_text">
 

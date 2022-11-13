@@ -29,23 +29,27 @@
 }
 
 .MainPageContents2_section_text_category {
-  color: #ee495a;
+  color: rgb(75, 75, 208);
   font-size: 22px;
   font-weight: bold;
 }
-.MainPageContents2_section_text_title{
-  font-size: 44px;
+.MainPageContents2_section_text_title {
+  font-size: 37px;
   font-weight: bold;
-  line-height: 66px;
+  margin: 10px 0 19px;
+  line-height: 45px;
+  letter-spacing: -1.3px;
+
   text-align: left;
   color: rgb(34, 34, 34);
-  
 }
-
-margin-top: 24
-px
-;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 27px;
-    text-align: left;
+.MainPageContents {
+  color: rgb(74, 74, 74);
+}
+.MainPageContents2_section_text_contents {
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 27px;
+  text-align: left;
+}
