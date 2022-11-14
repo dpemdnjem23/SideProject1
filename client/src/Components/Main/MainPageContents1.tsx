@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useRef } from "react";
-// import 
+import React, { useState, useEffect, useRef } from "react";
+// import
 import {
   Route,
   BrowserRouter,
@@ -11,10 +11,11 @@ import {
 import { MainPageUseStore } from "utils/state";
 import "../../css/components/MainPage/MainPageContents1.css";
 const MainPageContents1 = () => {
-  const target = useRef<HTMLDivElement|null|undefined>(null);
+  const target = useRef() as React.MutableRefObject<HTMLDivElement>;
 
+  // const [vistble,set]
 
-  const {visible,setVisible} =MainPageUseStore()
+  const { visible, setVisible } = MainPageUseStore();
 
   const options = {
     root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
@@ -24,30 +25,23 @@ const MainPageContents1 = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-
+      entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
-          setVisible(entry.isIntersecting)
-         
-
-
-        console.log(entry.isIntersecting) // entry is 'IntersectionObserverEntry'
+          setVisible(entry.isIntersecting);
+          console.log(entry.isIntersecting)
+       // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
-          setVisible(entry.isIntersecting)
+          setVisible(entry.isIntersecting);
+          // observer.unobserve(target.current)
 
 
-    // entry is 'IntersectionObserverEntry'
+          // entry is 'IntersectionObserverEntry'
         }
-      })
-
-
-    }, options)
-
+      });
+    }, options);
 
     observer.observe(target.current);
-
-
   }, [target]);
 
   // entry와 observer 출력
@@ -59,27 +53,21 @@ const MainPageContents1 = () => {
   // });
   // const visible = isVisible ? "zoom-in" : "";
 
-
-
-
-  
   return (
-    <div ref={target  as React.RefObject<HTMLDivElement>} className="MainPageContents1">
+    <div ref={target} className="MainPageContents1">
       <div className="MainPageContents1_section">
-          <div className="MainPageCotents1_text">
-
-        <div>
-          <p className="MainPageContents1_section_p">
-            더 쉽게 구독관리를 해보세요, <br></br>구독관리는<br></br>{" "}
-            섭개더에서 해보세요
-          </p>
-          <p className="MainPageContents1_section_p2">
-            정리하기 귀찮으셨다면,<br></br> 생활속 구독들을 만나보세요
-          </p>
-          <div className='MainPageContents1_bt_section'>
-            <Link to='/login'>섭개더 시작하기</Link>
+        <div className="MainPageCotents1_text">
+          <div>
+            <p className="MainPageContents1_section_p">
+              더 쉽게 구독관리를 해보세요, <br></br>구독관리는<br></br>{" "}
+              섭개더에서 해보세요
+            </p>
+            <p className="MainPageContents1_section_p2">
+              정리하기 귀찮으셨다면,<br></br> 생활속 구독들을 만나보세요
+            </p>
+            <div className="MainPageContents1_bt_section">
+              <Link to="/login">섭개더 시작하기</Link>
             </div>
-
           </div>
         </div>
       </div>

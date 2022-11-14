@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,8 +15,37 @@ const MainPageSlickList = () => {
     cssEase: "linear",
     draggable: false,
   };
+
+  const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const [raise, setRaise] = useState<boolean>(false);
+
+  const options = {
+    root: document.querySelector('.MainPageSlickList'), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
+    threshold: 1, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entries[0].isIntersecting) {
+          setRaise(entry.isIntersecting);
+
+          console.log(entries[0].isIntersecting); // entry is 'IntersectionObserverEntry'
+        }
+        if (!entries[0].isIntersecting) {
+          setRaise(entry.isIntersecting);
+          console.log(entries[0].isIntersecting); // entry is 'IntersectionObserverEntry'
+
+          // entry is 'IntersectionObserverEntry'
+        }
+      });
+    }, options);
+
+    observer.observe(target2.current);
+  }, [target2]);
   return (
-    <div className="MainPageSlickList">
+    <div ref={target2} className="MainPageSlickList">
       <Slider {...settings}>
         <div className="MainPageSlickList_items">
           <div className="MainPageSlickList_items"></div>
