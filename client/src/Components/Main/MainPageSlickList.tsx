@@ -20,9 +20,9 @@ const MainPageSlickList = () => {
   const [raise, setRaise] = useState<boolean>(false);
 
   const options = {
-    root: document.querySelector('.MainPageSlickList'), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
-    threshold: 1, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+    threshold: 0, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
@@ -44,10 +44,12 @@ const MainPageSlickList = () => {
 
     observer.observe(target2.current);
   }, [target2]);
+
+  console.log(raise,'raise')
   return (
-    <div ref={target2} className="MainPageSlickList">
-      <Slider {...settings}>
-        <div className="MainPageSlickList_items">
+    <div ref={target2}  className="MainPageSlickList">
+      <Slider  {...settings}>
+        <div  className="MainPageSlickList_items">
           <div className="MainPageSlickList_items"></div>
         </div>
         <div className="MainPageSlickList_items">

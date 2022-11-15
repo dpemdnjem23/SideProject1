@@ -33,6 +33,8 @@ const MainPageContents1 = () => {
         }
         if (!entries[0].isIntersecting) {
           setVisible(entry.isIntersecting);
+          console.log(entry.isIntersecting)
+
           // observer.unobserve(target.current)
 
 
