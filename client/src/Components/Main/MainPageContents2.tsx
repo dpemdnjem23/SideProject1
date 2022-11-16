@@ -12,10 +12,39 @@ import {
 import "../../css/components/MainPage/MainPageContents2.css";
 const MainPageContents2 = () => {
 
+  const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const [raise, setRaise] = useState<boolean>(false);
+
+  const options = {
+    root: document.querySelector('.MainPageContents2'), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
+    threshold: 0, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entries[0].isIntersecting) {
+          setRaise(entry.isIntersecting);
+
+          console.log(entries[0].isIntersecting); // entry is 'IntersectionObserverEntry'
+        }
+        if (!entries[0].isIntersecting) {
+          setRaise(entry.isIntersecting);
+          console.log(entries[0].isIntersecting); // entry is 'IntersectionObserverEntry'
+
+          // entry is 'IntersectionObserverEntry'
+        }
+      });
+    }, options);
+
+    observer.observe(target2.current);
+  }, [target2]);
+
 
   return (
     <div  className="MainPageContents2">
-      <div className="MainPageContents2_section">
+      <div ref={target2} className="MainPageContents2_section">
         <div className="MainPageContents2_section_text">
           <p className="MainPageContents2_section_text_category raise_up1">
             SUBSCRIPTION
