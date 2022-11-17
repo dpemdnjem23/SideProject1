@@ -9,9 +9,13 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import {useScrollFadeOut} from "@/hooks";
+
 import "../../css/components/MainPage/MainPageContents2.css";
 const MainPageContents2 = () => {
 
+  const animatedItem = useScrollFadeOut()
+  // const animatedItem = useScrollFadeOut
   const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
 
@@ -44,7 +48,7 @@ const MainPageContents2 = () => {
 
   return (
     <div  className="MainPageContents2">
-      <div ref={target2} className="MainPageContents2_section">
+      <div {...animatedItem} className="MainPageContents2_section">
         <div className="MainPageContents2_section_text">
           <p className="MainPageContents2_section_text_category raise_up1">
             SUBSCRIPTION

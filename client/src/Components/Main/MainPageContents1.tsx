@@ -44,6 +44,10 @@ const MainPageContents1 = () => {
     }, options);
 
     observer.observe(target.current);
+
+
+    return () => observer && observer.disconnect();
+
   }, [target]);
 
   // entry와 observer 출력
