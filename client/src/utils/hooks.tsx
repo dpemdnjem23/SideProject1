@@ -55,3 +55,5 @@ const useScrollFadeOut = (duration: number, delay: number) => {
 };
 
 export default useScrollFadeOut;
+
+
