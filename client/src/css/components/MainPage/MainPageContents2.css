@@ -69,6 +69,6 @@
   transition-delay: 1.5s;
   transform: translateZ(0);
 }
-.on {
+.on[class^=raise_up] {
   opacity: 1;
 }
