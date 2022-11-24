@@ -53,7 +53,7 @@ const MainPageContents2 = () => {
       <div  className="MainPageContents2_section">
         <div ref={target2} className={`MainPageContents2_section_text ${on}`}>
           {/* <div {...animatedItem1}> */}
-            <p className="MainPageContents2_section_text_category raise_up1">
+            <p className="raise_up1">
               SUBSCRIPTION
             </p>
             <h2 className="MainPageContents2_section_text_title raise_up1">
