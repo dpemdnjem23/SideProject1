@@ -8,7 +8,6 @@ const useScrollFadeOut = (duration: number, delay: number) => {
       const { current }: any = dom;
 
       if (entry.isIntersecting) {
-        console.log("dndndn");
 
         current.style.transitionProperty = "all";
         current.style.transitionDuration = `${duration}s`;
