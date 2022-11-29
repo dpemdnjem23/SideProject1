@@ -32,11 +32,9 @@ const MainPageContents2 = () => {
         if (entries[0].isIntersecting) {
           setRaise(entry.isIntersecting);
 
-          console.log(entries[0].isIntersecting); // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
           setRaise(entry.isIntersecting);
-          console.log(entries[0].isIntersecting); // entry is 'IntersectionObserverEntry'
 
           // entry is 'IntersectionObserverEntry'
         }

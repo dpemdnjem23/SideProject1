@@ -28,13 +28,10 @@ const MainPageContents1 = () => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setVisible(entry.isIntersecting);
-          console.log(entry.isIntersecting)
        // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
           setVisible(entry.isIntersecting);
-          console.log(entry.isIntersecting)
-
           // observer.unobserve(target.current)
 
 
