@@ -29,11 +29,7 @@ const MainPageContents4 = () =>{
           setRaise(entry.isIntersecting);
 
         }
-        if (!entries[0].isIntersecting) {
-          setRaise(entry.isIntersecting);
-
-          // entry is 'IntersectionObserverEntry'
-        }
+      
       });
     }, options);
 
@@ -59,7 +55,7 @@ const MainPageContents4 = () =>{
 
           {/* <div {...animatedItem2}> */}
             <p className="raise_up2 MainPageContents4_section_text_contents MainPageContents">
-             구독을 월별로 확인하고,<br></br>
+             구독을 월별로 확인하고,<br></br>자유롭게 날짜를 정해보세요!
             </p>
           {/* </div> */}
         </div>
