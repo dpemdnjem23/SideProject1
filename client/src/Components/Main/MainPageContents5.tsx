@@ -9,6 +9,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import "../../css/components/MainPage/MainPageContents5.css";
+
 const MainPageContents5 = () =>{
 
 

@@ -10,6 +10,7 @@ import MainPageContents2 from "Components/Main/MainPageContents2";
 import MainPageBoundary from "Components/Main/MainPageBoundary";
 import MainPageContents3 from "Components/Main/MainPageContents3";
 import MainPageContents4 from "Components/Main/MainPageContents4";
+import MainPageContents5 from "Components/Main/MainPageContents5";
 const MainPage = () => {
 
   return (
@@ -21,6 +22,10 @@ const MainPage = () => {
       <MainPageContents3></MainPageContents3>
       <MainPageBoundary></MainPageBoundary>
       <MainPageContents4></MainPageContents4>
+      <MainPageBoundary></MainPageBoundary>
+      <MainPageContents5></MainPageContents5>
+
+
       <MainPageLoginBt></MainPageLoginBt>
 
       <BottomBar></BottomBar>
