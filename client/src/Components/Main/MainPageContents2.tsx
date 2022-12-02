@@ -33,11 +33,7 @@ const MainPageContents2 = () => {
           setRaise(entry.isIntersecting);
 
         }
-        if (!entries[0].isIntersecting) {
-          setRaise(entry.isIntersecting);
-
-          // entry is 'IntersectionObserverEntry'
-        }
+     
       });
     }, options);
 
@@ -66,7 +62,9 @@ const MainPageContents2 = () => {
             </p>
           {/* </div> */}
         </div>
-        <div className="MainPageContents2_section_image"></div>
+        <div className="MainPageContents2_section_image">
+          <img className="" src='/2img.png'></img>
+        </div>
       </div>
     </div>
   );

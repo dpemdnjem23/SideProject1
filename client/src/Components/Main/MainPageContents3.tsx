@@ -29,11 +29,7 @@ const MainPageContents3 = () =>{
           setRaise(entry.isIntersecting);
 
         }
-        if (!entries[0].isIntersecting) {
-          setRaise(entry.isIntersecting);
-
-          // entry is 'IntersectionObserverEntry'
-        }
+  
       });
     }, options);
 
