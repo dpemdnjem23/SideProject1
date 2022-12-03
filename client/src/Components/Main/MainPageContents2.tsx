@@ -63,7 +63,9 @@ const MainPageContents2 = () => {
           {/* </div> */}
         </div>
         <div className="MainPageContents2_section_image">
-          <img className="" src='/2img.png'></img>
+          <img className="MainPageContents2_section_image_img1 imgBack" src='/2img.png'></img>
+          <img className="MainPageContents2_section_image_img2 imgBack" src='/1img.png'></img>
+
         </div>
       </div>
     </div>
