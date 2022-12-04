@@ -95,7 +95,13 @@ div[class^="MainPageContents2_section_text"] [class^="raise_up"] {
   box-shadow: rgb(0 0 0 / 10%) 0px 3px 50px 0px;
 }
 
+.imgBack2{
+  border-radius: 35px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 50px 0px;
 
+
+
+}
 .MainPageContents2_section_image{
   display: flex;
   align-items: flex-end;
