@@ -19,6 +19,7 @@
     line-height: 31.5px;
     text-align: center;
     color: rgb(255, 255, 255);
+    z-index: 999;
 
     /* transform: scale(.6); */
 
