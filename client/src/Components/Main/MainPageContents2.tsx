@@ -62,9 +62,9 @@ const MainPageContents2 = () => {
             </p>
           {/* </div> */}
         </div>
-        <div className="MainPageContents2_section_image">
-          <img className="raise_up1 MainPageContents2_section_image_img1 imgBack" src='/2img.png'></img>
-          <img className="raise_up1 MainPageContents2_section_image_img2 imgBack" src='/1img.png'></img>
+        <div className={`raise_up1 MainPageContents2_section_image ${on}`}>
+          <img className="MainPageContents2_section_image_img1 imgBack" src='/2img.png'></img>
+          <img className="MainPageContents2_section_image_img2 imgBack" src='/1img.png'></img>
 
         </div>
       </div>
