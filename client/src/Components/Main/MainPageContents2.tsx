@@ -23,7 +23,7 @@ const MainPageContents2 = () => {
   const options = {
     root: document.querySelector(".MainPageContents2"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
-    threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+    threshold: 0.6, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
@@ -44,14 +44,14 @@ const MainPageContents2 = () => {
 
   return (
     <div  className="MainPageContents2">
-      <div  className="MainPageContents2_section">
-        <div ref={target2} className={`MainPageContents2_section_text ${on}`}>
+      <div  ref={target2}  className="MainPageContents2_section">
+        <div className={`MainPageContents2_section_text ${on}`}>
           {/* <div {...animatedItem1}> */}
             <p className="raise_up1 MainPageContents2_section_text_category">
               SUBSCRIPTION
             </p>
             <h2 className="raise_up1 MainPageContents2_section_text_title">
-              보다 편하게 관리<br></br>구독관리
+             보다 편하게 관리<br></br>구독관리
             </h2>
           {/* </div> */}
 
@@ -62,9 +62,9 @@ const MainPageContents2 = () => {
             </p>
           {/* </div> */}
         </div>
-        <div className={`raise_up1 MainPageContents2_section_image ${on}`}>
-          <img className="MainPageContents2_section_image_img1 imgBack" src='/2img.png'></img>
-          <img className="MainPageContents2_section_image_img2 imgBack" src='/1img.png'></img>
+        <div className={`MainPageContents2_section_image ${on}`}>
+          <img className="raise_up3 MainPageContents2_section_image_img1 imgBack" src='/2img.png'></img>
+          <img className="raise_up3 MainPageContents2_section_image_img2 imgBack" src='/1img.png'></img>
 
         </div>
       </div>

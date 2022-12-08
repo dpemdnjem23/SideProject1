@@ -90,7 +90,7 @@
     transform: translate3d(0, 50%, 0);
   }
   
-  .raise_up2 {
+  .MainPageContents4_section_text>raise_up2 {
     opacity: 0;
     transition-duration: 0.7s;
     transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
@@ -100,3 +100,6 @@
     /* transform: translateZ(0); */
   }
   
+  .MainPageContents2_section_image>raise_up3{
+    
+  }
