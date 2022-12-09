@@ -99,3 +99,17 @@ div[class^="MainPageContents3_section_text"] [class^="raise_up"] {
 
   /* transform: translateZ(0); */
 }
+
+.MainPageContents3_section_image{
+  display: flex;
+  align-items: flex-end;
+  width: 450px;
+  min-height: 632px;
+}
+.MainPageContents3_section_image_img1 {
+  width: 300px;
+  height: 600px;
+  position: relative;
+
+}
+

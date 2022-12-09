@@ -1,5 +1,5 @@
-import React, { useState, useEffect ,useRef} from "react";
-// import 
+import React, { useState, useEffect, useRef } from "react";
+// import
 import {
   Route,
   BrowserRouter,
@@ -9,10 +9,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import "../../css/components/MainPage/MainPageContents3.css"
-const MainPageContents3 = () =>{
-
-
+import "../../css/components/MainPage/MainPageContents3.css";
+const MainPageContents3 = () => {
   const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
 
@@ -27,43 +25,43 @@ const MainPageContents3 = () =>{
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setRaise(entry.isIntersecting);
-
         }
-  
       });
     }, options);
 
     observer.observe(target2.current);
   }, [target2]);
 
-  const on = raise?'on' : ''
-
-
+  const on = raise ? "on" : "";
 
   return (
-    <div  className="MainPageContents3">
-      <div  className="MainPageContents3_section">
+    <div className="MainPageContents3">
+      <div className="MainPageContents3_section">
         <div ref={target2} className={`MainPageContents3_section_text ${on}`}>
           {/* <div {...animatedItem1}> */}
-            <p className="raise_up1 MainPageContents3_section_text_category">
-              SHARE
-            </p>
-            <h2 className="raise_up1 MainPageContents3_section_text_title">
-              모두와 나누세요<br></br>구독공유
-            </h2>
+          <p className="raise_up1 MainPageContents3_section_text_category">
+            SHARE
+          </p>
+          <h2 className="raise_up1 MainPageContents3_section_text_title">
+            모두와 나누세요<br></br>구독공유
+          </h2>
           {/* </div> */}
 
           {/* <div {...animatedItem2}> */}
-            <p className="raise_up2 MainPageContents3_section_text_contents MainPageContents">
-              내가 등록한 구독들을 선택하고, <br></br> 제목,글을 작성해주세요
-            </p>
+          <p className="raise_up2 MainPageContents3_section_text_contents MainPageContents">
+            내가 등록한 구독들을 선택하고, <br></br> 제목,글을 작성해주세요
+          </p>
           {/* </div> */}
         </div>
-        <div className="MainPageContents3_section_image"></div>
+        <div className="MainPageContents3_section_image">
+          <img
+            className="raise_up3 MainPageContents3_section_image_img1 imgBack"
+            src="/4img.png"
+          ></img>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainPageContents3
-
+export default MainPageContents3;
