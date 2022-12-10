@@ -17,7 +17,7 @@ const MainPageContents3 = () => {
   const options = {
     root: document.querySelector(".MainPageContents2"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
-    threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+    threshold: 0.7, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
@@ -36,8 +36,8 @@ const MainPageContents3 = () => {
 
   return (
     <div className="MainPageContents3">
-      <div className="MainPageContents3_section">
-        <div ref={target2} className={`MainPageContents3_section_text ${on}`}>
+      <div ref={target2} className="MainPageContents3_section">
+        <div  className={`MainPageContents3_section_text ${on}`}>
           {/* <div {...animatedItem1}> */}
           <p className="raise_up1 MainPageContents3_section_text_category">
             SHARE

@@ -59,7 +59,13 @@ const MainPageContents4 = () =>{
             </p>
           {/* </div> */}
         </div>
-        <div className="MainPageContents3_section_image"></div>
+        <div className="MainPageContents4_section_image">
+
+        <img
+            className="raise_up3 MainPageContents4_section_image_img1 imgBack"
+            src="/5img.png"
+          ></img>
+        </div>
       </div>
     </div>
   )
