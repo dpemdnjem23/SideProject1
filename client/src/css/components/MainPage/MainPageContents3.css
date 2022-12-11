@@ -90,15 +90,6 @@ div[class^="MainPageContents3_section_text"] [class^="raise_up"] {
   transform: translate3d(0, 50%, 0);
 }
 
-.MainPageContents3_section_text>raise_up2 {
-  opacity: 0;
-  transition-duration: 0.7s;
-  transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
-  transition-delay: 0.7s;
-  transform: translate3d(0, 50%, 0);
-
-  /* transform: translateZ(0); */
-}
 
 .MainPageContents3_section_image{
   display: flex;
@@ -122,3 +113,14 @@ div[class^="MainPageContents3_section_text"] [class^="raise_up"] {
 /* width: 100%; */
 }
 
+.MainPageContents3_section_text .raise_up1{
+  transition-delay: 0.6s;
+
+}
+
+.MainPageContents3_section_text .raise_up2 {
+  
+  
+  transition-delay: 1.5s;
+
+}
