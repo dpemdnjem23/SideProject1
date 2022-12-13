@@ -24,7 +24,7 @@
   align-items: center;
 }
 .MainPageContents3_section_text {
-  position: relative;
+  /* position: relative; */
   z-index: 1;
   width: 450px;
   margin: 0 10px;
@@ -107,6 +107,9 @@ div.on[class^="MainPageContents3_section_image"] [class^="raise_up"] {
   align-items: flex-end;
   width: 450px;
   min-height: 632px;
+}
+.MainPageContents3_section_image .raise_up3{
+
 }
 /* .imgBack {
   width: 280px;

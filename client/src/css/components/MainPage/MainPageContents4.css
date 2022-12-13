@@ -90,6 +90,18 @@
     transform: translate3d(0, 50%, 0);
   }
   
+  div[class^="MainPageContents4_section_image"] [class^="raise_up"] {
+    opacity: 0;
+  
+    transition-duration: 0.7s;
+    transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
+    transform: translate3d(0, 50%, 0);
+  }
+  div.on[class^="MainPageContents4_section_image"] [class^="raise_up"] {
+    opacity: 1;
+  
+    transform: translate3d(0, 0, 0);
+  }
   .MainPageContents4_section_text>raise_up2 {
     opacity: 0;
     transition-duration: 0.7s;

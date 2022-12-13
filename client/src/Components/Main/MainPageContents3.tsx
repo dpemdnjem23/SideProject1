@@ -53,7 +53,7 @@ const MainPageContents3 = () => {
           </p>
           {/* </div> */}
         </div>
-        <div className="MainPageContents3_section_image">
+        <div className={`MainPageContents3_section_image ${on}`}>
           <img
             className="raise_up3 MainPageContents3_section_image_img1 imgBack"
             src="/4img.png"
