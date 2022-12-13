@@ -17,8 +17,6 @@ const rule = ` 0 0 0 * * *`
           //start_date === today 
           //지갑에 있는 모든 구독을 불러온다.
           // 
-    
-    
           //today가 end_date에 도달하는 순간, 목록들을 불러온다. 
           //불러온 목록들중 , cycle이 다 다르다. 이 다른 cycle들을 end_date
           //반복문으로 업데이트? sequelize 이용하여 업데이트?
