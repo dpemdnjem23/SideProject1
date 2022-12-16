@@ -1,7 +1,7 @@
-const schedule  =require('node-schedule')
+const schedule  =require('node-cron')
 
 //매일 0시에 실행되도록
-const rule = ` 0 0 0 * * *`
+const rule = ` 0 0 18 * * *`
 
  const schuduleDateControll = schedule.scheduleJob(rule , async (req,res) =>{
 
