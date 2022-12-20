@@ -1,10 +1,12 @@
 .MainPageContents5 {
   /* max-width: 100vw; */
+
   width: 100%;
+  height: 450px;
   background-color: rgb(118, 118, 118);
-  height: 200px;
+  /* height: 300px; */
   /* background-color: rgb(255, 255, 255); */
-  padding: 0px 20px;
+  /* padding: 0px 20px; */
   display: flex;
   flex-direction: column;
   -webkit-box-pack: center;
@@ -12,6 +14,38 @@
   -webkit-box-align: center;
   align-items: center;
   z-index: 4;
+}
+
+.MainPageLoginBt5 {
+  opacity: 0;
+  /* position: fixed; */
+  /* bottom: 20px; */
+  cursor: pointer;
+  margin-top: 80px;
+
+  background: linear-gradient(to right, rgb(99, 98, 239), rgb(133, 118, 255));
+  box-shadow: rgb(76 75 208 / 25%) 0px 10px 15px 0px;
+  height: 70px;
+  border-radius: 15px;
+  width: 265px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 31.5px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.MainPageLoginBt5.on {
+  opacity: 1;
+
+ transition-duration: 0.7s;
+  /* cursor: pointer; */
 }
 .MainPageContents5_section {
   display: flex;
@@ -41,18 +75,28 @@
 }
 
 .arrow_box {
-  width: 100px;
-  height: 45px;
+  margin-bottom: 10px;
+  font-family: "SCDream";
+  display: flex;
+
+  width: 115px;
+  height: 40px;
   position: relative;
   background: #88b7d5;
   color: white;
-  font-size: 15px;
+  font-size: 18px;
   /* border: 4px solid #c2e1f5; */
-  border-radius:30px;
+  border-radius: 30px;
+
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
 }
 .arrow_box:after {
-  top: 83%;
-  left: 28%;
+  top: 82%;
+  left: 25%;
   border: solid transparent;
   content: "";
   height: 0;
@@ -64,9 +108,9 @@
 .arrow_box:after {
   border-color: rgba(136, 183, 213, 0);
   border-top-color: #88b7d5;
-  border-width: 8px;
+  border-width: 10px;
   margin-left: -30px;
-  transform: rotate(30deg);
+  transform: rotate(35deg);
 }
 /* .arrow_box:before {
   border-color: rgba(194, 225, 245, 0);

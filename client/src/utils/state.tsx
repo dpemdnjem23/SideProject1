@@ -186,8 +186,10 @@ type paginationState = {
 };
 
 type MainPageState = {
+  footerLoginBt:boolean
   visible:boolean;
   setVisible:(input:boolean) =>void
+  setFooterLoginBt:(input:boolean) =>void
 }
 
 export const isSigninState = create<isSigninState>()(
