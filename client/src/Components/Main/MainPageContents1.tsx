@@ -15,7 +15,7 @@ const MainPageContents1 = () => {
 
   // const [vistble,set]
 
-  const { visible, setVisible } = MainPageUseStore();
+  const { visible, setVisible, setZoomIn, setZoomOut } = MainPageUseStore();
 
   const options = {
     root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
@@ -28,12 +28,15 @@ const MainPageContents1 = () => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setVisible(entry.isIntersecting);
-       // entry is 'IntersectionObserverEntry'
+          setZoomIn(entry.isIntersecting);
+          setZoomOut(entry.isIntersecting);
+          // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
           setVisible(entry.isIntersecting);
+          setZoomIn(entry.isIntersecting);
+          setZoomOut(entry.isIntersecting);
           // observer.unobserve(target.current)
-
 
           // entry is 'IntersectionObserverEntry'
         }
@@ -42,9 +45,7 @@ const MainPageContents1 = () => {
 
     observer.observe(target.current);
 
-
     return () => observer && observer.disconnect();
-
   }, [target]);
 
   // entry와 observer 출력

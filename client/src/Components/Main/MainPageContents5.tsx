@@ -19,8 +19,9 @@ const MainPageContents5 = () => {
 
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
+  // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
 
-  const {visible,setVisible} =MainPageUseStore()
+  const {visible,setVisible,footerLoginBt,setFooterLoginBt} =MainPageUseStore()
   // io.observe(button);
 
 
@@ -36,11 +37,15 @@ const MainPageContents5 = () => {
         if (entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
           setVisible(true)
+          setFooterLoginBt(true)
+          
        // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
           setVisible(false)
+          setFooterLoginBt(false)
+
 
           // observer.unobserve(target.current)
 

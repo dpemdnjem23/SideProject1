@@ -152,24 +152,22 @@ type shareBoardState = {
   setShareBoard: (input: string) => void;
 };
 
-
 type shareCard = {
   id: number;
   title: string;
   description: string;
-  createdAt:string
-  list_sub: {list_sub:[string]};
+  createdAt: string;
+  list_sub: { list_sub: [string] };
   user: { nickname: string };
 };
-
 
 type shareCardState = {
   loading: boolean;
   shareInfo: shareCard[];
   cardIndex: number;
   clickModalNum: number;
-  cardModal:boolean;
-  setCardModal:(input:boolean) =>void;
+  cardModal: boolean;
+  setCardModal: (input: boolean) => void;
   setClickModalNum: (input: number) => void;
   setCardIndex: (input: number) => void;
   setLoading: (input: boolean) => void;
@@ -186,11 +184,15 @@ type paginationState = {
 };
 
 type MainPageState = {
-  footerLoginBt:boolean
-  visible:boolean;
-  setVisible:(input:boolean) =>void
-  setFooterLoginBt:(input:boolean) =>void
-}
+  footerLoginBt: boolean;
+  visible: boolean;
+  zoomIn: boolean;
+  zoomOut: boolean;
+  setZoomIn: (input: boolean) => void;
+  setZoomOut: (input: boolean) => void;
+  setVisible: (input: boolean) => void;
+  setFooterLoginBt: (input: boolean) => void;
+};
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -334,8 +336,8 @@ export const shareCarduseStore = create<shareCardState>((set) => ({
   loading: true,
   cardIndex: 0,
   clickModalNum: 0,
-  cardModal:false,
-  setCardModal:(input) =>set({cardModal:input}),
+  cardModal: false,
+  setCardModal: (input) => set({ cardModal: input }),
 
   setClickModalNum: (input) => set({ clickModalNum: input }),
   setCardIndex: (input) => set({ cardIndex: input }),
@@ -351,13 +353,17 @@ export const paginationuseStore = create<paginationState>((set) => ({
   setPage: (input) => set({ page: input }),
 }));
 
-
 export const MainPageUseStore = create<MainPageState>((set) => ({
-visible:false,
-setVisible:(input) =>set({visible:input})
+  zoomIn: false,
+  visible: false,
+  zoomOut: false,
+  footerLoginBt: false,
+  setZoomIn: (input) => set({ zoomIn: input }),
+  setZoomOut: (input) => set({ zoomOut: input }),
 
+  setFooterLoginBt: (input) => set({ footerLoginBt: input }),
+  setVisible: (input) => set({ visible: input }),
 }));
-
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{

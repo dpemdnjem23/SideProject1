@@ -13,15 +13,18 @@ import "../../css/components/MainPage/MainPageLoginBt.css";
 import { faSnowflake } from "@fortawesome/free-regular-svg-icons";
 import { MainPageUseStore } from "utils/state";
 const MainPageLoginBt = () => {
-  const {visible,setVisible} =MainPageUseStore()
+  const {visible,setVisible,footerLoginBt,zoomIn,zoomOut} =MainPageUseStore()
   // io.observe(button);
 
-  const FadeButton = visible? 'zoom-out':'zoom-in'
+  const FadeOutButton = zoomOut? 'zoom-out':''
+  const FadeInButton = zoomIn?'':'zoom-in'
   const StandBy = visible? 'stand' : ''
+  const footer = footerLoginBt ? 'footer':''
+
   return (
     <>
     {/* {visible?null: */}
-    <div  className={`MainPageLoginBt ${StandBy} ${FadeButton}`}>
+    <div  className={`MainPageLoginBt ${StandBy} ${FadeInButton} ${FadeOutButton} ${footer}`}>
       <Link to="/login">
         <FontAwesomeIcon icon={faSnowflake} /> 섭개더 시작하기
       </Link>
