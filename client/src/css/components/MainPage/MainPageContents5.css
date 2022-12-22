@@ -44,7 +44,7 @@
 .MainPageLoginBt5.on {
   opacity: 1;
 
- transition-duration: 0.7s;
+ /* transition-duration: 0.7s; */
   /* cursor: pointer; */
 }
 .MainPageContents5_section {

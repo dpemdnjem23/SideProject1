@@ -355,7 +355,7 @@ export const paginationuseStore = create<paginationState>((set) => ({
 
 export const MainPageUseStore = create<MainPageState>((set) => ({
   zoomIn: false,
-  visible: false,
+  visible: true,
   zoomOut: false,
   footerLoginBt: false,
   setZoomIn: (input) => set({ zoomIn: input }),

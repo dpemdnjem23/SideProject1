@@ -21,7 +21,7 @@ const MainPageContents5 = () => {
   const [raise, setRaise] = useState<boolean>(false);
   // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
 
-  const {visible,setVisible,footerLoginBt,setFooterLoginBt} =MainPageUseStore()
+  const {visible,setVisible,footerLoginBt,setFooterLoginBt,setZoomOut,setZoomIn} =MainPageUseStore()
   // io.observe(button);
 
 
@@ -36,8 +36,13 @@ const MainPageContents5 = () => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
-          setVisible(true)
+          // setVisible(true)
           setFooterLoginBt(true)
+          setZoomIn(entries[0].isIntersecting)
+
+
+
+          
           
        // entry is 'IntersectionObserverEntry'
         }

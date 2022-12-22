@@ -15,25 +15,32 @@ const MainPageContents1 = () => {
 
   // const [vistble,set]
 
-  const { visible, setVisible, setZoomIn, setZoomOut } = MainPageUseStore();
+  const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut } =
+    MainPageUseStore();
 
   const options = {
     root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
-    threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+    threshold: 0.8, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
-          setVisible(entry.isIntersecting);
+          console.log(zoomIn)
+          // setVisible(entry.isIntersecting);
+          if (zoomIn) {
+            setZoomOut(entry.isIntersecting)
+          }
           setZoomIn(entry.isIntersecting);
-          setZoomOut(entry.isIntersecting);
+
+          // setZoomOut(entry.isIntersecting);
+          console.log(entries[0].isIntersecting);
           // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
-          setVisible(entry.isIntersecting);
+          // setVisible(entry.isIntersecting);
           setZoomIn(entry.isIntersecting);
           setZoomOut(entry.isIntersecting);
           // observer.unobserve(target.current)
