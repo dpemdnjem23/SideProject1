@@ -36,9 +36,9 @@ const MainPageContents5 = () => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
-          // setVisible(true)
+          setVisible(false)
           setFooterLoginBt(true)
-          setZoomIn(entries[0].isIntersecting)
+          // setZoomIn(entries[0].isIntersecting)
 
 
 
@@ -48,7 +48,7 @@ const MainPageContents5 = () => {
         }
         if (!entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
-          setVisible(false)
+          setVisible(true)
           setFooterLoginBt(false)
 
 

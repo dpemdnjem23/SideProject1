@@ -19,14 +19,14 @@ const MainPageLoginBt = () => {
 
   const FadeOutButton = zoomOut ? "zoom-out" : "";
   const FadeInButton = zoomIn ? "" : "zoom-in";
-  const StandBy = visible ? "stand" : "";
+  // const StandBy = visible ? "stand" : "";
   const footer = footerLoginBt ? "footer" : "";
 
   return (
     <>
       {/* {visible?null: */}
       <div
-        className={`MainPageLoginBt ${StandBy} ${FadeInButton} ${FadeOutButton} ${footer}`}
+        className={`MainPageLoginBt ${FadeInButton} ${FadeOutButton} ${footer}`}
       >
         <Link to="/login">
           <FontAwesomeIcon icon={faSnowflake} /> 섭개더 시작하기
