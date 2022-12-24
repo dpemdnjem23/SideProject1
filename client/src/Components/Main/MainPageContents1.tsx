@@ -13,7 +13,7 @@ import "../../css/components/MainPage/MainPageContents1.css";
 const MainPageContents1 = () => {
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  // const [vistble,set]
+  const [checked, setChecked] = useState<boolean>(false);
 
   const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut } =
     MainPageUseStore();
@@ -28,26 +28,30 @@ const MainPageContents1 = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
-          setVisible(entry.isIntersecting);
-          console.log(zoomIn);
+          //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
+          setChecked(true);
 
-          if (zoomIn === false) {
-            setZoomOut(entry.isIntersecting);
-            setZoomIn(entry.isIntersecting);
-          }
+          // if (checked === true) {
+          console.log("오야지");
+          setZoomIn(entry.isIntersecting);
+          setZoomOut(entry.isIntersecting);
+          setChecked(false);
+          // }
+          console.log(checked, zoomIn, zoomOut);
+
+          // if (zoomIn === false) {
+          // }
 
           // setZoomOut(entry.isIntersecting);
           // entry is 'IntersectionObserverEntry'
         }
         if (!entries[0].isIntersecting) {
-
-          setVisible(entry.isIntersecting);
-          setZoomIn(entry.isIntersecting);
+          setChecked(true);
+          setZoomIn(false);
           setZoomOut(entry.isIntersecting);
           // observer.unobserve(target.current)
-          console.log(entries[0].isIntersecting);
 
-          console.log(zoomIn);
+          console.log(checked, zoomIn, zoomOut);
           // entry is 'IntersectionObserverEntry'
         }
       });
@@ -57,6 +61,7 @@ const MainPageContents1 = () => {
 
     return () => observer && observer.disconnect();
   }, [target]);
+
 
   // entry와 observer 출력
 

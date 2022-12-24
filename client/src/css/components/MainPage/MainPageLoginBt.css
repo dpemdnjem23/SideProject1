@@ -29,7 +29,6 @@
 }
 .zoom-in{
   opacity: 1 !important;
-
  animation: zoom-in 1s;
 }
 
