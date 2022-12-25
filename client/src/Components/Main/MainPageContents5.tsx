@@ -37,8 +37,8 @@ const MainPageContents5 = () => {
         if (entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
           setVisible(false)
-          setFooterLoginBt(true)
-          // setZoomIn(entries[0].isIntersecting)
+          // setFooterLoginBt(true)
+          setZoomIn(entries[0].isIntersecting)
 
 
 
@@ -49,7 +49,7 @@ const MainPageContents5 = () => {
         if (!entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
           setVisible(true)
-          setFooterLoginBt(false)
+          // setFooterLoginBt(false)
 
 
           // observer.unobserve(target.current)
