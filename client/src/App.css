@@ -13,13 +13,14 @@ body {
   font-size: 15px;
   height: 100%;
   line-height: 1.8rem;
+  /* overflow-x: hidden; */
 
   
 
 }
 #App{
 
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 
 }
 

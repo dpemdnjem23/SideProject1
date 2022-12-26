@@ -26,9 +26,9 @@ const MainPageContents5 = () => {
 
 
   const options = {
-    root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    root: document.querySelector('.MainPageContents5'), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
-    threshold: 1, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
+    threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
@@ -37,9 +37,9 @@ const MainPageContents5 = () => {
         if (entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
           setVisible(false)
-          // setFooterLoginBt(true)
+          setFooterLoginBt(true)
           setZoomIn(entries[0].isIntersecting)
-
+          console.log('왜작동됨')
 
 
           
@@ -49,7 +49,7 @@ const MainPageContents5 = () => {
         if (!entries[0].isIntersecting) {
           setRaise(entries[0].isIntersecting);
           setVisible(true)
-          // setFooterLoginBt(false)
+          setFooterLoginBt(false)
 
 
           // observer.unobserve(target.current)
@@ -62,7 +62,7 @@ const MainPageContents5 = () => {
 
     observer.observe(target.current);
 
-
+    console.log('왜작동됨')
     return () => observer && observer.disconnect();
 
   }, [target]);

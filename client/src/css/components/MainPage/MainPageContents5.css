@@ -69,6 +69,13 @@
 .MainPageContents5_text_2 {
   color: rgb(66, 66, 218);
 }
+
+div.on[class^="MainPageContents5_section_text"] [class^="raise_up"] {
+  opacity: 1;
+
+  transform: translate3d(0, 0, 0);
+}
+
 @font-face {
   font-family: "SCDream";
   src: url("../../../../public/SCDream5.otf");

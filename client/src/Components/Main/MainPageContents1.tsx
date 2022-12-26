@@ -15,11 +15,11 @@ const MainPageContents1 = () => {
 
   const [checked, setChecked] = useState<boolean>(false);
 
-  const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut } =
+  const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut,setFooterLoginBt } =
     MainPageUseStore();
 
   const options = {
-    root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    root:  document.querySelector(".MainPageContents1"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
     threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
@@ -32,12 +32,12 @@ const MainPageContents1 = () => {
           setChecked(true);
 
           // if (checked === true) {
-          console.log("오야지");
           setZoomIn(entry.isIntersecting);
           setZoomOut(entry.isIntersecting);
           setChecked(false);
+          setFooterLoginBt(true)
+
           // }
-          console.log(checked, zoomIn, zoomOut);
 
           // if (zoomIn === false) {
           // }
@@ -73,8 +73,8 @@ const MainPageContents1 = () => {
   // const visible = isVisible ? "zoom-in" : "";
 
   return (
-    <div ref={target} className="MainPageContents1">
-      <div className="MainPageContents1_section">
+    <div className="MainPageContents1">
+      <div ref={target} className="MainPageContents1_section">
         <div className="MainPageCotents1_text">
           <div>
             <p className="MainPageContents1_section_p">

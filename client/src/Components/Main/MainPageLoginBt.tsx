@@ -20,10 +20,10 @@ const MainPageLoginBt = () => {
   const FadeOutButton = zoomOut ? "zoom-out" : "";
   const FadeInButton = zoomIn ? "" : "zoom-in";
   // const StandBy = visible ? "stand" : "";
-  const footer = footerLoginBt ? "footer" : "";
+  const footer = footerLoginBt ? "" : "footer";
 
 
-  console.log(zoomIn,zoomIn)
+  console.log(zoomIn,zoomOut)
   return (
     <>
       {/* {visible?null: */}

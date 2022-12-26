@@ -40,7 +40,7 @@
     transform: scale(.6);
   }
 .footer{
-  opacity: 0;
+  opacity: 1;
 }
     @keyframes zoom-in {
         0% {
