@@ -357,7 +357,7 @@ export const MainPageUseStore = create<MainPageState>((set) => ({
   zoomIn: true,
   visible: true,
   zoomOut: false,
-  footerLoginBt: false,
+  footerLoginBt: true,
   setZoomIn: (input) => set({ zoomIn: input }),
   setZoomOut: (input) => set({ zoomOut: input }),
 

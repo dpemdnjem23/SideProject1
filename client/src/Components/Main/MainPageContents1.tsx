@@ -33,18 +33,21 @@ const MainPageContents1 = () => {
 
           // if (checked === true) {
           setZoomIn(entry.isIntersecting);
-          setZoomOut(entry.isIntersecting);
+          
           setChecked(false);
           setFooterLoginBt(true)
 
           // }
 
-          // if (zoomIn === false) {
-          // }
+          if (zoomIn === false) {
+            setZoomOut(entry.isIntersecting);
+
+          }
 
           // setZoomOut(entry.isIntersecting);
           // entry is 'IntersectionObserverEntry'
         }
+        
         if (!entries[0].isIntersecting) {
           setChecked(true);
           setZoomIn(false);
@@ -58,6 +61,7 @@ const MainPageContents1 = () => {
     }, options);
 
     observer.observe(target.current);
+
 
     return () => observer && observer.disconnect();
   }, [target]);
