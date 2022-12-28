@@ -15,7 +15,7 @@ const MainPageContents1 = () => {
 
   const [checked, setChecked] = useState<boolean>(false);
 
-  const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut,setFooterLoginBt } =
+  const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut,setFooterLoginBt,footerLoginBt } =
     MainPageUseStore();
 
   const options = {
@@ -27,7 +27,8 @@ const MainPageContents1 = () => {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entries[0].isIntersecting) {
+        if (entry.isIntersecting&&zoomIn===false||footerLoginBt) {
+          console.log('왜 장사가ㅏㄹ되')
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
           setChecked(true);
 
@@ -36,19 +37,15 @@ const MainPageContents1 = () => {
           
           setChecked(false);
           setFooterLoginBt(true)
+          setZoomOut(entry.isIntersecting);
 
           // }
-
-          if (zoomIn === false) {
-            setZoomOut(entry.isIntersecting);
-
-          }
 
           // setZoomOut(entry.isIntersecting);
           // entry is 'IntersectionObserverEntry'
         }
-        
-        if (!entries[0].isIntersecting) {
+
+        if (!entry.isIntersecting) {
           setChecked(true);
           setZoomIn(false);
           setZoomOut(entry.isIntersecting);

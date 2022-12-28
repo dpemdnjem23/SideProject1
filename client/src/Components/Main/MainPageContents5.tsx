@@ -62,7 +62,6 @@ const MainPageContents5 = () => {
 
     observer.observe(target.current);
 
-    console.log('왜작동됨')
     return () => observer && observer.disconnect();
 
   }, [target]);
