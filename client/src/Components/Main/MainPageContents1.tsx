@@ -25,17 +25,17 @@ const MainPageContents1 = () => {
   };
 
   useEffect(() => {
+    if(target){
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting&&zoomIn===false||footerLoginBt) {
           console.log('왜 장사가ㅏㄹ되')
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
-          setChecked(true);
 
           // if (checked === true) {
           setZoomIn(entry.isIntersecting);
           
-          setChecked(false);
           setFooterLoginBt(true)
           setZoomOut(entry.isIntersecting);
 
@@ -55,12 +55,16 @@ const MainPageContents1 = () => {
           // entry is 'IntersectionObserverEntry'
         }
       });
+
     }, options);
+
 
     observer.observe(target.current);
 
 
     return () => observer && observer.disconnect();
+  }
+
   }, [target]);
 
 
