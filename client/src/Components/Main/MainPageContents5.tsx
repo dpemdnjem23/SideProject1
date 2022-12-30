@@ -50,6 +50,7 @@ const MainPageContents5 = () => {
           setRaise(entries[0].isIntersecting);
           setVisible(true)
           setFooterLoginBt(false)
+          console.log('니뭔데')
 
 
           // observer.unobserve(target.current)

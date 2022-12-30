@@ -35,8 +35,9 @@ const MainPageContents1 = () => {
 
           // if (checked === true) {
           setZoomIn(entry.isIntersecting);
-          
+        
           setFooterLoginBt(true)
+          console.log(footerLoginBt,'footerLgin')
           setZoomOut(entry.isIntersecting);
 
           // }
