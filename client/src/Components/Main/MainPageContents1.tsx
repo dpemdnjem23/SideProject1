@@ -19,8 +19,8 @@ const MainPageContents1 = () => {
     MainPageUseStore();
 
   const options = {
-    root:  document.querySelector(".MainPageContents1"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
-    rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
+    root:  null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    rootMargin: "50px 0px 50px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
     threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
@@ -29,7 +29,7 @@ const MainPageContents1 = () => {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting&&zoomIn===false||footerLoginBt) {
+        if (entry.isIntersecting&&zoomIn===false||footerLoginBt===false) {
           console.log('왜 장사가ㅏㄹ되')
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
 
@@ -63,10 +63,13 @@ const MainPageContents1 = () => {
     observer.observe(target.current);
 
 
-    return () => observer && observer.disconnect();
+    // return () =>{
+    //   observer.unobserve()
+    // }
+    return () => observer.disconnect()
   }
 
-  }, [target]);
+  }, []);
 
 
   // entry와 observer 출력
