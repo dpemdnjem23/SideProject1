@@ -27,11 +27,13 @@ const MainPageContents5 = () => {
 
   const options = {
     root: document.querySelector('.MainPageContents5'), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
-    rootMargin: "50px 0px 50px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
+    rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
     threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
+
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
@@ -50,6 +52,7 @@ const MainPageContents5 = () => {
           setRaise(entries[0].isIntersecting);
           setVisible(true)
           setFooterLoginBt(false)
+          setZoomIn(true)
           console.log('니뭔데')
 
 
@@ -61,9 +64,11 @@ const MainPageContents5 = () => {
       });
     }, options);
 
+    console.log(observer,'1')
+
     observer.observe(target.current);
 
-    return () => observer && observer.disconnect();
+    return () =>  observer.disconnect();
 
   }, [target]);
 

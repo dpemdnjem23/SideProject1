@@ -25,12 +25,13 @@ const MainPageContents1 = () => {
   };
 
   useEffect(() => {
-    if(target){
 
+      
     const observer = new IntersectionObserver((entries) => {
+
       entries.forEach((entry) => {
-        if (entry.isIntersecting&&zoomIn===false||footerLoginBt===false) {
-          console.log('왜 장사가ㅏㄹ되')
+        if (entry.isIntersecting) {
+          console.log('왜 장사가ㅏㄹ되',target.current)
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
 
           // if (checked === true) {
@@ -66,10 +67,10 @@ const MainPageContents1 = () => {
     // return () =>{
     //   observer.unobserve()
     // }
-    return () => observer.disconnect()
-  }
+    return () => observer.unobserve(target.current)
+  
 
-  }, []);
+  }, [target]);
 
 
   // entry와 observer 출력
