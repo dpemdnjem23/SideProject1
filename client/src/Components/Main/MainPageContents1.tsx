@@ -67,7 +67,11 @@ const MainPageContents1 = () => {
     // return () =>{
     //   observer.unobserve()
     // }
-    return () => observer.unobserve(target.current)
+    return () =>  {
+        
+      observer.disconnect();
+      observer.unobserve(target.current)
+    }
   
 
   }, [target]);
