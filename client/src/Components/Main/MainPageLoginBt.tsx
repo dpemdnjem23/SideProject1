@@ -13,7 +13,7 @@ import "../../css/components/MainPage/MainPageLoginBt.css";
 import { faSnowflake } from "@fortawesome/free-regular-svg-icons";
 import { MainPageUseStore } from "utils/state";
 const MainPageLoginBt = () => {
-  const { visible, setVisible, footerLoginBt, zoomIn, zoomOut } =
+  const { footerLoginBt, zoomIn, zoomOut } =
     MainPageUseStore();  // io.observe(button);
 
   const FadeOutButton = zoomOut ? "zoom-out" : "";

@@ -13,6 +13,9 @@ import "../../css/components/MainPage/MainPageContents1.css";
 const MainPageContents1 = () => {
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
 
+  const [scroll, setScroll] = useState(false);
+
+
   const [checked, setChecked] = useState<boolean>(false);
 
   const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut,setFooterLoginBt,footerLoginBt } =
@@ -24,10 +27,33 @@ const MainPageContents1 = () => {
     threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     console.log('clean up')
+  //     window.removeEventListener('scroll', handleScroll); //clean up
+  //   };
+  // }, []);
+
+
+const handleScroll = () => {
+	// 스크롤이 Top에서 50px 이상 내려오면 true값을 useState에 넣어줌
+    if(window.scrollY >= 50){
+      setScroll(true);
+      console.log(scroll)
+    }else{
+    // 스크롤이 50px 미만일경우 false를 넣어줌
+      setScroll(false);
+    }
+
+  };
+
+
   useEffect(() => {
 
       
     const observer = new IntersectionObserver((entries) => {
+      console.log(entries,'entries')
 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {

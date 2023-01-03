@@ -18,11 +18,10 @@ import "../../css/components/MainPage/MainPageContents5.css";
 const MainPageContents5 = () => {
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
+  const [visible,setVisible] = useState<boolean>(false)
   // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
 
   const {
-    visible,
-    setVisible,
     footerLoginBt,
     setFooterLoginBt,
     setZoomOut,
@@ -37,21 +36,23 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
-    if (target) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entries[0].isIntersecting) {
+          if (entry.isIntersecting) {
             setRaise(entries[0].isIntersecting);
-            setVisible(false);
+            setVisible(entry.isIntersecting);
             setFooterLoginBt(true);
             setZoomIn(entries[0].isIntersecting);
             console.log("왜작동됨");
+            console.log(visible,'vis')
+
 
             // entry is 'IntersectionObserverEntry'
           }
-          if (!entries[0].isIntersecting) {
+          if (!entry.isIntersecting) {
             setRaise(entries[0].isIntersecting);
-            setVisible(true);
+            setVisible(entry.isIntersecting);
+            console.log(visible,'vis')
             setFooterLoginBt(false);
             setZoomIn(true);
             console.log("니뭔데");
@@ -63,16 +64,15 @@ const MainPageContents5 = () => {
         });
       }, options);
 
-      console.log(observer, "1");
-
       observer.observe(target.current);
 
       return () => {
+        console.log('나중에 언마운트됏어요')
         observer.unobserve(target.current);
 
         observer.disconnect();
       };
-    }
+  
   }, [target]);
 
   const on = raise ? "on" : "";
