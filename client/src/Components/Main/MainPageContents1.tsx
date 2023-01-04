@@ -15,15 +15,22 @@ const MainPageContents1 = () => {
 
   const [scroll, setScroll] = useState(false);
 
-
   const [checked, setChecked] = useState<boolean>(false);
 
-  const { visible, setVisible, zoomIn, zoomOut, setZoomIn, setZoomOut,setFooterLoginBt,footerLoginBt } =
-    MainPageUseStore();
+  const {
+    visible,
+    setVisible,
+    zoomIn,
+    zoomOut,
+    setZoomIn,
+    setZoomOut,
+    setFooterLoginBt,
+    footerLoginBt,
+  } = MainPageUseStore();
 
   const options = {
-    root:  null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
-    rootMargin: "50px 0px 50px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
+    root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
     threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
@@ -35,36 +42,35 @@ const MainPageContents1 = () => {
   //   };
   // }, []);
 
-
-const handleScroll = () => {
-	// 스크롤이 Top에서 50px 이상 내려오면 true값을 useState에 넣어줌
-    if(window.scrollY >= 50){
+  const handleScroll = () => {
+    // 스크롤이 Top에서 50px 이상 내려오면 true값을 useState에 넣어줌
+    if (window.scrollY >= 50) {
       setScroll(true);
-      console.log(scroll)
-    }else{
-    // 스크롤이 50px 미만일경우 false를 넣어줌
+      console.log(scroll);
+    } else {
+      // 스크롤이 50px 미만일경우 false를 넣어줌
       setScroll(false);
     }
-
   };
-
 
   useEffect(() => {
 
-      
+
+    
+
     const observer = new IntersectionObserver((entries) => {
-      console.log(entries,'entries')
+      console.log(entries, "entries");
 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log('왜 장사가ㅏㄹ되',target.current)
+          console.log("왜 장사가ㅏㄹ되", target.current);
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
 
           // if (checked === true) {
           setZoomIn(entry.isIntersecting);
-        
-          setFooterLoginBt(true)
-          console.log(footerLoginBt,'footerLgin')
+
+          setFooterLoginBt(true);
+          console.log(footerLoginBt, "footerLgin");
           setZoomOut(entry.isIntersecting);
 
           // }
@@ -83,25 +89,19 @@ const handleScroll = () => {
           // entry is 'IntersectionObserverEntry'
         }
       });
-
     }, options);
 
-
     observer.observe(target.current);
-
 
     // return () =>{
     //   observer.unobserve()
     // }
-    return () =>  {
-        
-      observer.disconnect();
-      observer.unobserve(target.current)
-    }
-  
+    return () => {
+      console.log("나중에 언마운트됏어요");
 
+      observer && observer.disconnect();
+    };
   }, [target]);
-
 
   // entry와 observer 출력
 

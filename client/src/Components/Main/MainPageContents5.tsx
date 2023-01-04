@@ -18,15 +18,11 @@ import "../../css/components/MainPage/MainPageContents5.css";
 const MainPageContents5 = () => {
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
-  const [visible,setVisible] = useState<boolean>(false)
+  const [visible, setVisible] = useState<boolean>(false);
   // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
 
-  const {
-    footerLoginBt,
-    setFooterLoginBt,
-    setZoomOut,
-    setZoomIn,
-  } = MainPageUseStore();
+  const { footerLoginBt, setFooterLoginBt, setZoomOut, setZoomIn } =
+    MainPageUseStore();
   // io.observe(button);
 
   const options = {
@@ -36,44 +32,42 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setRaise(entries[0].isIntersecting);
-            setVisible(entry.isIntersecting);
-            setFooterLoginBt(true);
-            setZoomIn(entries[0].isIntersecting);
-            console.log("왜작동됨");
-            console.log(visible,'vis')
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setRaise(entries[0].isIntersecting);
+          setVisible(entry.isIntersecting);
+          setFooterLoginBt(true);
+          setZoomIn(entries[0].isIntersecting);
+          console.log("왜작동됨");
+          console.log(visible, "vis");
 
+          // entry is 'IntersectionObserverEntry'
+        }
+        if (!entry.isIntersecting) {
+          setRaise(entries[0].isIntersecting);
+          setVisible(entry.isIntersecting);
+          console.log(visible, "vis");
+          setFooterLoginBt(false);
+          setZoomIn(true);
+          console.log("니뭔데");
 
-            // entry is 'IntersectionObserverEntry'
-          }
-          if (!entry.isIntersecting) {
-            setRaise(entries[0].isIntersecting);
-            setVisible(entry.isIntersecting);
-            console.log(visible,'vis')
-            setFooterLoginBt(false);
-            setZoomIn(true);
-            console.log("니뭔데");
+          // observer.unobserve(target.current)
 
-            // observer.unobserve(target.current)
+          // entry is 'IntersectionObserverEntry'
+        }
+      });
+    }, options);
 
-            // entry is 'IntersectionObserverEntry'
-          }
-        });
-      }, options);
+    observer.observe(target.current);
 
-      observer.observe(target.current);
+    return () => {
+      console.log("나중에 언마운트됏어요");
 
-      return () => {
-        console.log('나중에 언마운트됏어요')
-        observer.unobserve(target.current);
-
-        observer.disconnect();
-      };
-  
-  }, [target]);
+      // observer.unobserve(target.current)
+    };
+  }, []);
 
   const on = raise ? "on" : "";
 
