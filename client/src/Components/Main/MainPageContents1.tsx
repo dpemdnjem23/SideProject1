@@ -59,18 +59,16 @@ const MainPageContents1 = () => {
     
 
     const observer = new IntersectionObserver((entries) => {
-      console.log(entries, "entries");
 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log("왜 장사가ㅏㄹ되", target.current);
+          console.log('main1')
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
 
           // if (checked === true) {
           setZoomIn(entry.isIntersecting);
 
           setFooterLoginBt(true);
-          console.log(footerLoginBt, "footerLgin");
           setZoomOut(entry.isIntersecting);
 
           // }
@@ -84,24 +82,27 @@ const MainPageContents1 = () => {
           setZoomIn(false);
           setZoomOut(entry.isIntersecting);
           // observer.unobserve(target.current)
-
-          console.log(checked, zoomIn, zoomOut);
+console.log('main1 false')
           // entry is 'IntersectionObserverEntry'
         }
       });
     }, options);
 
-    observer.observe(target.current);
+    if(target.current){
+      observer.observe(target.current);
+
+    }
+
 
     // return () =>{
     //   observer.unobserve()
     // }
     return () => {
-      console.log("나중에 언마운트됏어요");
-
-      observer && observer.disconnect();
+      // console.log("나중에 언마운트됏어요");
+       observer.disconnect();
     };
-  }, [target]);
+  }, [target.current]);
+
 
   // entry와 observer 출력
 

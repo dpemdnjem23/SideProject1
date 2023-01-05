@@ -32,35 +32,39 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setRaise(entries[0].isIntersecting);
-          setVisible(entry.isIntersecting);
-          setFooterLoginBt(true);
-          setZoomIn(entries[0].isIntersecting);
-          console.log("왜작동됨");
-          console.log(visible, "vis");
+    if (target) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          console.log(entry);
 
-          // entry is 'IntersectionObserverEntry'
-        }
-        if (!entry.isIntersecting) {
-          setRaise(entries[0].isIntersecting);
-          setVisible(entry.isIntersecting);
-          console.log(visible, "vis");
-          setFooterLoginBt(false);
-          setZoomIn(true);
-          console.log("니뭔데");
+          if (entry.isIntersecting) {
+            setRaise(entries[0].isIntersecting);
+            setVisible(entry.isIntersecting);
+            setFooterLoginBt(true);
+            setZoomIn(entries[0].isIntersecting);
+          
 
-          // observer.unobserve(target.current)
+            console.log('main5')
 
-          // entry is 'IntersectionObserverEntry'
-        }
-      });
-    }, options);
+            // entry is 'IntersectionObserverEntry'
+          }
+          if (!entry.isIntersecting) {
+            setRaise(entries[0].isIntersecting);
+            setVisible(entry.isIntersecting);
+            setFooterLoginBt(false);
+            setZoomIn(true);
 
-    observer.observe(target.current);
+            console.log('mian5 x')
+
+            // observer.unobserve(target.current)
+
+            // entry is 'IntersectionObserverEntry'
+          }
+        });
+      }, options);
+
+      observer.observe(target.current);
+    }
 
     return () => {
       console.log("나중에 언마운트됏어요");

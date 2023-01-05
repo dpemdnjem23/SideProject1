@@ -21,7 +21,6 @@ const MainPageLoginBt = () => {
   // const StandBy = visible ? "stand" : "";
   const footer = footerLoginBt ? "" : "footer";
 
-  console.log(footer,footerLoginBt)
 
   return (
     <>
