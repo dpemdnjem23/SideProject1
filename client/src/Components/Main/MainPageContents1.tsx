@@ -15,7 +15,6 @@ const MainPageContents1 = () => {
 
   const [scroll, setScroll] = useState(false);
 
-  const [checked, setChecked] = useState<boolean>(false);
 
   const {
     visible,
@@ -33,6 +32,7 @@ const MainPageContents1 = () => {
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
     threshold: 0.9, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
+  let checked= false;
 
   // useEffect(() => {
   //   window.addEventListener('scroll', handleScroll);
@@ -61,15 +61,17 @@ const MainPageContents1 = () => {
     const observer = new IntersectionObserver((entries) => {
 
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting&&checked===true) {
           console.log('main1')
           //zustand 변수들이 적용이 되고 intersection observer는 처음 설정그대로 console에 찍힌다.
 
           // if (checked === true) {
           setZoomIn(entry.isIntersecting);
-
           setFooterLoginBt(true);
           setZoomOut(entry.isIntersecting);
+          console.log(checked)
+          checked=false
+        
 
           // }
 
@@ -78,20 +80,22 @@ const MainPageContents1 = () => {
         }
 
         if (!entry.isIntersecting) {
-          setChecked(true);
           setZoomIn(false);
+          checked=true
+          setFooterLoginBt(entry.isIntersecting);
+
+
           setZoomOut(entry.isIntersecting);
           // observer.unobserve(target.current)
-console.log('main1 false')
+console.log('main1 false',checked)
           // entry is 'IntersectionObserverEntry'
         }
       });
     }, options);
 
-    if(target.current){
       observer.observe(target.current);
 
-    }
+    
 
 
     // return () =>{
@@ -101,7 +105,7 @@ console.log('main1 false')
       // console.log("나중에 언마운트됏어요");
        observer.disconnect();
     };
-  }, [target.current]);
+  }, [target]);
 
 
   // entry와 observer 출력

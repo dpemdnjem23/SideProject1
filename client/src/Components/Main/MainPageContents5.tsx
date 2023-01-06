@@ -17,9 +17,8 @@ import "../../css/components/MainPage/MainPageContents5.css";
 
 const MainPageContents5 = () => {
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const [raise, setRaise] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(false);
-  // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
+  const [raise, setRaise] = useState<boolean>(false);  // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
+  let checked= false;
 
   const { footerLoginBt, setFooterLoginBt, setZoomOut, setZoomIn } =
     MainPageUseStore();
@@ -32,27 +31,25 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
-    if (target) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          console.log(entry);
 
           if (entry.isIntersecting) {
             setRaise(entries[0].isIntersecting);
-            setVisible(entry.isIntersecting);
+            checked=entry.isIntersecting
             setFooterLoginBt(true);
-            setZoomIn(entries[0].isIntersecting);
+            setZoomIn(true);
+            console.log('dn')
           
 
-            console.log('main5')
 
             // entry is 'IntersectionObserverEntry'
           }
-          if (!entry.isIntersecting) {
+          if (!entry.isIntersecting&&checked===true) {
             setRaise(entries[0].isIntersecting);
-            setVisible(entry.isIntersecting);
+            checked=entry.isIntersecting
             setFooterLoginBt(false);
-            setZoomIn(true);
+            setZoomIn(entry.isIntersecting);
 
             console.log('mian5 x')
 
@@ -64,14 +61,12 @@ const MainPageContents5 = () => {
       }, options);
 
       observer.observe(target.current);
-    }
+    
 
     return () => {
-      console.log("나중에 언마운트됏어요");
-
-      // observer.unobserve(target.current)
+      observer&&observer.disconnect()
     };
-  }, []);
+  }, [target]);
 
   const on = raise ? "on" : "";
 
