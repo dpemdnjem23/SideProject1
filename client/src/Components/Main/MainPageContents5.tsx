@@ -31,16 +31,18 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
+    console.log(target)
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
+          console.log(entry)
 
           if (entry.isIntersecting) {
             setRaise(entries[0].isIntersecting);
             checked=entry.isIntersecting
             setFooterLoginBt(true);
             setZoomIn(true);
-            console.log('dn')
           
+            console.log('main5',checked)
 
 
             // entry is 'IntersectionObserverEntry'
@@ -49,13 +51,8 @@ const MainPageContents5 = () => {
             setRaise(entries[0].isIntersecting);
             checked=entry.isIntersecting
             setFooterLoginBt(false);
-            setZoomIn(entry.isIntersecting);
+            console.log('main5 x',checked)
 
-            console.log('mian5 x')
-
-            // observer.unobserve(target.current)
-
-            // entry is 'IntersectionObserverEntry'
           }
         });
       }, options);
@@ -64,6 +61,8 @@ const MainPageContents5 = () => {
     
 
     return () => {
+      console.log("나중에 언마운트됏어요");
+
       observer&&observer.disconnect()
     };
   }, [target]);

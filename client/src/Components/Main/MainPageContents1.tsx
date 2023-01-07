@@ -102,7 +102,7 @@ console.log('main1 false',checked)
     //   observer.unobserve()
     // }
     return () => {
-      // console.log("나중에 언마운트됏어요");
+      console.log("나중에 언마운트됏어요");
        observer.disconnect();
     };
   }, [target]);
