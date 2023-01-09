@@ -79,7 +79,7 @@ const MainPageContents1 = () => {
           // entry is 'IntersectionObserverEntry'
         }
 
-        if (!entry.isIntersecting) {
+        if (!entry.isIntersecting&&footerLoginBt===true) {
           setZoomIn(false);
           checked=true
           setFooterLoginBt(entry.isIntersecting);
