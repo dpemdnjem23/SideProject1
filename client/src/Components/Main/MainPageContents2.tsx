@@ -51,7 +51,7 @@ const MainPageContents2 = () => {
               SUBSCRIPTION
             </p>
             <h2 className="raise_up1 MainPageContents2_section_text_title">
-             보다 편하게 관리<br></br>구독관리
+             보다 편하게 관리<br className="ungiven"></br> 구독관리
             </h2>
           {/* </div> */}
 
