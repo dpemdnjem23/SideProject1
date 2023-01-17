@@ -27,6 +27,42 @@
 
 
 }
+
+
+@media(max-width: 768px){
+  .MainPageLoginBt{
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    left: calc((100% - 200px) / 2);
+    background: linear-gradient(to right, rgb(99, 98, 239), rgb(133, 118, 255));
+    z-index: 4;
+    box-shadow: rgb(76 75 208 / 25%) 0px 10px 15px 0px;
+    height: 60px;
+    border-radius: 15px;
+    min-width: 200px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 31.5px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    z-index: 999;
+    opacity: 0;
+
+    /* transform: scale(.6); */
+
+
+
+}
+
+
+
+}
 .zoom-in{
   opacity: 1 !important;
  animation: zoom-in 1s;

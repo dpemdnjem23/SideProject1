@@ -43,7 +43,7 @@ const MainPageContents3 = () => {
             SHARE
           </p>
           <h2 className="raise_up1 MainPageContents3_section_text_title">
-            모두와 나누세요<br></br>구독공유
+            모두와 나누세요<br className='ungiven'></br> 구독공유
           </h2>
           {/* </div> */}
 
