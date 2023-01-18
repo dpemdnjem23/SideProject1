@@ -29,3 +29,27 @@
     font-size: 18px;
 
 }
+
+@media screen and (max-width: 375px){
+
+    .Footer_section{
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .Footer_text{
+        color:white;
+        font-weight: bold;
+        font-size: 15px;
+        height: 40px;
+
+    
+    }
+
+    .GitIcon{
+        min-width: 150px;
+        color: white;
+    }
+ 
+}

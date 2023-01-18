@@ -49,7 +49,7 @@ const MainPageContents3 = () => {
 
           {/* <div {...animatedItem2}> */}
           <p className="raise_up2 MainPageContents3_section_text_contents MainPageContents">
-            내가 등록한 구독들을 선택하고, <br></br> 제목,글을 작성해주세요
+            내가 등록한 구독들을 선택하고, <br></br> 제목, 글을 작성해주세요
           </p>
           {/* </div> */}
         </div>

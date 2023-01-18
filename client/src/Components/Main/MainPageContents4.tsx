@@ -49,7 +49,7 @@ const MainPageContents4 = () =>{
               CALLENDAR
             </p>
             <h2 className="raise_up1 MainPageContents4_section_text_title">
-              한눈에 확인 하는 <br></br>구독달력
+              한눈에 확인 하는 <br className='ungiven'></br>구독달력
             </h2>
           {/* </div> */}
 
