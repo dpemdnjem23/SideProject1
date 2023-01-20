@@ -20,6 +20,7 @@ const MainPageContents2 = () => {
   const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
 
+
   const options = {
     root: document.querySelector(".MainPageContents2"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
@@ -39,6 +40,22 @@ const MainPageContents2 = () => {
 
     observer.observe(target2.current);
   }, [target2]);
+
+
+
+
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    /* 뷰포트 너비가 400 픽셀 이상 */
+
+    const on = raise?'on' : ''
+
+  } else {
+    /* 뷰포트 너비가 400 픽셀 미만 */
+
+    const on = raise?'on' : ''
+
+  }
+
 
   const on = raise?'on' : ''
 
