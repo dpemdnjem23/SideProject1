@@ -12,7 +12,7 @@ import {
 import useScrollFadeOut from "utils/hooks";
 
 import "../../css/components/MainPage/MainPageContents2.css";
-const MainPageContents2 = () => {
+const MainPageMobile2 = () => {
   // const animatedItem1: any = useScrollFadeOut(1,0.5);
   // const animatedItem2: any = useScrollFadeOut(1.5,1.5);
 
@@ -84,7 +84,7 @@ const MainPageContents2 = () => {
             src="/2img.png"
           ></img>
           <img
-            className="raise_up3 MainPageContents2_section_image_img2 imgBack"
+            className="raise_up3 MainPageMobile2_section_image_img2 imgBack"
             src="/1img.png"
           ></img>
         </div>
@@ -93,4 +93,4 @@ const MainPageContents2 = () => {
   );
 };
 
-export default MainPageContents2;
+export default MainPageMobile2;
