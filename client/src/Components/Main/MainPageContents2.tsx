@@ -12,6 +12,10 @@ import {
 import useScrollFadeOut from "utils/hooks";
 
 import "../../css/components/MainPage/MainPageContents2.css";
+import MainPageMobile2 from "./MainPageMobile2";
+
+
+
 const MainPageContents2 = () => {
   // const animatedItem1: any = useScrollFadeOut(1,0.5);
   // const animatedItem2: any = useScrollFadeOut(1.5,1.5);
@@ -20,13 +24,15 @@ const MainPageContents2 = () => {
   const [raise, setRaise] = useState<boolean>(false);
 
   const [match, setMatch] = useState<boolean>(
-    window.innerWidth < 768 ? true : false
+    window.innerWidth < 768 ? false : true
   );
   // let mql:any = window.matchMedia("(max-width: 768px)").matches
 
-  const screenChange = (event: any) => {
-    const matches = event.matches;
+  const screenChange = (event: MediaQueryListEvent) => {
+    const matches = event.matches
     // setRaise(false);
+    console.log(match)
+    console.log(matches)
     setMatch(matches);
     // setRaise(true)
   };
@@ -50,7 +56,10 @@ const MainPageContents2 = () => {
 
   useEffect(() => {
     const mql = window.matchMedia("(max-width:768px)");
+    console.log(mql)
+
     mql.addEventListener("change", screenChange);
+
     return () => mql.removeEventListener("change", screenChange);
   }, []);
 
@@ -58,37 +67,42 @@ const MainPageContents2 = () => {
 
   return (
     <div className="MainPageContents2">
-      <div ref={target2} className="MainPageContents2_section">
-        {/* {match ? ( */}
-          <div className={`MainPageContents2_section_text ${on}`}>
-            {/* <div {...animatedItem1}> */}
-            <p className="raise_up1 MainPageContents2_section_text_category">
-              SUBSCRIPTION
-            </p>
-            <h2 className="raise_up1 MainPageContents2_section_text_title">
-              보다 편하게 관리<br className="ungiven"></br> 구독관리
-            </h2>
-            {/* </div> */}
+      {match ? (
+        <>
+          <div ref={target2} className="MainPageContents2_section">
+            <div className={`MainPageContents2_section_text ${on}`}>
+              {/* <div {...animatedItem1}> */}
+              <p className="raise_up1 MainPageContents2_section_text_category">
+                SUBSCRIPTION
+              </p>
+              <h2 className="raise_up1 MainPageContents2_section_text_title">
+                보다 편하게 관리<br className="ungiven"></br> 구독관리
+              </h2>
+              {/* </div> */}
 
-            {/* <div {...animatedItem2}> */}
-            <p className="raise_up2 MainPageContents2_section_text_contents MainPageContents">
-              사용하고 있는 구독명을 선택하고, <br></br> 기간, 가격을 입력하고
-              등록해주세요
-            </p>
-            {/* </div> */}
+              {/* <div {...animatedItem2}> */}
+              <p className="raise_up2 MainPageContents2_section_text_contents MainPageContents">
+                사용하고 있는 구독명을 선택하고, <br></br> 기간, 가격을 입력하고
+                등록해주세요
+              </p>
+              {/* </div> */}
+            </div>
+
+            <div className={`MainPageContents2_section_image ${on}`}>
+              <img
+                className="raise_up3 MainPageContents2_section_image_img1 imgBack"
+                src="/2img.png"
+              ></img>
+              <img
+                className="raise_up3 MainPageContents2_section_image_img2 imgBack"
+                src="/1img.png"
+              ></img>
+            </div>
           </div>
-
-        <div className={`MainPageContents2_section_image ${on}`}>
-          <img
-            className="raise_up3 MainPageContents2_section_image_img1 imgBack"
-            src="/2img.png"
-          ></img>
-          <img
-            className="raise_up3 MainPageContents2_section_image_img2 imgBack"
-            src="/1img.png"
-          ></img>
-        </div>
-      </div>
+        </>
+       ) : (
+        <MainPageMobile2></MainPageMobile2>
+      )} 
     </div>
   );
 };
