@@ -54,21 +54,36 @@ const MainPageContents2 = () => {
     observer.observe(target2.current);
   }, [target2]);
 
+  // useEffect(() => {
+  //   const mql = window.matchMedia("(max-width:768px)");
+  //   console.log(mql)
+
+  //   mql.addEventListener("change", screenChange);
+
+  //   return () => mql.removeEventListener("change", screenChange);
+  // }, []);
   useEffect(() => {
-    const mql = window.matchMedia("(max-width:768px)");
-    console.log(mql)
-
-    mql.addEventListener("change", screenChange);
-
-    return () => mql.removeEventListener("change", screenChange);
+    const mediaQuery = window.matchMedia('(max-width:768px)');
+    setMatch(mediaQuery.matches);
+    const listener = (e:any) => setMatch(e.matches);
+    mediaQuery.addEventListener(listener);
+    return () => mediaQuery.removeEventListener(listener);
   }, []);
+
+  // }
+  // else{
+  //   setMatch(true)
+  //   console.log('true')
+    
+
+  // }
 
   const on = raise ? "on" : "";
 
   return (
     <div className="MainPageContents2">
       {match ? (
-        <>
+      
           <div ref={target2} className="MainPageContents2_section">
             <div className={`MainPageContents2_section_text ${on}`}>
               {/* <div {...animatedItem1}> */}
@@ -99,7 +114,6 @@ const MainPageContents2 = () => {
               ></img>
             </div>
           </div>
-        </>
        ) : (
         <MainPageMobile2></MainPageMobile2>
       )} 

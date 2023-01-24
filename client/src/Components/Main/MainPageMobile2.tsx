@@ -30,7 +30,7 @@ const MainPageMobile2 = () => {
   const on = raise ? "on" : "";
 
   return (
-<>
+
       <div ref={target2} className="MainPageMobile2_section">
         {/* {match ? ( */}
           <div className={`MainPageMobile2_section_text ${on}`}>
@@ -62,7 +62,7 @@ const MainPageMobile2 = () => {
           ></img>
         </div>
       </div>
-      </>
+      
   );
 };
 
