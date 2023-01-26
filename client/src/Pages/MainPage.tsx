@@ -12,7 +12,6 @@ import MainPageContents3 from "Components/Main/MainPageContents3";
 import MainPageContents4 from "Components/Main/MainPageContents4";
 import MainPageContents5 from "Components/Main/MainPageContents5";
 const MainPage = () => {
-
   return (
     <div className="MainPage">
       <MainPageContents1></MainPageContents1>
@@ -24,7 +23,6 @@ const MainPage = () => {
       <MainPageContents4></MainPageContents4>
       <MainPageBoundary></MainPageBoundary>
       <MainPageContents5></MainPageContents5>
-
 
       <MainPageLoginBt></MainPageLoginBt>
 

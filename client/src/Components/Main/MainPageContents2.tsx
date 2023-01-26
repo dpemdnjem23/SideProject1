@@ -13,9 +13,7 @@ const MainPageContents2 = () => {
   const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
 
-  const [match, setMatch] = useState<boolean>(
-    window.innerWidth < 768 ? true : false
-  );
+  const [match, setMatch] = useState<boolean>(false);
   // let mql:any = window.matchMedia("(max-width: 768px)").matches
   const options = {
     root: document.querySelector(".MainPageContents2"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
@@ -44,25 +42,23 @@ const MainPageContents2 = () => {
   //   return () => mql.removeEventListener("change", screenChange);
   // }, []);
   useEffect(() => {
-    
     const mediaQuery = window.matchMedia("(max-width:768px)");
     setMatch(mediaQuery.matches);
     const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
-    
+
     mediaQuery.addEventListener("change", listener);
-// location.reload()
-    console.log('나는 죄가없다',match)
-  }, [match]);
-
-  
-
+    console.log("나는 죄가없다", match);
+  }, []);
 
   const on = raise ? "on" : "";
 
   return (
     <div className="MainPageContents2">
       {match ? (
-        
+        // <div>
+        //   diarh
+
+        // </div>
         <MainPageMobile2></MainPageMobile2>
       ) : (
         <div ref={target2} className="MainPageContents2_section">
