@@ -14,6 +14,7 @@ const MainPageMobile2 = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
+      console.log('머이가')
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setRaise(entry.isIntersecting);
@@ -22,46 +23,48 @@ const MainPageMobile2 = () => {
     }, options);
 
     observer.observe(target2.current);
+    return () => {
+
+      observer&&observer.disconnect()
+    };
   }, [target2]);
 
   const on = raise ? "on" : "";
 
   return (
-    <div>
-      <span>멍청도</span>
+    <div className="MainPageContents2">
+      <div ref={target2} className="MainPageMobile2_section">
+        {/* {match ? ( */}
+        <div className={`MainPageMobile2_section_text ${on}`}>
+          {/* <div {...animatedItem1}> */}
+          <p className="raise_up1 MainPageMobile2_section_text_category">
+            SUBSCRIPTION
+          </p>
+          <h2 className="raise_up1 MainPageMobile2_section_text_title">
+            보다 편하게 관리<br className="ungiven"></br> 구독관리
+          </h2>
+          {/* </div> */}
+
+          {/* <div {...animatedItem2}> */}
+          <p className="raise_up2 MainPageMobile2_section_text_contents MainPageContents">
+            사용하고 있는 구독명을 선택하고, <br></br> 기간, 가격을 입력하고
+            등록해주세요
+          </p>
+          {/* </div> */}
+        </div>
+
+        <div className={`MainPageMobile2_section_image ${on}`}>
+          <img
+            className="raise_up3 MainPageMobile2_section_image_img1 imgBack2"
+            src="/2img.png"
+          ></img>
+          <img
+            className="raise_up3 MainPageMobile2_section_image_img2 imgBack2"
+            src="/1img.png"
+          ></img>
+        </div>
+      </div>
     </div>
-
-    // <div ref={target2} className="MainPageMobile2_section">
-    //   {/* {match ? ( */}
-    //     <div className={`MainPageMobile2_section_text ${ons}`}>
-    //       {/* <div {...animatedItem1}> */}
-    //       <p className="raise_up1 MainPageMobile2_section_text_category">
-    //         SUBSCRIPTION
-    //       </p>
-    //       <h2 className="raise_up1 MainPageMobile2_section_text_title">
-    //         보다 편하게 관리<br className="ungiven"></br> 구독관리
-    //       </h2>
-    //       {/* </div> */}
-
-    //       {/* <div {...animatedItem2}> */}
-    //       <p className="raise_up2 MainPageMobile2_section_text_contents MainPageContents">
-    //         사용하고 있는 구독명을 선택하고, <br></br> 기간, 가격을 입력하고
-    //         등록해주세요
-    //       </p>
-    //       {/* </div> */}
-    //     </div>
-
-    //   <div className={`MainPageMobile2_section_image ${ons}`}>
-    //     <img
-    //       className="raise_up3 MainPageMobile2_section_image_img1 imgBack2"
-    //       src="/2img.png"
-    //     ></img>
-    //     <img
-    //       className="raise_up3 MainPageMobile2_section_image_img2 imgBack2"
-    //       src="/1img.png"
-    //     ></img>
-    //   </div>
-    // </div>
   );
 };
 

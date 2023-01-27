@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 // import useScrollFadeOut from "utils/hooks";
 
 import "../../css/components/MainPage/MainPageContents2.css";
-import MainPageMobile2 from "./MainPageMobile2";
 
 const MainPageContents2 = () => {
   // const animatedItem1: any = useScrollFadeOut(1,0.5);
@@ -13,85 +12,72 @@ const MainPageContents2 = () => {
   const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
 
-  const [match, setMatch] = useState<boolean>(false);
   // let mql:any = window.matchMedia("(max-width: 768px)").matches
   const options = {
-    root: document.querySelector(".MainPageContents2"), // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
+    root: null, // .container class를 가진 엘리먼트를 root로 설정. null일 경우 브라우저 viewport
     rootMargin: "0px 0px 0px 0px", // rootMargin을 '10px 10px 10px 10px'로 설정
     threshold: 0.6, // 타겟 엘리먼트가 교차영역에 진입했을 때, 교차영역에 타켓 엘리먼트의 50%가 있을 때, 교차 영역에 타켓 엘리먼트의 100%가 있을 때 observe가 반응한다.
   };
 
   useEffect(() => {
+    console.log('이젠')
+
+
     const observer = new IntersectionObserver((entries) => {
+
       entries.forEach((entry) => {
+                  console.log('이젠')
+
         if (entries[0].isIntersecting) {
+
           setRaise(entry.isIntersecting);
+          console.log('무시',raise)
+
         }
       });
     }, options);
 
     observer.observe(target2.current);
+
+    return () => {
+      observer && observer.disconnect();
+    };
   }, [target2]);
-
-  // useEffect(() => {
-  //   const mql = window.matchMedia("(max-width:768px)");
-  //   console.log(mql)
-
-  //   mql.addEventListener("change", screenChange);
-
-  //   return () => mql.removeEventListener("change", screenChange);
-  // }, []);
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width:768px)");
-    setMatch(mediaQuery.matches);
-    const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
-
-    mediaQuery.addEventListener("change", listener);
-    console.log("나는 죄가없다", match);
-  }, []);
 
   const on = raise ? "on" : "";
 
   return (
     <div className="MainPageContents2">
-      {match ? (
-        // <div>
-        //   diarh
+      <div ref={target2} className="MainPageContents2_section">
+        <div className={`MainPageContents2_section_text ${on}`}>
+          {/* <div {...animatedItem1}> */}
+          <p className="raise_up1 MainPageContents2_section_text_category">
+            SUBSCRIPTION
+          </p>
+          <h2 className="raise_up1 MainPageContents2_section_text_title">
+            보다 편하게 관리<br className="ungiven"></br> 구독관리
+          </h2>
+          {/* </div> */}
 
-        // </div>
-        <MainPageMobile2></MainPageMobile2>
-      ) : (
-        <div ref={target2} className="MainPageContents2_section">
-          <div className={`MainPageContents2_section_text ${on}`}>
-            {/* <div {...animatedItem1}> */}
-            <p className="raise_up1 MainPageContents2_section_text_category">
-              SUBSCRIPTION
-            </p>
-            <h2 className="raise_up1 MainPageContents2_section_text_title">
-              보다 편하게 관리<br className="ungiven"></br> 구독관리
-            </h2>
-            {/* </div> */}
-
-            {/* <div {...animatedItem2}> */}
-            <p className="raise_up2 MainPageContents2_section_text_contents MainPageContents">
-              사용하고 있는 구독명을 선택하고, <br></br> 기간, 가격을 입력하고
-              등록해주세요
-            </p>
-            {/* </div> */}
-          </div>
-
-          <div className={`MainPageContents2_section_image ${on}`}>
-            <img
-              className="raise_up3 MainPageContents2_section_image_img1 imgBack"
-              src="/2img.png"
-            ></img>
-            <img
-              className="raise_up3 MainPageContents2_section_image_img2 imgBack"
-              src="/1img.png"
-            ></img>
-          </div>
+          {/* <div {...animatedItem2}> */}
+          <p className="raise_up2 MainPageContents2_section_text_contents MainPageContents">
+            사용하고 있는 구독명을 선택하고, <br></br> 기간, 가격을 입력하고
+            등록해주세요
+          </p>
+          {/* </div> */}
         </div>
-      )}
+
+        <div className={`MainPageContents2_section_image ${on}`}>
+          <img
+            className="raise_up3 MainPageContents2_section_image_img1 imgBack"
+            src="/2img.png"
+          ></img>
+          <img
+            className="raise_up3 MainPageContents2_section_image_img2 imgBack"
+            src="/1img.png"
+          ></img>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, BrowserRouter, Link } from "react-router-dom";
 import MainPageContents1 from "Components/Main/MainPageContents1";
 import MainPageSlickList from "Components/Main/MainPageSlickList";
@@ -11,12 +11,33 @@ import MainPageBoundary from "Components/Main/MainPageBoundary";
 import MainPageContents3 from "Components/Main/MainPageContents3";
 import MainPageContents4 from "Components/Main/MainPageContents4";
 import MainPageContents5 from "Components/Main/MainPageContents5";
+import MainPageMobile2 from "Components/Main/MainPageMobile2";
+
 const MainPage = () => {
+  const [match, setMatch] = useState<boolean>(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width:768px)");
+    setMatch(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
+
+    mediaQuery.addEventListener("change", listener);
+    return () => {
+      mediaQuery.removeEventListener("change", listener);
+    };
+  }, []);
+
   return (
     <div className="MainPage">
       <MainPageContents1></MainPageContents1>
       <MainPageSlickList></MainPageSlickList>
-      <MainPageContents2></MainPageContents2>
+
+      {match ? (
+        <MainPageMobile2></MainPageMobile2>
+      ) : (
+        <MainPageContents2></MainPageContents2>
+      )}
+
       <MainPageBoundary></MainPageBoundary>
       <MainPageContents3></MainPageContents3>
       <MainPageBoundary></MainPageBoundary>
