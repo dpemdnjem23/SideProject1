@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-// import
+import React, { useState, useEffect ,useRef} from "react";
+// import 
 import {
   Route,
   BrowserRouter,
@@ -9,8 +9,10 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import "../../css/components/MainPage/MainPageContents4.css";
-const MainPageContents4 = () => {
+import "../../css/components/MainPage/MainPageMobile4.css"
+const MainPageMobile4 = () =>{
+
+
   const target2 = useRef() as React.MutableRefObject<HTMLDivElement>;
   const [raise, setRaise] = useState<boolean>(false);
 
@@ -25,46 +27,51 @@ const MainPageContents4 = () => {
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setRaise(entry.isIntersecting);
+
         }
+      
       });
     }, options);
 
     observer.observe(target2.current);
 
-    return () => {
-      observer && observer.disconnect();
-    };
+    return ()=>{
+        observer && observer.disconnect()
+    }
   }, [target2]);
 
-  const on = raise ? "on" : "";
+  const on = raise?'on' : ''
+
+
 
   return (
-    <div className="MainPageContents4">
-      <div className="MainPageContents4_section">
-        <div ref={target2} className={`MainPageContents4_section_text ${on}`}>
+    <div  className="MainPageContents4">
+      <div  className="MainPageMobile4_section">
+        <div ref={target2} className={`MainPageMobile4_section_text ${on}`}>
           {/* <div {...animatedItem1}> */}
-          <p className="raise_up1 MainPageContents4_section_text_category">
-            CALLENDAR
-          </p>
-          <h2 className="raise_up1 MainPageContents4_section_text_title">
-            한눈에 확인 하는 <br className="ungiven"></br>구독달력
-          </h2>
+            <p className="raise_up1 MainPageMobile4_section_text_category">
+              CALLENDAR
+            </p>
+            <h2 className="raise_up1 MainPageMobile4_section_text_title">
+              한눈에 확인 하는 <br className='MainPageMobile4_ungiven'></br>구독달력
+            </h2>
           {/* </div> */}
 
           {/* <div {...animatedItem2}> */}
-          <p className="raise_up2 MainPageContents4_section_text_contents MainPageContents">
-            구독을 월별로 확인하고,<br></br>자유롭게 날짜를 정해보세요!
-          </p>
+            <p className="raise_up2 MainPageMobile4_section_text_contents MainPageContents">
+             구독을 월별로 확인하고,<br></br>자유롭게 날짜를 정해보세요!
+            </p>
           {/* </div> */}
         </div>
-        <div className={`MainPageContents4_section_image ${on}`}>
-          <img
-            className="raise_up3 MainPageContents4_section_image_img1 imgBack"
+        <div className={`MainPageMobile4_section_image ${on}`}>
+
+        <img
+            className="raise_up3 MainPageMobile4_section_image_img1 imgBack"
             src="/5img.png"
           ></img>
         </div>
       </div>
     </div>
-  );
-};
-export default MainPageContents4;
+  )
+}
+export default MainPageMobile4

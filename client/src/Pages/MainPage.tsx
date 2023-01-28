@@ -12,6 +12,8 @@ import MainPageContents3 from "Components/Main/MainPageContents3";
 import MainPageContents4 from "Components/Main/MainPageContents4";
 import MainPageContents5 from "Components/Main/MainPageContents5";
 import MainPageMobile2 from "Components/Main/MainPageMobile2";
+import MainPageMobile3 from "Components/Main/MainPageMobile3";
+import MainPageMobile4 from "Components/Main/MainPageMobile4";
 
 const MainPage = () => {
   const [match, setMatch] = useState<boolean>(false);
@@ -39,9 +41,20 @@ const MainPage = () => {
       )}
 
       <MainPageBoundary></MainPageBoundary>
-      <MainPageContents3></MainPageContents3>
+      {match ? (
+        <MainPageMobile3></MainPageMobile3>
+      ) : (
+        <MainPageContents3></MainPageContents3>
+      )}
+
       <MainPageBoundary></MainPageBoundary>
-      <MainPageContents4></MainPageContents4>
+
+      {match ? (
+        <MainPageMobile4></MainPageMobile4>
+      ) : (
+        <MainPageContents4></MainPageContents4>
+      )}
+
       <MainPageBoundary></MainPageBoundary>
       <MainPageContents5></MainPageContents5>
 

@@ -12,105 +12,110 @@
   z-index: 4;
 }
 
-  div.on[class^="MainPageMobile2_section_text"] [class^="raise_up"] {
-    opacity: 1;
+div.on[class^="MainPageMobile2_section_text"] [class^="raise_up"] {
+  opacity: 1;
 
-    transform: translateZ(0);
-  }
+  transform: translateZ(0);
+}
 
-  div[class^="MainPageMobile2_section_text"] [class^="raise_up"] {
-    opacity: 0;
+div[class^="MainPageMobile2_section_text"] [class^="raise_up"] {
+  opacity: 0;
 
+  transform: translate3d(0, 50%, 0);
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
+}
 
-    transform: translate3d(0, 50%, 0);
-    transition-duration: 0.7s;
-    transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
+div[class^="MainPageMobile2_section_image"] [class^="raise_up"] {
+  opacity: 0;
 
-  }
+  transform: translate3d(0, 50%, 0);
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
+}
+div.on[class^="MainPageMobile2_section_image"] [class^="raise_up"] {
+  opacity: 1;
 
-  div[class^="MainPageMobile2_section_image"] [class^="raise_up"] {
-    opacity: 0;
+  transform: translate3d(0, 0, 0);
+}
 
-    
-    transform: translate3d(0, 50%, 0);
-    transition-duration: 0.7s;
-    transition-timing-function: cubic-bezier(0, 0, 0.3, 1);
-  }
-  div.on[class^="MainPageMobile2_section_image"] [class^="raise_up"] {
-    opacity: 1;
+div[class^="MainPageMobile2_section_text"] .raise_up1 {
+  transition-delay: 0.6s;
+}
 
-    transform: translate3d(0, 0, 0);
-  }
+div[class^="MainPageMobile2_section_text"] .raise_up2 {
+  transition-delay: 1.5s;
+}
 
-  div[class^="MainPageMobile2_section_text"] .raise_up1 {
-    transition-delay: 0.6s;
-  }
+.MainPageMobile2_section {
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.MainPageMobile2_section_text {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+.MainPageMobile2_section_text_category {
+  color: rgb(75, 75, 208);
+  font-size: 14px;
+  font-weight: bold;
+}
+.MainPageMobile2_section_text h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 30px;
+
+  color: rgb(34, 34, 34);
+}
+.MainPageContents {
+  color: rgb(74, 74, 74);
+}
+.MainPageMobile2_section_text_contents {
+  margin-top: 24px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+.imgBack2 {
   
-  div[class^="MainPageMobile2_section_text"] .raise_up2 {
-    transition-delay: 1.5s;
-  }
 
-  .MainPageMobile2_section {
-    flex-direction: column;
-    justify-content: flex-start;
-  }
+  width: 190px;
+  height: 410px;
+  border-radius: 35px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 50px 0px;
+}
+.MainPageMobile2_ungiven {
+  display: none;
+}
 
-  .MainPageMobile2_section_text {
-    width: 100%;
-    margin: 0;
-    text-align: center;
-  }
+.MainPageMobile2_section_image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  margin: auto;
+  top:10px;
+  left: 200px;
+  text-align: center;
+  position: relative;
+  min-height: 480px;
+}
+.MainPageMobile2_section_image_img1 {
+  /* 1대2 */
+  /* height: 800px; */
 
-  .MainPageMobile2_section_text_category {
-    color: rgb(75, 75, 208);
-    font-size: 14px;
-    font-weight: bold;
-  }
-  .MainPageMobile2_section_text h2 {
-    margin: 0 0 10px;
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 30px;
-
-    color: rgb(34, 34, 34);
-  }
-  .MainPageContents {
-    color: rgb(74, 74, 74);
-  }
-  .MainPageMobile2_section_text_contents {
-    margin-top: 24px;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 25px;
-  }
-
-  .imgBack2 {
-
-    width: 190px;
-    height: 410px;
-    border-radius: 35px;
-    box-shadow: rgb(0 0 0 / 10%) 0px 3px 50px 0px;
-  }
-  .MainPageMobile2_ungiven {
-    display: none;
-  }
-
-  .MainPageMobile2_section_image {
-    margin: auto;
-    /* max-width: 100px;
-    min-height: 480px; */
-  }
-  .MainPageMobile2_section_image_img1 {
-    /* 1대2 */
-    /* height: 800px; */
-
-    position: relative;
-    left: -133px;
-    bottom: 32px;
-  }
-  .MainPageMobile2_section_image_img2 {
-    position: relative;
-    left: -250px;
-    bottom: 10px;
-    z-index: 5;
-  }
+  position: relative;
+  left: -133px;
+  bottom: 32px;
+}
+.MainPageMobile2_section_image_img2 {
+  position: relative;
+  left: -250px;
+  bottom: 10px;
+  z-index: 5;
+}
