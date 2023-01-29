@@ -16,6 +16,7 @@
 }
 .GitIcon{
     color: white;
+    z-index: 999;
 }
 .Footer_section{
     display: flex;

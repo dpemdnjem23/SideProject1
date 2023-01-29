@@ -31,10 +31,8 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
-    console.log(target)
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          console.log(entry)
 
           if (entry.isIntersecting) {
             setRaise(entries[0].isIntersecting);

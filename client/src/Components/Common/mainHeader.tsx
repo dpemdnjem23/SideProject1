@@ -11,10 +11,10 @@ import {
 } from "react-router-dom";
 import { useStore } from "Components/Login/Login";
 import MypageModal from "Components/Modal/MypageModal";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
-import create from "zustand";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+
 import {
   alarmInfouseStore,
   isSigninState,
@@ -26,10 +26,10 @@ import {
 import AlarmModal from "Components/Modal/alarmModal";
 
 const Mainheader = () => {
-  const {page} = paginationuseStore()
+  const { page } = paginationuseStore();
 
-  const limit =6 
-  const offset = (page ) * limit;
+  const limit = 6;
+  const offset = page * limit;
 
   const navigate = useNavigate();
   const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
@@ -39,11 +39,10 @@ const Mainheader = () => {
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
     alarmInfouseStore();
   const [showNumber, setShowNumber] = useState<boolean>(true);
-  const [number,setNumber] = useState<number>(0)
+  const [number, setNumber] = useState<number>(0);
 
   const { setShowErrModal } = showErrModalState();
 
-  
   const handleErrModal = () => {
     setShowSubDetail(false);
     setShowSubEdit(false);
@@ -66,9 +65,6 @@ const Mainheader = () => {
   const openAlarmModal = () => {
     setShowAlarmModal(true);
     setShowNumber(false);
-
-  
-  
   };
 
   const closeAlarmModal = () => {
@@ -76,27 +72,26 @@ const Mainheader = () => {
     setShowNumber(true);
   };
 
-  let sum=0;
+  let sum = 0;
 
   //alarmInfo중 false만 나오도록
   for (let i = 0; i < alarmInfo.length; i++) {
-
     if (alarmInfo[i].read === false) {
-      sum++
+      sum++;
     }
   }
 
-//   const clickToNotSign= () =>{
-// alert()
-    
-//   }
+  //   const clickToNotSign= () =>{
+  // alert()
+
+  //   }
 
   return (
     <>
       <div id="header">
         <div className="logo">
           <Link to="/">
-            <img width="60" src="./images/2.png" />
+            <img  width="60" src="./images/2.png" />
           </Link>
         </div>
 
@@ -113,6 +108,9 @@ const Mainheader = () => {
             </li>
             <li onClick={handleErrModal} className="menu">
               <Link to="/callendar">구독달력</Link>
+            </li>
+            <li className="mobilemenu">
+              <FontAwesomeIcon icon={faBars} size='2x' className=''></FontAwesomeIcon>
             </li>
             {userSignin ? (
               <li className="menu">

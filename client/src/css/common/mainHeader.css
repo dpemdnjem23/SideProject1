@@ -16,10 +16,14 @@ background-color: white;
   /* transition: height 0.05s ease 0s; */
   border-bottom: 1px solid rgb(211, 211, 211);
 }
+.mobilemenu{
+  display: none;
+}
 
 #header > .logo {
   width:60px;
   height: 0px;
+  z-index: 999;
 
   /* display: inline-block; */
   background-color: white;
@@ -134,3 +138,56 @@ align-items: center;
 
 
 }
+ @media(max-width:768px){ 
+
+
+  .menu {
+   display: none;
+
+    /* background-color: white; */
+    
+  } 
+ 
+  #header > .logo>img {
+    cursor: pointer;
+  }
+  
+
+  #header > .logo {
+    width:calc(100% - 40px);
+    display: flex;
+justify-content: center;    
+text-align: center;
+
+
+  
+  }
+  .main_menu>ul{
+    display: flex;
+
+    justify-content: right;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+
+
+  } 
+  .mobilemenu{
+    display: block;
+    text-align: center;
+    top: 30px;
+ 
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  .menu>img{
+    cursor: pointer;
+    top: 50px;
+    border-radius: 50%;
+    z-index: 10;
+  }
+  
+} 
