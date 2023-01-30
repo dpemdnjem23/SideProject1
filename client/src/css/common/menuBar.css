@@ -1,0 +1,24 @@
+#menuBar {
+  width: 400px;
+  height: 500px;
+
+  animation: slide-in 1s
+}
+
+@keyframes slide-in {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0%;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    left: 0%;
+  }
+  to {
+    left: -100%;
+  }
+}

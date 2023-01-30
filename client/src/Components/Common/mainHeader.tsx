@@ -24,6 +24,7 @@ import {
   useWalletStore,
 } from "utils/state";
 import AlarmModal from "Components/Modal/alarmModal";
+import MenuBar from "./menuBar";
 
 const Mainheader = () => {
   const { page } = paginationuseStore();
@@ -33,7 +34,7 @@ const Mainheader = () => {
 
   const navigate = useNavigate();
   const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
-  const { showMypageModal, showMypageModalOn } = mainheaderuseStore();
+  const { showMypageModal, mobileMyPageOn,mobileMyPage,showMypageModalOn } = mainheaderuseStore();
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
@@ -71,6 +72,15 @@ const Mainheader = () => {
     setShowAlarmModal(false);
     setShowNumber(true);
   };
+
+  const openMenuBar = () =>{
+mobileMyPageOn(true)
+console.log('클릭')
+  }
+  const closeMenuBar = () =>{
+    mobileMyPageOn(false)
+
+  }
 
   let sum = 0;
 
@@ -110,8 +120,9 @@ const Mainheader = () => {
               <Link to="/callendar">구독달력</Link>
             </li>
             <li className="mobilemenu">
-              <FontAwesomeIcon icon={faBars} size='2x' className=''></FontAwesomeIcon>
+              <FontAwesomeIcon onClick={openMenuBar} icon={faBars} size='2x' className=''></FontAwesomeIcon>
             </li>
+          
             {userSignin ? (
               <li className="menu">
                 <div className="menu_bell_section">

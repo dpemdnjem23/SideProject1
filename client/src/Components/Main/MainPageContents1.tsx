@@ -58,6 +58,7 @@ const MainPageContents1 = () => {
 
     
 
+
     const observer = new IntersectionObserver((entries) => {
 
       entries.forEach((entry) => {
@@ -68,7 +69,6 @@ const MainPageContents1 = () => {
           setZoomIn(entry.isIntersecting);
           setFooterLoginBt(true);
           setZoomOut(entry.isIntersecting);
-          console.log(checked)
           checked=false
         
 
@@ -82,8 +82,6 @@ const MainPageContents1 = () => {
           setZoomIn(false);
           checked=true
           setFooterLoginBt(entry.isIntersecting);
-
-
           setZoomOut(entry.isIntersecting);
           // observer.unobserve(target.current)
           // entry is 'IntersectionObserverEntry'
@@ -92,16 +90,12 @@ const MainPageContents1 = () => {
     }, options);
 
       observer.observe(target.current);
-
-    
-
-
-    // return () =>{
-    //   observer.unobserve()
-    // }
     return () => {
        observer.disconnect();
+
     };
+
+
   }, [target]);
 
 

@@ -34,6 +34,7 @@ import { stringify } from "querystring";
 import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
+import MenuBar from "Components/Common/menuBar";
 
 // import {
 //   MainPage,
@@ -69,10 +70,17 @@ const App = () => {
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
 
-  const { showMypageModalOn } = mainheaderuseStore();
+  const { showMypageModalOn, mobileMyPageOn, mobileMyPage } =
+    mainheaderuseStore();
 
   const closeShowMypageModal = () => {
     showMypageModalOn(false);
+    mobileMyPageOn(false);
+
+  };
+
+  const closeMenuBar = () => {
+    mobileMyPageOn(false);
   };
 
   {
@@ -220,6 +228,7 @@ const App = () => {
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
         {showErrModal ? <ErrModal></ErrModal> : null}
+        {mobileMyPage ? <MenuBar></MenuBar> : null}
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
@@ -269,7 +278,6 @@ const App = () => {
           <Route path="/" element={<MainPage></MainPage>}></Route>
         </Routes>
       </div>
-
     </BrowserRouter>
   );
 };

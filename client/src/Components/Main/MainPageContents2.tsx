@@ -20,13 +20,11 @@ const MainPageContents2 = () => {
   };
 
   useEffect(() => {
-    console.log('이젠')
 
 
     const observer = new IntersectionObserver((entries) => {
 
       entries.forEach((entry) => {
-                  console.log('이젠')
 
         if (entries[0].isIntersecting) {
 

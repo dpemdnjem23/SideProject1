@@ -22,6 +22,7 @@ const MainPageLoginBt = () => {
   const footer = footerLoginBt ? "" : "footer";
 
 
+
   return (
     <>
       {/* {visible?null: */}

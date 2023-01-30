@@ -14,7 +14,6 @@ const MainPageMobile2 = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      console.log('머이가')
       entries.forEach((entry) => {
         if (entries[0].isIntersecting) {
           setRaise(entry.isIntersecting);

@@ -17,10 +17,10 @@ import "../../css/components/MainPage/MainPageContents5.css";
 
 const MainPageContents5 = () => {
   const target = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const [raise, setRaise] = useState<boolean>(false);  // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
-  let checked= false;
+  const [raise, setRaise] = useState<boolean>(false); // const [footerLoginBt, setFooterLoginBt] = useState<boolean>(false)
+  let checked = false;
 
-  const { footerLoginBt, setFooterLoginBt, setZoomOut, setZoomIn } =
+  const { footerLoginBt, zoomIn, setFooterLoginBt, setZoomOut, setZoomIn } =
     MainPageUseStore();
   // io.observe(button);
 
@@ -31,38 +31,35 @@ const MainPageContents5 = () => {
   };
 
   useEffect(() => {
+    setTimeout(() => {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-
           if (entry.isIntersecting) {
+            console.log(zoomIn);
             setRaise(entries[0].isIntersecting);
-            checked=entry.isIntersecting
+            checked = entry.isIntersecting;
             setFooterLoginBt(true);
-            setZoomIn(true);
-          
-            console.log('main5',checked)
 
+            setZoomIn(true);
+
+            //아래로 내려올때
 
             // entry is 'IntersectionObserverEntry'
           }
-          if (!entry.isIntersecting&&checked===true) {
+          if (!entry.isIntersecting && checked === true) {
             setRaise(entries[0].isIntersecting);
-            checked=entry.isIntersecting
-            setFooterLoginBt(false);
-            console.log('main5 x',checked)
-
+            checked = entry.isIntersecting;
+            setFooterLoginBt(entries[0].isIntersecting);
           }
         });
       }, options);
 
       observer.observe(target.current);
-    
 
-    return () => {
-      console.log("나중에 언마운트됏어요");
-
-      observer&&observer.disconnect()
-    };
+      return () => {
+        observer && observer.disconnect();
+      };
+    }, 100);
   }, [target]);
 
   const on = raise ? "on" : "";
