@@ -9,22 +9,38 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+
+import '../../css/common/menuBar.css'
+
 const MenuBar = () => {
   return (
     <div id="menuBar">
       <div className="menuBarSection">
         <div className="menuBarSection_top">
+        <div>
+          <img src='/images/2.png'></img>
+       
+          <div className='menuBar_line'></div>
+          <span>
+         로그인하세요
+
+          </span>
+          <button>로그인</button>
+
+          </div>
+
+          <div>
+          이름,벨
+          </div>
           <div>
             x표시
           </div>
-          <div>
-            로그인
-          </div>
-
+      
 
 
         </div>
         <div className="menuBarSection_middle">
+          <div>메인메뉴</div>
           <ul>
 
             <li>

@@ -1,16 +1,46 @@
-#menuBar {
-  width: 400px;
-  height: 500px;
+  #menuBar {
+    /* left: -277px; */
+text-align: right;
+    height: 400px;
+position: absolute;
+    width: 250px;
+    right: 0px;
+    animation: slide-in 1.5s;
+    background-color: white;
+margin: auto;
+    z-index: 50;
+  margin-right: 0;
+  text-align: left;
+  
+  
+  }
+  .menuBarSection{
 
-  animation: slide-in 1s
-}
+  }
+  .menuBarSection_top{
+    padding: 20px 20px;
+
+    /* background-color: black; */
+    width: 100%;
+  }
+  .menuBarSection_top>div{
+    /* color: white; */
+  }
+
+  .menuBarSection_middle{
+    padding-left: 20px;
+  }
+  .menuBar_line{
+    
+  }
+
 
 @keyframes slide-in {
   from {
-    left: -100%;
+    right: -100%;
   }
   to {
-    left: 0%;
+    right: 0%;
   }
 }
 
