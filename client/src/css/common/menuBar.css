@@ -1,39 +1,105 @@
-  #menuBar {
-    /* left: -277px; */
-text-align: right;
-    height: 400px;
-position: absolute;
-    width: 250px;
-    right: 0px;
-    animation: slide-in 1.5s;
-    background-color: white;
-margin: auto;
-    z-index: 50;
-  margin-right: 0;
+#menuBar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  animation: slide-in 1s;
+  background-color: white;
+  z-index: 50;
+  
+}
+.menuBar_Xbutton{
+  height: auto;
+  width: 100%;
+  
+}
+.menuBar_Xbutton>div{
+  cursor: pointer;
+  font-size: 18px;
+  width: 30px;
+  text-align: right;
+
+
+
+}
+.menuBarSection {
+  display: block;
   text-align: left;
-  
-  
-  }
-  .menuBarSection{
+  width: 250px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding-right: 20px;
+}
+.menuBarSection_top {
+  padding: 20px 24px;
+  border-bottom: solid 1px #e0e0e0;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
+  letter-spacing: normal;
+  color: black;
+}
+.menuBarSection_top > span {
+  font-size: 20px;
+  color: rgb(93, 93, 255);
+}
+.menuBarSection_middle {
+  border-bottom: solid 1px #e0e0e0;
+}
 
-  }
-  .menuBarSection_top{
-    padding: 20px 20px;
+.menuBarSection_middle > div {
+  padding: 24px;
+  display: block;
+}
+.menuBarSection_middle > div > a {
+  width: 100%;
+text-align: center;
+  display: block;
+  background-color: rgb(190, 127, 248);
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  padding: 11px 24px;
+  line-height: 1.71;
 
-    /* background-color: black; */
-    width: 100%;
-  }
-  .menuBarSection_top>div{
-    /* color: white; */
-  }
 
-  .menuBarSection_middle{
-    padding-left: 20px;
-  }
-  .menuBar_line{
-    
-  }
+}
 
+.menuBarimg {
+  width: 50px;
+  height: 40px;
+}
+
+
+.menuBarSection_down_main{
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 18px;
+}
+.menuBarSection_main{
+  padding: 10px;
+
+}
+.menuBarSection_main>li{
+  /* display: flex; */
+  height:35px;
+  cursor: pointer;
+}
+.menuBarSection_main>li>div{
+  display: flex;
+  justify-content: space-between;
+}
+.right_angle{
+  color: rgb(218, 218, 218);
+}
 
 @keyframes slide-in {
   from {

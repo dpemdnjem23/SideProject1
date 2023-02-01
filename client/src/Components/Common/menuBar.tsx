@@ -9,66 +9,74 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import '../../css/common/menuBar.css'
+import "../../css/common/menuBar.css";
+import XButton from "./XButton";
 
 const MenuBar = () => {
   return (
     <div id="menuBar">
       <div className="menuBarSection">
-        <div className="menuBarSection_top">
-        <div>
-          <img src='/images/2.png'></img>
-       
-          <div className='menuBar_line'></div>
-          <span>
-         로그인하세요
-
-          </span>
-          <button>로그인</button>
-
-          </div>
-
-          <div>
-          이름,벨
-          </div>
-          <div>
-            x표시
-          </div>
-      
-
-
+        <div className='menuBar_Xbutton'>
+          <div>x</div>
         </div>
-        <div className="menuBarSection_middle">
-          <div>메인메뉴</div>
-          <ul>
+        <div className="menuBarSection_top">
+          <img className="menuBarimg" src="/images/2.png"></img>
+          <span> 섭개더</span>
+          {/* <div>이름,벨</div>
+          < */}
+        </div>
 
+        <div className="menuBarSection_middle">
+          <div>
+            <Link to="/login"> 로그인</Link>
+          </div>
+        </div>
+
+        <div className="menuBarSection_down">
+          <div className="menuBarSection_down_main">메인메뉴</div>
+          <ul className="menuBarSection_main">
             <li>
-              메인페이지
-              
+            <div>
+
+              <span>메인페이지</span>
+
+            
+              <FontAwesomeIcon className='right_angle' icon={faChevronRight}></FontAwesomeIcon>
+              </div>
+ 
             </li>
             <li>
-              구독지갑
-              
-              </li>
-              <li>
-                구독공유
-              
-              </li>
-              <li>
-                구독달력
-              
-              </li>
-              <li>
-                
-              
-              </li>
-              <li>
-              
-              </li>
+              <div>
+
+              <span>구독지갑</span>
+
+              <FontAwesomeIcon className='right_angle'  icon={faChevronRight}></FontAwesomeIcon>
+              </div>
+
+            </li>
+            <li>
+            <div>
+
+              <span>구독공유</span>
+
+              <FontAwesomeIcon className='right_angle' icon={faChevronRight}></FontAwesomeIcon>
+              </div>
+
+            </li>
+            <li>
+              <div>
+
+              <span>구독달력</span>
+
+              <FontAwesomeIcon className='right_angle' icon={faChevronRight}></FontAwesomeIcon>
+              </div>
+            </li>
+            <li></li>
+            <li></li>
           </ul>
-
-
         </div>
       </div>
     </div>
