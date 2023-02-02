@@ -2,27 +2,15 @@
   position: fixed;
   right: 0;
   top: 0;
-  bottom: 0;
+  /* bottom: 0; */
 
   animation: slide-in 1s;
   background-color: white;
   z-index: 50;
   
-}
-.menuBar_Xbutton{
-  height: auto;
-  width: 100%;
   
 }
-.menuBar_Xbutton>div{
-  cursor: pointer;
-  font-size: 18px;
-  width: 30px;
-  text-align: right;
 
-
-
-}
 .menuBarSection {
   display: block;
   text-align: left;
@@ -31,6 +19,26 @@
   top: 0;
   right: 0;
   padding-right: 20px;
+}
+
+.menuBar_Xbutton{
+  height: auto;
+  width: 100%;
+  text-align: right;
+
+  
+}
+.menuBar_Xbutton>button{
+  cursor: pointer;
+  font-size: 18px;
+  width: 30px;
+  border: none;
+  background-color: white;
+
+  
+
+
+
 }
 .menuBarSection_top {
   padding: 20px 24px;
@@ -82,20 +90,30 @@ text-align: center;
   height: auto;
   padding: 10px;
   font-weight: 700;
+  text-align: center;
   font-size: 18px;
 }
 .menuBarSection_main{
-  padding: 10px;
+  padding: 15px;
 
+}
+
+.menuBarSection_down{
+  margin-top:10px
 }
 .menuBarSection_main>li{
   /* display: flex; */
   height:35px;
-  cursor: pointer;
 }
 .menuBarSection_main>li>div{
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+
+}
+.menuBarSection_main>li>div>a{
+  font-size: 16px;
+
 }
 .right_angle{
   color: rgb(218, 218, 218);
