@@ -15,6 +15,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import "../../css/common/menuBar.css";
 import XButton from "./XButton";
 import {
+  isSigninState,
   mainheaderuseStore,
   showErrModalState,
   useWalletStore,
@@ -25,7 +26,7 @@ const MenuBar = () => {
     mainheaderuseStore();
   const { setShowErrModal } = showErrModalState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
-
+const {userSignin} = isSigninState()
   const closeMenuBar = () => {
     mobileMyPageOn(false);
     console.log("asd");
@@ -47,6 +48,12 @@ const MenuBar = () => {
   return (
     <div onClick={(e) => e.stopPropagation()} id="menuBar">
       <div className="menuBarSection">
+        {userSignin?(<div>
+          <div>
+
+          </div>
+          </div>):(
+            <>
         <div className="menuBar_Xbutton">
           <button onClick={closeMenuBar}>x</button>
         </div>
@@ -103,10 +110,11 @@ const MenuBar = () => {
                 ></FontAwesomeIcon>
               </div>
             </li>
-            <li></li>
-            <li></li>
+         
           </ul>
         </div>
+        </>
+        )}
       </div>
     </div>
   );
