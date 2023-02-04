@@ -51,6 +51,8 @@ type cycleState = {
   setCycleCal: (input: { year: string; month: string; day: string }) => void;
 };
 type showModaleState = {
+  showNumber: boolean;
+  setShowNumber: (input: boolean) => void;
   mobileMyPage: boolean;
   mobileMyPageOn: (input: boolean) => void;
   showMypageModal: boolean;
@@ -309,6 +311,11 @@ export const useWalletStore = create<walletInfoState>()((set) => ({
 
 export const mainheaderuseStore = create<showModaleState>((set) => ({
   showMypageModal: false,
+  showNumber: false,
+  setShowNumber: (input) =>
+    set(() => ({
+      showNumber: input,
+    })),
   mobileMyPage: false,
   mobileMyPageOn: (input) =>
     set(() => ({

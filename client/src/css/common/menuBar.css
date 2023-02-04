@@ -8,8 +8,6 @@
   animation: slide-in 1s;
   background-color: white;
   z-index: 50;
-  
-  
 }
 
 .menuBarSection {
@@ -22,24 +20,17 @@
   padding-right: 20px;
 }
 
-.menuBar_Xbutton{
+.menuBar_Xbutton {
   height: auto;
   width: 100%;
   text-align: right;
-
-  
 }
-.menuBar_Xbutton>button{
+.menuBar_Xbutton > button {
   cursor: pointer;
   font-size: 18px;
   width: 30px;
   border: none;
   background-color: white;
-
-  
-
-
-
 }
 .menuBarSection_top {
   padding: 20px 24px;
@@ -68,7 +59,7 @@
 }
 .menuBarSection_middle > div > a {
   width: 100%;
-text-align: center;
+  text-align: center;
   display: block;
   background-color: rgb(190, 127, 248);
   border-radius: 6px;
@@ -76,8 +67,6 @@ text-align: center;
   font-size: 14px;
   padding: 11px 24px;
   line-height: 1.71;
-
-
 }
 
 .menuBarimg {
@@ -85,8 +74,7 @@ text-align: center;
   height: 40px;
 }
 
-
-.menuBarSection_down_main{
+.menuBarSection_down_main {
   width: 100%;
   height: auto;
   padding: 10px;
@@ -94,30 +82,56 @@ text-align: center;
   text-align: center;
   font-size: 18px;
 }
-.menuBarSection_main{
+.menuBarSection_main {
   padding: 15px;
-
 }
 
-.menuBarSection_down{
-  margin-top:10px
+.menuBarSection_down {
+  margin-top: 10px;
 }
-.menuBarSection_main>li{
+.menuBarSection_main > li {
   /* display: flex; */
-  height:35px;
+  height: 35px;
 }
-.menuBarSection_main>li>div{
+.menuBarSection_main > li > div {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-
 }
-.menuBarSection_main>li>div>a{
+.menuBarSection_main > li > div > a {
   font-size: 16px;
+}
+.right_angle {
+  color: rgb(218, 218, 218);
+}
+
+/* menuBar2 ----로그인후  */
+.menuBarSection_top2 {
+  height: 100px;
+  padding-top: 10px;
+  background-color: black;
+}
+
+.menuBarSection_top2 > div {
+  color: white;
+}
+.menuBar2_Xbutton {
+  height: auto;
+  width: 100%;
+  text-align: right;
+  border: none;
+}
+.menuBar2_Xbutton>button{
+  cursor: pointer;
+  font-size: 18px;
+  width: 30px;
+  border: none;
+  background-color: black;
+  color: white;
 
 }
-.right_angle{
-  color: rgb(218, 218, 218);
+.menuBar2_bell{
+cursor: pointer;
 }
 
 @keyframes slide-in {

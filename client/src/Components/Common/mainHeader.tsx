@@ -34,13 +34,18 @@ const Mainheader = () => {
 
   const navigate = useNavigate();
   const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
-  const { showMypageModal, mobileMyPageOn,mobileMyPage,showMypageModalOn } = mainheaderuseStore();
+  const {
+    showMypageModal,
+    showNumber,
+    setShowNumber,
+    mobileMyPageOn,
+    mobileMyPage,
+    showMypageModalOn,
+  } = mainheaderuseStore();
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
     alarmInfouseStore();
-  const [showNumber, setShowNumber] = useState<boolean>(true);
-  const [number, setNumber] = useState<number>(0);
 
   const { setShowErrModal } = showErrModalState();
 
@@ -73,14 +78,13 @@ const Mainheader = () => {
     setShowNumber(true);
   };
 
-  const openMenuBar = () =>{
-mobileMyPageOn(true)
-console.log('클릭')
-  }
-  const closeMenuBar = () =>{
-    mobileMyPageOn(false)
-
-  }
+  const openMenuBar = () => {
+    mobileMyPageOn(true);
+    console.log("클릭");
+  };
+  const closeMenuBar = () => {
+    mobileMyPageOn(false);
+  };
 
   let sum = 0;
 
@@ -101,7 +105,7 @@ console.log('클릭')
       <div id="header">
         <div className="logo">
           <Link to="/">
-            <img  width="60" src="./images/2.png" />
+            <img width="60" src="./images/2.png" />
           </Link>
         </div>
 
@@ -120,9 +124,14 @@ console.log('클릭')
               <Link to="/callendar">구독달력</Link>
             </li>
             <li className="mobilemenu">
-              <FontAwesomeIcon onClick={openMenuBar} icon={faBars} size='2x' className=''></FontAwesomeIcon>
+              <FontAwesomeIcon
+                onClick={openMenuBar}
+                icon={faBars}
+                size="2x"
+                className=""
+              ></FontAwesomeIcon>
             </li>
-          
+
             {userSignin ? (
               <li className="menu">
                 <div className="menu_bell_section">
