@@ -15,8 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import "../../css/common/menuBar.css";
-import XButton from "./XButton";
 import {
+  alarmInfouseStore,
   isSigninState,
   mainheaderuseStore,
   showErrModalState,
@@ -24,8 +24,14 @@ import {
 } from "utils/state";
 
 const MenuBar = () => {
-  const { showMypageModal, showNumber,mobileMyPageOn, mobileMyPage, showMypageModalOn } =
-    mainheaderuseStore();
+  const {
+    showMypageModal,
+    showNumber,
+    mobileMyPageOn,
+    mobileMyPage,
+    infoNumber,
+    showMypageModalOn,
+  } = mainheaderuseStore();
   const { setShowErrModal } = showErrModalState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
   const { userSignin } = isSigninState();
@@ -34,6 +40,9 @@ const MenuBar = () => {
     console.log("asd");
   };
   const navigate = useNavigate();
+
+  const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
+    alarmInfouseStore();
 
   const handleErrModal = () => {
     setShowSubDetail(false);
@@ -46,7 +55,15 @@ const MenuBar = () => {
       setShowErrModal(true);
     }
   };
+  let sum = 0;
 
+  for (let i = 0; i < alarmInfo.length; i++) {
+    if (alarmInfo[i].read === false) {
+      sum++;
+    }
+  }
+
+  console.log(showNumber)
   return (
     <div onClick={(e) => e.stopPropagation()} id="menuBar">
       <div className="menuBarSection">
@@ -56,14 +73,14 @@ const MenuBar = () => {
               <div className="menuBar2_Xbutton">
                 <FontAwesomeIcon
                   // onClick={openAlarmModal}
-                  size='lg'
-                  width="60"
+                  size="lg"
+                  width="30"
                   className="menuBar2_bell"
                   icon={faBell}
                 />
-                 {showNumber ? (
-                    <div className="menu_bell_number">{sum}</div>
-                  ) : null}
+                {showNumber ? (
+                  <div className="menuBar2_bell_number">{sum}</div>
+                ) : null}
                 <button onClick={closeMenuBar}>x</button>
               </div>
               <div>이름</div>

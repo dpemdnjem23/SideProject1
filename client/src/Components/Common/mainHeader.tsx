@@ -41,6 +41,8 @@ const Mainheader = () => {
     mobileMyPageOn,
     mobileMyPage,
     showMypageModalOn,
+    setInfoNumber,
+    infoNumber
   } = mainheaderuseStore();
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
@@ -68,6 +70,7 @@ const Mainheader = () => {
     }
   };
 
+
   const openAlarmModal = () => {
     setShowAlarmModal(true);
     setShowNumber(false);
@@ -77,7 +80,6 @@ const Mainheader = () => {
     setShowAlarmModal(false);
     setShowNumber(true);
   };
-
   const openMenuBar = () => {
     mobileMyPageOn(true);
     console.log("클릭");
@@ -87,13 +89,17 @@ const Mainheader = () => {
   };
 
   let sum = 0;
-
   //alarmInfo중 false만 나오도록
-  for (let i = 0; i < alarmInfo.length; i++) {
-    if (alarmInfo[i].read === false) {
-      sum++;
+    for (let i = 0; i < alarmInfo.length; i++) {
+      if (alarmInfo[i].read === false) {
+        sum++;
+      }
     }
-  }
+
+  useEffect(() => {
+    setShowNumber(true);
+  }, []);
+
 
   //   const clickToNotSign= () =>{
   // alert()
