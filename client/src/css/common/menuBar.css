@@ -17,13 +17,13 @@
   height: 100%;
   top: 0;
   right: 0;
-  padding-right: 20px;
 }
 
 .menuBar_Xbutton {
   height: auto;
   width: 100%;
   text-align: right;
+  margin-right: 10px;
 }
 .menuBar_Xbutton > button {
   cursor: pointer;
@@ -89,11 +89,15 @@
 .menuBarSection_down {
   margin-top: 10px;
 }
+.right_angle{
+  top: 10;
+  height: 15px;
+}
 .menuBarSection_main > li {
   /* display: flex; */
   height: 35px;
 }
-.menuBarSection_main > li > div {
+.menuBarSection_main > li > a {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
@@ -107,8 +111,9 @@
 
 /* menuBar2 ----로그인후  */
 .menuBarSection_top2 {
-  height: 100px;
+  height: 140px;
   padding-top: 10px;
+  padding-left: 20px;
   background-color: black;
 }
 
@@ -117,9 +122,10 @@
 }
 .menuBar2_Xbutton {
   height: auto;
-  width: 100%;
+  width: 220px;
   text-align: right;
   border: none;
+  margin-right: 10px;
 }
 .menuBar2_Xbutton>button{
   cursor: pointer;
@@ -136,6 +142,9 @@
 cursor: pointer;
 margin-right: 20px;
 }
+.menuBar2_nameSection{
+  padding-top: 30px;
+}
 
 
 .menuBar2_bell_number{
@@ -146,7 +155,7 @@ margin-right: 20px;
   font-weight: bold;
   line-height: 16px;
   font-size: 8px;
-  right: 66px;
+  right: 55px;
 
   top:5px;
   text-align: center;
@@ -165,6 +174,12 @@ margin-right: 20px;
   color:white;
   z-index: 11;
 }
+
+.menuBar2_nameSection>div{
+  font-weight: 500;
+}
+
+
 @keyframes slide-in {
   from {
     right: -100%;

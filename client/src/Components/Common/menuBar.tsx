@@ -12,7 +12,10 @@ import {
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faCaretRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "../../css/common/menuBar.css";
 import {
@@ -40,6 +43,9 @@ const MenuBar = () => {
     console.log("asd");
   };
   const navigate = useNavigate();
+  const userinfo = JSON.parse(
+    localStorage.getItem("subgatherUserInfo") || `{}`
+  );
 
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
     alarmInfouseStore();
@@ -63,7 +69,6 @@ const MenuBar = () => {
     }
   }
 
-  console.log(showNumber)
   return (
     <div onClick={(e) => e.stopPropagation()} id="menuBar">
       <div className="menuBarSection">
@@ -83,8 +88,12 @@ const MenuBar = () => {
                 ) : null}
                 <button onClick={closeMenuBar}>x</button>
               </div>
-              <div>이름</div>
-              <div>아이디</div>
+              <div className="menuBar2_nameSection">
+                <div>{userinfo.nickname} 님</div>
+                <Link onClick={() => mobileMyPageOn(false)} to="/mypage">
+                  마이페이지 <FontAwesomeIcon icon={faCaretRight} />
+                </Link>
+              </div>
 
               {/* <div>이름,벨</div>
 < */}
@@ -97,44 +106,48 @@ const MenuBar = () => {
             <div className="menuBarSection_down">
               <ul className="menuBarSection_main">
                 <li>
-                  <div>
-                    <Link to="/">메인페이지</Link>
-
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
+                  <Link onClick={() => mobileMyPageOn(false)} to="/">
+                    <div> 메인페이지 </div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
                 </li>
                 <li>
-                  <div onClick={handleErrModal}>
-                    <Link to="/wallet">구독지갑</Link>
+                  <Link onClick={() => mobileMyPageOn(false)} to="/wallet">
+                    <div>구독지갑</div>
 
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
                 </li>
                 <li>
-                  <div>
-                    <Link to={`/share`}>구독공유</Link>
+                  <Link onClick={() => mobileMyPageOn(false)} to={`/share`}>
+                    <div>구독공유</div>
 
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
                 </li>
                 <li>
-                  <div onClick={handleErrModal}>
-                    <Link to="/callendar">구독달력</Link>
-
+                  <Link to="/callendar">
+                    <div>구독달력</div>
                     <FontAwesomeIcon
                       className="right_angle"
                       icon={faChevronRight}
                     ></FontAwesomeIcon>
-                  </div>
+                  </Link>
                 </li>
               </ul>
             </div>
