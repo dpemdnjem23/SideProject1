@@ -14,7 +14,7 @@
 .AlarmModal_background {
   position: absolute;
   top: 62px;
-  right:90px;
+  right: 90px;
   max-width: 1180px;
   width: 100%;
   height: 100vh;
@@ -109,8 +109,8 @@
   font-size: 16px;
   color: rgb(185, 185, 185);
 }
-.AlarmModal_newTextBox{
-    margin-top: 80px;
+.AlarmModal_newTextBox {
+  margin-top: 80px;
 }
 
 .AlarmModal_section_body {
@@ -118,7 +118,7 @@
   max-height: calc(501px);
   height: 100%;
   margin-top: 59px;
-  overflow-y:auto
+  overflow-y: auto;
 }
 
 .AlarmModal_section_body_textbox {
@@ -175,8 +175,7 @@
   color: rgb(74, 74, 74);
 }
 .AlarmModal_header_contents_read:hover {
-    background-color: rgb(246, 246, 246);
-
+  background-color: rgb(246, 246, 246);
 }
 
 .alarmInfo_old {
@@ -198,7 +197,6 @@
   text-align: left;
   color: rgb(74, 74, 74);
 }
-
 
 .alarmInfo {
   /* margin-bottom: 80px; */
@@ -257,5 +255,7 @@
 
 .newTextBox {
   margin-top: 80px;
-
 }
+/* 모바일 화면 */
+
+

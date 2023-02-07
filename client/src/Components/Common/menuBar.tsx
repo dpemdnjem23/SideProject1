@@ -43,9 +43,52 @@ const MenuBar = () => {
     console.log("asd");
   };
   const navigate = useNavigate();
+
+  const { persistLogin } = isSigninState();
+
   const userinfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
+  const handleSignout = () => {
+    fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+      method: "get",
+      credentials: "include",
+
+      headers: {
+        // "Accept" : 'application/json',
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res: any) => {
+        if (!res.ok) {
+          persistLogin(false);
+          showMypageModalOn(false);
+
+          localStorage.removeItem("accessToken");
+          alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+          isSigninState.persist.clearStorage();
+          localStorage.removeItem("subgatherUserInfo");
+
+          throw new Error(res.status);
+          // window.location.reload()
+        }
+        return res.text();
+        //       // window.location.reload();
+      })
+      .then((res) => {
+        persistLogin(false);
+        showMypageModalOn(false);
+        localStorage.clear();
+        isSigninState.persist.clearStorage();
+        mobileMyPageOn(false);
+
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
     alarmInfouseStore();
@@ -143,11 +186,31 @@ const MenuBar = () => {
                 <li>
                   <Link to="/callendar">
                     <div>구독달력</div>
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
                   </Link>
+                </li>
+              </ul>
+
+              <div className="menuBarSection_middle">
+                <div className="menuBarSection_down_main">고객관리</div>
+              </div>
+              <ul className="menuBarSection_main">
+                <li>
+                  <a onClick={handleSignout}>
+                    <div>로그아웃</div>
+
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -171,44 +234,50 @@ const MenuBar = () => {
             <div className="menuBarSection_down">
               <ul className="menuBarSection_main">
                 <li>
-                  <div>
-                    <Link to="/">메인페이지</Link>
+                  <Link onClick={() => mobileMyPageOn(false)} to="/">
+                    <div>메인페이지</div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
+                </li>
+                <li onClick={handleErrModal}>
+                  <Link to="/wallet">
+                    <div>구독지갑</div>
 
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
                 </li>
                 <li>
-                  <div onClick={handleErrModal}>
-                    <Link to="/wallet">구독지갑</Link>
+                  <Link to={`/share`}>
+                    <div>구독공유</div>
 
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
                 </li>
-                <li>
-                  <div>
-                    <Link to={`/share`}>구독공유</Link>
-
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
-                </li>
-                <li>
-                  <div onClick={handleErrModal}>
-                    <Link to="/callendar">구독달력</Link>
-
-                    <FontAwesomeIcon
-                      className="right_angle"
-                      icon={faChevronRight}
-                    ></FontAwesomeIcon>
-                  </div>
+                <li onClick={handleErrModal}>
+                  <Link to="/callendar">
+                    <div>구독달력</div>
+                    <div>
+                      <FontAwesomeIcon
+                        className="right_angle"
+                        icon={faChevronRight}
+                      ></FontAwesomeIcon>
+                    </div>
+                  </Link>
                 </li>
               </ul>
             </div>

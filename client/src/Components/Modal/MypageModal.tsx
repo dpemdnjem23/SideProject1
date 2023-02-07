@@ -23,6 +23,7 @@ const MypageModal = () => {
   const { mypageOn }: any = useStore();
 
   const { persistLogin } = isSigninState();
+  
   const userinfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
