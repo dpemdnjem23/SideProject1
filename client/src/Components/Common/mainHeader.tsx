@@ -28,22 +28,23 @@ import MenuBar from "./menuBar";
 
 const Mainheader = () => {
   const { page } = paginationuseStore();
-
+  const {
+    showMypageModal,
+    showNumber,
+    setShowNumber,
+    setShowAlarmPage,
+    mobileMyPageOn,
+    mobileMyPage,
+    showMypageModalOn,
+    setInfoNumber,
+    infoNumber,
+  } = mainheaderuseStore();
   const limit = 6;
   const offset = page * limit;
 
   const navigate = useNavigate();
   const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
-  const {
-    showMypageModal,
-    showNumber,
-    setShowNumber,
-    mobileMyPageOn,
-    mobileMyPage,
-    showMypageModalOn,
-    setInfoNumber,
-    infoNumber
-  } = mainheaderuseStore();
+
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
@@ -70,16 +71,11 @@ const Mainheader = () => {
     }
   };
 
-
   const openAlarmModal = () => {
     setShowAlarmModal(true);
     setShowNumber(false);
   };
 
-  const closeAlarmModal = () => {
-    setShowAlarmModal(false);
-    setShowNumber(true);
-  };
   const openMenuBar = () => {
     mobileMyPageOn(true);
     console.log("클릭");
@@ -90,16 +86,15 @@ const Mainheader = () => {
 
   let sum = 0;
   //alarmInfo중 false만 나오도록
-    for (let i = 0; i < alarmInfo.length; i++) {
-      if (alarmInfo[i].read === false) {
-        sum++;
-      }
+  for (let i = 0; i < alarmInfo.length; i++) {
+    if (alarmInfo[i].read === false) {
+      sum++;
     }
+  }
 
   useEffect(() => {
     setShowNumber(true);
   }, []);
-
 
   //   const clickToNotSign= () =>{
   // alert()
@@ -166,9 +161,7 @@ const Mainheader = () => {
           {showMypageModal ? <MypageModal></MypageModal> : null}
         </div>
       </div>
-      {showAlarmModal ? (
-        <AlarmModal closeAlarmModal={closeAlarmModal}></AlarmModal>
-      ) : null}
+      {showAlarmModal ? <AlarmModal></AlarmModal> : null}
 
       <Outlet></Outlet>
     </>

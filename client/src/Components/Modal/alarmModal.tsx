@@ -1,18 +1,30 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { alarmInfouseStore } from "utils/state";
+import { alarmInfouseStore, mainheaderuseStore } from "utils/state";
 
 import "../../css/common/modal/alarmModal.css";
 
-type alarmModal = {
-  closeAlarmModal: () => void;
-};
 
-const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
+
+const AlarmModal = () => {
   const [alarmMode, setAlarmMode] = useState<boolean>(false);
-
+  const {
+    showMypageModal,
+    showNumber,
+    setShowNumber,
+    setShowAlarmModal,
+    setShowAlarmPage,
+    mobileMyPageOn,
+    mobileMyPage,
+    showMypageModalOn,
+    setInfoNumber,
+    infoNumber
+  } = mainheaderuseStore()
   const { alarmInfo, setAlarmInfo,alarmText, setAlarmText } = alarmInfouseStore();
-
+  const closeAlarmModal = () => {
+    setShowAlarmModal(false);
+    setShowNumber(true);
+  };
 
   const accessToken = localStorage.getItem("accessToken");
   //새 알림을 클릭하면 새알림의 색깔이 black , 콘텐츠
@@ -248,7 +260,6 @@ const AlarmModal: React.FC<alarmModal> = ({ closeAlarmModal }) => {
                           </div>
                         );
                       } else {
-                        console.log(el);
                         return (
                           <div className={`AlarmModal_section_body_textbox`}>
                             {/* {alarmInfo.length <= 0 ? ( */}
