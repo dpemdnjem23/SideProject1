@@ -34,14 +34,15 @@ const MenuBar = () => {
     mobileMyPage,
     infoNumber,
     showMypageModalOn,
+    
   } = mainheaderuseStore();
   const { setShowErrModal } = showErrModalState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
   const { userSignin } = isSigninState();
-  const closeMenuBar = () => {
-    mobileMyPageOn(false);
-    console.log("asd");
-  };
+   
+  const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
+    alarmInfouseStore();
+  
   const navigate = useNavigate();
 
   const { persistLogin } = isSigninState();
@@ -49,6 +50,7 @@ const MenuBar = () => {
   const userinfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
+
   const handleSignout = () => {
     fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
       method: "get",
@@ -90,8 +92,7 @@ const MenuBar = () => {
       });
   };
 
-  const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
-    alarmInfouseStore();
+
 
   const handleErrModal = () => {
     setShowSubDetail(false);
@@ -104,6 +105,13 @@ const MenuBar = () => {
       setShowErrModal(true);
     }
   };
+
+
+  const closeMenuBar = () => {
+    mobileMyPageOn(false);
+    console.log('어ㅐ부러')
+  };
+  
   let sum = 0;
 
   for (let i = 0; i < alarmInfo.length; i++) {
@@ -149,7 +157,7 @@ const MenuBar = () => {
             <div className="menuBarSection_down">
               <ul className="menuBarSection_main">
                 <li>
-                  <Link onClick={() => mobileMyPageOn(false)} to="/">
+                  <Link onClick={closeMenuBar} to="/">
                     <div> 메인페이지 </div>
                     <div>
                       <FontAwesomeIcon
@@ -160,7 +168,7 @@ const MenuBar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={() => mobileMyPageOn(false)} to="/wallet">
+                  <Link onClick={closeMenuBar}to="/wallet">
                     <div>구독지갑</div>
 
                     <div>
@@ -172,7 +180,7 @@ const MenuBar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={() => mobileMyPageOn(false)} to={`/share`}>
+                  <Link onClick={closeMenuBar} to={`/share`}>
                     <div>구독공유</div>
 
                     <div>
@@ -234,7 +242,7 @@ const MenuBar = () => {
             <div className="menuBarSection_down">
               <ul className="menuBarSection_main">
                 <li>
-                  <Link onClick={() => mobileMyPageOn(false)} to="/">
+                  <Link onClick={closeMenuBar} to="/">
                     <div>메인페이지</div>
                     <div>
                       <FontAwesomeIcon

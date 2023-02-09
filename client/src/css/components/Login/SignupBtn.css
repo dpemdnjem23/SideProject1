@@ -1,12 +1,11 @@
 
 .id_signup_section{
-    display: flex;
+  display: flex;
     width: 100%;
-    
+    padding-top:10px;
+
     align-items: center;
-    justify-content: center;
-   
-}
+    justify-content: center;}
 
 .id_signup_ic {
 
@@ -19,7 +18,7 @@
     height: 45px;
     padding:0px 15px;
     width: 100%;
-    min-width: 400px;
+    max-width: 400px;
   
     /* padding: 10px 35px; */
     border: 1px solid rgb(223, 223, 223);

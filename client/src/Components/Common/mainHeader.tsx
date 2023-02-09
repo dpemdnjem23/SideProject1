@@ -74,14 +74,15 @@ const Mainheader = () => {
   const openAlarmModal = () => {
     setShowAlarmModal(true);
     setShowNumber(false);
+    mobileMyPageOn(true);
   };
 
   const openMenuBar = () => {
     mobileMyPageOn(true);
+  
+    console.log(mobileMyPage);
     console.log("클릭");
-  };
-  const closeMenuBar = () => {
-    mobileMyPageOn(false);
+    mobileMyPageOn(true);
   };
 
   let sum = 0;
@@ -100,7 +101,7 @@ const Mainheader = () => {
   // alert()
 
   //   }
-
+  // onClick={(e) => e.stopPropagation()}
   return (
     <>
       <div id="header">
@@ -110,27 +111,23 @@ const Mainheader = () => {
           </Link>
         </div>
 
-        <div onClick={(e) => e.stopPropagation()} className="main_menu">
+        <div className="main_menu">
           <ul>
             <li className="menu">
               <Link to="/">메인페이지</Link>
             </li>
-            <li onClick={handleErrModal} className="menu">
-              <Link to="/wallet">구독지갑</Link>
+            <li className="menu">
+              <Link onClick={handleErrModal} to="/wallet">
+                구독지갑
+              </Link>
             </li>
             <li className="menu">
               <Link to={`/share`}>구독공유</Link>
             </li>
-            <li onClick={handleErrModal} className="menu">
-              <Link to="/callendar">구독달력</Link>
-            </li>
-            <li className="mobilemenu">
-              <FontAwesomeIcon
-                onClick={openMenuBar}
-                icon={faBars}
-                size="2x"
-                className=""
-              ></FontAwesomeIcon>
+            <li className="menu">
+              <Link onClick={handleErrModal} to="/callendar">
+                구독달력
+              </Link>
             </li>
 
             {userSignin ? (
@@ -159,6 +156,14 @@ const Mainheader = () => {
             )}
           </ul>
           {showMypageModal ? <MypageModal></MypageModal> : null}
+        </div>
+
+        <div className="nav_mobile">
+          <ul>
+            <li onClick={openMenuBar}>
+              <FontAwesomeIcon icon={faBars} size="2x"></FontAwesomeIcon>
+            </li>
+          </ul>
         </div>
       </div>
       {showAlarmModal ? <AlarmModal></AlarmModal> : null}

@@ -2,7 +2,7 @@
 .Oauth_sign_section{
     display: flex;
     width: 100%;
-    padding: 10px 32px;
+    padding-top: 10px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
