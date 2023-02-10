@@ -35,6 +35,7 @@ import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
+import AlarmPage from "Pages/Mypage/AlarmPage";
 
 // import {
 //   MainPage,
@@ -70,13 +71,22 @@ const App = () => {
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
 
-  const { showMypageModalOn, mobileMyPageOn, mobileMyPage } =
-    mainheaderuseStore();
-
+  const {
+    showMypageModal,
+    showNumber,
+    mobileMyPageOn,
+    mobileMyPage,
+    showAlarmPage,
+    infoNumber,
+    setShowNumber,
+    showMypageModalOn,
+    setShowAlarmModal,
+    setShowAlarmPage,
+  } = mainheaderuseStore();
   const closeShowMypageModal = () => {
     showMypageModalOn(false);
     mobileMyPageOn(false);
-
+    
   };
 
   const closeMenuBar = () => {
@@ -229,6 +239,7 @@ const App = () => {
       <div onClick={closeShowMypageModal} id="App">
         {showErrModal ? <ErrModal></ErrModal> : null}
         {mobileMyPage ? <MenuBar></MenuBar> : null}
+        {showAlarmPage?<AlarmPage></AlarmPage>:null}
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>

@@ -33,7 +33,11 @@ const MenuBar = () => {
     mobileMyPageOn,
     mobileMyPage,
     infoNumber,
+    setShowNumber,
     showMypageModalOn,
+    setShowAlarmModal,
+    setShowAlarmPage,
+    
     
   } = mainheaderuseStore();
   const { setShowErrModal } = showErrModalState();
@@ -106,10 +110,17 @@ const MenuBar = () => {
     }
   };
 
+  const openAlarmPage = () =>{
+    setShowAlarmModal(true)
+    setShowAlarmPage(true)
+    setShowNumber(false)
+    mobileMyPageOn(false);
+
+  }
 
   const closeMenuBar = () => {
     mobileMyPageOn(false);
-    console.log('어ㅐ부러')
+    
   };
   
   let sum = 0;
@@ -128,7 +139,7 @@ const MenuBar = () => {
             <div className="menuBarSection_top2">
               <div className="menuBar2_Xbutton">
                 <FontAwesomeIcon
-                  // onClick={openAlarmModal}
+                  onClick={openAlarmPage}
                   size="lg"
                   width="30"
                   className="menuBar2_bell"

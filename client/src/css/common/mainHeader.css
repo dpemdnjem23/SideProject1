@@ -15,6 +15,9 @@
   /* transition: height 0.05s ease 0s; */
   border-bottom: 1px solid rgb(211, 211, 211);
 }
+.nav_mobile{
+  display: none;
+}
 
 #header > .logo {
   width: 60px;
@@ -146,8 +149,8 @@
     width: calc(100% - 40px) !important;
   }
   .mobile_menu {
-    /* display: block;
-    width: calc(100% - 40px) !important; */
+display: block;
+width: 100px;
   }
   #header > .logo {
     width: calc(100% - 40px);

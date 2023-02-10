@@ -32,18 +32,17 @@ const Mainheader = () => {
     showMypageModal,
     showNumber,
     setShowNumber,
-    setShowAlarmPage,
     mobileMyPageOn,
     mobileMyPage,
+    setShowAlarmPage,
+    showAlarmModal,
+    setShowAlarmModal,
     showMypageModalOn,
-    setInfoNumber,
-    infoNumber,
   } = mainheaderuseStore();
   const limit = 6;
   const offset = page * limit;
 
   const navigate = useNavigate();
-  const [showAlarmModal, setShowAlarmModal] = useState<boolean>(false);
 
   const { userSignin } = isSigninState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
@@ -74,15 +73,15 @@ const Mainheader = () => {
   const openAlarmModal = () => {
     setShowAlarmModal(true);
     setShowNumber(false);
-    mobileMyPageOn(true);
+    setShowAlarmPage(true)
+    // mobileMyPageOn(true);
   };
 
   const openMenuBar = () => {
+    // mobileMyPageOn(true);
     mobileMyPageOn(true);
-  
-    console.log(mobileMyPage);
-    console.log("클릭");
-    mobileMyPageOn(true);
+    // setShowAlarmModal(true);
+
   };
 
   let sum = 0;
@@ -92,7 +91,6 @@ const Mainheader = () => {
       sum++;
     }
   }
-
   useEffect(() => {
     setShowNumber(true);
   }, []);
@@ -111,7 +109,7 @@ const Mainheader = () => {
           </Link>
         </div>
 
-        <div className="main_menu">
+        <div onClick={(e) => e.stopPropagation()} className="main_menu">
           <ul>
             <li className="menu">
               <Link to="/">메인페이지</Link>
@@ -158,7 +156,7 @@ const Mainheader = () => {
           {showMypageModal ? <MypageModal></MypageModal> : null}
         </div>
 
-        <div className="nav_mobile">
+        <div onClick={(e) => e.stopPropagation()} className="nav_mobile">
           <ul>
             <li onClick={openMenuBar}>
               <FontAwesomeIcon icon={faBars} size="2x"></FontAwesomeIcon>

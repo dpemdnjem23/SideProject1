@@ -1,0 +1,46 @@
+@media (max-width: 768px) {
+  .AlarmTop {
+    width: 100%;
+  }
+
+  .AlarmTop_Xbutton {
+    width: 100%;
+    padding-top: 20px;
+    padding-right: 20px;
+    margin-bottom: 5px;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+  }
+  .AlarmTop_Xbutton > div {
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .AlarmTop_section {
+    width: 100%;
+    max-height: 59px;
+    min-height: 59px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    border-bottom: 1 x solid rgb(240, 240, 240);
+    padding: 0px 20px;
+    position: absolute;
+    background: rgb(255, 255, 255);
+  }
+  .AlarmTop_contents{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+  
+}

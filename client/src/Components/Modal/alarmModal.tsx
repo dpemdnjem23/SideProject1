@@ -21,9 +21,13 @@ const AlarmModal = () => {
     infoNumber
   } = mainheaderuseStore()
   const { alarmInfo, setAlarmInfo,alarmText, setAlarmText } = alarmInfouseStore();
+  
+  
   const closeAlarmModal = () => {
     setShowAlarmModal(false);
     setShowNumber(true);
+    setShowAlarmPage
+    
   };
 
   const accessToken = localStorage.getItem("accessToken");
@@ -127,7 +131,7 @@ const AlarmModal = () => {
   const isSelectedAlarm = alarmText ? "newTextBox" : "";
 
   return (
-    <div onClick={() => closeAlarmModal()} id="AlarmModal">
+    <div onClick={closeAlarmModal} id="AlarmModal">
       <div className="AlarmModal_background">
         <div
           onClick={(e) => e.stopPropagation()}

@@ -51,13 +51,13 @@ type cycleState = {
   setCycleCal: (input: { year: string; month: string; day: string }) => void;
 };
 type showModaleState = {
-  showAlarmModal:boolean;
-  setShowAlarmModal:(input:boolean) =>void
-  showAlarmPage:boolean;
-  setShowAlarmPage:(input:boolean) =>void
-  infoNumber:number;
+  showAlarmModal: boolean;
+  setShowAlarmModal: (input: boolean) => void;
+  showAlarmPage: boolean;
+  setShowAlarmPage: (input: boolean) => void;
+  infoNumber: number;
 
-  setInfoNumber:(input:number) =>void;
+  setInfoNumber: (input: number) => void;
   showNumber: boolean;
   setShowNumber: (input: boolean) => void;
   mobileMyPage: boolean;
@@ -318,19 +318,22 @@ export const useWalletStore = create<walletInfoState>()((set) => ({
 
 export const mainheaderuseStore = create<showModaleState>((set) => ({
   showMypageModal: false,
-  infoNumber:0,
-  showAlarmModal:false,
-  setShowAlarmModal:(input) =>set(()=>({
-    showAlarmModal:input
-  })),
-  showAlarmPage:false,
-  setShowAlarmPage:(input) =>set(()=>({
-    showAlarmPage:input
-  })),
+  infoNumber: 0,
+  showAlarmModal: false,
+  setShowAlarmModal: (input) =>
+    set(() => ({
+      showAlarmModal: input,
+    })),
+  showAlarmPage: false,
+  setShowAlarmPage: (input) =>
+    set(() => ({
+      showAlarmPage: input,
+    })),
 
-  setInfoNumber:(input) =>set(()=>({
-    infoNumber:input
-  })),
+  setInfoNumber: (input) =>
+    set(() => ({
+      infoNumber: input,
+    })),
   showNumber: false,
   setShowNumber: (input) =>
     set(() => ({
