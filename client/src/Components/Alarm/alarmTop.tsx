@@ -7,10 +7,14 @@ import { alarmInfouseStore, mainheaderuseStore } from "utils/state";
 
 import "../../css/components/Alarm/alarmTop.css";
 const AlarmTop = () => {
-  const [alarmMode, setAlarmMode] = useState<boolean>(false);
-
-  const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
-    alarmInfouseStore();
+  const {
+    alarmInfo,
+    setAlarmMode,
+    alarmMode,
+    setAlarmInfo,
+    alarmText,
+    setAlarmText,
+  } = alarmInfouseStore();
 
   const accessToken = localStorage.getItem("accessToken");
   const {
@@ -28,7 +32,7 @@ const AlarmTop = () => {
   const closeAlarmPage = () => {
     setShowAlarmPage(false);
     setShowNumber(true);
-    setShowAlarmModal(false)
+    setShowAlarmModal(false);
   };
   const handlebulkReadClick = () => {
     //버튼 클릭시 alarm에 존재하는 read update
@@ -62,38 +66,6 @@ const AlarmTop = () => {
       });
   };
 
-  const handleReadClick = (el: number) => {
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/alarm/update`,
-        { id: el },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
-      .then(() => {
-        // console.log(res)
-
-        axios
-          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((res) => {
-            setAlarmInfo(res.data.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const handleNewClick = () => {
     setAlarmMode(false);
@@ -128,7 +100,7 @@ const AlarmTop = () => {
         </div>
       </div>
 
-      <div className='AlarmTop_section'>
+      <div className="AlarmTop_section">
         <div className="AlarmTop_contents">
           <div
             onClick={handleNewClick}

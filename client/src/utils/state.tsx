@@ -141,6 +141,8 @@ type alarmInfo = {
 };
 
 type alarmInfoState = {
+  alarmMode: boolean;
+  setAlarmMode: (input: boolean) => void;
   alarmInfo: alarmInfo[];
   setAlarmInfo: (input: []) => void;
   alarmText: boolean;
@@ -351,7 +353,10 @@ export const mainheaderuseStore = create<showModaleState>((set) => ({
 }));
 
 export const alarmInfouseStore = create<alarmInfoState>((set) => ({
+  alarmMode: false,
+  setAlarmMode: (input) => set({ alarmMode: input }),
   alarmInfo: [],
+
   setAlarmInfo: (input) => set({ alarmInfo: input }),
   alarmText: false,
   setAlarmText: (input) => set({ alarmText: input }),
