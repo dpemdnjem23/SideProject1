@@ -24,6 +24,7 @@ const MainPage = () => {
     const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
 
     mediaQuery.addEventListener("change", listener);
+    
     return () => {
       mediaQuery.removeEventListener("change", listener);
     };

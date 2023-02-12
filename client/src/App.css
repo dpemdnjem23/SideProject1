@@ -4,7 +4,6 @@
   font-size: 100%;
   margin: 0;
   box-sizing: border-box;
-
 }
 
 html,
@@ -13,43 +12,34 @@ body {
   font-size: 15px;
   height: 100%;
   line-height: 1.8rem;
-  overflow-y:scroll;
-  z-index: 90;
-
-  
-
 }
 #App{
-
   overflow-x: hidden;
-
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   width: 17px;
-  /* z-index: 999; */
-
-  /* background-color: black; */
+  background-color: white;
 }
-body::-webkit-scrollbar-track:hover{
+body::-webkit-scrollbar-track:hover {
   background-color: rgb(250, 250, 250);
-
 }
 
-body::-webkit-scrollbar-thumb{
+
+body::-webkit-scrollbar-thumb {
   background-color: rgb(192, 192, 192);
   border-radius: 10px;
   width: 10px;
   background-clip: padding-box;
   border: 5px solid transparent;
-
-
-  /* background-color: black; */
 }
-body::-webkit-scrollbar-thumb:hover{
+body::-webkit-scrollbar-thumb:hover {
   background-color: rgb(184, 184, 184);
   border: 4px solid transparent;
+}
+
+body::-webkit-scrollbar:horizontal{
 
 
-
+  overflow: hidden;
 }

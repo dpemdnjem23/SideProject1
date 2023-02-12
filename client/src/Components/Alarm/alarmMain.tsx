@@ -136,14 +136,14 @@ const AlarmMain = () => {
         ? alarmInfo.map((el) => {
             if (el.read === true) {
               return (
-                <div className="alarmInfo_old" key={el.id}>
-                  <div className="alarmInfo_Section1">
-                    <div className="alarmInfo_Section1_imgarea">
+                <div className="AlarmMainInfo_old" key={el.id}>
+                  <div className="AlarmMainInfo_Section1">
+                    <div className="AlarmMainInfo_Section1_imgarea">
                       <img src={el.image} />
                     </div>
-                    <div className="alarmInfo_Section1_contentarea">
+                    <div className="AlarmMainInfo_Section1_contentarea">
                       <div>
-                        <div className="alarmInfo_Section1_contentarea_title">
+                        <div className="AlarmMainInfo_Section1_contentarea_title">
                           {el.title}
                         </div>
                       </div>
@@ -153,7 +153,7 @@ const AlarmMain = () => {
                       </div>
                       {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
                     </div>
-                    <div className="alarmInfo_Section1_contentarea2">
+                    <div className="AlarmMainInfo_Section1_contentarea2">
                       <span>
                         {el.createdAt.substr(5, 2) +
                           "월 " +
@@ -169,15 +169,16 @@ const AlarmMain = () => {
         : alarmInfo.map((el) => {
             if (el.read === false) {
               if (el) {
+                // AlarmMain
                 return (
-                  <div className="alarmInfo" key={el.id}>
-                    <div className="alarmInfo_Section1">
-                      <div className="alarmInfo_Section1_imgarea">
+                  <div className="AlarmMainInfo" key={el.id}>
+                    <div className="AlarmMainInfo_Section1">
+                      <div className="AlarmMainInfo_Section1_imgarea">
                         <img src={el.image} />
                       </div>
-                      <div className="alarmInfo_Section1_contentarea">
+                      <div className="AlarmMainInfo_Section1_contentarea">
                         <div>
-                          <div className="alarmInfo_Section1_contentarea_title">
+                          <div className="AlarmMainInfo_Section1_contentarea_title">
                             {el.title}
                           </div>
                         </div>
@@ -187,7 +188,7 @@ const AlarmMain = () => {
                         </div>
                         {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
                       </div>
-                      <div className="alarmInfo_Section1_contentarea2">
+                      <div className="AlarmMainInfo_Section1_contentarea2">
                         <span>
                           {el.createdAt.substr(5, 2) +
                             "월 " +
@@ -201,7 +202,7 @@ const AlarmMain = () => {
                 );
               } else {
                 return (
-                  <div className={`AlarmMain_section_textbox`}>
+                  <div className={`AlarmMainInfo_section_textbox`}>
                     {/* {alarmInfo.length <= 0 ? ( */}
                     <h1>현재 도착한 새알림이 없습니다.</h1>
                     <p>

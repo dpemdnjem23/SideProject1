@@ -115,6 +115,10 @@ const MenuBar = () => {
     setShowAlarmPage(true)
     setShowNumber(false)
     mobileMyPageOn(false);
+    document.body.style.overflowY='scroll'
+    document.body.style.top='0';
+    document.body.style.position='fixed'
+    document.body.style.width='100%'
 
   }
 

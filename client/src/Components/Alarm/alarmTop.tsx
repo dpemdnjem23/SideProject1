@@ -33,6 +33,10 @@ const AlarmTop = () => {
     setShowAlarmPage(false);
     setShowNumber(true);
     setShowAlarmModal(false);
+    document.body.style.overflowY = "";
+    document.body.style.top = "";
+    document.body.style.position = "";
+    document.body.style.width = "";
   };
   const handlebulkReadClick = () => {
     //버튼 클릭시 alarm에 존재하는 read update
@@ -66,7 +70,6 @@ const AlarmTop = () => {
       });
   };
 
-
   const handleNewClick = () => {
     setAlarmMode(false);
   };
@@ -91,12 +94,8 @@ const AlarmTop = () => {
   return (
     <div className="AlarmTop">
       <div className="AlarmTop_Xbutton">
-        <div>
-          <FontAwesomeIcon
-            onClick={closeAlarmPage}
-            size="lg"
-            icon={faX}
-          ></FontAwesomeIcon>
+        <div onClick={closeAlarmPage}>
+          <FontAwesomeIcon size="lg" icon={faX}></FontAwesomeIcon>
         </div>
       </div>
 

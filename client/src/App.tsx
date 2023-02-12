@@ -35,7 +35,7 @@ import Loading from "Components/Common/loading";
 import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
-import AlarmPage from "Pages/Mypage/AlarmPage";
+import AlarmPage from "Pages/AlarmPage";
 
 // import {
 //   MainPage,
