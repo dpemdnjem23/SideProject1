@@ -1,35 +1,43 @@
 import AlarmMain from "Components/Alarm/alarmMain";
 import AlarmTop from "Components/Alarm/alarmTop";
 import React, { useState, useEffect } from "react";
+import { mainheaderuseStore } from "utils/state";
 
 import "../css/pages/AlarmPage.css";
 const AlarmPage = () => {
   const [pageScroll, setPageScroll] = useState<boolean>(true);
 
+  const { showAlarmModal } = mainheaderuseStore();
+
+  //alarmModal이 존재할때만
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width:768px)");
+    // if (showAlarmModal) {
+      console.log(showAlarmModal,pageScroll)
 
-    const listener = (e: MediaQueryListEvent) => {
-      setPageScroll(e.matches);
-    };
+      const mediaQuery = window.matchMedia("(max-width:768px)");
 
-    mediaQuery.addEventListener("change", listener);
-    
-    if (pageScroll) {
-      document.body.style.overflowY = "scroll";
-      document.body.style.top = "0";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-    } else {
-      document.body.style.overflowY = "";
-      document.body.style.top = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-    }
+      const listener = (e: MediaQueryListEvent) => {
+        setPageScroll(e.matches);
+      };
 
-    return () => {
-      mediaQuery.removeEventListener("change", listener);
-    };
+      mediaQuery.addEventListener("change", listener);
+
+      if (pageScroll) {
+        document.body.style.overflowY = "scroll";
+        document.body.style.top = "0";
+        document.body.style.position = "fixed";
+        document.body.style.width = "100%";
+      } else {
+        document.body.style.overflowY = "";
+        document.body.style.top = "";
+        document.body.style.position = "";
+        document.body.style.width = "";
+      }
+
+      return () => {
+        mediaQuery.removeEventListener("change", listener);
+      };
+    // }
   }, []);
 
   return (

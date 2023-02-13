@@ -8,7 +8,13 @@ import NicknameNotificationModal from "Components/Modal/NicknameNotificationModa
 
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/Mypage/mypageuseredit";
-import { BrowserRouter, Route, Routes, Outlet,useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
 import RegisterPage from "./Mypage/SubReigstPage";
 import MypageWithdrwal from "Components/Mypage/mypageuserWithdrawal";
 import {
@@ -28,17 +34,14 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
 
 const MyPage = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [subLength, setSubLength] = useState<number>(0);
-
 
   const userinfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
 
-const [nick,setNick] = useState<string>('')
-  
+  const [nick, setNick] = useState<string>("");
 
   const { showNicknameNotiModal, showPasswordNotiModal } =
     mypageNotiModalState();
@@ -50,20 +53,19 @@ const [nick,setNick] = useState<string>('')
     setShowRegist(true);
   };
 
-  const today = moment().format('YYYY-MM-DD')
-
+  const today = moment().format("YYYY-MM-DD");
 
   const { setDelUser, setEditUser, editUser, delUser, passEditUser } =
     showMypageState();
 
-  const {cycleCal, setCycleCal } = cycleState();
+  const { cycleCal, setCycleCal } = cycleState();
 
   const { dateCal, setDateCal } = dateState();
 
   const { setSelected, setSubCash } = registSubInfoState();
 
-  const [subPayment,setSubPayment] = useState<number>(0)
-  const [subCost,setSubCost] = useState<number>(0)
+  const [subPayment, setSubPayment] = useState<number>(0);
+  const [subCost, setSubCost] = useState<number>(0);
 
   // const { setPaymentCost, setSubCost } = mypageSubCostState();
 
@@ -77,8 +79,6 @@ const [nick,setNick] = useState<string>('')
     setSelected("");
     setSubCash("");
   };
-
- 
 
   const calSubCost = () =>
     axios
@@ -98,8 +98,7 @@ const [nick,setNick] = useState<string>('')
           sum = sum + costSum[i];
         }
 
-
-                setSubLength(res.data.data.length);
+        setSubLength(res.data.data.length);
 
         setSubCost(sum);
       })
@@ -131,19 +130,15 @@ const [nick,setNick] = useState<string>('')
         console.log(err);
       });
 
-
   useEffect(() => {
     calSubCost();
     calPaymentCost();
     resetState();
-
-
   }, []);
 
   // useEffect(()=>{
 
   // },)
-
 
   //가운데 메인 내정보
   //사이드 정보
@@ -161,8 +156,22 @@ const [nick,setNick] = useState<string>('')
 
       <div className="Mypage_background">
         <div className="Mypage_section">
+          <div className="Mypage_mobile">
+            <div>
+              
+            </div>
+            <div>
+              마이페이지
+            </div>
+            <div>
+              이미지
+            </div>
+          </div>
+
           <div className="Mypage_info_section">
-            {editUser || delUser || passEditUser ? null : <Mypageuser subLength={subLength} />}
+            {editUser || delUser || passEditUser ? null : (
+              <Mypageuser subLength={subLength} />
+            )}
             {editUser && userinfo.social_user === false ? <MypageEdit /> : null}
             {delUser ? <MypageWithdrwal /> : null}
             {editUser && userinfo.social_user ? <MypageSocialEdit /> : null}

@@ -83,6 +83,7 @@ const App = () => {
     setShowAlarmModal,
     setShowAlarmPage,
   } = mainheaderuseStore();
+  
   const closeShowMypageModal = () => {
     showMypageModalOn(false);
     mobileMyPageOn(false);
@@ -232,7 +233,6 @@ const App = () => {
   //2. 액세스 토큰이 만료되면 리프레쉬 토큰으로 액세스 토큰 재발급
   //3.
   // console.log(document.cookie.match('refreshToken'))
-
   //
   return (
     <BrowserRouter>

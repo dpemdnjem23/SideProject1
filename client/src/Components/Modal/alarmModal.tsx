@@ -26,7 +26,7 @@ const AlarmModal = () => {
   const closeAlarmModal = () => {
     setShowAlarmModal(false);
     setShowNumber(true);
-    setShowAlarmPage
+    setShowAlarmPage(false)
     
   };
 

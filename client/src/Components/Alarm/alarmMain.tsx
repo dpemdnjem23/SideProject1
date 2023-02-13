@@ -141,25 +141,25 @@ const AlarmMain = () => {
                     <div className="AlarmMainInfo_Section1_imgarea">
                       <img src={el.image} />
                     </div>
-                    <div className="AlarmMainInfo_Section1_contentarea">
-                      <div>
-                        <div className="AlarmMainInfo_Section1_contentarea_title">
-                          {el.title}
-                        </div>
-                      </div>
+                    <div className="AlarmMainInfo_Section1_main">
+                      <div className="AlarmMainInfo_Section1_contentarea">
+                          <div className="AlarmMainInfo_Section1_contentarea_title">
+                            {el.title}
+                          </div>
 
-                      <div>
-                        갱신까지 {el.remain_time}일 남았습니다. 확인해주세요{" "}
+                        <div className= 'AlarmMainInfo_Section1_contentarea_main'>
+                          갱신까지 {el.remain_time}일 남았습니다. 확인해주세요{" "}
+                        </div>
+                        {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
                       </div>
-                      {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
-                    </div>
-                    <div className="AlarmMainInfo_Section1_contentarea2">
-                      <span>
-                        {el.createdAt.substr(5, 2) +
-                          "월 " +
-                          el.createdAt.substr(8, 2) +
-                          "일"}
-                      </span>
+                      <div className="AlarmMainInfo_Section1_contentarea2">
+                        <span>
+                          {el.createdAt.substr(5, 2) +
+                            "월 " +
+                            el.createdAt.substr(8, 2) +
+                            "일"}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -176,26 +176,26 @@ const AlarmMain = () => {
                       <div className="AlarmMainInfo_Section1_imgarea">
                         <img src={el.image} />
                       </div>
-                      <div className="AlarmMainInfo_Section1_contentarea">
-                        <div>
+                      <div className="AlarmMainInfo_Section1_main">
+                        <div className="AlarmMainInfo_Section1_contentarea">
                           <div className="AlarmMainInfo_Section1_contentarea_title">
                             {el.title}
                           </div>
-                        </div>
 
-                        <div>
-                          갱신까지 {el.remain_time}일 남았습니다. 확인해주세요{" "}
+                          <div className="AlarmMainInfo_Section1_contentarea_main">
+                            갱신까지 {el.remain_time}일 남았습니다. 확인해주세요{" "}
+                          </div>
                         </div>
                         {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}
-                      </div>
-                      <div className="AlarmMainInfo_Section1_contentarea2">
-                        <span>
-                          {el.createdAt.substr(5, 2) +
-                            "월 " +
-                            el.createdAt.substr(8, 2) +
-                            "일"}
-                        </span>
-                        <div onClick={() => handleReadClick(el.id)}>읽음</div>
+                        <div className="AlarmMainInfo_Section1_contentarea2">
+                          <span>
+                            {el.createdAt.substr(5, 2) +
+                              "월 " +
+                              el.createdAt.substr(8, 2) +
+                              "일"}
+                          </span>
+                          <div onClick={() => handleReadClick(el.id)}>읽음</div>
+                        </div>
                       </div>
                     </div>
                   </div>

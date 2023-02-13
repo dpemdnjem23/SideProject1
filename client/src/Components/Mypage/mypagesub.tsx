@@ -3,9 +3,9 @@ import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 
 import "../../css/components/MyPage/mypagesub.css";
 
-type props =  {
+type props = {
   openRegist: () => void;
-}
+};
 
 const Mypagesub: React.FC<props> = ({ openRegist }) => {
   // const [showRegist, setShowRegist] = useState<boolean>(false);
@@ -28,20 +28,21 @@ const Mypagesub: React.FC<props> = ({ openRegist }) => {
           </div>
         </Link>
         <div className="Mypage_2 sub">
-        <Link to="/shareregist">
-          <div className="Mypage_2 textarea">
-            <span className="text_top">구독 모음</span>
-            <span className="text_middle">나의 구독을 글과 함께 공유해요!</span>
-            <div className="text_regist2 bottom">
-              구독 모음
-              <img src="./images/icons8-들어가다-30.png"></img>
+          <Link to="/shareregist">
+            <div className="Mypage_2 textarea">
+              <span className="text_top">구독 모음</span>
+              <span className="text_middle">
+                나의 구독을 글과 함께 공유해요!
+              </span>
+              <div className="text_regist2 bottom">
+                구독 모음
+                <img src="./images/icons8-들어가다-30.png"></img>
+              </div>
             </div>
-          </div>
           </Link>
         </div>
-     
       </div>
- 
+
       {/* // </div> */}
     </>
   );
