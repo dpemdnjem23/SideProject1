@@ -27,8 +27,8 @@ const Mypagesub: React.FC<props> = ({ openRegist }) => {
             </div>
           </div>
         </Link>
-        <div className="Mypage_2 sub">
-          <Link to="/shareregist">
+        <Link to="/shareregist">
+          <div className="Mypage_2 sub">
             <div className="Mypage_2 textarea">
               <span className="text_top">구독 모음</span>
               <span className="text_middle">
@@ -39,11 +39,10 @@ const Mypagesub: React.FC<props> = ({ openRegist }) => {
                 <img src="./images/icons8-들어가다-30.png"></img>
               </div>
             </div>
-          </Link>
-        </div>
+          </div>
+        </Link>
       </div>
 
-      {/* // </div> */}
     </>
   );
 };

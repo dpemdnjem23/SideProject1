@@ -6,6 +6,7 @@ import Mypagesub from "Components/Mypage/mypagesub";
 import MypagePassEdit from "Components/Mypage/mypagePassEdit";
 import NicknameNotificationModal from "Components/Modal/NicknameNotificationModal";
 
+import MobileMyPage from "Components/Mypage/mobileMyPage";
 import "../css/pages/Mypage.css";
 import MypageEdit from "Components/Mypage/mypageuseredit";
 import {
@@ -29,6 +30,7 @@ import {
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
 import PassNotificationModal from "Components/Modal/passwordNotificationModal";
+import MobileMyPageMenu from "Components/Modal/mobileMyPageMenu";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
@@ -156,19 +158,9 @@ const MyPage = () => {
 
       <div className="Mypage_background">
         <div className="Mypage_section">
-          <div className="Mypage_mobile">
-            <div>
-              
-            </div>
-            <div>
-              마이페이지
-            </div>
-            <div>
-              이미지
-            </div>
-          </div>
-
+          <MobileMyPage></MobileMyPage>
           <div className="Mypage_info_section">
+            <MobileMyPageMenu></MobileMyPageMenu>
             {editUser || delUser || passEditUser ? null : (
               <Mypageuser subLength={subLength} />
             )}
