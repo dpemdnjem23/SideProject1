@@ -1,6 +1,47 @@
+@media(max-width:768px){
 .MobileMyPageMenu{
+/* display: block; */
+max-width: 100vw;
+width: 100%;
+min-height: 100vh;
+background-color: white;
+
+}
+
+.MobileMyPageMenu_section{
 
     padding: 24px 20px;
     text-align: center;
+}
+.MobileMyPageMenu_section_manage{
+    margin-top: 30px;
+}
+.MobileMyPageMenu_section_manage>div:first-child{
+    font-weight: bold;
+cursor: default;
+width: 100%;
+height: 50px;
+display: flex;
+justify-content: center;
+font-size: 15px;
+line-height: 21px;
+text-align: center;
+}
+
+.MobileMyPageMenu_section_manage>a:nth-child(1){
+
+cursor: pointer;
+}
+.MobileMyPageMenu_section_manage>a:nth-child(1):hover{
+    background-color: rgb(226, 226, 226);
+  border-radius: 10px;
+}
 
 }
+
+/* 
+.MobileMyPageMenu{
+
+display: none;
+
+} */

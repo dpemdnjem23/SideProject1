@@ -207,6 +207,13 @@ type MainPageState = {
   setFooterLoginBt: (input: boolean) => void;
 };
 
+
+type mypageMenu= {
+  mobileMenu:boolean;
+  setMobileMenu:(input:boolean) =>void;
+
+}
+
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -405,6 +412,14 @@ export const MainPageUseStore = create<MainPageState>((set) => ({
 
   setFooterLoginBt: (input) => set({ footerLoginBt: input }),
   setVisible: (input) => set({ visible: input }),
+}));
+
+
+export const mobileMypageUseStore = create<mypageMenu>((set) => ({
+mobileMenu:false,
+setMobileMenu: (input) => set({ mobileMenu: input }),
+
+
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

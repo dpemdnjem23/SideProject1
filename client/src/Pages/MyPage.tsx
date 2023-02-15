@@ -26,6 +26,7 @@ import {
   mypageSubCostState,
   mypagePaymentManagementState,
   mypageNotiModalState,
+  mobileMypageUseStore,
 } from "utils/state";
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
@@ -36,6 +37,8 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
 
 const MyPage = () => {
+  const { setMobileMenu, mobileMenu } = mobileMypageUseStore();
+
   const navigate = useNavigate();
   const [subLength, setSubLength] = useState<number>(0);
 
@@ -159,23 +162,31 @@ const MyPage = () => {
       <div className="Mypage_background">
         <div className="Mypage_section">
           <MobileMyPage></MobileMyPage>
-          <div className="Mypage_info_section">
+
+          {mobileMenu ? (
             <MobileMyPageMenu></MobileMyPageMenu>
-            {editUser || delUser || passEditUser ? null : (
-              <Mypageuser subLength={subLength} />
-            )}
-            {editUser && userinfo.social_user === false ? <MypageEdit /> : null}
-            {delUser ? <MypageWithdrwal /> : null}
-            {editUser && userinfo.social_user ? <MypageSocialEdit /> : null}
-            {passEditUser ? <MypagePassEdit></MypagePassEdit> : null}
+          ) : (
+            <>
+              <div className="Mypage_info_section">
+                {editUser || delUser || passEditUser ? null : (
+                  <Mypageuser subLength={subLength} />
+                )}
+                {editUser && userinfo.social_user === false ? (
+                  <MypageEdit />
+                ) : null}
+                {delUser ? <MypageWithdrwal /> : null}
+                {editUser && userinfo.social_user ? <MypageSocialEdit /> : null}
+                {passEditUser ? <MypagePassEdit></MypagePassEdit> : null}
 
-            {/* {paylist?<Myp} */}
+                {/* {paylist?<Myp} */}
 
-            <Mypagesub openRegist={openRegist} />
-          </div>
-          <div className="Mypage_bar_section">
-            <Mypagebar />
-          </div>
+                <Mypagesub openRegist={openRegist} />
+              </div>
+              <div className="Mypage_bar_section">
+                <Mypagebar />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
