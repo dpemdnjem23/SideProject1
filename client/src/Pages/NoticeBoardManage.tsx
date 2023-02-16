@@ -6,6 +6,8 @@ const NoticeBoardManage = () => {
   return (
     <div className="NoticeBoardManage">
       <div className="NoticeBoardManage_section">
+        <img src="/ready.jpg"></img>
+
         <div className="NoticeBoardManage_text">
           <h1> 구독 공유 관리</h1>
           <p>내가 공유 했던 구독 들을 수정, 삭제로 관리할수 있습니다.</p>

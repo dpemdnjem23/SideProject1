@@ -135,6 +135,7 @@ const MyPage = () => {
         console.log(err);
       });
 
+
   useEffect(() => {
     calSubCost();
     calPaymentCost();

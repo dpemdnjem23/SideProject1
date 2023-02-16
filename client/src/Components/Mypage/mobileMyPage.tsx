@@ -6,7 +6,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 import { mobileMypageUseStore } from "utils/state";
 const MobileMyPage = () => {
-  const { setMobileMenu, mobileMenu } = mobileMypageUseStore();
+  const { setMobileMenu, mobileMenu,mobileMenuName,setMobileMenuName} = mobileMypageUseStore();
 
   const mobileMenuOpenClose = () => {
     setMobileMenu(true);
@@ -19,7 +19,7 @@ const MobileMyPage = () => {
   return (
     <div onClick={mobileMenuOpenClose} className="MobileMypage">
       <div></div>
-      <div>마이페이지</div>
+      <div>{mobileMenuName}</div>
       {mobileMenu ? (
         <FontAwesomeIcon icon={faChevronUp}></FontAwesomeIcon>
       ) : (

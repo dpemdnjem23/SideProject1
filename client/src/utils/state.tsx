@@ -210,6 +210,9 @@ type MainPageState = {
 
 type mypageMenu= {
   mobileMenu:boolean;
+  mobileMenuName:string|null;
+  setMobileMenuName:(input:string|null) =>void
+
   setMobileMenu:(input:boolean) =>void;
 
 }
@@ -417,6 +420,9 @@ export const MainPageUseStore = create<MainPageState>((set) => ({
 
 export const mobileMypageUseStore = create<mypageMenu>((set) => ({
 mobileMenu:false,
+mobileMenuName:'마이페이지',
+setMobileMenuName:(input) =>set({mobileMenuName:input}),
+
 setMobileMenu: (input) => set({ mobileMenu: input }),
 
 
