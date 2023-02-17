@@ -31,7 +31,7 @@ import {
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
 import PassNotificationModal from "Components/Modal/passwordNotificationModal";
-import MobileMyPageMenu from "Components/Modal/mobileMyPageMenu";
+import MobileMyPageMenu from "Pages/mobileMyPageMenu";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
@@ -172,9 +172,11 @@ const MyPage = () => {
                 {editUser || delUser || passEditUser ? null : (
                   <Mypageuser subLength={subLength} />
                 )}
+
                 {editUser && userinfo.social_user === false ? (
                   <MypageEdit />
                 ) : null}
+
                 {delUser ? <MypageWithdrwal /> : null}
                 {editUser && userinfo.social_user ? <MypageSocialEdit /> : null}
                 {passEditUser ? <MypagePassEdit></MypagePassEdit> : null}

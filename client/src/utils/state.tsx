@@ -209,9 +209,13 @@ type MainPageState = {
 
 
 type mypageMenu= {
-  mobileMenu:boolean;
+  mobileUserEdit:boolean;
+  setMobileUserEdit:(input:boolean) =>void;
+  mobilePassEdit:boolean
+  setMobilePassEdit:(input:boolean) =>void;
   mobileMenuName:string|null;
   setMobileMenuName:(input:string|null) =>void
+  mobileMenu:boolean;
 
   setMobileMenu:(input:boolean) =>void;
 
@@ -419,10 +423,15 @@ export const MainPageUseStore = create<MainPageState>((set) => ({
 
 
 export const mobileMypageUseStore = create<mypageMenu>((set) => ({
-mobileMenu:false,
+mobileUserEdit:false,
+setMobileUserEdit:(input) =>set({mobileUserEdit:input}),
+mobilePassEdit:false,
+setMobilePassEdit:(input) =>set({mobilePassEdit:input}),
+
+
 mobileMenuName:'마이페이지',
 setMobileMenuName:(input) =>set({mobileMenuName:input}),
-
+mobileMenu:false,
 setMobileMenu: (input) => set({ mobileMenu: input }),
 
 
