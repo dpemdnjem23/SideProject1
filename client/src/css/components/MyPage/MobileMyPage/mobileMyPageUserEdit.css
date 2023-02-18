@@ -1,4 +1,115 @@
-.mobileMypage_useredit{
+@media (max-width: 768px) {
+  .mobileMypage_useredit_section {
+    display: flex;
 
-    
+    background-color: white;
+    width: 100%;
+
+    padding: 15px 24px;
+    border-radius: 20px;
+    flex-direction: column;
+
+    margin-bottom: 30px;
+  }
+
+  .Msection {
+    width: 100%;
+    height: 100%;
+  
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+  }
+  .mobileMypage_useredit_contents {
+    border: none;
+    width: 220px;
+    margin-left: 15px;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+  }
+
+  .mobileMypage_useredit_bt {
+    cursor: pointer;
+    margin-left: 10px;
+
+    text-align: center;
+    color: blue;
+    font-size: 16px;
+    font-weight: bold;
+
+    border: none;
+    width: 90px;
+    height: 45px;
+    border-radius: 15px;
+    background-color: rgb(240, 240, 255);
+  }
+  .Msubsection {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      
+ 
+  }
+
+
+  .mobileMypage_useredit_nick {
+    padding-top: 20px;
+  }
+
+  .mobileMypage_useredit_pass {
+    padding-top: 20px;
+  }
+
+  .mobileMypgae_useredit_gap2 {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* .mobileMypage_userdit_nick_sub {
+    margin-right: 50px;
+  } */
+
+  .mobileMypage_useredit_description {
+    color: gray;
+    min-width: 60px;
+
+  }
+  .mobileMypage_useredit_secbt{
+
+    width: 300px;
+  }
+
+  .mobileyMpage_useredit_nickErr {
+    color: red;
+    height: 10px;
+    font-size: 12px;
+  }
+
+  .mobileMypage_useredit_cancel{
+      margin-top: 20px;
+
+  }
+  .mobileMypage_useredit_cancel>button{
+
+    cursor: pointer;
+    margin-left: 10px;
+
+    text-align: center;
+    color: rgb(80, 80, 80);
+    font-size: 18px;
+    font-weight: bold;
+
+    border: none;
+    width: 150px;
+    height: 60px;
+    border-radius: 15px;
+    background-color: rgb(246, 246, 246);
+  }
+  .mobileMypage_useredit_cancel>button:hover{
+    background-color: rgb(206, 206, 206);
+
+
+  }
 }

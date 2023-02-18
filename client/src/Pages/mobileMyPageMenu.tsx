@@ -28,6 +28,8 @@ const MobileMyPageMenu = () => {
     mobileUserEdit,
   } = mobileMypageUseStore();
 
+
+
   const handleEditClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const energy = e.target as HTMLDivElement;
 
@@ -35,6 +37,7 @@ const MobileMyPageMenu = () => {
 
     setMobileMenuName(textContent);
     setMobileUserEdit(true);
+    setEditUser(true)
   };
   const handleWithdrawalClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const energy = e.target as HTMLDivElement;

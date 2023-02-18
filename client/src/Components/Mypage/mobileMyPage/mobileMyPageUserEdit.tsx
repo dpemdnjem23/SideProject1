@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { mypageNotiModalState, mypageUserInfoState, showMypageState } from "utils/state";
+import {
+  mypageNotiModalState,
+  mypageUserInfoState,
+  showMypageState,
+} from "utils/state";
 
-import '../../../css/components/MyPage/MobileMyPage/mobileMyPageUserEdit.css'
+import "../../../css/components/MyPage/MobileMyPage/mobileMyPageUserEdit.css";
 const MobileMyPageUserEdit = () => {
   const accessToken: string | null = localStorage.getItem("accessToken");
 
@@ -13,7 +17,7 @@ const MobileMyPageUserEdit = () => {
   );
 
   const { setEditUser, passEditUser, setPassEditUser, setDelUser } =
-    showMypageState()
+    showMypageState();
 
   const { setNickname, nickname, setPassword, password } =
     mypageUserInfoState();
@@ -121,21 +125,19 @@ const MobileMyPageUserEdit = () => {
   };
 
   return (
-    <div id="mobileMypage_useredit">
-      <div className="mobileMypage_useredit_section">
-        <div className="mobileMypage_useredit_title">회원 정보 수정</div>
-        <div className="mobileMypgae_useredit_gap"></div>
-        <div className="mobileMypage_useredit_nick section">
-          <div className="mobileMypage_useredit_description">닉네임</div>
-          <div className="mobileMypage_userdit_nick_sub subsection">
-            <input
-              onKeyDown={spaceBarBlock}
-              maxLength={7}
-              onChange={handleUserNick}
-              type="text"
-              placeholder={userInfo.nickname}
-              className="mobileMypage_useredit_contents"
-            ></input>
+    <div className="mobileMypage_useredit_section">
+      <div className="mobileMypage_useredit_nick Msection">
+        <div className="mobileMypage_useredit_description">닉네임</div>
+        <div className="mobileMypage_userdit_nick_sub Msubsection">
+          <input
+            onKeyDown={spaceBarBlock}
+            maxLength={7}
+            onChange={handleUserNick}
+            type="text"
+            placeholder={userInfo.nickname}
+            className="mobileMypage_useredit_contents"
+          ></input>
+          <div className="mobileMypage_useredit_secbt">
             <button
               onClick={handleNicknameNotiModal}
               className="mobileMypage_useredit_bt"
@@ -144,19 +146,21 @@ const MobileMyPageUserEdit = () => {
             </button>
           </div>
         </div>
+      </div>
 
-        <span className="mobileMypage_useredit_nickErr">{nickErrMessage}</span>
+      <span className="mobileMypage_useredit_nickErr">{nickErrMessage}</span>
 
-        <div className="mobileMypgae_useredit_gap2"></div>
-        <div className="mobileMypage_useredit_pass section">
-          <div className="mobileMypage_useredit_description">비밀번호</div>
+      <div className="mobileMypgae_useredit_gap2"></div>
+      <div className="mobileMypage_useredit_pass Msection">
+        <div className="mobileMypage_useredit_description">비밀번호</div>
 
-          <div className="mobileMypage_userdit_pass subsection">
-            <input
-              onChange={handleUserPass}
-              type="password"
-              className="mobileMypage_useredit_contents"
-            ></input>
+        <div className="mobileMypage_userdit_pass Msubsection">
+          <input
+            onChange={handleUserPass}
+            type="password"
+            className="mobileMypage_useredit_contents"
+          ></input>
+          <div className="mobileMypage_useredit_secbt">
             <button
               onClick={handlePasswordCheck}
               className="mobileMypage_useredit_bt"
@@ -164,9 +168,18 @@ const MobileMyPageUserEdit = () => {
               변경하기
             </button>
           </div>
-          <span className="mobileMypage_useredit_nickErr">{passErrMessage}</span>
         </div>
+        <span className="mobileMypage_useredit_nickErr">{passErrMessage}</span>
       </div>
+
+      <div className='mobileMypage_useredit_cancel'>
+          <button>
+          변경취소
+
+          </button>
+      </div>
+      <
+
     </div>
   );
 };

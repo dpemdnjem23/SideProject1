@@ -37,6 +37,8 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
 
 const MyPage = () => {
+  const [match, setMatch] = useState<boolean>(false);
+
   const { setMobileMenu, mobileMenu } = mobileMypageUseStore();
 
   const navigate = useNavigate();
@@ -135,19 +137,23 @@ const MyPage = () => {
         console.log(err);
       });
 
-
   useEffect(() => {
     calSubCost();
     calPaymentCost();
     resetState();
   }, []);
 
-  // useEffect(()=>{
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width:768px)");
+    setMatch(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
 
-  // },)
+    mediaQuery.addEventListener("change", listener);
 
-  //가운데 메인 내정보
-  //사이드 정보
+    return () => {
+      mediaQuery.removeEventListener("change", listener);
+    };
+  }, []);
 
   // const [paylist, setPayList] = useState<boolean>(false);
 
@@ -164,7 +170,7 @@ const MyPage = () => {
         <div className="Mypage_section">
           <MobileMyPage></MobileMyPage>
 
-          {mobileMenu ? (
+          {mobileMenu && match ? (
             <MobileMyPageMenu></MobileMyPageMenu>
           ) : (
             <>
