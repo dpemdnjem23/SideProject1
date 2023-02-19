@@ -51,10 +51,8 @@
 .subsection {
   display: flex;
   align-items: center;
-}
-
-.Mypage_userdit_nick_sub{
   margin-right: 50px;
+
 }
 
 .Mypage_useredit_description {

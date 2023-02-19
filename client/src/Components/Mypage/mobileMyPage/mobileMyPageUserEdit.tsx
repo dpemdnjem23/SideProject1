@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
+  mobileMypageUseStore,
   mypageNotiModalState,
   mypageUserInfoState,
   showMypageState,
 } from "utils/state";
 
 import "../../../css/components/MyPage/MobileMyPage/mobileMyPageUserEdit.css";
+import MobileMyPageNotification from "./mobileMyPageNotification";
 const MobileMyPageUserEdit = () => {
   const accessToken: string | null = localStorage.getItem("accessToken");
 
@@ -21,11 +23,12 @@ const MobileMyPageUserEdit = () => {
 
   const { setNickname, nickname, setPassword, password } =
     mypageUserInfoState();
+  const { mobileNoti, setMobileNoti } = mobileMypageUseStore();
 
   const { showNicknameNotiModal, setShowNicknameNotiModal } =
     mypageNotiModalState();
 
-  const handleNicknameNotiModal = () => {
+  const handleNicknameNoti = () => {
     if (!nickname) {
       setNickErrMessage("닉네임을 입력해주세요");
     } else {
@@ -47,14 +50,13 @@ const MobileMyPageUserEdit = () => {
         })
           .then((res: any) => {
             if (!res.ok) {
-              setShowNicknameNotiModal(false);
               setNickErrMessage("동일한 닉네임이 존재합니다.");
               throw new Error(res.status);
             }
             return res.text();
           })
           .then((result) => {
-            setShowNicknameNotiModal(true);
+            setMobileNoti(true);
           })
           .catch((err) => {
             console.log(err);
@@ -65,6 +67,7 @@ const MobileMyPageUserEdit = () => {
 
   const handlePasswordCheck = () => {
     if (!password) {
+      console.log("s");
       setPassErrMessage("비밀번호를 입력해주세요");
     } else {
       // const regPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -139,7 +142,7 @@ const MobileMyPageUserEdit = () => {
           ></input>
           <div className="mobileMypage_useredit_secbt">
             <button
-              onClick={handleNicknameNotiModal}
+              onClick={handleNicknameNoti}
               className="mobileMypage_useredit_bt"
             >
               변경하기
@@ -147,6 +150,7 @@ const MobileMyPageUserEdit = () => {
           </div>
         </div>
       </div>
+      <div className="mobileMypgae_useredit_gap2"></div>
 
       <span className="mobileMypage_useredit_nickErr">{nickErrMessage}</span>
 
@@ -169,17 +173,15 @@ const MobileMyPageUserEdit = () => {
             </button>
           </div>
         </div>
-        <span className="mobileMypage_useredit_nickErr">{passErrMessage}</span>
       </div>
+      <div className="mobileMypgae_useredit_gap2"></div>
 
-      <div className='mobileMypage_useredit_cancel'>
-          <button>
-          변경취소
+      <span className="mobileMypage_useredit_passkErr">{passErrMessage}</span>
 
-          </button>
-      </div>
-      <
-
+      {mobileNoti ? (
+        <MobileMyPageNotification></MobileMyPageNotification>
+      ) : null}
+      {}
     </div>
   );
 };

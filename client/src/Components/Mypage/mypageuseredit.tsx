@@ -17,7 +17,8 @@ const MypageEdit = () => {
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
 
-  const { setEditUser,passEditUser, setPassEditUser ,setDelUser} = showMypageState();
+  const { setEditUser, passEditUser, setPassEditUser, setDelUser } =
+    showMypageState();
 
   const { setNickname, nickname, setPassword, password } =
     mypageUserInfoState();
@@ -89,7 +90,6 @@ const MypageEdit = () => {
       })
         .then((res: any) => {
           if (!res.ok) {
-
             setPassErrMessage("비밀번호가 일치하지 않습니다.");
 
             // setShowNicknameNotiModal(false);
@@ -99,7 +99,7 @@ const MypageEdit = () => {
         })
         .then((result) => {
           setPassEditUser(true);
-          setEditUser(false)
+          setEditUser(false);
 
           // setShowNicknameNotiModal(true);
         })
@@ -149,7 +149,6 @@ const MypageEdit = () => {
             </button>
           </div>
         </div>
-
         <span className="Mypage_useredit_nickErr">{nickErrMessage}</span>
 
         <div className="Mypgae_useredit_gap2"></div>
@@ -169,9 +168,12 @@ const MypageEdit = () => {
               변경하기
             </button>
           </div>
-          <span className="Mypage_useredit_nickErr">{passErrMessage}</span>
+
         </div>
+        <span className="Mypage_useredit_nickErr">{passErrMessage}</span>
+
       </div>
+
     </div>
   );
 };

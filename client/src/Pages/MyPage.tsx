@@ -27,6 +27,8 @@ import {
   mypagePaymentManagementState,
   mypageNotiModalState,
   mobileMypageUseStore,
+  pageUseStore,
+  mypageUserInfoState,
 } from "utils/state";
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
@@ -37,8 +39,7 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
 
 const MyPage = () => {
-  const [match, setMatch] = useState<boolean>(false);
-
+  const { setPageMatch, pageMatch } = pageUseStore();
   const { setMobileMenu, mobileMenu } = mobileMypageUseStore();
 
   const navigate = useNavigate();
@@ -65,6 +66,9 @@ const MyPage = () => {
   const { setDelUser, setEditUser, editUser, delUser, passEditUser } =
     showMypageState();
 
+  const { setNickname, nickname, setPassword, password } =
+    mypageUserInfoState();
+
   const { cycleCal, setCycleCal } = cycleState();
 
   const { dateCal, setDateCal } = dateState();
@@ -73,6 +77,16 @@ const MyPage = () => {
 
   const [subPayment, setSubPayment] = useState<number>(0);
   const [subCost, setSubCost] = useState<number>(0);
+  const {
+    mobileNoti,
+    setMobileNoti,
+    mobileMenuName,
+    setMobileMenuName,
+    setMobilePassEdit,
+    setMobileUserEdit,
+    mobilePassEdit,
+    mobileUserEdit,
+  } = mobileMypageUseStore();
 
   // const { setPaymentCost, setSubCost } = mypageSubCostState();
 
@@ -145,8 +159,12 @@ const MyPage = () => {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width:768px)");
-    setMatch(mediaQuery.matches);
-    const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
+    setPageMatch(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => {
+      setMobileNoti(!e.matches);
+      setNickname("");
+      setPageMatch(e.matches);
+    };
 
     mediaQuery.addEventListener("change", listener);
 
@@ -170,7 +188,7 @@ const MyPage = () => {
         <div className="Mypage_section">
           <MobileMyPage></MobileMyPage>
 
-          {mobileMenu && match ? (
+          {mobileMenu && pageMatch ? (
             <MobileMyPageMenu></MobileMyPageMenu>
           ) : (
             <>

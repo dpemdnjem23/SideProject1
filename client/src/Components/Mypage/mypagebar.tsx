@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
+  mobileMypageUseStore,
   mypagePaymentManagementState,
   mypageSubCostState,
   showMypageState,
@@ -39,6 +40,17 @@ const Mypagebar = () => {
     setSocialEditUser,
     socialEditUser,
   } = showMypageState();
+  const {
+    mobileMenuName,
+    mobileMenu,
+    setMobileMenu,
+    setMobileMenuName,
+    setMobilePassEdit,
+    setMobileUserEdit,
+    mobilePassEdit,
+    mobileUserEdit,
+  } = mobileMypageUseStore();
+  
   const accessToken: string | null = localStorage.getItem("accessToken");
 
   const handleEditUser = () => {
@@ -48,9 +60,20 @@ const Mypagebar = () => {
       setDelUser(false);
       setPassEditUser(false);
       setSocialEditUser(false);
+      setMobilePassEdit(false);
+      setMobileUserEdit(false);
+      setMobileMenu(false)
+      setMobileMenuName('마이페이지')
+
+
+  
     } else {
+      setMobilePassEdit(false);
+      setMobileUserEdit(true);
       setEditUser(true);
       setDelUser(false);
+      setMobileMenu(true)
+      setMobileMenuName('회원 정보 수정')
     }
   };
 

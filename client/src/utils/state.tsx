@@ -207,19 +207,24 @@ type MainPageState = {
   setFooterLoginBt: (input: boolean) => void;
 };
 
+type mypageMenu = {
+  mobileNoti: boolean;
+  setMobileNoti: (input: boolean) => void;
+  mobileUserEdit: boolean;
+  setMobileUserEdit: (input: boolean) => void;
+  mobilePassEdit: boolean;
+  setMobilePassEdit: (input: boolean) => void;
+  mobileMenuName: string | null;
+  setMobileMenuName: (input: string | null) => void;
+  mobileMenu: boolean;
 
-type mypageMenu= {
-  mobileUserEdit:boolean;
-  setMobileUserEdit:(input:boolean) =>void;
-  mobilePassEdit:boolean
-  setMobilePassEdit:(input:boolean) =>void;
-  mobileMenuName:string|null;
-  setMobileMenuName:(input:string|null) =>void
-  mobileMenu:boolean;
+  setMobileMenu: (input: boolean) => void;
+};
 
-  setMobileMenu:(input:boolean) =>void;
-
-}
+type mediaQuery = {
+  setPageMatch: (input: boolean) => void;
+  pageMatch: boolean;
+};
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -421,20 +426,22 @@ export const MainPageUseStore = create<MainPageState>((set) => ({
   setVisible: (input) => set({ visible: input }),
 }));
 
-
 export const mobileMypageUseStore = create<mypageMenu>((set) => ({
-mobileUserEdit:false,
-setMobileUserEdit:(input) =>set({mobileUserEdit:input}),
-mobilePassEdit:false,
-setMobilePassEdit:(input) =>set({mobilePassEdit:input}),
+  mobileUserEdit: false,
+  setMobileUserEdit: (input) => set({ mobileUserEdit: input }),
+  mobilePassEdit: false,
+  setMobilePassEdit: (input) => set({ mobilePassEdit: input }),
+  mobileNoti: false,
+  setMobileNoti: (input) => set({ mobileNoti: input }),
 
-
-mobileMenuName:'마이페이지',
-setMobileMenuName:(input) =>set({mobileMenuName:input}),
-mobileMenu:false,
-setMobileMenu: (input) => set({ mobileMenu: input }),
-
-
+  mobileMenuName: "마이페이지",
+  setMobileMenuName: (input) => set({ mobileMenuName: input }),
+  mobileMenu: false,
+  setMobileMenu: (input) => set({ mobileMenu: input }),
+}));
+export const pageUseStore= create<mediaQuery>((set) => ({
+  pageMatch: false,
+  setPageMatch: (input) => set({ pageMatch: input }),
 }));
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

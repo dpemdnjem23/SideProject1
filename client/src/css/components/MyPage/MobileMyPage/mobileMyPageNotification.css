@@ -1,0 +1,95 @@
+.mobileMyPageNoti {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  /* height: 100%; */
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileMyPageNoti_section {
+  width: 100%;
+  height: auto;
+  /* box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%); */
+  padding: 20px;
+  margin-top: 20px;
+
+  max-width: 400px;
+  min-height: 200px;
+}
+
+.mobileMyPageNoti_title {
+  /* white-space: pre-line; */
+}
+
+.mobileMyPageNoti_title > span {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+}
+.mobileMyPageNoti_contents > span {
+  line-height: 35px;
+  font-size: 16px;
+  color: rgb(101, 101, 101);
+}
+
+.mobileMyPageNoti_bt {
+  line-height: 28px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileMyPageNoti_bt > button {
+  border-radius: 10px;
+
+  width: 160px;
+  height: 45px;
+
+  margin: 0px 5px;
+
+  font-weight: bold;
+  cursor: pointer;
+}
+.mobileMyPageNoti_leftbt {
+  background-color: white;
+  border: 1px solid red;
+  color: red;
+}
+.mobileMyPageNoti_rightbt {
+  background-color: rgb(194, 194, 194);
+  border: none;
+}
+
+
+.mobileMyPageNoti_cancel{
+    margin-bottom: 30px;
+
+}
+.mobileMyPageNoti_cancel>button{
+
+  cursor: pointer;
+  margin-left: 10px;
+
+  text-align: center;
+  color: rgb(80, 80, 80);
+  font-size: 18px;
+  font-weight: bold;
+
+  border: none;
+  width: 150px;
+  height: 60px;
+  border-radius: 15px;
+  background-color: rgb(246, 246, 246);
+}
+.mobileMyPageNoti_cancel>button:hover{
+  background-color: rgb(206, 206, 206);
+
+
+}
