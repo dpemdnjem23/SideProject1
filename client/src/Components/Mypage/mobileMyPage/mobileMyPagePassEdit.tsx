@@ -1,11 +1,6 @@
-
-
-
-
-
-
 import React, { useState } from "react";
 import {
+  mobileMypageUseStore,
   mypageNotiModalState,
   mypageUserInfoState,
   showMypageState,
@@ -17,8 +12,8 @@ type validateUserInfo = {
   passwordCheckValidate: boolean;
 };
 
-import "../../css/components/MyPage/mypagePassEdit.css";
-const MobileMyPagePassEdit=  () => {
+import "../../../css/components/MyPage/MobileMyPage/mobileMyPagePassEdit.css";
+const MobileMyPagePassEdit = () => {
   // const userinfo:string|null =JSON.parse(localStorage.getItem('subgatherUserInfo')||"{}")
   const accessToken: string | null = localStorage.getItem("accessToken");
   const { setPassword, password, setPasswordCheck, passwordCheck } =
@@ -33,6 +28,20 @@ const MobileMyPagePassEdit=  () => {
     passwordCheckValidate: false,
   });
 
+  const {
+    mobileMenuName,
+    mobileMenu,
+    setMobileMenu,
+    setMobileMenuName,
+    setMobilePassEdit,
+    setMobileUserEdit,
+    mobilePassEdit,
+    mobileUserEdit,
+    setMobileNoti
+  } = mobileMypageUseStore();
+
+  const { setShowNicknameNotiModal, showNicknameNotiModal } =
+  mypageNotiModalState()
   const passwordBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     // 8자이상 16자이하 의 숫자, 문자, 특수문자 조합
 
@@ -88,12 +97,9 @@ const MobileMyPagePassEdit=  () => {
       setValidateUserInfo({
         ...validateUserInfo,
         passwordCheckValidate: false,
-      });  
+      });
       setPassCheckErrMessage("비밀번호를 확인해주세요");
-
-      }
-
-    
+    }
   };
 
   const handlePsssModifyBt = () => {
@@ -107,30 +113,27 @@ const MobileMyPagePassEdit=  () => {
       const regPassword =
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
-
-    
-    if(!regPassword.test(password)){
-      setPassErrMessage(
-        "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
-      );
+      if (!regPassword.test(password)) {
+        setPassErrMessage(
+          "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
+        );
+      }
+      if (!regPassword.test(passwordCheck)) {
+        setPassCheckErrMessage(
+          "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
+        );
+      }
+      if (
+        regPassword.test(passwordCheck) &&
+        regPassword.test(password) &&
+        password !== passwordCheck
+      ) {
+        setPassCheckErrMessage("비밀번호가 일치하지 않습니다.");
+        setPassErrMessage("");
+      }
     }
-    if(!regPassword.test(passwordCheck)){
-      setPassCheckErrMessage(
-        "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
-      );
-    }
-    if(regPassword.test(passwordCheck)&&regPassword.test(password)&&password!==passwordCheck){
-      setPassCheckErrMessage(
-        '비밀번호가 일치하지 않습니다.'
-      );
-      setPassErrMessage('')
-    }
-    }
-      //passcheck!==pass 일치x
-      //pass가 입력, reg에 맞지 않는경우
-  
-      
-    
+    //passcheck!==pass 일치x
+    //pass가 입력, reg에 맞지 않는경우
   };
 
   const handleUserPass = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,12 +145,24 @@ const MobileMyPagePassEdit=  () => {
     setPasswordCheck(e.target.value);
     setPassCheckErrMessage("");
   };
-//   MobileMyPage
+
+  const handleNicknameNoti = () => {
+    setMobileNoti(false);
+    setMobilePassEdit(false)
+    setShowNicknameNotiModal(false);
+    // setMobileNoti(true)
+  };
+  //   MobileMyPage
   return (
     <div id="MobileMyPage_passEdit">
       <div className="MobileMyPage_passEdit_section">
-        <div className="MobileMyPage_passEdit_title">비밀번호 수정</div>
-        <div className="MobileMyPage_passEdit_gap"></div>
+
+      <div className="mobileMyPageNoti_cancel">
+          <button onClick={handleNicknameNoti}>변경취소</button>
+        </div>
+        <div className="MobileMyPage_passEdit_title">
+          <div>{'< 변경할 비밀번호를 입력해주세요 >'}</div>
+        </div>
         <div className="MobileMyPage_passEdit_pass passsection sts">
           <div className="MobileMyPage_passEdit_description">비밀번호</div>
           <div className="MobileMyPage_passEdit_pass passsubsection">
@@ -178,8 +193,11 @@ const MobileMyPagePassEdit=  () => {
         <span className="MobileMyPage_passEdit_err">{passCheckErrMessage}</span>
 
         <div className="MobileMyPage_passEdit_btsection">
-          <button onClick={handlePsssModifyBt} className="MobileMyPage_passEdit_bt">
-            변경하기
+          <button
+            onClick={handlePsssModifyBt}
+            className="MobileMyPage_passEdit_bt"
+          >
+            변경완료
           </button>
         </div>
       </div>
@@ -187,4 +205,4 @@ const MobileMyPagePassEdit=  () => {
   );
 };
 
-export default MobileMyPagePassEdit
+export default MobileMyPagePassEdit;

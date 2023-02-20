@@ -51,7 +51,7 @@ const MyPage = () => {
 
   const [nick, setNick] = useState<string>("");
 
-  const { showNicknameNotiModal, showPasswordNotiModal } =
+  const { setShowNicknameNotiModal,showNicknameNotiModal, showPasswordNotiModal } =
     mypageNotiModalState();
   const accessToken: string | null =
     localStorage.getItem("accessToken") || null;
@@ -63,7 +63,7 @@ const MyPage = () => {
 
   const today = moment().format("YYYY-MM-DD");
 
-  const { setDelUser, setEditUser, editUser, delUser, passEditUser } =
+  const { setDelUser, setPassEditUser,setEditUser, editUser, delUser, passEditUser } =
     showMypageState();
 
   const { setNickname, nickname, setPassword, password } =
@@ -93,6 +93,7 @@ const MyPage = () => {
   const { setMypagePaymentManageCost, setMypagePaymentManageDate } =
     mypagePaymentManagementState();
   //mypage 화면에 도달할때마다
+
 
   const resetState = () => {
     setCycleCal({ year: "", day: "", month: "" });
@@ -161,9 +162,25 @@ const MyPage = () => {
     const mediaQuery = window.matchMedia("(max-width:768px)");
     setPageMatch(mediaQuery.matches);
     const listener = (e: MediaQueryListEvent) => {
+      if(mobilePassEdit||mobileUserEdit||passEditUser){
+        setEditUser(true)
+        setPassEditUser(false)
+
+
+        // setPassEdit
+
+
+        // setMobileMenuName
+
+      }
+      setShowNicknameNotiModal(false)
+
+      
       setMobileNoti(!e.matches);
       setNickname("");
       setPageMatch(e.matches);
+      setMobilePassEdit(!e.matches)
+
     };
 
     mediaQuery.addEventListener("change", listener);

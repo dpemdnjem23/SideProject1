@@ -8,6 +8,8 @@ import {
 
 import "../../../css/components/MyPage/MobileMyPage/mobileMyPageUserEdit.css";
 import MobileMyPageNotification from "./mobileMyPageNotification";
+import MobileMyPagePassEdit from "./mobileMyPagePassEdit";
+
 const MobileMyPageUserEdit = () => {
   const accessToken: string | null = localStorage.getItem("accessToken");
 
@@ -20,6 +22,17 @@ const MobileMyPageUserEdit = () => {
 
   const { setEditUser, passEditUser, setPassEditUser, setDelUser } =
     showMypageState();
+
+  const {
+    mobileMenuName,
+    mobileMenu,
+    setMobileMenu,
+    setMobileMenuName,
+    setMobilePassEdit,
+    setMobileUserEdit,
+    mobilePassEdit,
+    mobileUserEdit,
+  } = mobileMypageUseStore();
 
   const { setNickname, nickname, setPassword, password } =
     mypageUserInfoState();
@@ -36,6 +49,9 @@ const MobileMyPageUserEdit = () => {
 
       if (!regNickname.test(nickname)) {
         setNickErrMessage("닉네임을 제대로입력해주세요");
+        if (mobileNoti) {
+          setMobileNoti(false);
+        }
       } else {
         fetch(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
           method: "post",
@@ -57,6 +73,9 @@ const MobileMyPageUserEdit = () => {
           })
           .then((result) => {
             setMobileNoti(true);
+            if (mobileNoti) {
+              setMobileNoti(false);
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -67,7 +86,6 @@ const MobileMyPageUserEdit = () => {
 
   const handlePasswordCheck = () => {
     if (!password) {
-      console.log("s");
       setPassErrMessage("비밀번호를 입력해주세요");
     } else {
       // const regPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -93,6 +111,9 @@ const MobileMyPageUserEdit = () => {
         .then((res: any) => {
           if (!res.ok) {
             setPassErrMessage("비밀번호가 일치하지 않습니다.");
+            if (mobilePassEdit) {
+              setMobilePassEdit(false);
+            }
 
             // setShowNicknameNotiModal(false);
             throw new Error(res.status);
@@ -100,8 +121,13 @@ const MobileMyPageUserEdit = () => {
           return res.text();
         })
         .then((result) => {
-          setPassEditUser(true);
+            setEditUser(true)
+          setPassEditUser(false);
           setEditUser(false);
+          setMobilePassEdit(true);
+          if (mobilePassEdit) {
+            setMobilePassEdit(false);
+          }
 
           // setShowNicknameNotiModal(true);
         })
@@ -129,59 +155,70 @@ const MobileMyPageUserEdit = () => {
 
   return (
     <div className="mobileMypage_useredit_section">
-      <div className="mobileMypage_useredit_nick Msection">
-        <div className="mobileMypage_useredit_description">닉네임</div>
-        <div className="mobileMypage_userdit_nick_sub Msubsection">
-          <input
-            onKeyDown={spaceBarBlock}
-            maxLength={7}
-            onChange={handleUserNick}
-            type="text"
-            placeholder={userInfo.nickname}
-            className="mobileMypage_useredit_contents"
-          ></input>
-          <div className="mobileMypage_useredit_secbt">
-            <button
-              onClick={handleNicknameNoti}
-              className="mobileMypage_useredit_bt"
-            >
-              변경하기
-            </button>
+      {mobilePassEdit ? null : (
+        <>
+          <div className="mobileMypage_useredit_nick Msection">
+            <div className="mobileMypage_useredit_description">닉네임</div>
+            <div className="mobileMypage_userdit_nick_sub Msubsection">
+              <input
+                onKeyDown={spaceBarBlock}
+                maxLength={7}
+                onChange={handleUserNick}
+                type="text"
+                placeholder={userInfo.nickname}
+                className="mobileMypage_useredit_contents"
+              ></input>
+              <div className="mobileMypage_useredit_secbt">
+                <button
+                  onClick={handleNicknameNoti}
+                  className="mobileMypage_useredit_bt"
+                >
+                  변경하기
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="mobileMypgae_useredit_gap2"></div>
+          <div className="mobileMypgae_useredit_gap2"></div>
 
-      <span className="mobileMypage_useredit_nickErr">{nickErrMessage}</span>
+          <span className="mobileMypage_useredit_nickErr">
+            {nickErrMessage}
+          </span>
 
-      <div className="mobileMypgae_useredit_gap2"></div>
-      <div className="mobileMypage_useredit_pass Msection">
-        <div className="mobileMypage_useredit_description">비밀번호</div>
+          <div className="mobileMypgae_useredit_gap2"></div>
+        </>
+      )}
+      {mobileNoti ? null : (
+        <>
+          <div className="mobileMypage_useredit_pass Msection">
+            <div className="mobileMypage_useredit_description">비밀번호</div>
 
-        <div className="mobileMypage_userdit_pass Msubsection">
-          <input
-            onChange={handleUserPass}
-            type="password"
-            className="mobileMypage_useredit_contents"
-          ></input>
-          <div className="mobileMypage_useredit_secbt">
-            <button
-              onClick={handlePasswordCheck}
-              className="mobileMypage_useredit_bt"
-            >
-              변경하기
-            </button>
+            <div className="mobileMypage_userdit_pass Msubsection">
+              <input
+                onChange={handleUserPass}
+                type="password"
+                className="mobileMypage_useredit_contents"
+              ></input>
+              <div className="mobileMypage_useredit_secbt">
+                <button
+                  onClick={handlePasswordCheck}
+                  className="mobileMypage_useredit_bt"
+                >
+                  변경하기
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="mobileMypgae_useredit_gap2"></div>
+          <div className="mobileMypgae_useredit_gap2"></div>
 
-      <span className="mobileMypage_useredit_passkErr">{passErrMessage}</span>
-
+          <span className="mobileMypage_useredit_passkErr">
+            {passErrMessage}
+          </span>
+        </>
+      )}
       {mobileNoti ? (
         <MobileMyPageNotification></MobileMyPageNotification>
       ) : null}
-      {}
+      {mobilePassEdit ? <MobileMyPagePassEdit></MobileMyPagePassEdit> : null}
     </div>
   );
 };

@@ -1,30 +1,32 @@
-.MobileMyPage_passEdit_section {
+@media (max-width: 768px) {
+  .MobileMyPage_passEdit_section {
     display: flex;
-  
+
     background-color: white;
     width: 100%;
     /* height: 100%; */
     height: 230px;
     width: 520px;
     padding: 15px 24px;
-    border-radius: 20px;
+
+    margin-top: 30px;
     flex-direction: column;
-  
-    margin-bottom: 30px;
   }
-  
+
   .MobileMyPage_passEdit_title {
-    height: 21px;
-    font-weight: bold;
+    height: 60px;
+
     line-height: 28px;
-    font-size: 18px;
-    text-align: left;
+    font-size: 15px;
+    text-align: center;
+    color: rgb(100, 100, 100);
+    padding-bottom: 20px;
   }
-  
+
   .MobileMyPage_passEdit_gap {
     width: 100%;
     margin: 17px 0px;
-    height: 1px;
+    height: 10px;
     background-color: rgb(227, 227, 227);
   }
   .passsection {
@@ -33,17 +35,16 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   /* 
   .sts{
       margin-top: 10px;
   } */
-  
+
   .passsubsection {
     align-items: center;
-  
+
     display: flex;
-    margin-right: 90px;
   }
   .MobileMyPage_passEdit_passcheck {
     padding-top: 30px;
@@ -51,44 +52,49 @@
   /* .MobileMyPage_passEdit_pass{
       padding-top: 10px;
   } */
-  
+
   .MobileMyPage_passEdit_description {
     color: gray;
   }
-  
+
   .MobileMyPage_passEdit_contents {
     border: none;
     border-bottom: 1px solid black;
     font-size: 16px;
     font-weight: bold;
     line-height: 24px;
+    padding-top: 20px;
     margin-right: 24px;
   }
-  
+
   .MobileMyPage_passEdit_btsection {
     display: flex;
     align-items: center;
-    justify-content: end;
-  
-    padding-top: 10px;
+    justify-content: center;
+
+    padding-top: 60px;
   }
-  
+
   .MobileMyPage_passEdit_bt {
     cursor: pointer;
-  
+    border: 1px solid blue;
+    text-align: center;
+
     color: blue;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     border: none;
-    width: 70px;
-    height: 40px;
+    width: 100px;
+    height: 50px;
     border-radius: 15px;
     background-color: rgb(240, 240, 255);
   }
-  
+
   .MobileMyPage_passEdit_err {
     color: red;
-    height: 5px;
+    margin-top: 10px;
+    height: 10px;
     font-size: 12px;
+    text-align: left;
   }
-  
+}
