@@ -7,6 +7,8 @@ import { Route, BrowserRouter, Link, Routes } from "react-router-dom";
 import { mobileMypageUseStore, showMypageState } from "utils/state";
 
 import "../css/pages/mobileMyPageMenu.css";
+import { userInfo } from "os";
+import MobileMyPageSocial from "Components/Mypage/mobileMyPage/mobileMyPageSocialEdit";
 
 const MobileMyPageMenu = () => {
   // const
@@ -31,6 +33,10 @@ const MobileMyPageMenu = () => {
     mobileUserEdit,
   } = mobileMypageUseStore();
 
+  const userinfo = JSON.parse(
+    localStorage.getItem("subgatherUserInfo") || `{}`
+  );
+
   const handleEditClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const energy = e.target as HTMLDivElement;
 
@@ -48,13 +54,19 @@ const MobileMyPageMenu = () => {
     setMobileMenuName(textContent);
   };
 
+  //editUser && userinfo.social_user
+
   return (
     <div className="MobileMyPageMenu">
       <div className="MobileMyPageMenu_section">
-        {mobileUserEdit ? (
+        {mobileUserEdit && userinfo.social_user === true ? (
+          <MobileMyPageSocial></MobileMyPageSocial>
+        ) : null}
+        {mobileUserEdit && userinfo.social_user === false ? (
           <MobileMyPageUserEdit></MobileMyPageUserEdit>
-        ) : (
-       
+        ) : null}
+
+        {mobileUserEdit ? null : (
           <div className="MobileMyPageMenu_section_manage">
             <div>섭개더 관리</div>
             <Link to="/noticeBoard">
@@ -72,7 +84,7 @@ const MobileMyPageMenu = () => {
               회원탈퇴
             </div>
           </div>
-        )}
+        )} 
       </div>
     </div>
   );
