@@ -210,7 +210,7 @@ const MobileMyPageUserEdit = () => {
           </div>
           <div className="mobileMypgae_useredit_gap2"></div>
 
-          <span className="mobileMypage_useredit_passkErr">
+          <span className="mobileMypage_useredit_passErr">
             {passErrMessage}
           </span>
         </>

@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const axios  =  require('axios')
+const axios = require("axios");
 const crypto = require("crypto");
 const { userInfo } = require("os");
 const { authchecker } = require("../middleware/authChecker");
@@ -20,113 +20,85 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 module.exports = {
+  getUserInfo: async (req, res) => {
+    try {
+      const userId = req.user.userId || req.user.id;
 
-  getUserInfo:async (req,res) =>{
+      const userinfo = await user.findOne({ where: { id: userId } });
 
-    try{
-
-
-      const userId = req.user.userId||req.user.id
-
-      const userinfo = await user.findOne({where:{id:userId}})
-
-      if(!userinfo){
-        return res.status(400).send('존재하지 않습니다')
+      if (!userinfo) {
+        return res.status(400).send("존재하지 않습니다");
       }
 
-    
-
-      return res.status(200).send({data:userinfo})
-
-
-
-
-    }catch(err){
-      return res.status(500).send(err)
-
+      return res.status(200).send({ data: userinfo });
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-
   },
 
-
   withdrawalControl: async (req, res) => {
-      //회원탈퇴 아이디, 닉네임 ,id 가일치하는 정보를 찾아 로그아웃한다.
-      //회원탈퇴할때 만약 id가없어 탈퇴할수가 없는경우. 고려하지 않는다 왜냐 id가 엇으면 탈퇴x
-     
-const userId = req.user.userId||req.user.id
+    //회원탈퇴 아이디, 닉네임 ,id 가일치하는 정보를 찾아 로그아웃한다.
+    //회원탈퇴할때 만약 id가없어 탈퇴할수가 없는경우. 고려하지 않는다 왜냐 id가 엇으면 탈퇴x
+
+    const userId = req.user.userId || req.user.id;
     const isUser = await user.findByPk(userId);
     //일반 유저인경우
-    console.log(isUser)
-try{
+    console.log(isUser);
+    try {
+      if (isUser.social_user === false) {
+        if (isUser.username) {
+          await user.destroy({ where: { id: isUser.id } });
 
-
-    if(isUser.social_user===false){
-
-        if(isUser.username){
-           await user.destroy({where:{id:isUser.id}})
-    
-            return res.status(200).send('회원 탈퇴 완료')
+          return res.status(200).send("회원 탈퇴 완료");
         }
 
-        return res.status(400).send('소셜 로그인 유저 ')
-    
-
-    }
-    else{
-
-
-    
+        return res.status(400).send("소셜 로그인 유저 ");
+      } else {
         // await axios.get('https://kapi.kakao.com/v1/user/unlink', {
         //   headers: {
         //     Authorization: `Bearer ${token}`,
         //   },
         // });
-      await user.destroy({where:{id:id}})
-    
-      return res.status(200).send('회원 탈퇴 완료')
+        await user.destroy({ where: { id: id } });
 
+        return res.status(200).send("회원 탈퇴 완료");
+      }
+    } catch (err) {
+      return res.status(500).send(err);
     }
 
-  }catch(err){
-    return res.status(500).send(err)
-  }
-
-
-      //소셜 로그인과, 소셜로그인이 아닌 경우로 나눈다.
+    //소셜 로그인과, 소셜로그인이 아닌 경우로 나눈다.
 
     //가입되지 않은 경우 가입한다.
   },
 
-  editUserControl :async (req,res) =>{
-//닉네임 , 비밀번호 변경
-   const {nickname,password} = req.body
-    try{
-
-
+  editUserControl: async (req, res) => {
+    //닉네임 , 비밀번호 변경
+    const { nickname, password } = req.body;
+    try {
       //먼저 닉네임이 존재하는지 확인한다.
-      //닉네임이 
-      if(!password){
-        console.log(req.body)
+      //닉네임이
+      if (!password) {
+        console.log(req.body, req.user.userId);
 
-        
         //동일한 닉네임이 없는경우 update
-       const updateNick =  await user.update({nickname:nickname},{where:{
-          id:req.user.userId
-        }})
+        const updateNick = await user.update(
+          { nickname: nickname },
+          {
+            where: {
+              id: req.user.userId,
+            },
+          }
+        );
 
-        if(!updateNick){
-          return res.status(400).send('업데이트가 되지 않습니다.')
+        if (!updateNick) {
+          return res.status(400).send("업데이트가 되지 않습니다.");
         }
 
-        return res.status(200).send('닉네임 업데이트')
-
+        return res.status(200).send("닉네임 업데이트");
 
         //
-      }
-      else{
-
-
+      } else {
         crypto.randomBytes(64, (err, buf) => {
           if (err) {
             throw err;
@@ -146,30 +118,21 @@ try{
                   const insertUser = await user.update({
                     password: hardPassword,
                     salt: salt,
-                  where:{id:req.user.userId}});
+                    where: { id: req.user.userId },
+                  });
                   if (!insertUser) {
                     return res.status(400).send("변경실패");
-                  } 
-                    return res.status(201).send("패스워드 변경 성공");
-                  
+                  }
+                  return res.status(201).send("패스워드 변경 성공");
                 }
               }
             );
           }
         });
         //pw는 동일한 pw를 살필 필요는없다. 이미 앞에서 pw는 확인을 거친 상황
-
-
       }
-  
-       
-
-    }catch(err){
-      return res.status(500).send(err)
-
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-  
-
-}
+  },
 };
