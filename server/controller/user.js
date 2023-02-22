@@ -75,23 +75,30 @@ module.exports = {
   editUserControl: async (req, res) => {
     //닉네임 , 비밀번호 변경
     const { nickname, password } = req.body;
+    const userId = req.user.userId || req.user.id;
+
     try {
       //먼저 닉네임이 존재하는지 확인한다.
       //닉네임이
       if (!password) {
-        console.log(req.body, req.user.userId);
+        console.log(req.body, req.user,req.body);
 
+
+
+
+        
         //동일한 닉네임이 없는경우 update
         const updateNick = await user.update(
           { nickname: nickname },
           {
             where: {
-              id: req.user.userId,
+              id: userId,
             },
           }
         );
 
         if (!updateNick) {
+          
           return res.status(400).send("업데이트가 되지 않습니다.");
         }
 

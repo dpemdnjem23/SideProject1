@@ -190,6 +190,7 @@ module.exports = {
     // startdate 순으로 배치한다.
 
     const userId = req.user.userId || req.user.id;
+    console.log(userId);
 
     try {
       console.log(userId);
