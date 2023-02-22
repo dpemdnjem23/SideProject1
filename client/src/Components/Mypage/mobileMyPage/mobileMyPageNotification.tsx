@@ -14,7 +14,6 @@ const MobileMyPageNotification = () => {
 
   const navigate = useNavigate();
   const accessToken: string | null = localStorage.getItem("accessToken");
-
   const { setEditUser, editUser } = showMypageState();
 
   const { mobileNoti, setMobileNoti } = mobileMypageUseStore();
