@@ -20,7 +20,6 @@ import { isSigninState, mainheaderuseStore } from "utils/state";
 const MypageModal = () => {
   const navigate = useNavigate();
   const { showMypageModalOn } = mainheaderuseStore();
-  const { mypageOn }: any = useStore();
 
   const { persistLogin } = isSigninState();
   

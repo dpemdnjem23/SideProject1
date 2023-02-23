@@ -36,6 +36,7 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
+import { Identifier } from "@babel/types";
 
 // import {
 //   MainPage,
@@ -62,8 +63,6 @@ const App = () => {
   const { setAlarmInfo } = alarmInfouseStore();
   const { userSignin } = isSigninState();
 
-  const accessToken = localStorage.getItem("accessToken");
-
   // 로그인했을때만 로딩 하도록한다.
 
   //!
@@ -83,11 +82,10 @@ const App = () => {
     setShowAlarmModal,
     setShowAlarmPage,
   } = mainheaderuseStore();
-  
+
   const closeShowMypageModal = () => {
     showMypageModalOn(false);
     mobileMyPageOn(false);
-    
   };
 
   const closeMenuBar = () => {
@@ -104,62 +102,65 @@ const App = () => {
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
   // 로그아웃인경우는 작동하지 않는다.
+  const accessToken: string | null = localStorage.getItem("accessToken");
 
-  const localstorageUserInfo = JSON.parse(
-    localStorage.getItem("subgatherUserInfo") || "{}"
-  );
+console.log(accessToken)
+  // console.log(JSON.parse(localStorage.getItem("subgatherUserInfo") || "{}"));
 
   const { persistLogin } = isSigninState();
 
-  const issueAccessToken = () => {
-    fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-      body: JSON.stringify({
-        id: localstorageUserInfo.id,
-      }),
-      method: "post",
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
-          persistLogin(false);
-          window.location.assign("/");
+  // const localstorageUserInfo = JSON.parse(
+  //   localStorage.getItem("subgatherUserInfo") || "{}"
+  // );
+  // const issueAccessToken = () => {
+  //   fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
+  //     body: JSON.stringify({
+  //       id: localstorageUserInfo.id,
+  //     }),
+  //     method: "post",
+  //     headers: {
+  //       authorization: `Bearer ${accessToken}`,
+  //     },
+  //     credentials: "include",
+  //   })
+  //     .then((res: any) => {
+  //       if (!res.ok) {
+  //         //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
+  //         persistLogin(false);
+  //         window.location.assign("/");
 
-          localStorage.removeItem("accessToken");
-          // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-          isSigninState.persist.clearStorage();
-          localStorage.removeItem("subgatherUserInfo");
+  //         localStorage.removeItem("accessToken");
+  //         // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+  //         isSigninState.persist.clearStorage();
+  //         localStorage.removeItem("subgatherUserInfo");
 
-          throw new Error(res.status);
-        }
+  //         throw new Error(res.status);
+  //       }
 
-        return res.json();
-      })
-      .then((result) => {
-        //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-        localStorage.setItem("accessToken", result.data.accessToken);
-        //res.data
-        localStorage.setItem(
-          "subgatherUserInfo",
-          JSON.stringify(result.data.data)
-        );
-      })
-      .catch((err) => {
-        console.log(err);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+  //       localStorage.setItem("accessToken", result.data.accessToken);
+  //       //res.data
+  //       localStorage.setItem(
+  //         "subgatherUserInfo",
+  //         JSON.stringify(result.data.data)
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
 
-        window.location.assign("/");
-      });
-  };
+  //       window.location.assign("/");
+  //     });
+  // };
 
-  if (
-    localstorageUserInfo.accessExp - 10 < today ||
-    localstorageUserInfo.refreshExp - 10 < today
-  ) {
-    issueAccessToken();
-  }
+  // if (
+  //   localstorageUserInfo.accessExp - 10 < today ||
+  //   localstorageUserInfo.refreshExp - 10 < today
+  // ) {
+  //   issueAccessToken();
+  // }
 
   useEffect(() => {
     axios
@@ -239,7 +240,7 @@ const App = () => {
       <div onClick={closeShowMypageModal} id="App">
         {showErrModal ? <ErrModal></ErrModal> : null}
         {mobileMyPage ? <MenuBar></MenuBar> : null}
-        {showAlarmPage?<AlarmPage></AlarmPage>:null}
+        {showAlarmPage ? <AlarmPage></AlarmPage> : null}
 
         {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
         <Routes>
