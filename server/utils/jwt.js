@@ -5,7 +5,7 @@ const { sign, verify } = require("jsonwebtoken");
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "3h" });
+    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "2h" });
   },
   generateRefreshToken: (data) => {
     return sign(data, process.env.REFRESH_SECRET, { expiresIn: "3d" });
@@ -15,7 +15,7 @@ module.exports = {
     try {
       return verify(refreshToken, process.env.REFRESH_SECRET);
     } catch (err) {
-      return null;
+      return res.staus(401).send("잘못된 토큰입니다.");
     }
   },
 
@@ -23,12 +23,12 @@ module.exports = {
     try {
       return verify(accessToken, process.env.ACCESS_SECRET);
     } catch (err) {
-      return null;
+      return res.staus(401).send("잘못된 토큰입니다.");
     }
   },
   sendCookie: (res, refreshToken) => {
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true
+      httpOnly: true,
     });
   },
   tokenExp: (Token) => {

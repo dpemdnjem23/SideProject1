@@ -455,14 +455,14 @@ module.exports = {
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
     if (!refreshToken) {
-      return res.status(401).send("토큰이 없어");
+      return res.status(401).send("리프레쉬 토큰이 만료가되었습니다.");
     }
 
     try {
       const refreshTokenData = checkRefreshToken(refreshToken);
 
       if (!refreshTokenData) {
-        return res.status(401).send("리프레쉬 토큰이 만료되었습니다.");
+        return res.status(401).send("리프레쉬 토큰이 이상합니다.");
       }
 
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
@@ -548,31 +548,31 @@ module.exports = {
           },
           accessToken: accessToken,
         });
+      } else {
+        const accessToken = generateAccessToken({
+          id,
+          username,
+          nickname,
+          social_user,
+          isAdmin,
+        });
+        const accessExp = tokenExp(accessToken);
+        const refreshExp = tokenExp(refreshToken);
+
+        return res.status(200).send({
+          data: {
+            id: id,
+            username: username,
+            nickname: nickname,
+            social_user: social_user,
+            isAdmin: isAdmin,
+
+            accessExp: accessExp,
+            refreshExp: refreshExp,
+          },
+          accessToken: accessToken,
+        });
       }
-
-      const accessToken = generateAccessToken({
-        id,
-        username,
-        nickname,
-        social_user,
-        isAdmin,
-      });
-      const accessExp = tokenExp(accessToken);
-      const refreshExp = tokenExp(refreshToken);
-
-      return res.status(200).send({
-        data: {
-          id: id,
-          username: username,
-          nickname: nickname,
-          social_user: social_user,
-          isAdmin: isAdmin,
-
-          accessExp: accessExp,
-          refreshExp: refreshExp,
-        },
-        accessToken: accessToken,
-      });
 
       //구글 로그인
     } catch (err) {
@@ -589,7 +589,7 @@ module.exports = {
     try {
       const salt = await user.findOne({
         attributes: ["salt"],
-        where: { username:req.user.userUsername },
+        where: { username: req.user.userUsername },
       });
 
       if (!salt) {
@@ -619,7 +619,7 @@ module.exports = {
             return res.status(400).send("비밀번호가 일치하지 않습니다.");
           }
 
-          return res.status(200).send('적합한 비밀번호 입니다.')
+          return res.status(200).send("적합한 비밀번호 입니다.");
         }
       );
     } catch (err) {
