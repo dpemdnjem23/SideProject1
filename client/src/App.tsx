@@ -120,14 +120,16 @@ const App = () => {
     //2시간 마다 실행 하도록 하는 코드
 
 
+// console.log('째깍째깍')
+  },1000)
 
-  },2*60*60*1000)
+  //2*60*60*1000
 
   
 //accessToken을 보내 만료를 확인하고 만료가 되지 않았다면,
 //
   const issueAccessToken = () => {
-    
+
     fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
       body: JSON.stringify({
         id: localstorageUserInfo.id,

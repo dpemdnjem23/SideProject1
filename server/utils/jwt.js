@@ -15,7 +15,7 @@ module.exports = {
     try {
       return verify(refreshToken, process.env.REFRESH_SECRET);
     } catch (err) {
-      return res.staus(401).send("잘못된 토큰입니다.");
+      return null
     }
   },
 
@@ -23,7 +23,7 @@ module.exports = {
     try {
       return verify(accessToken, process.env.ACCESS_SECRET);
     } catch (err) {
-      return res.staus(401).send("잘못된 토큰입니다.");
+      return null
     }
   },
   sendCookie: (res, refreshToken) => {
