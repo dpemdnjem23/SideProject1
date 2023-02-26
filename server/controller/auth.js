@@ -370,6 +370,7 @@ module.exports = {
       const kakaoUser = await user.findOne({ where: { kakao_id: kakao_id } });
       // 신규 가입자 인경우
       //아이디만 만든다.만들엇으면
+      console.log(kakaoUser)
       if (!kakaoUser) {
         const newUser = await user.create({
           kakao_id: kakao_id,
@@ -437,7 +438,7 @@ module.exports = {
     }
   },
 
-  accessTokenReissuaControl: async (req, res) => {
+  accessTokenReissueControl: async (req, res) => {
     //만료시간이 다가오면 작동됨
     //1. 액세스토큰이 만료되기전에 리프레쉬로 액세스토큰을 재발행 한다.
     //2.  리프레쉬가 만료가됐는지를 확인해야함
@@ -450,21 +451,13 @@ module.exports = {
 
     const refreshToken = req.cookies.refreshToken;
 
-    console.log(refreshToken);
-
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
     if (!refreshToken) {
-      return res.status(401).send("리프레쉬 토큰이 만료가되었습니다.");
+      return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
     }
 
-    try {
-      const refreshTokenData = checkRefreshToken(refreshToken);
-
-      if (!refreshTokenData) {
-        return res.status(401).send("리프레쉬 토큰이 이상합니다.");
-      }
-
+    try {      
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
       //만약 다르다면 정보가 변경때문에 로그아웃
       const getUserInfo = await user.findOne({
@@ -473,7 +466,7 @@ module.exports = {
         },
       });
       if (!getUserInfo) {
-        return res.status(401).send("토큰 정보가 일치하지 않습니다.");
+        return res.status(400).send("존재하지않는 회원입니다.");
       }
 
       // id: 1,
