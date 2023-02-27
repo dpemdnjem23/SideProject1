@@ -2,8 +2,7 @@ require("dotenv").config();
 
 const router = require("express").Router();
 const controller = require("../controller/auth");
-const { accessTokenReissueControl } = require("../controller/auth");
-const { checkAccessToken, checkRefreshToken } = require("../utils/jwt");
+const { checkAccessToken, checkRefreshToken,tokenExp } = require("../utils/jwt");
 module.exports = {
   authchecker: (req, res, next) => {
     //auth가 만료 됐다면 로그인이 해제되어야한다.
@@ -15,8 +14,7 @@ module.exports = {
     //2. auth가 만료된 경우 ( 리프레쉬로 재발급, 로그인상황 에서 시간이다된경우)
 
     const refreshToken = req.cookies.refreshToken;
-
-    console.log("처음 접속");
+    controller.accessTokenReissueControl
 
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
@@ -25,6 +23,7 @@ module.exports = {
     if (!authorization || !refreshToken) {
       return next();
     }
+    // console.log("enqjs");
 
     try {
       const accessToken = authorization.split(" ")[1];
@@ -36,17 +35,17 @@ module.exports = {
       //accessTokne 만료가 됏는데 refresh가 아직 살아있으면 재발급 여지존재
 
       //그러면 next()
+      console.log(accessTokendata, authorization )
 
       //매버 currentTime을 체크한다.
-      const currentTime = Math.floor(Date.now() / 1000);
+     
 
-      const accessExp = tokenExp(accessToken);
+      // console.log(accessExp < currentTime, accessExp, currentTime);
 
       // accessExp 즉,만료되었다는 얘기다 만료가 된경우 재발급하여야 한다.
-      if (accessExp < currentTime) {
-        console.log("재발급 하고싶어요");
-        router.post("/issueaccess", controller.accessTokenReissueControl);
-      }
+      //   console.log('쪽지',accessExp,currentTime)
+
+      // }
 
       if (!accessTokendata || !refreshTokenData) {
         return res.status(401).send("토큰이 만료되었습니다.");
@@ -55,10 +54,15 @@ module.exports = {
       req.access = accessToken;
       req.user = accessTokendata;
     } catch (err) {
+      console.log('rmsu')
       return res.status(501).send(err);
     }
 
     return next();
+
+
     // return res.status(200).send({data:data})
   },
+
+
 };

@@ -34,7 +34,7 @@ module.exports = {
   tokenExp: (Token) => {
     // const token = authorization.split(" ")[1];
     const base64Payload = Token.split(".")[1];
-
+    
     const payload = Buffer.from(base64Payload, "base64");
     const result = JSON.parse(payload.toString());
 

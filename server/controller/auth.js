@@ -163,13 +163,14 @@ module.exports = {
     // console.log(req.headers)
     //signout 시 토큰이 만료가 됐다.
 
-    const accessTokenData = req.user;
     // const token = req.access;
 
     // console.log(req.use)
 
     try {
-      if (!accessTokenData) {
+      // const accessTokenData = req.user;
+
+      if (!req.access) {
         return res.status(401).send("토큰이 존재하지 않습니다.");
       }
 
@@ -181,10 +182,7 @@ module.exports = {
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {
-      return res
-        .clearCookie("refreshToken")
-        .status(500)
-        .send("로그아웃 서버오류");
+      return res.status(500).send("로그아웃 서버오류");
     }
     //로그 아웃은 토큰을 제거해준다.
     // authchecker(req,res,next)
@@ -370,9 +368,9 @@ module.exports = {
       const kakaoUser = await user.findOne({ where: { kakao_id: kakao_id } });
       // 신규 가입자 인경우
       //아이디만 만든다.만들엇으면
-      console.log(kakaoUser)
       if (!kakaoUser) {
         const newUser = await user.create({
+          id:kakaoUser.dataValues.id,
           kakao_id: kakao_id,
           nickname: nickname,
           email: email,
@@ -439,15 +437,18 @@ module.exports = {
   },
 
   accessTokenReissueControl: async (req, res) => {
-    //만료시간이 다가오면 작동됨
-    //1. 액세스토큰이 만료되기전에 리프레쉬로 액세스토큰을 재발행 한다.
-    //2.  리프레쉬가 만료가됐는지를 확인해야함
-    //2-1 => 리프레쉬가 만료가됐는지 or 리프레쉬 토큰에 조작이 있었는지
 
-    //조작을 확인하는 방법은 decode해서 비교를 해야하고, 토큰 만료는 토큰이
-    //있는지 없는지만 확인한다.
+    //1 액세스 토큰을 수시로 확인하여 만료가 된경우
+    //1-1 액세스 토큰이 만료된 경우 액세스 토큰을 발급한다.(구글 카카오 유저)
+
+
+//2 액세스 토큰만료를 확인할때 refreshtoken이 만료되었다면 
+//2-1 refreshToken이 만료되었다면 로그아웃을 해야한다
+
+    //조작을 확인하는 방법은 decode해서 비교를 해야하고, 토큰 만료는 토큰이있는지 없는지만 확인한다.
     // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
+    console.log("부회장");
 
     const refreshToken = req.cookies.refreshToken;
 
@@ -457,7 +458,13 @@ module.exports = {
       return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
     }
 
-    try {      
+    // const currentTime = Math.floor(Date.now() / 1000);
+
+    // const accessExp = tokenExp(accessToken);
+
+    //       if (accessExp < currentTime) {
+
+    try {
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
       //만약 다르다면 정보가 변경때문에 로그아웃
       const getUserInfo = await user.findOne({
@@ -492,7 +499,6 @@ module.exports = {
       //카카오 로그인
       if (kakao_id) {
         const accessToken = generateAccessToken({
-          id,
           kakao_id,
           nickname,
 
