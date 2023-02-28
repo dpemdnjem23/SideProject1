@@ -450,23 +450,27 @@ module.exports = {
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
     console.log("부회장");
 
-    const refreshToken = req.cookies.refreshToken;
 
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
-    if (!refreshToken) {
+    if (!req.refresh) {
       return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
     }
 
-    // const currentTime = Math.floor(Date.now() / 1000);
-
-    // const accessExp = tokenExp(accessToken);
-
-    //       if (accessExp < currentTime) {
+   
 
     try {
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
       //만약 다르다면 정보가 변경때문에 로그아웃
+
+
+      if(!req.issue){
+        return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
+
+      }
+
+
+
       const getUserInfo = await user.findOne({
         where: {
           id: req.body.id,
@@ -506,7 +510,7 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
-        const refreshExp = tokenExp(refreshToken);
+        const refreshExp = tokenExp(req.refresh);
 
         return res.status(200).send({
           data: {
@@ -532,7 +536,7 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
-        const refreshExp = tokenExp(refreshToken);
+        const refreshExp = tokenExp(req.refresh);
 
         return res.status(200).send({
           data: {
@@ -556,7 +560,7 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
-        const refreshExp = tokenExp(refreshToken);
+        const refreshExp = tokenExp(req.refresh);
 
         return res.status(200).send({
           data: {
