@@ -170,10 +170,6 @@ module.exports = {
     try {
       // const accessTokenData = req.user;
 
-      if (!req.access) {
-        return res.status(401).send("토큰이 존재하지 않습니다.");
-      }
-
       // await axios.get("https://kapi.kakao.com/v1/user/logout", {
       //   headers: {
       //     Authorization: `Bearer ${token}`,
@@ -280,7 +276,6 @@ module.exports = {
           social_user: true,
           isAdmin: false,
         });
-        console.log(newUser, "newUser");
 
         const accessToken = generateAccessToken(newUser.dataValues);
 
@@ -468,6 +463,13 @@ module.exports = {
         return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
 
       }
+
+
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      const accessExp = tokenExp(req.access);
+
+      // if(accessExp<currentTime)
 
 
 

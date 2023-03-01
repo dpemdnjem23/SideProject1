@@ -115,14 +115,38 @@ const App = () => {
 
   // let intervalId;
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URI}/user/info`, {
+      method: "GET",
 
-  setInterval(()=>{
-    //2시간 마다 실행 하도록 하는 코드
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res: any) => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
 
+        return res.json();
+      })
+      .then((result) => {
+        //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+        //res.data
+        localStorage.setItem(
+          "subgatherUserInfo",
+          JSON.stringify(result.data.data)
+        );
+      })
+      .catch((err) => {
+        console.log(err);
 
-// console.log('째깍째깍')
-  },1000)
-
+     
+      });
+  }, []);
+    
   //2*60*60*1000
 
   
