@@ -25,7 +25,6 @@ module.exports = {
   registerShare: async (req, res) => {
     const { title, list_sub, description } = req.body;
 
-    console.log(title, list_sub, description, "makemeStrong");
 
     const userId = req.user.userId || req.user.id;
 
@@ -70,7 +69,6 @@ module.exports = {
       let pageNum = Number(req.query.page||1)
       let offset =0
       // const offset = start
-      console.log(Number(req.query.page))
 
       if(pageNum>1){
         offset = 6*(pageNum-1);

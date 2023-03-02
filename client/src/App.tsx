@@ -142,18 +142,14 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
-
-     
       });
   }, []);
-    
+
   //2*60*60*1000
 
-  
-//accessToken을 보내 만료를 확인하고 만료가 되지 않았다면,
-//
+  //accessToken을 보내 만료를 확인하고 만료가 되지 않았다면,
+  //
   const issueAccessToken = () => {
-
     fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
       body: JSON.stringify({
         id: localstorageUserInfo.id,
@@ -198,6 +194,7 @@ const App = () => {
   // issueAccessToken();
 
   useEffect(() => {
+    console.log('무')
     axios
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
@@ -210,7 +207,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setWalletInfo]);
+  }, [walletInfo, userSignin]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
@@ -245,18 +242,6 @@ const App = () => {
         console.log(err);
       });
 
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        setWalletInfo(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, [userSignin]);
 
   // useEffect(()=>{

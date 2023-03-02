@@ -37,16 +37,14 @@ const MenuBar = () => {
     showMypageModalOn,
     setShowAlarmModal,
     setShowAlarmPage,
-    
-    
   } = mainheaderuseStore();
   const { setShowErrModal } = showErrModalState();
   const { setShowSubEdit, setShowSubDetail } = useWalletStore();
   const { userSignin } = isSigninState();
-   
+
   const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
     alarmInfouseStore();
-  
+
   const navigate = useNavigate();
 
   const { persistLogin } = isSigninState();
@@ -96,8 +94,6 @@ const MenuBar = () => {
       });
   };
 
-
-
   const handleErrModal = () => {
     setShowSubDetail(false);
     setShowSubEdit(false);
@@ -110,23 +106,21 @@ const MenuBar = () => {
     }
   };
 
-  const openAlarmPage = () =>{
-    setShowAlarmModal(true)
-    setShowAlarmPage(true)
-    setShowNumber(false)
+  const openAlarmPage = () => {
+    setShowAlarmModal(true);
+    setShowAlarmPage(true);
+    setShowNumber(false);
     mobileMyPageOn(false);
-    document.body.style.overflowY='scroll'
-    document.body.style.top='0';
-    document.body.style.position='fixed'
-    document.body.style.width='100%'
-
-  }
+    document.body.style.overflowY = "scroll";
+    document.body.style.top = "0";
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
+  };
 
   const closeMenuBar = () => {
     mobileMyPageOn(false);
-    
   };
-  
+
   let sum = 0;
 
   for (let i = 0; i < alarmInfo.length; i++) {
@@ -183,7 +177,7 @@ const MenuBar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={closeMenuBar}to="/wallet">
+                  <Link onClick={closeMenuBar} to="/wallet">
                     <div>구독지갑</div>
 
                     <div>

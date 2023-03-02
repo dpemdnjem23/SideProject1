@@ -25,23 +25,28 @@ module.exports = {
     const refreshToken = req.cookies.refreshToken;
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
+    const accessToken = authorization.split(" ")[1];
 
+    console.log(authorization,accessToken)
     //accesstoken이 존재하지 않는경우 넘어간다. 로그인이 되지 않은경우
     const isPublic = (url) => {
-
-      // TODO: 로그인하지 않아도 이용 가능한 기능의 URL을 정의합니다.
-      return url.startsWith("/share") ||url.startsWith("/login")||url.startsWith("/signup")
+      // 로그인하지 않아도 이용 가능한 기능의 URL을 정의합니다.
+      return (
+        url.startsWith("/share") ||
+        url.startsWith("/login") ||
+        url.startsWith("/signup")
+      );
     };
 
-    if (authorization) {
+    if (isNaN(accessToken)) {
       //토큰이 없으면 넘어간다 -> 로그인 되지 않은경우
       //토큰이 없는경우 다음 미들웨어로 ->
+      console.log("토큰이 필요한곳이야 나가");
 
       if (isPublic(req.url)) {
-        console.log('토큰이 필요없어')
+        console.log("토큰이 필요없어");
         return next();
       }
-      console.log('토큰이 필요한곳이야 나가')
 
       return res.status(401).send("Unauthorized");
     }
@@ -49,7 +54,7 @@ module.exports = {
     // console.log("enqjs");
 
     try {
-      console.log('통과되었다.')
+      console.log("통과되었다.");
 
       const accessToken = authorization.split(" ")[1];
 
@@ -79,7 +84,7 @@ module.exports = {
 
       return res.status(501).send(err);
     }
-    next();
+    // next();
 
     // return res.status(200).send({data:data})
   },

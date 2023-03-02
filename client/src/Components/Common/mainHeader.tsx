@@ -57,6 +57,7 @@ const Mainheader = () => {
     if (localStorage.getItem("accessToken")) {
       setShowErrModal(false);
     } else {
+      console.log("이것좀봐");
       navigate("/");
       setShowErrModal(true);
     }
@@ -73,7 +74,7 @@ const Mainheader = () => {
   const openAlarmModal = () => {
     setShowAlarmModal(true);
     setShowNumber(false);
-    setShowAlarmPage(true)
+    setShowAlarmPage(true);
     // mobileMyPageOn(true);
   };
 
@@ -81,7 +82,6 @@ const Mainheader = () => {
     // mobileMyPageOn(true);
     mobileMyPageOn(true);
     // setShowAlarmModal(true);
-
   };
 
   let sum = 0;
@@ -114,18 +114,14 @@ const Mainheader = () => {
             <li className="menu">
               <Link to="/">메인페이지</Link>
             </li>
-            <li className="menu">
-              <Link onClick={handleErrModal} to="/wallet">
-                구독지갑
-              </Link>
+            <li onClick={handleErrModal} className="menu">
+              <Link to="/wallet">구독지갑</Link>
             </li>
             <li className="menu">
               <Link to={`/share`}>구독공유</Link>
             </li>
-            <li className="menu">
-              <Link onClick={handleErrModal} to="/callendar">
-                구독달력
-              </Link>
+            <li onClick={handleErrModal} className="menu">
+              <Link to="/callendar">구독달력</Link>
             </li>
 
             {userSignin ? (
