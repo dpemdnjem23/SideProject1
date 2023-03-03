@@ -43,9 +43,9 @@ const MypageModal = () => {
           showMypageModalOn(false);
 
           localStorage.removeItem("accessToken");
-          alert("로그인이 만료되었습니다. 다시 로그인해주세요");
           isSigninState.persist.clearStorage();
           localStorage.removeItem("subgatherUserInfo");
+          alert("로그인이 만료되었습니다. 다시 로그인해주세요");
 
           throw new Error(res.status);
           // window.location.reload()

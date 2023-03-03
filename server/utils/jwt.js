@@ -15,15 +15,17 @@ module.exports = {
     try {
       return verify(refreshToken, process.env.REFRESH_SECRET);
     } catch (err) {
-      return null
+      return null;
     }
   },
 
   checkAccessToken: (accessToken) => {
     try {
+      console.log("내가바로 기적");
+
       return verify(accessToken, process.env.ACCESS_SECRET);
     } catch (err) {
-      return null
+      return null;
     }
   },
   sendCookie: (res, refreshToken) => {
@@ -34,7 +36,7 @@ module.exports = {
   tokenExp: (Token) => {
     // const token = authorization.split(" ")[1];
     const base64Payload = Token.split(".")[1];
-    
+
     const payload = Buffer.from(base64Payload, "base64");
     const result = JSON.parse(payload.toString());
 

@@ -88,15 +88,6 @@ const Login = () => {
           body:JSON.stringify({ username: signinInfo.username, password: signinInfo.password }),
 
         })
-      // axios({
-      //   url: `${process.env.REACT_APP_API_URI}/auth/signin`,
-      //   method: "post",
-      //   data: { username: signinInfo.username, password: signinInfo.password },
-
-      //   headers: {
-      //     "Content-Type": "application/json;charset=UTF-8",
-      //   },
-      // })
         .then((res:any) => {
           if(!res.ok){
             mypageOn(false);
@@ -107,11 +98,6 @@ const Login = () => {
             throw new Error(res.status)
           }
           return res.json()
-
-   
-
-          //  console.log(mypageOn(disabled) )
-
         })
         .then((res)=>{
 

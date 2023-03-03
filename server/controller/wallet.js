@@ -191,7 +191,7 @@ module.exports = {
 
     const userId = req.user.userId || req.user.id;
 
-
+console.log(userId)
     try {
       const findWallet = await wallet.findAll({
         where: { user_id: userId },

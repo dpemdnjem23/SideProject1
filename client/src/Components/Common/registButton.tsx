@@ -22,10 +22,7 @@ const RegistButton = () => {
     const number = subCash.replace(/,/g, "");
     const today = dateCal.format("YYYY-MM-DD");
 
-    //end_date를 계산해서 넣는다.
     
-    console.log(accessToken)
-
     fetch(`${process.env.REACT_APP_API_URI}/wallet/regist`, {
       method: "post",
       body: JSON.stringify({

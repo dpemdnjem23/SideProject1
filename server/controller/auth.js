@@ -64,13 +64,10 @@ module.exports = {
   },
   signinControl: async (req, res) => {
     // const body = JSON.stringify(req.body)
-    // console.log(body)
+    console.log(req.body)
 
     try {
       const { username, password } = req.body;
-
-      console.log(req.body.username, req.body, "login");
-
       // console.log(username,password)
 
       const salt = await user.findOne({
