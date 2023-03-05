@@ -440,14 +440,10 @@ module.exports = {
     //조작을 확인하는 방법은 decode해서 비교를 해야하고, 토큰 만료는 토큰이있는지 없는지만 확인한다.
     // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
-    console.log("부회장");
 
 
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
-    if (!req.refresh) {
-      return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
-    }
 
    
 
@@ -456,18 +452,12 @@ module.exports = {
       //만약 다르다면 정보가 변경때문에 로그아웃
 
 
-      if(!req.issue){
-        return res.status(401).send("리프레쉬 토큰이 존재하지 않는경우");
-
-      }
-
-
       const currentTime = Math.floor(Date.now() / 1000);
 
       const accessExp = tokenExp(req.access);
 
-      // if(accessExp<currentTime)
 
+      
 
 
       const getUserInfo = await user.findOne({
