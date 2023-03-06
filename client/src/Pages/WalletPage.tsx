@@ -118,48 +118,39 @@ const WalletPage = () => {
   return (
     <div id="WalletPage">
       {loading ? <Loading></Loading> : null}
-      
-      {walletInfo.length<0? <EmptyPage></EmptyPage>:
-      
-(
-  <>
 
- {showSubDetail ? 
+      {walletInfo.length < 0 ? (
+        <EmptyPage></EmptyPage>
+      ) : (
+        <>
+          {showSubDetail ? (
+            <SubDetailModal
+              // key={el.id}
+              // walletInfo={el}
+              arrIndex={arrIndex}
+              // walletInfo={walletInfo}
+              closeCancellationModal={closeCancellationModal}
+              showCancellation={showCancellation}
+              openCancellationModal={openCancellationModal}
+              closeSubModal={closeSubModal}
+            ></SubDetailModal>
+          ) : null}
 
-        <SubDetailModal
-          // key={el.id}
-          // walletInfo={el}
-          arrIndex={arrIndex}
-          // walletInfo={walletInfo}
-          closeCancellationModal={closeCancellationModal}
-          showCancellation={showCancellation}
-          openCancellationModal={openCancellationModal}
-          closeSubModal={closeSubModal}
-        ></SubDetailModal>
-        : null }
+          <div className="WalletPage_background">
+            <WalletPageTop></WalletPageTop>
 
-
-      
-      <div className="WalletPage_background">
-        <WalletPageTop></WalletPageTop>
-
-        <WalletPageCenter
-          // walletInfo={walletInfo}
-          // showCancellation={showCancellation}
-          openSubModal={openSubModal}
-        />
-        <WalletPageBottom
-          walletSubCost={walletSubCost}
-          // walletInfo={walletInfo}
-        />
-        
-      </div>
-
-      </>
-)
-    }
-
-
+            <WalletPageCenter
+              // walletInfo={walletInfo}
+              // showCancellation={showCancellation}
+              openSubModal={openSubModal}
+            />
+            <WalletPageBottom
+              walletSubCost={walletSubCost}
+              // walletInfo={walletInfo}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

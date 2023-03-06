@@ -64,7 +64,7 @@ module.exports = {
   },
   signinControl: async (req, res) => {
     // const body = JSON.stringify(req.body)
-    console.log(req.body)
+    console.log(req.body);
 
     try {
       const { username, password } = req.body;
@@ -362,7 +362,7 @@ module.exports = {
       //아이디만 만든다.만들엇으면
       if (!kakaoUser) {
         const newUser = await user.create({
-          id:kakaoUser.dataValues.id,
+          id: kakaoUser.dataValues.id,
           kakao_id: kakao_id,
           nickname: nickname,
           email: email,
@@ -429,40 +429,34 @@ module.exports = {
   },
 
   accessTokenReissueControl: async (req, res) => {
-
     //1 액세스 토큰을 수시로 확인하여 만료가 된경우
     //1-1 액세스 토큰이 만료된 경우 액세스 토큰을 발급한다.(구글 카카오 유저)
 
-
-//2 액세스 토큰만료를 확인할때 refreshtoken이 만료되었다면 
-//2-1 refreshToken이 만료되었다면 로그아웃을 해야한다
-
+    //2 액세스 토큰만료를 확인할때 refreshtoken이 만료되었다면
+    //2-1 refreshToken이 만료되었다면 로그아웃을 해야한다
     //조작을 확인하는 방법은 decode해서 비교를 해야하고, 토큰 만료는 토큰이있는지 없는지만 확인한다.
     // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
     // 로컬스토리지는 id, nickname,username 3개를 가져온다.
 
-
     // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
 
-
-   
-
     try {
+
+      const refreshToken = req.cookies.refreshToken;
+
+
+      //리프레쉬토큰으로 재발급을한다 -> 리프레쉬토큰이 만약에 존재하지않으면
+      //로그아웃을 진행해야하기때문에 따로뺀다.
+      const refreshTokenData = checkRefreshToken(refreshToken);
+
+      if (!refreshTokenData) {
+        return res.status(401).send("token expired");
+      }
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
       //만약 다르다면 정보가 변경때문에 로그아웃
-
-
-      const currentTime = Math.floor(Date.now() / 1000);
-
-      const accessExp = tokenExp(req.access);
-
-
-      
-
-
       const getUserInfo = await user.findOne({
         where: {
-          id: req.body.id,
+          id: refreshTokenData.userId,
         },
       });
       if (!getUserInfo) {
@@ -499,7 +493,6 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
-        const refreshExp = tokenExp(req.refresh);
 
         return res.status(200).send({
           data: {
@@ -510,7 +503,6 @@ module.exports = {
             social_user: social_user,
             isAdmin: isAdmin,
             accessExp: accessExp,
-            refreshExp: refreshExp,
           },
           accessToken: accessToken,
         });
@@ -525,7 +517,6 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
-        const refreshExp = tokenExp(req.refresh);
 
         return res.status(200).send({
           data: {
@@ -536,11 +527,13 @@ module.exports = {
             social_user: social_user,
             isAdmin: isAdmin,
             accessExp: accessExp,
-            refreshExp: refreshExp,
+            
           },
           accessToken: accessToken,
         });
       } else {
+        
+        console.log('요시 재발급')
         const accessToken = generateAccessToken({
           id,
           username,
@@ -549,7 +542,6 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
-        const refreshExp = tokenExp(req.refresh);
 
         return res.status(200).send({
           data: {
@@ -560,7 +552,6 @@ module.exports = {
             isAdmin: isAdmin,
 
             accessExp: accessExp,
-            refreshExp: refreshExp,
           },
           accessToken: accessToken,
         });
