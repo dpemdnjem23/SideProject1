@@ -57,7 +57,6 @@ module.exports = {
       const accessTokendata = checkAccessToken(accessToken);
 
 
-      console.log(accessTokendata)
 
 
 
@@ -67,6 +66,7 @@ module.exports = {
 
       // console.log(userOne)
       req.access = accessToken;
+      req.user = accessTokendata
 
       console.log('이젠')
 

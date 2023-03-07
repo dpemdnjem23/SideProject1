@@ -112,7 +112,34 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
+  const [expiredAccess, setExpiredAccess] = useState(null);
+  const [expirationTime, setExpirationTime] = useState(null);
+
   // let intervalId;
+
+  useEffect(() => {
+    if (!accessToken || !expirationTime) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      // accessToken이 만료된 경우 실행될 코드
+      console.log("accessToken has expired");
+      // ...
+    }, expirationTime - Date.now());
+
+    // cleanup 함수
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [accessToken, expirationTime]);
+
+  const handleLogin = (token, expirationTime) => {
+    setExpiredAccess(token);
+    setExpirationTime(expirationTime);
+  };
+
+
 
 
 
