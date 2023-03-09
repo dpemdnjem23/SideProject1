@@ -104,14 +104,62 @@ const App = () => {
   // 로그아웃인경우는 작동하지 않는다.
   const accessToken: string | null = localStorage.getItem("accessToken");
 
-  // console.log(localStorage.getItem("subgatherUserInfo"))
-
-  const { persistLogin } = isSigninState();
-
   const localstorageUserInfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
+  const [tokenExpired, setTokenExpired] = useState(true);
+
+
+
+  const { persistLogin } = isSigninState();
+
+  // useEffect(() => {
+  //   //
+  //   fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
+  //     body: JSON.stringify({
+  //       id: localstorageUserInfo.id,
+  //     }),
+  //     method: "post",
+  //     headers: {
+  //       authorization: `Bearer ${accessToken}`,
+  //     },
+  //     credentials: "include",
+  //   })
+  //     .then((res: any) => {
+  //       if (!res.ok) {
+  //         // console.log(res.response.status)
+  //         //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
+  //         persistLogin(false);
+  //         window.location.assign("/");
+
+  //         localStorage.removeItem("accessToken");
+  //         // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+  //         isSigninState.persist.clearStorage();
+  //         localStorage.removeItem("subgatherUserInfo");
+
+  //         throw new Error(res.status);
+  //       }
+
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       console.log('재발급',JSON.stringify(result.data)
+  //       )
+  //       //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+  //       localStorage.setItem("accessToken", result.accessToken);
+  //       //res.data
+  //       localStorage.setItem(
+  //         "subgatherUserInfo",
+  //         JSON.stringify(result.data)
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
+  //       window.location.assign("/");
+  //     });
+
+  // }, []);
 
   // let intervalId;
   useEffect(() => {
@@ -147,48 +195,6 @@ const App = () => {
   //2*60*60*1000
 
   //accessToken을 보내 만료를 확인하고 만료가 되지 않았다면,
-  //
-  const issueAccessToken = () => {
-    fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-      body: JSON.stringify({
-        id: localstorageUserInfo.id,
-      }),
-      method: "post",
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
-          persistLogin(false);
-          window.location.assign("/");
-
-          localStorage.removeItem("accessToken");
-          // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-          isSigninState.persist.clearStorage();
-          localStorage.removeItem("subgatherUserInfo");
-
-          throw new Error(res.status);
-        }
-
-        return res.json();
-      })
-      .then((result) => {
-        //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-        localStorage.setItem("accessToken", result.data.accessToken);
-        //res.data
-        localStorage.setItem(
-          "subgatherUserInfo",
-          JSON.stringify(result.data.data)
-        );
-      })
-      .catch((err) => {
-        //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
-        window.location.assign("/");
-      });
-  };
 
   useEffect(() => {
     axios
