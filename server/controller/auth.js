@@ -216,8 +216,7 @@ module.exports = {
       );
 
       const Token = getAccessToken.data.access_token;
-
-      // console.log(Token)
+      console.log( getAccessToken.data)
       // https://www.googleapis.com/oauth2/v2/userinfo?access_token=${Token}
       // https://www.googleapis.com/oauth2/v3/tokeninfo
       const getUserInfo = await axios.get(
@@ -429,17 +428,8 @@ module.exports = {
   },
 
   accessTokenReissueControl: async (req, res) => {
-    //1 액세스 토큰을 수시로 확인하여 만료가 된경우
-    //1-1 액세스 토큰이 만료된 경우 액세스 토큰을 발급한다.(구글 카카오 유저)
-
-    //2 액세스 토큰만료를 확인할때 refreshtoken이 만료되었다면
-    //2-1 refreshToken이 만료되었다면 로그아웃을 해야한다
-    //조작을 확인하는 방법은 decode해서 비교를 해야하고, 토큰 만료는 토큰이있는지 없는지만 확인한다.
-    // 액세스 재발급 -> 로컬스토리지에 있는 정보를 가져와서 db랑 비교
-    // 로컬스토리지는 id, nickname,username 3개를 가져온다.
-
-    // 리프레쉬 토큰이 만료된경우 => 로그아웃을 해야함.
-
+    
+//accessToken이 만료가된경우 -> !accessToken,
     try {
 
       const refreshToken = req.cookies.refreshToken;

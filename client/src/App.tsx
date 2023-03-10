@@ -108,88 +108,100 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
-  const [tokenExpired, setTokenExpired] = useState(true);
-
-
+  const [tokenExpired, setTokenExpired] = useState(false);
 
   const { persistLogin } = isSigninState();
 
+  //로그인후 1초마다 실행하는 도구
+//expirytime,accesstoken 둘다필요함
+// 시간이바뀌거나, accesstoken이 바귈테니깐
+
   // useEffect(() => {
-  //   //
-  //   fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-  //     body: JSON.stringify({
-  //       id: localstorageUserInfo.id,
-  //     }),
-  //     method: "post",
-  //     headers: {
-  //       authorization: `Bearer ${accessToken}`,
-  //     },
-  //     credentials: "include",
-  //   })
-  //     .then((res: any) => {
-  //       if (!res.ok) {
-  //         // console.log(res.response.status)
-  //         //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
-  //         persistLogin(false);
-  //         window.location.assign("/");
+  //   const intervalId = setInterval(() => {
+  //     if (expiryTime && expiryTime < new Date()) {
+  //       clearInterval(intervalId);
+  //       refreshAccessToken();
+  //     }
+  //   }, 1000);
 
-  //         localStorage.removeItem("accessToken");
-  //         // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-  //         isSigninState.persist.clearStorage();
-  //         localStorage.removeItem("subgatherUserInfo");
+  //   return () => clearInterval(intervalId);
+  // }, [expiryTime]);
 
-  //         throw new Error(res.status);
-  //       }
-
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       console.log('재발급',JSON.stringify(result.data)
-  //       )
-  //       //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-  //       localStorage.setItem("accessToken", result.accessToken);
-  //       //res.data
-  //       localStorage.setItem(
-  //         "subgatherUserInfo",
-  //         JSON.stringify(result.data)
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
-  //       window.location.assign("/");
-  //     });
-
-  // }, []);
-
-  // let intervalId;
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URI}/user/info`, {
-      method: "GET",
-
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          throw new Error(res.status);
-        }
-
-        return res.json();
+    if (accessToken) {
+      fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
+        body: JSON.stringify({
+          id: localstorageUserInfo.id,
+        }),
+        method: "post",
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
       })
-      .then((result) => {
-        //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-        //res.data
-        localStorage.setItem(
-          "subgatherUserInfo",
-          JSON.stringify(result.data.data)
-        );
+        .then((res: any) => {
+          if (!res.ok) {
+            //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
+            persistLogin(false);
+            window.location.assign("/");
+
+            localStorage.removeItem("accessToken");
+            // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+            isSigninState.persist.clearStorage();
+            localStorage.removeItem("subgatherUserInfo");
+
+            throw new Error(res.status);
+          }
+
+          return res.json();
+        })
+        .then((result) => {
+          console.log("재발급", JSON.stringify(result.data));
+          //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+          localStorage.setItem("accessToken", result.accessToken);
+          //res.data
+          localStorage.setItem(
+            "subgatherUserInfo",
+            JSON.stringify(result.data)
+          );
+        })
+        .catch((err) => {
+          //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
+          window.location.assign("/");
+        });
+    }
+  }, [tokenExpired]);
+
+  useEffect(() => {
+    if (accessToken) {
+      fetch(`${process.env.REACT_APP_API_URI}/user/info`, {
+        method: "GET",
+
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${accessToken}`,
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res: any) => {
+          if (!res.ok) {
+            throw new Error(res.status);
+          }
+
+          return res.json();
+        })
+        .then((result) => {
+          //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+          //res.data
+          localStorage.setItem(
+            "subgatherUserInfo",
+            JSON.stringify(result.data.data)
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   //2*60*60*1000
@@ -197,52 +209,56 @@ const App = () => {
   //accessToken을 보내 만료를 확인하고 만료가 되지 않았다면,
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        setWalletInfo(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (accessToken) {
+      axios
+        .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => {
+          setWalletInfo(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [userSignin]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
-      method: "POST",
+    if (accessToken) {
+      fetch(`${process.env.REACT_APP_API_URI}/alarm/register`, {
+        method: "POST",
 
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          throw new Error(res.status);
-        }
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${accessToken}`,
+        },
       })
-      .then((result) => {
-        axios
-          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          })
-          .then((res) => {
-            setAlarmInfo(res.data.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res: any) => {
+          if (!res.ok) {
+            throw new Error(res.status);
+          }
+        })
+        .then((result) => {
+          axios
+            .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+              headers: {
+                authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((res) => {
+              setAlarmInfo(res.data.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   // useEffect(()=>{

@@ -31,6 +31,9 @@ type mypageState = {
 
 export const useStore = create<mypageState>()((set) => ({
   userSignin: false,
+  tokenExpired:null,
+  
+
   mypageOn: (input) => set({ userSignin: input }),
 }));
 

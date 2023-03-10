@@ -56,14 +56,9 @@ module.exports = {
       //토큰이 존재하는경우 -> 로그인 하는경우 반드시 액세스, 리프레쉬 발급
       const accessTokendata = checkAccessToken(accessToken);
 
-      if(!accessTokendata){
-res.status(401).semd('token expired')
-      }
-
-
-
-
-
+//       if(!accessTokendata){
+// return res.status(401).semd('token expired')
+//       }
 
       //리프레쉬토큰으로 재발급을한다 -> 리프레쉬토큰이 만약에 존재하지않으면
       //로그아웃을 진행해야하기때문에 따로뺀다.
@@ -71,8 +66,6 @@ res.status(401).semd('token expired')
       // console.log(userOne)
       req.access = accessToken;
       req.user = accessTokendata
-
-      console.log('이젠')
 
       return next();
     } catch (error) {
