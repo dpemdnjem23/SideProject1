@@ -13,7 +13,12 @@ type SigninInfo = {
   password: string;
 };
 type mypageState = {
-  userSignin: boolean;
+  mypageState: boolean;
+  tokenExpired:string|null
+  tokenExpiration:number|null
+  setTokenExpiration:(input:number|null) =>void
+
+  setTokenExpired:(input:string|null) =>void
 
   mypageOn: (input: boolean) => void;
 };
@@ -29,12 +34,19 @@ type mypageState = {
 //   }
 // ))
 
-export const useStore = create<mypageState>()((set) => ({
-  userSignin: false,
-  tokenExpired:null,
-  
 
-  mypageOn: (input) => set({ userSignin: input }),
+
+export const useStore = create<mypageState>()((set) => ({
+  mypageState: false,
+  tokenExpired:null,
+  tokenExpiration:null,
+  setTokenExpiration:(input) =>set({tokenExpiration:input}),
+
+  
+  setTokenExpired:(input) =>set({tokenExpired:input}),
+
+
+  mypageOn: (input) => set({ mypageState:input }),
 }));
 
 // type signInfo = {
@@ -43,7 +55,7 @@ export const useStore = create<mypageState>()((set) => ({
 
 
 const Login = () => {
-  const { mypageOn } = useStore();
+  const { mypageOn,mypageState,tokenExpiration,tokenExpired,setTokenExpiration,setTokenExpired } = useStore();
   const [signinInfo, setSigninInfo] = useState<SigninInfo>({
     username: "",
     password: "",
@@ -103,6 +115,7 @@ const Login = () => {
           return res.json()
         })
         .then((res)=>{
+          
 
 
          localStorage.setItem("accessToken", res.accessToken);

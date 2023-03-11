@@ -108,7 +108,6 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
-  const [tokenExpired, setTokenExpired] = useState(false);
 
   const { persistLogin } = isSigninState();
 
