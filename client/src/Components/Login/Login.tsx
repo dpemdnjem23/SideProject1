@@ -14,11 +14,11 @@ type SigninInfo = {
 };
 type mypageState = {
   mypageState: boolean;
-  tokenExpired:string|null
-  tokenExpiration:number|null
-  setTokenExpiration:(input:number|null) =>void
+  tokenExpired: string;
+  tokenExpiration: number;
+  setTokenExpiration: (input: number) => void;
 
-  setTokenExpired:(input:string|null) =>void
+  setTokenExpired: (input: string) => void;
 
   mypageOn: (input: boolean) => void;
 };
@@ -34,28 +34,30 @@ type mypageState = {
 //   }
 // ))
 
-
-
 export const useStore = create<mypageState>()((set) => ({
   mypageState: false,
-  tokenExpired:null,
-  tokenExpiration:null,
-  setTokenExpiration:(input) =>set({tokenExpiration:input}),
+  tokenExpired: "",
+  tokenExpiration: 0,
+  setTokenExpiration: (input) => set({ tokenExpiration: input }),
 
-  
-  setTokenExpired:(input) =>set({tokenExpired:input}),
+  setTokenExpired: (input) => set({ tokenExpired: input }),
 
-
-  mypageOn: (input) => set({ mypageState:input }),
+  mypageOn: (input) => set({ mypageState: input }),
 }));
 
 // type signInfo = {
 //   handleSignin: () => void;
 //   signinErrMessage:string;
 
-
 const Login = () => {
-  const { mypageOn,mypageState,tokenExpiration,tokenExpired,setTokenExpiration,setTokenExpired } = useStore();
+  const {
+    mypageOn,
+    mypageState,
+    tokenExpiration,
+    tokenExpired,
+    setTokenExpiration,
+    setTokenExpired,
+  } = useStore();
   const [signinInfo, setSigninInfo] = useState<SigninInfo>({
     username: "",
     password: "",
@@ -91,40 +93,35 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
+      fetch(`${process.env.REACT_APP_API_URI}/auth/signin`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json ",
+        },
+        credentials: "include",
 
-      fetch(`${process.env.REACT_APP_API_URI}/auth/signin`,
-        {
-          method: "post",
-          headers:{
-            'Content-Type':'application/json '
-         },
-         credentials: "include",
-
-          body:JSON.stringify({ username: signinInfo.username, password: signinInfo.password }),
-
-        })
-        .then((res:any) => {
-          if(!res.ok){
+        body: JSON.stringify({
+          username: signinInfo.username,
+          password: signinInfo.password,
+        }),
+      })
+        .then((res: any) => {
+          if (!res.ok) {
             mypageOn(false);
             setSigninInfo({ ...signinInfo, password: "" });
-  
+
             setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
 
-            throw new Error(res.status)
+            throw new Error(res.status);
           }
-          return res.json()
+          return res.json();
         })
-        .then((res)=>{
-          
+        .then((res) => {
+          localStorage.setItem("accessToken", res.accessToken);
 
-
-         localStorage.setItem("accessToken", res.accessToken);
-
-          localStorage.setItem(
-            "subgatherUserInfo",
-            JSON.stringify(res.data)
-          );
-
+          localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data));
+          setTokenExpiration(res.data.accessExp);
+          setTokenExpired(res.accessToken);
           persistLogin(true);
 
           navigate("/");
@@ -138,10 +135,9 @@ const Login = () => {
           setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
           // mypageOff()
 
-          console.log(err)
-        
+          console.log(err);
+
           //로그인 정보가 맞지 않는경우. errmessage
-        
         });
     }
   };
