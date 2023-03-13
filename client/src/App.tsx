@@ -98,7 +98,7 @@ const App = () => {
   }
 
   const today:number = new Date().getTime() / 1000;
-  const  {tokenExpiration,tokenExpired} =  useStore()
+  const  {tokenExpiration,tokenExpired,setTokenExpiration,setTokenExpired} =  useStore()
 
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
@@ -109,10 +109,7 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
-  console.log(tokenExpiration<today,'tokenExpiration')
-
-
-  console.log(today)
+  console.log(tokenExpiration<today,tokenExpiration,today)
   const { persistLogin } = isSigninState();
 
   //로그인후 1초마다 실행하는 도구
@@ -131,7 +128,8 @@ const App = () => {
   // }, [expiryTime]);
 
   useEffect(() => {
-    if (accessToken) {
+    if (tokenExpiration<today) {
+      console.log('참일때 들어와라')
       fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
         body: JSON.stringify({
           id: localstorageUserInfo.id,
@@ -144,6 +142,7 @@ const App = () => {
       })
         .then((res: any) => {
           if (!res.ok) {
+            console.log('끝')
             //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
             persistLogin(false);
             window.location.assign("/");
@@ -159,7 +158,8 @@ const App = () => {
           return res.json();
         })
         .then((result) => {
-          console.log("재발급", JSON.stringify(result.data));
+          console.log("재발급", JSON.stringify(result.data.data));
+          setTokenExpiration(result.accessExp)
           //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
           localStorage.setItem("accessToken", result.accessToken);
           //res.data
@@ -170,7 +170,7 @@ const App = () => {
         })
         .catch((err) => {
           //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
-          window.location.assign("/");
+          
         });
     }
   }, []);
