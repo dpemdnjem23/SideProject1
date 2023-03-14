@@ -52,10 +52,15 @@ module.exports = {
     }
 
     try {
-      const accessToken = authorization.split(" ")[1];
+
+
+
+    const accessToken = authorization.split(" ")[1];
       //토큰이 존재하는경우 -> 로그인 하는경우 반드시 액세스, 리프레쉬 발급
       const accessTokendata = checkAccessToken(accessToken);
 
+
+       console.log(accessTokenData)
 //       if(!accessTokendata){
 // return res.status(401).semd('token expired')
 //       }

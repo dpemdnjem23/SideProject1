@@ -189,7 +189,7 @@ module.exports = {
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
 
-    console.log(req.user)
+    console.log(req.user,'req.user')
 
 
     const userId = req.user.userId || req.user.id;

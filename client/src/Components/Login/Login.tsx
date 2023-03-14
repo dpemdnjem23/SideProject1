@@ -14,11 +14,11 @@ type SigninInfo = {
 };
 type mypageState = {
   mypageState: boolean;
-  tokenExpired: string;
-  tokenExpiration: number;
-  setTokenExpiration: (input: number) => void;
+  // tokenExpired: string;
+  // tokenExpiration: number;
+  // setTokenExpiration: (input: number) => void;
 
-  setTokenExpired: (input: string) => void;
+  // setTokenExpired: (input: string) => void;
 
   mypageOn: (input: boolean) => void;
 };
@@ -36,12 +36,6 @@ type mypageState = {
 
 export const useStore = create<mypageState>()((set) => ({
   mypageState: false,
-  tokenExpired: "",
-  tokenExpiration: 0,
-  setTokenExpiration: (input) => set({ tokenExpiration: input }),
-
-  setTokenExpired: (input) => set({ tokenExpired: input }),
-
   mypageOn: (input) => set({ mypageState: input }),
 }));
 
@@ -53,10 +47,7 @@ const Login = () => {
   const {
     mypageOn,
     mypageState,
-    tokenExpiration,
-    tokenExpired,
-    setTokenExpiration,
-    setTokenExpired,
+
   } = useStore();
   const [signinInfo, setSigninInfo] = useState<SigninInfo>({
     username: "",
@@ -120,8 +111,7 @@ const Login = () => {
           localStorage.setItem("accessToken", res.accessToken);
 
           localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data));
-          setTokenExpiration(res.data.accessExp);
-          setTokenExpired(res.accessToken);
+
           persistLogin(true);
 
           navigate("/");
