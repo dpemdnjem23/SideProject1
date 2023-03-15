@@ -109,6 +109,7 @@ const App = () => {
   );
 
   console.log(
+    localstorageUserInfo,
     localstorageUserInfo.accessExp < today,
     localstorageUserInfo.accessExp,
     today
@@ -171,43 +172,7 @@ const App = () => {
       });
   }
 
-  useEffect(() => {
-    if (accessToken) {
-      console.log('맨날 유저정보 가져오는놈')
-      fetch(`${process.env.REACT_APP_API_URI}/user/info`, {
-        method: "GET",
-
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            throw new Error(res.status);
-          }
-
-          return res.json();
-        })
-        .then((result) => {
-          //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-          //res.data
-          localStorage.setItem(
-            "subgatherUserInfo",
-            JSON.stringify(result.data.data)
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
-
   //2*60*60*1000
-
-  //accessToken을 보내 만료를 확인하고 만료가 되지 않았다면,
-
   useEffect(() => {
     if (accessToken) {
       axios

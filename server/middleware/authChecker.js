@@ -60,7 +60,6 @@ module.exports = {
       const accessTokendata = checkAccessToken(accessToken);
 
 
-       console.log(accessTokenData)
 //       if(!accessTokendata){
 // return res.status(401).semd('token expired')
 //       }
@@ -71,6 +70,7 @@ module.exports = {
       // console.log(userOne)
       req.access = accessToken;
       req.user = accessTokendata
+      console.log(accessTokendata,'req.user')
 
       return next();
     } catch (error) {
