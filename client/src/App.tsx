@@ -107,13 +107,6 @@ const App = () => {
   const localstorageUserInfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
-
-  console.log(
-    localstorageUserInfo,
-    localstorageUserInfo.accessExp < today,
-    localstorageUserInfo.accessExp,
-    today
-  );
   const { persistLogin } = isSigninState();
 
   //로그인후 1초마다 실행하는 도구

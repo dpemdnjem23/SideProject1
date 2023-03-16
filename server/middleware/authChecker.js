@@ -12,16 +12,6 @@ const {
 } = require("../utils/jwt");
 module.exports = {
   authchecker: async (req, res, next) => {
-    //auth가 만료 됐다면 로그인이 해제되어야한다.
-
-    //auth 는 2가지 케이스가 존재한다
-
-    //로그인 했다면 refresh access 둘다 발급된다.
-    //로그인되지 않은 상태면 그냥 넘어간다.
-    // 로그인 된경우 2가지 acess, refresh
-    //access가 만료된경우와 refresh가 만료된경우 2가지가 존재한다.
-    //access가 만료된경우 refresh로 재발급해야한다.
-    //refresh가 만료된경우 refresh는 로그아웃을 해야한다.
 
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
@@ -43,7 +33,6 @@ module.exports = {
       //토큰이 없는경우 허용되지 않는다. 단,예외
       if (isPublic(req.url)) {
         //share login signup callendar는 토큰이 없어도 진입가능
-        console.log("준비");
 
         return next();
       }
@@ -59,7 +48,16 @@ module.exports = {
       //토큰이 존재하는경우 -> 로그인 하는경우 반드시 액세스, 리프레쉬 발급
       const accessTokendata = checkAccessToken(accessToken);
 
+//acceesTokendata -> null이야 그러면 reissueaccessToken
 
+if(accessTokendata===null){
+  console.log('너나위')
+
+  router.post("/auth/issueaccess", controller.accessTokenReissueControl);
+
+
+  
+}
 //       if(!accessTokendata){
 // return res.status(401).semd('token expired')
 //       }
