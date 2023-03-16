@@ -13,7 +13,7 @@ const alarmRouter = require('./routes/alarm')
 const userRouter = require('./routes/user');
 const walletRouter = require('./routes/wallet');
 const shareRouter = require('./routes/share')
-const schuduleDateControll = require("./utils/scheduler");
+const {schuduleDateControll,scheduleAlarmRegister} = require("./utils/scheduler");
 
 const socketIo = require('socket.io');
 
@@ -65,6 +65,7 @@ app.use('/share',shareRouter)
 
 app.listen(Port, () => {
   schuduleDateControll
+  scheduleAlarmRegister
   console.log(`Server is Startin on ${Port}`);
 })
 
