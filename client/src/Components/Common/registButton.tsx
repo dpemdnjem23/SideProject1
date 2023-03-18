@@ -9,7 +9,7 @@ import "../../css/common/registButton.css";
 const RegistButton = () => {
   const { cycleCal } = cycleState();
   const { dateCal } = dateState();
-  const { selected, subCash } = registSubInfoState();
+  const { selected, subCash,setWalletInfoAdd,walletInfoAdd } = registSubInfoState();
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -54,6 +54,12 @@ const RegistButton = () => {
         //지갑 등록에 성공한경우 mypage로
       })
       .then((result) => {
+        if(walletInfoAdd){
+          setWalletInfoAdd(false)
+        }
+        setWalletInfoAdd(true)
+
+
         navigate("/wallet");
       })
       .catch((err) => {

@@ -7,6 +7,7 @@ import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
 import { isSigninState } from "utils/state";
+const today: number = Math.floor(Date.now() / 1000);
 
 type SigninInfo = {
   username: string;
@@ -14,11 +15,11 @@ type SigninInfo = {
 };
 type mypageState = {
   mypageState: boolean;
-  tokenExpired: string;
+  tokenExpired: string | null;
   tokenExpiration: number;
-  setTokenExpiration: (input: number ) => void;
+  setTokenExpiration: (input: number) => void;
 
-  setTokenExpired: (input: string ) => void;
+  setTokenExpired: (input: string | null) => void;
 
   mypageOn: (input: boolean) => void;
 };
@@ -36,7 +37,7 @@ type mypageState = {
 
 export const useStore = create<mypageState>()((set) => ({
   mypageState: false,
-  tokenExpired: "",
+  tokenExpired: null,
   tokenExpiration: 0,
   setTokenExpiration: (input) => set({ tokenExpiration: input }),
 
@@ -121,10 +122,21 @@ const Login = () => {
 
           localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data));
           setTokenExpiration(res.data.accessExp);
-          setTokenExpired(res.accessToken);
+          // setTokenExpired(res.accessToken);
           persistLogin(true);
 
+          console.log("Timeout실행", res.data.accessExp,today);
+          setTimeout(() => {
+            console.log(res.data.accessExp - today * 1000);
+            // accessToken의 만료 시간이 지나면 자동으로 재발급합니다.
+            // setTokenExpired(null);
+          }, (res.data.accessExp - today) * 1000);
+
+          // clearTimeout(tokenTimer)
+
           navigate("/");
+
+          //로그인을하는순간 setTimeOut 시작 하고
 
           // console.log(res)
         })

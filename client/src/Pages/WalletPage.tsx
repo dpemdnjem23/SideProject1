@@ -7,6 +7,7 @@ import axios from "axios";
 import {
   accessToken,
   dateState,
+  registSubInfoState,
   useWalletStore,
   walletPageCostState,
 } from "utils/state";
@@ -30,6 +31,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../css/pages/WalletPage.css";
 import Loading from "Components/Common/loading";
 import EmptyPage from "Components/Common/emptyPage";
+import SubRegistInfo from "Components/Mypage/mypagesub/subregistInfo";
 
 const WalletPage = () => {
   const {
@@ -42,6 +44,10 @@ const WalletPage = () => {
     showSubEdit,
     setShowSubDetail,
   } = useWalletStore();
+
+
+  const { selected, subCash,setWalletInfoAdd,walletInfoAdd } = registSubInfoState()
+
   // const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
@@ -117,40 +123,46 @@ const WalletPage = () => {
 
   return (
     <div id="WalletPage">
-      {loading ? <Loading></Loading> : null}
-
-      {walletInfo.length < 0 ? (
-        <EmptyPage></EmptyPage>
+      {loading ? (
+        <Loading></Loading>
       ) : (
         <>
-          {showSubDetail ? (
-            <SubDetailModal
-              // key={el.id}
-              // walletInfo={el}
-              arrIndex={arrIndex}
-              // walletInfo={walletInfo}
-              closeCancellationModal={closeCancellationModal}
-              showCancellation={showCancellation}
-              openCancellationModal={openCancellationModal}
-              closeSubModal={closeSubModal}
-            ></SubDetailModal>
-          ) : null}
+          {walletInfo.length < 0 ? (
+            <EmptyPage></EmptyPage>
+          ) : (
+            <>
+              {showSubDetail ? (
+                <SubDetailModal
+                  // key={el.id}
+                  // walletInfo={el}
+                  arrIndex={arrIndex}
+                  // walletInfo={walletInfo}
+                  closeCancellationModal={closeCancellationModal}
+                  showCancellation={showCancellation}
+                  openCancellationModal={openCancellationModal}
+                  closeSubModal={closeSubModal}
+                ></SubDetailModal>
+              ) : null}
 
-          <div className="WalletPage_background">
-            <WalletPageTop></WalletPageTop>
+              <div className="WalletPage_background">
+                <WalletPageTop></WalletPageTop>
 
-            <WalletPageCenter
-              // walletInfo={walletInfo}
-              // showCancellation={showCancellation}
-              openSubModal={openSubModal}
-            />
-            <WalletPageBottom
-              walletSubCost={walletSubCost}
-              // walletInfo={walletInfo}
-            />
-          </div>
+                <WalletPageCenter
+                  // walletInfo={walletInfo}
+                  // showCancellation={showCancellation}
+                  openSubModal={openSubModal}
+                />
+                <WalletPageBottom
+                  walletSubCost={walletSubCost}
+                  // walletInfo={walletInfo}
+                />
+              </div>
+            </>
+          )}
         </>
       )}
+
+      {/* // : null} */}
     </div>
   );
 };

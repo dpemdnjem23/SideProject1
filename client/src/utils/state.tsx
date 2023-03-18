@@ -34,6 +34,8 @@ type showMypageState = {
 };
 type registSubInfoState = {
   selected: string | null;
+  walletInfoAdd:boolean;
+  setWalletInfoAdd:(input:boolean) =>void
   setSelected: (input: string | null) => void;
   subCash: string;
   setSubCash: (input: string) => void;
@@ -263,6 +265,9 @@ export const showDropDownList = create<dropDownListState>()((set) => ({
 
 export const registSubInfoState = create<registSubInfoState>()((set) => ({
   selected: "",
+  walletInfoAdd:false,
+  setWalletInfoAdd:(input) =>set({walletInfoAdd:input}),
+  
   setSelected: (input) => set({ selected: input }),
   subCash: "",
   setSubCash: (input) => set({ subCash: input }),

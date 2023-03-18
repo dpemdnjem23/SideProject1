@@ -97,7 +97,7 @@ const App = () => {
 <Route path="/oauth/:corp" element={<Callback />} /> */
   }
 
-  const today: number = new Date().getTime() / 1000;
+  const today: number = Math.floor(Date.now() / 1000);
 
   const {
     mypageOn,
@@ -106,7 +106,7 @@ const App = () => {
     tokenExpired,
     setTokenExpiration,
     setTokenExpired,
-  } = useStore()
+  } = useStore();
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
   // 로그아웃인경우는 작동하지 않는다.
@@ -116,6 +116,8 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
   const { persistLogin } = isSigninState();
+
+  console.log(localstorageUserInfo.accessExp-today, today,tokenExpired,tokenExpiration);
 
   //로그인후 1초마다 실행하는 도구
   //expirytime,accesstoken 둘다필요함
@@ -131,81 +133,66 @@ const App = () => {
 
   //   return () => clearInterval(intervalId);
   // }, [expiryTime]);
-
-  if (localstorageUserInfo.accessExp < today) {
-    fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-      body: JSON.stringify({
-        id: localstorageUserInfo.id,
-      }),
-      method: "post",
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-      credentials: "include",
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          console.log("끝");
-          //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
-          persistLogin(false);
-          window.location.assign("/");
-
-          localStorage.removeItem("accessToken");
-          // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-          isSigninState.persist.clearStorage();
-          localStorage.removeItem("subgatherUserInfo");
-
-          throw new Error(res.status);
-        }
-
-        return res.json();
-      })
-      .then((result) => {
-        console.log("변경조치");
-
-        //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-        localStorage.setItem("accessToken", result.accessToken);
-        //res.data
-        localStorage.setItem("subgatherUserInfo", JSON.stringify(result.data));
-        setTokenExpired(result.accessToken)
-      })
-      .catch((err) => {
-        //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
-      });
-  }
-
-  //2*60*60*1000
+  // if (localstorageUserInfo.accessExp < today) {
   useEffect(() => {
     if (accessToken) {
-      axios
-        .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
+      fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
+        body: JSON.stringify({
+          id: localstorageUserInfo.id,
+        }),
+        method: "post",
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+        credentials: "include",
+      })
+        .then((res: any) => {
+          if (!res.ok) {
+            //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
+            persistLogin(false);
+            window.location.assign("/");
+
+            localStorage.removeItem("accessToken");
+            // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+            isSigninState.persist.clearStorage();
+            localStorage.removeItem("subgatherUserInfo");
+
+            throw new Error(res.status);
+          }
+
+          return res.json();
         })
-        .then((res) => {
-          setWalletInfo(res.data.data);
+        .then((result) => {
+          //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+          localStorage.setItem("accessToken", result.accessToken);
+          //res.data
+          localStorage.setItem(
+            "subgatherUserInfo",
+            JSON.stringify(result.data)
+          );
+          // setTokenExpired(result.accessToken);
         })
         .catch((err) => {
-          console.log(err);
+          //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
         });
     }
-  }, [userSignin]);
+  }, []);
+
+  //2*60*60*1000
 
   useEffect(() => {
-      axios
-        .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((res) => {
-          setAlarmInfo(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        setAlarmInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [tokenExpired]);
 
   // useEffect(()=>{
