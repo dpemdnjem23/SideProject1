@@ -21,6 +21,7 @@ import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
 import {
   alarmInfouseStore,
+  appUseStore,
   isSigninState,
   mainheaderuseStore,
   paginationuseStore,
@@ -107,6 +108,10 @@ const App = () => {
     setTokenExpiration,
     setTokenExpired,
   } = useStore();
+
+ const {setTimeIsNow} =  appUseStore()
+
+ console.log(today)
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
   // 로그아웃인경우는 작동하지 않는다.
@@ -117,7 +122,12 @@ const App = () => {
   );
   const { persistLogin } = isSigninState();
 
-  console.log(localstorageUserInfo.accessExp-today, today,tokenExpired,tokenExpiration);
+  console.log(
+    localstorageUserInfo.accessExp - today,
+    today,
+    tokenExpired,
+    tokenExpiration
+  );
 
   //로그인후 1초마다 실행하는 도구
   //expirytime,accesstoken 둘다필요함
