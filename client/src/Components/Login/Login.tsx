@@ -6,7 +6,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
-import { appUseStore, isSigninState } from "utils/state";
+import { isSigninState } from "utils/state";
+import { appUseStore } from "App";
 
 type SigninInfo = {
   username: string;
@@ -50,7 +51,6 @@ export const useStore = create<mypageState>()((set) => ({
 //   signinErrMessage:string;
 
 const Login = () => {
-  const today: number = Math.floor(Date.now() / 1000);
   const { setTimeIsNow,timeIsNow } = appUseStore()
 
   const {
@@ -67,7 +67,6 @@ const Login = () => {
   });
 
   // userSignin=false
-  console.log(today);
   const navigate: NavigateFunction = useNavigate();
   const [signinErrMessage, setSigninErrMessage] = useState<string>("");
 
@@ -122,12 +121,13 @@ const Login = () => {
         .then((res) => {
           console.log(
             "Timeout실행",
-            res.data.accessExp,
             timeIsNow,
-            res.data.accessExp - timeIsNow
+  
+            res.data.accessExp - timeIsNow,
+            res.data.accessExp
           );
           setTimeout(() => {
-            console.log(res.data.accessExp - today);
+            console.log(res.data.accessExp - timeIsNow);
             // accessToken의 만료 시간이 지나면 자동으로 재발급합니다.
             // setTokenExpired(null);
           }, (res.data.accessExp - timeIsNow) * 1000);

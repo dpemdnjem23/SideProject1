@@ -5,11 +5,6 @@ import { devtools, persist } from "zustand/middleware";
 
 export const accessToken = localStorage.getItem("accessToken") || null;
 
-type appUseStore = {
-  timeIsNow:number;
-  setTimeIsNow:(input:number) =>void
-}
-
 type isSigninState = {
   userSignin: boolean;
   persistLogin: (input: boolean) => void;
@@ -233,10 +228,6 @@ type mediaQuery = {
   pageMatch: boolean;
 };
 
-export const appUseStore = create<appUseStore>()((set) => ({
-  timeIsNow: 0,
-  setTimeIsNow: (input: number) => set({ timeIsNow: input }),
-}));
 
 
 export const isSigninState = create<isSigninState>()(

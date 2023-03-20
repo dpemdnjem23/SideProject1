@@ -5,6 +5,8 @@ import "./css/reset.css";
 import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
 import { useNavigate } from "react-router";
 import "./App.css";
+import create from "zustand";
+import { persist, devtools } from "zustand/middleware";
 
 import Mainheader from "Components/Common/mainHeader";
 import MainPage from "Pages/MainPage";
@@ -21,7 +23,6 @@ import SignupPage from "Pages/SignupPage";
 import MypageModal from "Components/Modal/MypageModal";
 import {
   alarmInfouseStore,
-  appUseStore,
   isSigninState,
   mainheaderuseStore,
   paginationuseStore,
@@ -46,7 +47,15 @@ import { Identifier } from "@babel/types";
 //   UserPage,
 //   CallendarPage,
 // } from 'Pages'
+type appState = {
+  timeIsNow: number;
+  setTimeIsNow: (input: number) => void;
+};
 
+export const appUseStore = create<appState>()((set) => ({
+  timeIsNow: 0,
+  setTimeIsNow: (input: number) => set({ timeIsNow: input }),
+}));
 axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -98,8 +107,6 @@ const App = () => {
 <Route path="/oauth/:corp" element={<Callback />} /> */
   }
 
-  const today: number = Math.floor(Date.now() / 1000);
-
   const {
     mypageOn,
     mypageState,
@@ -109,9 +116,8 @@ const App = () => {
     setTokenExpired,
   } = useStore();
 
- const {setTimeIsNow} =  appUseStore()
+  const { setTimeIsNow, timeIsNow } = appUseStore();
 
- console.log(today)
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
   // 로그아웃인경우는 작동하지 않는다.
@@ -121,12 +127,23 @@ const App = () => {
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
   const { persistLogin } = isSigninState();
+  const today: number = Math.floor(Date.now() / 1000);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     console.log("an");
+
+  //     setTimeIsNow(today);
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   console.log(
+    localstorageUserInfo.accessExp - timeIsNow,
     localstorageUserInfo.accessExp - today,
+    timeIsNow,
     today,
-    tokenExpired,
-    tokenExpiration
+    localstorageUserInfo.accessExp
   );
 
   //로그인후 1초마다 실행하는 도구
