@@ -53,7 +53,7 @@ type appState = {
 };
 
 export const appUseStore = create<appState>()((set) => ({
-  timeIsNow: 0,
+  timeIsNow: Math.floor(Date.now() / 1000),
   setTimeIsNow: (input: number) => set({ timeIsNow: input }),
 }));
 axios.defaults.withCredentials = true;
@@ -129,15 +129,6 @@ const App = () => {
   const { persistLogin } = isSigninState();
   const today: number = Math.floor(Date.now() / 1000);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log("an");
-
-  //     setTimeIsNow(today);
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
-
   console.log(
     localstorageUserInfo.accessExp - timeIsNow,
     localstorageUserInfo.accessExp - today,
@@ -162,7 +153,7 @@ const App = () => {
   // }, [expiryTime]);
   // if (localstorageUserInfo.accessExp < today) {
   useEffect(() => {
-    if (accessToken) {
+    if (localstorageUserInfo.accessExp < today) {
       fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
         body: JSON.stringify({
           id: localstorageUserInfo.id,
@@ -177,12 +168,12 @@ const App = () => {
           if (!res.ok) {
             //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
             persistLogin(false);
-            window.location.assign("/");
 
             localStorage.removeItem("accessToken");
             // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
             isSigninState.persist.clearStorage();
             localStorage.removeItem("subgatherUserInfo");
+            window.location.assign("/");
 
             throw new Error(res.status);
           }

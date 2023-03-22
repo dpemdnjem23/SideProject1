@@ -51,7 +51,7 @@ export const useStore = create<mypageState>()((set) => ({
 //   signinErrMessage:string;
 
 const Login = () => {
-  const { setTimeIsNow,timeIsNow } = appUseStore()
+  const { setTimeIsNow, timeIsNow } = appUseStore();
 
   const {
     mypageOn,
@@ -119,19 +119,18 @@ const Login = () => {
           return res.json();
         })
         .then((res) => {
+          // navigate("/");
+          window.location.assign("/");
+
           console.log(
             "Timeout실행",
             timeIsNow,
-  
+
             res.data.accessExp - timeIsNow,
             res.data.accessExp
           );
-          setTimeout(() => {
-            console.log(res.data.accessExp - timeIsNow);
-            // accessToken의 만료 시간이 지나면 자동으로 재발급합니다.
-            // setTokenExpired(null);
-          }, (res.data.accessExp - timeIsNow) * 1000);
-
+     
+  
           localStorage.setItem("accessToken", res.accessToken);
 
           localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data));
@@ -140,8 +139,6 @@ const Login = () => {
           persistLogin(true);
 
           // clearTimeout(tokenTimer)
-
-          navigate("/");
 
           //로그인을하는순간 setTimeOut 시작 하고
 
