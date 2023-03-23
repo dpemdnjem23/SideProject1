@@ -137,64 +137,50 @@ const App = () => {
     localstorageUserInfo.accessExp
   );
 
-  //로그인후 1초마다 실행하는 도구
-  //expirytime,accesstoken 둘다필요함
-  // 시간이바뀌거나, accesstoken이 바귈테니깐
 
   // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     if (expiryTime && expiryTime < new Date()) {
-  //       clearInterval(intervalId);
-  //       refreshAccessToken();
-  //     }
-  //   }, 1000);
+  //   if (localstorageUserInfo.accessExp < today) {
+  //     fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
+  //       body: JSON.stringify({
+  //         id: localstorageUserInfo.id,
+  //       }),
+  //       method: "post",
+  //       headers: {
+  //         authorization: `Bearer ${accessToken}`,
+  //       },
+  //       credentials: "include",
+  //     })
+  //       .then((res: any) => {
+  //         if (!res.ok) {
+  //           //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
+  //           persistLogin(false);
 
-  //   return () => clearInterval(intervalId);
-  // }, [expiryTime]);
-  // if (localstorageUserInfo.accessExp < today) {
-  useEffect(() => {
-    if (localstorageUserInfo.accessExp < today) {
-      fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-        body: JSON.stringify({
-          id: localstorageUserInfo.id,
-        }),
-        method: "post",
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
-            persistLogin(false);
+  //           localStorage.removeItem("accessToken");
+  //           // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+  //           isSigninState.persist.clearStorage();
+  //           localStorage.removeItem("subgatherUserInfo");
+  //           window.location.assign("/");
 
-            localStorage.removeItem("accessToken");
-            // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-            isSigninState.persist.clearStorage();
-            localStorage.removeItem("subgatherUserInfo");
-            window.location.assign("/");
+  //           throw new Error(res.status);
+  //         }
 
-            throw new Error(res.status);
-          }
-
-          return res.json();
-        })
-        .then((result) => {
-          //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-          localStorage.setItem("accessToken", result.accessToken);
-          //res.data
-          localStorage.setItem(
-            "subgatherUserInfo",
-            JSON.stringify(result.data)
-          );
-          // setTokenExpired(result.accessToken);
-        })
-        .catch((err) => {
-          //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
-        });
-    }
-  }, []);
+  //         return res.json();
+  //       })
+  //       .then((result) => {
+  //         //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
+  //         localStorage.setItem("accessToken", result.accessToken);
+  //         //res.data
+  //         localStorage.setItem(
+  //           "subgatherUserInfo",
+  //           JSON.stringify(result.data)
+  //         );
+  //         // setTokenExpired(result.accessToken);
+  //       })
+  //       .catch((err) => {
+  //         //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
+  //       });
+  //   }
+  // }, []);
 
   //2*60*60*1000
 
