@@ -39,6 +39,7 @@ import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
 import { Identifier } from "@babel/types";
+import { instance } from "utils/Intercepts";
 
 // import {
 //   MainPage,
@@ -137,6 +138,16 @@ const App = () => {
     localstorageUserInfo.accessExp
   );
 
+  useEffect(() => {
+    instance
+      .get("alarm/info")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[]);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {
@@ -184,20 +195,20 @@ const App = () => {
 
   //2*60*60*1000
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        setAlarmInfo(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [tokenExpired]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
+  //       headers: {
+  //         authorization: `Bearer ${accessToken}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setAlarmInfo(res.data.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [tokenExpired]);
 
   // useEffect(()=>{
 
