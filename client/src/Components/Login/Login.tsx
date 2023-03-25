@@ -120,16 +120,7 @@ const Login = () => {
         })
         .then((res) => {
           // navigate("/");
-          window.location.assign("/");
 
-          console.log(
-            "Timeout실행",
-            timeIsNow,
-
-            res.data.accessExp - timeIsNow,
-            res.data.accessExp
-          );
-     
   
           localStorage.setItem("accessToken", res.accessToken);
 
@@ -137,6 +128,7 @@ const Login = () => {
           setTokenExpiration(res.data.accessExp);
           // setTokenExpired(res.accessToken);
           persistLogin(true);
+          navigate('/')
 
           // clearTimeout(tokenTimer)
 

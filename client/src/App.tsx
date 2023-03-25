@@ -143,11 +143,12 @@ const App = () => {
       .get("alarm/info")
       .then((res) => {
         console.log(res.data);
+        setAlarmInfo(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  },[]);
+  }, [userSignin]);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

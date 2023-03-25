@@ -14,8 +14,6 @@ const localstorageUserInfo = JSON.parse(
 
 const today: number = Math.floor(Date.now() / 1000);
 
-console.log(localstorageUserInfo.accessExp - today);
-
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}/`,
   timeout: 5000,
@@ -29,7 +27,6 @@ export const instance: AxiosInstance = axios.create({
 //axios interceptor를 사용하여 요청전에 accesstoken
 
 instance.interceptors.request.use((config:any) => {
-  const accessToken: string | null = localStorage.getItem("accessToken");
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -57,7 +54,7 @@ instance.interceptors.response.use(
     //refresh token expired
 
     localStorage.clear();
-    window.location.assign('/')
+    // window.location.assign('/')
     return Promise.reject(error)
   }
 
