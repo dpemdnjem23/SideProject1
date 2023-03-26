@@ -17,20 +17,29 @@ const today: number = Math.floor(Date.now() / 1000);
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}/`,
   timeout: 5000,
+  headers: {
+  "Content-type": "application/json",
+  authorization: `Bearer ${accessToken}`,
+},
+
 });
 
-// headers: {
-//   "Content-type": "application/json",
-//   authorization: `Bearer ${accessToken}`,
-// },
 
 //axios interceptor를 사용하여 요청전에 accesstoken
 
 instance.interceptors.request.use((config:any) => {
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
+  console.log(localstorageUserInfo.accessExp-today)
+    
+  
+  console.log(config)
+
+ const issueToken =  instance.post( localstorageUserInfo.id
+  )
+
+  console.log(issueToken)
+
+
 
   return config
 },
@@ -41,38 +50,40 @@ instance.interceptors.request.use((config:any) => {
 
 );
 
-instance.interceptors.response.use(
-  (response) =>{
-    return response
-  },
-  async (error) =>{
+// instance.interceptors.response.use(
+//   (response) =>{
+//     return response
+//   },
+//   async (error) =>{
 
-  const originalRequest = error.config
+//   const originalRequest = error.config
 
-  if(error.response.status===401 && originalRequest.url ==='auth/issueaccess'){
+//   console.log(originalRequest)
 
-    //refresh token expired
+//   if(error.response.status===401 && originalRequest.url ==='auth/issueaccess'){
 
-    localStorage.clear();
-    // window.location.assign('/')
-    return Promise.reject(error)
-  }
+//     //refresh token expired
 
-  if(error.response.status===401 && !originalRequest._retry){
-    originalRequest._retry = true;
+//     localStorage.clear();
+//     // window.location.assign('/')
+//     return Promise.reject(error)
+//   }
 
-    console.log('액세스 토큰 재발급')
+//   if(error.response.status===401 && !originalRequest._retry){
+//     originalRequest._retry = true;
 
-    return
+//     console.log('액세스 토큰 재발급')
 
-  }
+//     return
 
-  return Promise.reject(error)
+//   }
+
+//   return Promise.reject(error)
 
 
 
-  }
-)
+//   }
+// )
 
 // async function reissuetoken (){
 

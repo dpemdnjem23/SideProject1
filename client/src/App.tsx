@@ -139,10 +139,12 @@ const App = () => {
   );
 
   useEffect(() => {
+
+    console.log('무시')
     instance
       .get("alarm/info")
       .then((res) => {
-        console.log(res.data);
+        console.log('alarminfo');
         setAlarmInfo(res.data.data);
       })
       .catch((err) => {
