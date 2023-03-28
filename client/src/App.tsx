@@ -38,8 +38,8 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
-import { Identifier } from "@babel/types";
-import { instance } from "utils/Intercepts";
+// import instance from "utils/Intercepts";
+
 
 // import {
 //   MainPage,
@@ -138,20 +138,112 @@ const App = () => {
     localstorageUserInfo.accessExp
   );
 
-  useEffect(() => {
 
-    console.log('무시')
-    instance
-      .get("alarm/info")
+  const instance = axios.create({
+    baseURL: `${process.env.REACT_APP_API_URI}`,
+    timeout: 5000,
+    headers: {
+      "Content-type": "application/json",
+      authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  instance.interceptors.request.use(
+   (config: any) => {
+    console.log("실력파", localstorageUserInfo.id);
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
+        {
+          id: localstorageUserInfo.id,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
       .then((res) => {
-        console.log('alarminfo');
-        setAlarmInfo(res.data.data);
+        console.log(res);
+
+        localStorage.setItem("accessToken", res.data.accessToken);
+        //         //res.data
+        localStorage.setItem(
+          "subgatherUserInfo",
+          JSON.stringify(res.data.data)
+        );
+        // setTokenExpired(result.accessToken);
       })
       .catch((err) => {
+        persistLogin(false);
+
+        localStorage.removeItem("accessToken");
+        // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+        isSigninState.persist.clearStorage();
+        localStorage.removeItem("subgatherUserInfo");
+        window.location.assign("/");
+
         console.log(err);
       });
-  }, [userSignin]);
 
+    return config;
+  },
+  (error: any) => {
+    Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  (response: any) => {
+    return response;
+  },
+  async (error: any) => {
+    const originalRequest = error.config;
+
+    console.log(originalRequest);
+
+    if (
+      error.response.status === 401 &&
+      originalRequest.url === "auth/issueaccess"
+    ) {
+      //refresh token expired
+
+      localStorage.clear();
+      // window.location.assign('/')
+      return Promise.reject(error);
+    }
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      console.log("액세스 토큰 재발급");
+
+      return;
+    }
+
+    return Promise.reject(error);
+  }
+);
+  
+
+  useEffect(() => {
+      
+    const fetchData = async () => {
+      try {
+        const response = await instance.get("/api/data");
+        console.log(response)
+      } catch (error) {
+        console.error(error);
+      }
+  
+    }
+    fetchData();
+  }, []);
+
+
+  
+ 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {
   //     fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
@@ -224,6 +316,41 @@ const App = () => {
   //3.
   // console.log(document.cookie.match('refreshToken'))
   //
+
+
+
+
+
+
+
+  // const instance: any= axios.create({
+  //   baseURL: `${process.env.REACT_APP_API_URI}`,
+  //   timeout: 5000,
+  //   headers: {
+  //     "Content-type": "application/json",
+  //     authorization: `Bearer ${accessToken}`,
+  //   },
+  // });
+  
+  //axios interceptor를 사용하여 요청전에 accesstoken
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <BrowserRouter>
       <div onClick={closeShowMypageModal} id="App">
@@ -283,4 +410,5 @@ const App = () => {
   );
 };
 
-export default App;
+export default App
+

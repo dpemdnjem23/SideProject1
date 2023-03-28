@@ -6,6 +6,8 @@ module.exports = {
     },
     "extends": [
         
+
+    "plugin:react-hooks/recommended",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended"
@@ -18,10 +20,12 @@ module.exports = {
         "ecmaVersion": "latest"
     },
     "plugins": [
-        
+        "react-hooks",
         "react",
         "@typescript-eslint"
     ],
     "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }
