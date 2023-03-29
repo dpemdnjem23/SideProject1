@@ -18,6 +18,14 @@ const today: number = Math.floor(Date.now() / 1000);
 const { persistLogin } = isSigninState();
 
 //axios interceptor를 사용하여 요청전에 accesstoken
+export const sos = axios.create({
+  baseURL: `${process.env.REACT_APP_API_URI}`,
+  timeout: 5000,
+  headers: {
+    "Content-type": "application/json",
+    authorization: `Bearer ${accessToken}`,
+  },
+});
 
 // instance.interceptors.request.use(
 //    (config: any) => {

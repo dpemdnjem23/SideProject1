@@ -32,6 +32,7 @@ import "../css/pages/WalletPage.css";
 import Loading from "Components/Common/loading";
 import EmptyPage from "Components/Common/emptyPage";
 import SubRegistInfo from "Components/Mypage/mypagesub/subregistInfo";
+import { instance } from "App";
 
 const WalletPage = () => {
   const {
@@ -73,6 +74,8 @@ const WalletPage = () => {
   // },[])
   // 각각의 모달을 나오게 하는법 =>
   // 몇번째 모달을 눌렀는지 상태정보를 state에 저장한다
+
+// instance
 
   const openSubModal = (num: number, id: number) => {
     setArrIndex(num);
