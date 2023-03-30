@@ -140,50 +140,51 @@ const App = () => {
   const today: number = Math.floor(Date.now() / 1000);
 
   console.log(
-    localstorageUserInfo.accessExp - timeIsNow,
     localstorageUserInfo.accessExp - today,
     timeIsNow,
     today,
     localstorageUserInfo.accessExp
   );
 
+  //  const instanceRequest =
   instance.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-      axios
-        .post(
-          `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
-          {
-            id: localstorageUserInfo.id,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
+      //토큰 재발급 할때가아닌데 재발급 되는 경우 문제발생
+
+      if (localstorageUserInfo.accessExp < today) {
+        axios
+          .post(
+            `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
+            {
+              id: localstorageUserInfo.id,
             },
-          }
-        )
-        .then((res) => {
+            {
+              headers: {
+                authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log("항상 먼저 실행");
 
-          console.log('항상 먼저 실행')
+            localStorage.setItem("accessToken", res.data.accessToken);
+            //         //res.data
+            localStorage.setItem(
+              "subgatherUserInfo",
+              JSON.stringify(res.data.data)
+            );
+            // setTokenExpired(result.accessToken);
+          })
+          .catch((err) => {
+            persistLogin(false);
+            console.log("항상 먼저 실행2");
 
-          localStorage.setItem("accessToken", res.data.accessToken);
-          //         //res.data
-          localStorage.setItem(
-            "subgatherUserInfo",
-            JSON.stringify(res.data.data)
-          );
-          // setTokenExpired(result.accessToken);
-        })
-        .catch((err) => {
-          persistLogin(false);
-
-          localStorage.removeItem("accessToken");
-          // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-          isSigninState.persist.clearStorage();
-          localStorage.removeItem("subgatherUserInfo");
-          window.location.assign("/");
-
-          console.log(err);
-        });
+            localStorage.removeItem("accessToken");
+            // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+            // isSigninState.persist.clearStorage();
+            localStorage.removeItem("subgatherUserInfo");
+          });
+      }
 
       return config;
     },
@@ -192,39 +193,46 @@ const App = () => {
     }
   );
 
-  // instance.interceptors.response.use(
-  //   (response) => {
-  //     return response;
-  //   },
-  //   async (error) => {
-  //     const originalRequest = error.config;
+  instance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const originalRequest = error.config;
 
-  //     console.log(originalRequest);
+      console.log(originalRequest);
 
-  //     if (error.response.status === 401 && !originalRequest._retry) {
-  //       originalRequest._retry = true;
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
 
-  //       console.log("액세스 토큰 재발급");
+        console.log("액세스 토큰 재발급");
 
-  //       return;
-  //     }
+        return;
+      }
 
-  //     return Promise.reject(error);
-  //   }
-  // );
+      return Promise.reject(error);
+    }
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
+        console.log("진행");
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchData();
-  }, [userSignin]);
+    if (accessToken) {
+      fetchData();
+    }
+
+    // return () => {
+    //   axios.interceptors.request.eject(instanceRequest);
+    // };
+  }, []);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

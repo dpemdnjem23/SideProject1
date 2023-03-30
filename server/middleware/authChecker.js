@@ -4,15 +4,14 @@ const { user } = require("../models");
 
 const router = require("express").Router();
 const controller = require("../controller/auth");
+
 const {
   checkAccessToken,
   checkRefreshToken,
   tokenExp,
-  
 } = require("../utils/jwt");
 module.exports = {
   authchecker: async (req, res, next) => {
-
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
 
@@ -41,34 +40,30 @@ module.exports = {
     }
 
     try {
-
-
-
-    const accessToken = authorization.split(" ")[1];
+      const accessToken = authorization.split(" ")[1];
       //토큰이 존재하는경우 -> 로그인 하는경우 반드시 액세스, 리프레쉬 발급
       const accessTokendata = checkAccessToken(accessToken);
 
-//acceesTokendata -> null이야 그러면 reissueaccessToken
+      //acceesTokendata -> null이야 그러면 reissueaccessToken
 
-if(accessTokendata===null){
-  console.log('너나위')
+      if (accessTokendata === null) {
+        console.log("여기로 오면 issueaccess");
+        //token이 없는경우 실행한다.,
+        router.post("/auth/issueaccess", controller.accessTokenReissueControl);
 
-  router.post("/auth/issueaccess", controller.accessTokenReissueControl);
+        module.exports = router;
+      }
 
-
-  
-}
-//       if(!accessTokendata){
-// return res.status(401).semd('token expired')
-//       }
+      //       if(!accessTokendata){
+      // return res.status(401).semd('token expired')
+      //       }
 
       //리프레쉬토큰으로 재발급을한다 -> 리프레쉬토큰이 만약에 존재하지않으면
       //로그아웃을 진행해야하기때문에 따로뺀다.
 
       // console.log(userOne)
       req.access = accessToken;
-      req.user = accessTokendata
-      console.log(accessTokendata,'req.user')
+      req.user = accessTokendata;
 
       return next();
     } catch (error) {
@@ -80,3 +75,5 @@ if(accessTokendata===null){
 
   // return res.status(200).send({data:data})
 };
+
+// module.exports = router

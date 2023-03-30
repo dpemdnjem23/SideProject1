@@ -139,6 +139,8 @@ module.exports = {
     try {
       const userId = req.user.userId || req.user.id;
 
+
+      console.log(userId,'userId')
       const alarmInfo = await alarm.findAll({ where: { user_id: userId } });
 
       return res.status(200).send({ data: alarmInfo });

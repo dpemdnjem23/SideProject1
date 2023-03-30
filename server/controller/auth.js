@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const axios = require("axios");
 const crypto = require("crypto");
+const { get } = require("mongoose");
 
 const { user } = require("../models");
 
@@ -429,6 +430,10 @@ module.exports = {
 
   accessTokenReissueControl: async (req, res) => {
     
+
+
+    console.log('getUserIssuee issue가 넘어왔어')
+
 //accessToken이 만료가된경우 -> !accessToken,
     try {
 
@@ -452,6 +457,8 @@ module.exports = {
       if (!getUserInfo) {
         return res.status(400).send("존재하지않는 회원입니다.");
       }
+
+
 
       // id: 1,
       // username: 'xptmxm123',
