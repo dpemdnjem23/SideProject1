@@ -11,6 +11,8 @@ const {
   tokenExp,
 } = require("../utils/jwt");
 module.exports = {
+
+
   authchecker: async (req, res, next) => {
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
@@ -46,13 +48,12 @@ module.exports = {
 
       //acceesTokendata -> null이야 그러면 reissueaccessToken
 
-      if (accessTokendata === null) {
-        console.log("여기로 오면 issueaccess");
-        //token이 없는경우 실행한다.,
-        router.post("/auth/issueaccess", controller.accessTokenReissueControl);
+      // if (accessTokendata === null) {
+      //   console.log("여기로 오면 issueaccess");
+      //   //token이 없는경우 실행한다.,
+      //   router.post("/auth/issueaccess", controller.accessTokenReissueControl);
 
-        module.exports = router;
-      }
+      // }
 
       //       if(!accessTokendata){
       // return res.status(401).semd('token expired')

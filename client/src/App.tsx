@@ -219,7 +219,6 @@ const App = () => {
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
-        console.log("진행");
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.error(error);
@@ -232,7 +231,7 @@ const App = () => {
     // return () => {
     //   axios.interceptors.request.eject(instanceRequest);
     // };
-  }, []);
+  }, [userSignin]);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

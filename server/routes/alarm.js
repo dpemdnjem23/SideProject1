@@ -4,4 +4,5 @@ const controller = require("../controller/alarm");
 router.post('/register',controller.alarmRegister)
 router.get('/info',controller.alarmInfo)
 router.patch('/update',controller.alarmReadUpdate)
+
 module.exports = router;
