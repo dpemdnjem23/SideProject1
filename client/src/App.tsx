@@ -56,11 +56,7 @@ const accessToken: string | null = localStorage.getItem("accessToken");
 
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
-  // timeout: 5000,
-  headers: {
-    "Content-type": "application/json",
-    authorization: `Bearer ${accessToken}`,
-  },
+  timeout: 5000,
 });
 
 export const appUseStore = create<appState>()((set) => ({
@@ -148,8 +144,9 @@ const App = () => {
 
   //  const instanceRequest =
   instance.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: any) => {
       //토큰 재발급 할때가아닌데 재발급 되는 경우 문제발생
+      config.headers.Authorization = `Bearer ${accessToken}`;
 
       if (localstorageUserInfo.accessExp < today) {
         axios
@@ -165,6 +162,8 @@ const App = () => {
             }
           )
           .then((res) => {
+            config.headers.Authorization = `Bearer ${res.data.accessToken}`;
+
             console.log("항상 먼저 실행");
 
             localStorage.setItem("accessToken", res.data.accessToken);
@@ -173,6 +172,7 @@ const App = () => {
               "subgatherUserInfo",
               JSON.stringify(res.data.data)
             );
+
             // setTokenExpired(result.accessToken);
           })
           .catch((err) => {
@@ -207,7 +207,7 @@ const App = () => {
 
         console.log("액세스 토큰 재발급");
 
-        return;
+        return instance(originalRequest);
       }
 
       return Promise.reject(error);
@@ -217,8 +217,11 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("이거왜안됨?");
+
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
+        console.log("yousay");
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.error(error);

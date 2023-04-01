@@ -136,6 +136,8 @@ module.exports = {
     }
   },
   alarmInfo: async (req, res) => {
+
+    console.log('alarmInfo 시작',req.user)
     try {
       const userId = req.user.userId || req.user.id;
 

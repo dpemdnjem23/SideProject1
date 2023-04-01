@@ -21,10 +21,7 @@ const { persistLogin } = isSigninState();
 export const sos = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
   timeout: 5000,
-  headers: {
-    "Content-type": "application/json",
-    authorization: `Bearer ${accessToken}`,
-  },
+
 });
 
 // instance.interceptors.request.use(
