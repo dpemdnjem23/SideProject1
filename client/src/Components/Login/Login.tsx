@@ -7,7 +7,6 @@ import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
 import { isSigninState } from "utils/state";
-import { appUseStore } from "App";
 
 type SigninInfo = {
   username: string;
@@ -51,7 +50,6 @@ export const useStore = create<mypageState>()((set) => ({
 //   signinErrMessage:string;
 
 const Login = () => {
-  const { setTimeIsNow, timeIsNow } = appUseStore();
 
   const {
     mypageOn,

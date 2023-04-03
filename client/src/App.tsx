@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import moment from "moment";
 import "./css/reset.css";
 import { Route, Navigate, BrowserRouter, Routes } from "react-router-dom";
@@ -38,7 +38,6 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
-import { sos } from "utils/Intercepts";
 // import instance from "utils/Intercepts";
 
 // import {
@@ -48,10 +47,14 @@ import { sos } from "utils/Intercepts";
 //   UserPage,
 //   CallendarPage,
 // } from 'Pages'
-type appState = {
-  timeIsNow: number;
-  setTimeIsNow: (input: number) => void;
-};
+
+// type appState = {
+//   timeIsNow: number;
+//   setTimeIsNow: (input: number) => void;
+// };
+
+
+
 const accessToken: string | null = localStorage.getItem("accessToken");
 
 export const instance: AxiosInstance = axios.create({
@@ -59,10 +62,10 @@ export const instance: AxiosInstance = axios.create({
   timeout: 5000,
 });
 
-export const appUseStore = create<appState>()((set) => ({
-  timeIsNow: Math.floor(Date.now() / 1000),
-  setTimeIsNow: (input: number) => set({ timeIsNow: input }),
-}));
+// export const appUseStore = create<appState>()((set) => ({
+//   timeIsNow: Math.floor(Date.now() / 1000),
+//   setTimeIsNow: (input: number) => set({ timeIsNow: input }),
+// }));
 axios.defaults.withCredentials = true;
 // axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -123,7 +126,6 @@ const App = () => {
     setTokenExpired,
   } = useStore();
 
-  const { setTimeIsNow, timeIsNow } = appUseStore();
 
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
@@ -136,57 +138,23 @@ const App = () => {
   const today: number = Math.floor(Date.now() / 1000);
 
   console.log(
-    localstorageUserInfo.accessExp - today,
-    timeIsNow,
-    today,
-    localstorageUserInfo.accessExp
-  );
-
-  //  const instanceRequest =
+    localstorageUserInfo.accessExp - today)
+      //  const instanceRequest =
   instance.interceptors.request.use(
-    (config: any) => {
-      //토큰 재발급 할때가아닌데 재발급 되는 경우 문제발생
-      config.headers.Authorization = `Bearer ${accessToken}`;
+    async (config: AxiosRequestConfig) => {
 
-      if (localstorageUserInfo.accessExp < today) {
-        axios
-          .post(
-            `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
-            {
-              id: localstorageUserInfo.id,
-            },
-            {
-              headers: {
-                authorization: `Bearer ${accessToken}`,
-              },
-            }
-          )
-          .then((res) => {
-            config.headers.Authorization = `Bearer ${res.data.accessToken}`;
+     const accessToken = localStorage.getItem('accessToken');
 
-            console.log("항상 먼저 실행");
+      if (accessToken) {
+        // accessToken이 있는 경우, 요청 헤더에 추가합니다.
+        config.headers={
+          Authorization :
+           `Bearer ${accessToken}`
 
-            localStorage.setItem("accessToken", res.data.accessToken);
-            //         //res.data
-            localStorage.setItem(
-              "subgatherUserInfo",
-              JSON.stringify(res.data.data)
-            );
-
-            // setTokenExpired(result.accessToken);
-          })
-          .catch((err) => {
-            persistLogin(false);
-            console.log("항상 먼저 실행2");
-
-            localStorage.removeItem("accessToken");
-            // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-            // isSigninState.persist.clearStorage();
-            localStorage.removeItem("subgatherUserInfo");
-          });
+        }
       }
-
       return config;
+    
     },
     (error) => {
       Promise.reject(error);
@@ -194,17 +162,54 @@ const App = () => {
   );
 
   instance.interceptors.response.use(
-    (response) => {
+   async (response) => {
       return response;
     },
     async (error) => {
       const originalRequest = error.config;
 
-      console.log(originalRequest);
+      console.log(originalRequest._retry);
 
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
+      if (!originalRequest._retry) {
+        if (localstorageUserInfo.accessExp < today) {
+          axios
+            .post(
+              `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
+              {
+                id: localstorageUserInfo.id,
+              },
+              {
+                headers: {
+                  authorization: `Bearer ${accessToken}`,
+                },
+              }
+            )
+            .then((res) => {
+  
+              console.log("항상 먼저 실행");
+  
+              localStorage.setItem("accessToken", res.data.accessToken);
+              //         //res.data
+              localStorage.setItem(
+                "subgatherUserInfo",
+                JSON.stringify(res.data.data)
+              );
+              instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
+              // setTokenExpired(result.accessToken);
+            })
+            .catch((err) => {
+              persistLogin(false);
+              console.log("항상 먼저 실행2");
+  
+              localStorage.removeItem("accessToken");
+              // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+              // isSigninState.persist.clearStorage();
+              localStorage.removeItem("subgatherUserInfo");
+            });
+        }
+  
+        
         console.log("액세스 토큰 재발급");
 
         return instance(originalRequest);
@@ -217,11 +222,8 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("이거왜안됨?");
-
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
-        console.log("yousay");
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.error(error);
