@@ -1,3 +1,4 @@
+import { instance } from "App";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ const WalletPageTop = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    axios
+    instance
       .get(`${process.env.REACT_APP_API_URI}/wallet/toptwo`, {
         headers: {
           "Content-Type": "application/json",

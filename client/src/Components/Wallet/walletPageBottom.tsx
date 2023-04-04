@@ -9,6 +9,7 @@ type walletPageBottom = {
 }
 
 import "../../css/components/WalletPage/walletPagebottom.css";
+import { instance } from "App";
 const WalletPageBottom:React.FC<walletPageBottom> = ({walletSubCost}) => {
 
 
@@ -22,7 +23,7 @@ const accessToken:string|null = localStorage.getItem("accessToken");
 
 useEffect(()=>{
 
-  axios
+  instance
 .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
   headers: {
     'Content-Type':'application/json',

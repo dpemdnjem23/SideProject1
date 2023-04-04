@@ -26,7 +26,9 @@ module.exports = {
         url.startsWith("/share") ||
         url.startsWith("/auth/signin") ||
         url.startsWith("/auth/signup") ||
-        url.startsWith("/callendar")
+        url.startsWith("/callendar")||
+        url.startsWith('/auth/google')||
+        url.startsWith('/auth/kakao')
       );
     };
 

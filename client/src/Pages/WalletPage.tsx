@@ -97,7 +97,7 @@ const WalletPage = () => {
   };
 
   useEffect(() => {
-    axios
+    instance
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
           authorization: `Bearer ${accessToken}`,
@@ -113,7 +113,7 @@ const WalletPage = () => {
         for (let i = 0; i < costSum.length; i++) {
           sum = sum + costSum[i];
         }
-
+        
         setWalletSubCost(sum);
 
         setWalletInfo(res.data.data);
