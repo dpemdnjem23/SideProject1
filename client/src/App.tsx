@@ -42,6 +42,7 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
+import { response } from "express";
 // import instance from "utils/Intercepts";
 
 // import {
@@ -205,11 +206,11 @@ const App = () => {
               localStorage.removeItem("subgatherUserInfo");
             });
 
+            //다시 요청
+          return instance(originalRequest)
+        }
+
         console.log("액세스 토큰 재발급");
-
-        return instance(originalRequest);
-      }
-
       }
 
       return Promise.reject(error);
@@ -217,6 +218,7 @@ const App = () => {
   );
 
   useEffect(() => {
+    console.log("fhrmdlsEogkfkrh");
     const fetchData = async () => {
       try {
         // const s = await sos.get('/')
@@ -233,7 +235,7 @@ const App = () => {
     // return () => {
     //   axios.interceptors.request.eject(instanceRequest);
     // };
-  }, [setAlarmInfo]);
+  }, [setAlarmInfo, userSignin]);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

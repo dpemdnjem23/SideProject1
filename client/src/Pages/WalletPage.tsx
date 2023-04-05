@@ -12,7 +12,10 @@ import {
   walletPageCostState,
 } from "utils/state";
 import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
-
+axios.defaults.withCredentials = true;
+// axios.defaults.headers.common['Authorization'] =  'Bearer token'
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.get["Content-Type"] = "application/json";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // interface walletInfo {
@@ -46,8 +49,8 @@ const WalletPage = () => {
     setShowSubDetail,
   } = useWalletStore();
 
-
-  const { selected, subCash,setWalletInfoAdd,walletInfoAdd } = registSubInfoState()
+  const { selected, subCash, setWalletInfoAdd, walletInfoAdd } =
+    registSubInfoState();
 
   // const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
@@ -75,7 +78,7 @@ const WalletPage = () => {
   // 각각의 모달을 나오게 하는법 =>
   // 몇번째 모달을 눌렀는지 상태정보를 state에 저장한다
 
-// instance
+  // instance
 
   const openSubModal = (num: number, id: number) => {
     setArrIndex(num);
@@ -97,6 +100,8 @@ const WalletPage = () => {
   };
 
   useEffect(() => {
+
+    console.log('얘는?')
     instance
       .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
         headers: {
@@ -113,7 +118,7 @@ const WalletPage = () => {
         for (let i = 0; i < costSum.length; i++) {
           sum = sum + costSum[i];
         }
-        
+
         setWalletSubCost(sum);
 
         setWalletInfo(res.data.data);
