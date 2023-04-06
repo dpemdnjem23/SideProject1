@@ -165,9 +165,9 @@ const App = () => {
     async (error) => {
       const originalRequest = error.config;
 
-      console.log(originalRequest._retry);
+      console.log(originalRequest._retry, error.response);
 
-      if (!originalRequest._retry) {
+      if (!originalRequest._retry && error.response.status === 500) {
         if (localstorageUserInfo.accessExp < today) {
           axios
             .post(
@@ -206,8 +206,8 @@ const App = () => {
               localStorage.removeItem("subgatherUserInfo");
             });
 
-            //다시 요청
-          return instance(originalRequest)
+          //다시 요청
+          return instance(originalRequest);
         }
 
         console.log("액세스 토큰 재발급");
