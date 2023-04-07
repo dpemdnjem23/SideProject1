@@ -145,7 +145,9 @@ const App = () => {
     async (config: AxiosRequestConfig) => {
       const accessToken = localStorage.getItem("accessToken");
 
+      // console.log('성공')
       if (accessToken) {
+        // console.log('토큰')
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
         config.headers = {
           Authorization: `Bearer ${accessToken}`,
@@ -158,17 +160,21 @@ const App = () => {
     }
   );
 
-  instance.interceptors.response.use(
+const instanceRequest=  instance.interceptors.response.use(
     async (response) => {
       return response;
     },
     async (error) => {
       const originalRequest = error.config;
 
-      console.log(originalRequest._retry, error.response);
+      console.log(!originalRequest._retry,originalRequest );
 
       if (!originalRequest._retry && error.response.status === 500) {
         if (localstorageUserInfo.accessExp < today) {
+
+          console.log(originalRequest._retry );
+
+          originalRequest._retry=true
           axios
             .post(
               `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
@@ -198,7 +204,7 @@ const App = () => {
             })
             .catch((err) => {
               persistLogin(false);
-              console.log("항상 먼저 실행2");
+              console.log(err);
 
               localStorage.removeItem("accessToken");
               // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
@@ -209,8 +215,6 @@ const App = () => {
           //다시 요청
           return instance(originalRequest);
         }
-
-        console.log("액세스 토큰 재발급");
       }
 
       return Promise.reject(error);
@@ -219,23 +223,24 @@ const App = () => {
 
   useEffect(() => {
     console.log("fhrmdlsEogkfkrh");
+
     const fetchData = async () => {
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
+        console.log(response.data.data)
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-    if (accessToken) {
       fetchData();
-    }
+    
 
-    // return () => {
-    //   axios.interceptors.request.eject(instanceRequest);
-    // };
-  }, [setAlarmInfo, userSignin]);
+    return () => {
+      axios.interceptors.response.eject(instanceRequest);
+    };
+  }, [userSignin]);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

@@ -166,6 +166,7 @@ module.exports = {
     // console.log(req.use)
 
     try {
+      console.log('난 로그아웃')
       // const accessTokenData = req.user;
 
       // await axios.get("https://kapi.kakao.com/v1/user/logout", {
