@@ -43,6 +43,7 @@ import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
 import { response } from "express";
+import { access } from "fs";
 // import instance from "utils/Intercepts";
 
 // import {
@@ -62,7 +63,7 @@ const accessToken: string | null = localStorage.getItem("accessToken");
 
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
-  timeout: 1000,
+  timeout: 5000,
 });
 
 // export const appUseStore = create<appState>()((set) => ({
@@ -70,7 +71,6 @@ export const instance: AxiosInstance = axios.create({
 //   setTimeIsNow: (input: number) => set({ timeIsNow: input }),
 // }));
 axios.defaults.withCredentials = true;
-// axios.defaults.headers.common['Authorization'] =  'Bearer token'
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.get["Content-Type"] = "application/json";
 
@@ -145,8 +145,11 @@ const App = () => {
     async (config: AxiosRequestConfig) => {
       const accessToken = localStorage.getItem("accessToken");
 
+      console.log(config.headers);
       // console.log('성공')
       if (accessToken) {
+
+        console.log(accessToken)
         // console.log('토큰')
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
         config.headers = {
@@ -160,21 +163,21 @@ const App = () => {
     }
   );
 
-const instanceRequest=  instance.interceptors.response.use(
+  const instanceRequest = instance.interceptors.response.use(
     async (response) => {
       return response;
     },
     async (error) => {
       const originalRequest = error.config;
 
-      console.log(!originalRequest._retry,originalRequest );
+      console.log(!originalRequest._retry, originalRequest);
 
       if (!originalRequest._retry && error.response.status === 500) {
         if (localstorageUserInfo.accessExp < today) {
+          console.log(originalRequest._retry);
 
-          console.log(originalRequest._retry );
+          originalRequest._retry = true;
 
-          originalRequest._retry=true
           axios
             .post(
               `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
@@ -196,9 +199,10 @@ const instanceRequest=  instance.interceptors.response.use(
                 "subgatherUserInfo",
                 JSON.stringify(res.data.data)
               );
-              instance.defaults.headers.common[
-                "Authorization"
-              ] = `Bearer ${accessToken}`;
+
+              console.log(accessToken,res.data.accessToken)
+
+              originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
 
               // setTokenExpired(result.accessToken);
             })
@@ -228,14 +232,13 @@ const instanceRequest=  instance.interceptors.response.use(
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
-        console.log(response.data.data)
+        console.log(response.data.data);
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.error(error);
       }
     };
-      fetchData();
-    
+    fetchData();
 
     return () => {
       axios.interceptors.response.eject(instanceRequest);
