@@ -51,10 +51,8 @@ module.exports = {
       //acceesTokendata -> null이야 그러면 reissueaccessToken
 
       // if (accessTokendata === null) {
-      //   console.log("여기로 오면 issueaccess");
-      //   //token이 없는경우 실행한다.,
-      //   router.post("/auth/issueaccess", controller.accessTokenReissueControl);
-
+      //   console.log('여기야 여기')
+      //   return res.status(401).send("Unauthorized");
       // }
 
       //       if(!accessTokendata){

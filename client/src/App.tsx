@@ -42,8 +42,7 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
-import { response } from "express";
-import { access } from "fs";
+
 // import instance from "utils/Intercepts";
 
 // import {
@@ -63,7 +62,7 @@ const accessToken: string | null = localStorage.getItem("accessToken");
 
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
-  timeout: 5000,
+  timeout: 500,
 });
 
 // export const appUseStore = create<appState>()((set) => ({
@@ -144,13 +143,8 @@ const App = () => {
   instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       const accessToken = localStorage.getItem("accessToken");
-
-      console.log(config.headers);
       // console.log('성공')
       if (accessToken) {
-
-        console.log(accessToken)
-        // console.log('토큰')
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
         config.headers = {
           Authorization: `Bearer ${accessToken}`,
@@ -158,25 +152,21 @@ const App = () => {
       }
       return config;
     },
-    (error) => {
+    async (error) => {
       Promise.reject(error);
     }
   );
 
-  const instanceRequest = instance.interceptors.response.use(
-    async (response) => {
+  instance.interceptors.response.use(
+    (response) => {
       return response;
     },
     async (error) => {
       const originalRequest = error.config;
 
-      console.log(!originalRequest._retry, originalRequest);
-
-      if (!originalRequest._retry && error.response.status === 500) {
-        if (localstorageUserInfo.accessExp < today) {
-          console.log(originalRequest._retry);
-
-          originalRequest._retry = true;
+      // if (!originalRequest._retry) {
+        if (localstorageUserInfo.accessExp < today&&userSignin) {
+          // originalRequest._retry = true;
 
           axios
             .post(
@@ -200,49 +190,49 @@ const App = () => {
                 JSON.stringify(res.data.data)
               );
 
-              console.log(accessToken,res.data.accessToken)
+              instance.defaults.headers.common[
+                "Authorization"
+              ] = `Bearer ${res.data.accessToken}`;
 
-              originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
+              //  axios.request(originalRequest);
 
               // setTokenExpired(result.accessToken);
             })
             .catch((err) => {
-              persistLogin(false);
               console.log(err);
+
+              persistLogin(false);
 
               localStorage.removeItem("accessToken");
               // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
               // isSigninState.persist.clearStorage();
               localStorage.removeItem("subgatherUserInfo");
             });
+          // return axios.request(originalRequest)
+
+          return instance(originalRequest);
 
           //다시 요청
-          return instance(originalRequest);
         }
-      }
+      // }
 
       return Promise.reject(error);
     }
   );
 
   useEffect(() => {
-    console.log("fhrmdlsEogkfkrh");
 
     const fetchData = async () => {
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
-        console.log(response.data.data);
+
         setAlarmInfo(response.data.data);
       } catch (error) {
-        console.error(error);
+        // console.error("error");
       }
     };
     fetchData();
-
-    return () => {
-      axios.interceptors.response.eject(instanceRequest);
-    };
   }, [userSignin]);
 
   // useEffect(() => {

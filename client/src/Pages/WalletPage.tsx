@@ -66,7 +66,6 @@ const WalletPage = () => {
 
   // const{setWalletSubCost,setWalletPayment} =walletPageCostState()
 
-  const accessToken: string | null = localStorage.getItem("accessToken");
   // useEffect(() => {
   //   if (!isLogin) {
   //     window.location.assign('/signin');
@@ -101,13 +100,8 @@ const WalletPage = () => {
 
   useEffect(() => {
 
-    console.log('얘는?')
     instance
-      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+      .get(`/wallet/info`)
       .then((res) => {
         let sum = 0;
 
