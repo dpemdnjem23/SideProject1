@@ -34,6 +34,7 @@ import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
 import PassNotificationModal from "Components/Modal/passwordNotificationModal";
 import MobileMyPageMenu from "Pages/mobileMyPageMenu";
+import { instance } from "App";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post["Content-type"] = "application/json";
@@ -51,8 +52,11 @@ const MyPage = () => {
 
   const [nick, setNick] = useState<string>("");
 
-  const { setShowNicknameNotiModal,showNicknameNotiModal, showPasswordNotiModal } =
-    mypageNotiModalState();
+  const {
+    setShowNicknameNotiModal,
+    showNicknameNotiModal,
+    showPasswordNotiModal,
+  } = mypageNotiModalState();
   const accessToken: string | null =
     localStorage.getItem("accessToken") || null;
   const [showRegist, setShowRegist] = useState<boolean>(false);
@@ -63,8 +67,14 @@ const MyPage = () => {
 
   const today = moment().format("YYYY-MM-DD");
 
-  const { setDelUser, setPassEditUser,setEditUser, editUser, delUser, passEditUser } =
-    showMypageState();
+  const {
+    setDelUser,
+    setPassEditUser,
+    setEditUser,
+    editUser,
+    delUser,
+    passEditUser,
+  } = showMypageState();
 
   const { setNickname, nickname, setPassword, password } =
     mypageUserInfoState();
@@ -94,7 +104,6 @@ const MyPage = () => {
     mypagePaymentManagementState();
   //mypage 화면에 도달할때마다
 
-
   const resetState = () => {
     setCycleCal({ year: "", day: "", month: "" });
     setDateCal(moment());
@@ -103,12 +112,8 @@ const MyPage = () => {
   };
 
   const calSubCost = () =>
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+    instance
+      .get(`/wallet/info`)
       .then((res) => {
         const costSum = res.data.data.map((pre: { cost: number }) => {
           return pre.cost;
@@ -129,12 +134,8 @@ const MyPage = () => {
       });
 
   const calPaymentCost = () =>
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+    instance
+      .get(`/wallet/payment`)
       .then((res) => {
         const costSum = res.data.data.map((pre: { cost: number }) => {
           return pre.cost;
@@ -162,25 +163,20 @@ const MyPage = () => {
     const mediaQuery = window.matchMedia("(max-width:768px)");
     setPageMatch(mediaQuery.matches);
     const listener = (e: MediaQueryListEvent) => {
-      if(mobilePassEdit||mobileUserEdit||passEditUser){
-        setEditUser(true)
-        setPassEditUser(false)
-
+      if (mobilePassEdit || mobileUserEdit || passEditUser) {
+        setEditUser(true);
+        setPassEditUser(false);
 
         // setPassEdit
 
-
         // setMobileMenuName
-
       }
-      setShowNicknameNotiModal(false)
+      setShowNicknameNotiModal(false);
 
-      
       setMobileNoti(!e.matches);
       setNickname("");
       setPageMatch(e.matches);
-      setMobilePassEdit(!e.matches)
-
+      setMobilePassEdit(!e.matches);
     };
 
     mediaQuery.addEventListener("change", listener);

@@ -21,8 +21,8 @@ const MypageModal = () => {
   const navigate = useNavigate();
   const { showMypageModalOn } = mainheaderuseStore();
 
-  const { persistLogin } = isSigninState();
-  
+  const { persistLogin, userSignin } = isSigninState();
+
   const userinfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
@@ -41,11 +41,11 @@ const MypageModal = () => {
         if (!res.ok) {
           persistLogin(false);
           showMypageModalOn(false);
+          console.log(userSignin);
 
           localStorage.removeItem("accessToken");
           isSigninState.persist.clearStorage();
           localStorage.removeItem("subgatherUserInfo");
-          alert("로그인이 만료되었습니다. 다시 로그인해주세요");
 
           throw new Error(res.status);
           // window.location.reload()
@@ -56,11 +56,13 @@ const MypageModal = () => {
       .then((res) => {
         persistLogin(false);
         showMypageModalOn(false);
-        localStorage.clear();
-        isSigninState.persist.clearStorage();
+        // localStorage.clear();
 
-        navigate("/");
+        console.log(userSignin);
+        // isSigninState.persist.clearStorage();
 
+        window.location.assign('/')
+navigate('/')
         // window.location.reload();
       })
       .catch((err) => {

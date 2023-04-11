@@ -2,34 +2,29 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../css/components/MyPage/mypageuser.css";
 import { useNavigate } from "react-router";
+import { instance } from "App";
 
-
-type mypageuser={
-
-  subLength:number
-
-}
-const Mypageuser:React.FC<mypageuser> = ({subLength}) => {
+type mypageuser = {
+  subLength: number;
+};
+const Mypageuser: React.FC<mypageuser> = ({ subLength }) => {
   const navigate = useNavigate();
 
-  const accessToken: string | null = localStorage.getItem("accessToken");
-
+  const localstorageUserInfo = JSON.parse(
+    localStorage.getItem("subgatherUserInfo") || "{}"
+  );
   const [nick, setNick] = useState<string>("");
 
   const userinfo = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/user/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+    instance
+      .get(`/user/info`)
       .then((res) => {
-        const userinfo = JSON.parse(
-          localStorage.getItem("subgatherUserInfo") || `{}`
-        );
-        userinfo.nickname = res.data.data.nickname;
+        localstorageUserInfo.nickname = res.data.data.nickname;
 
-        localStorage.setItem("subgatherUserInfo", JSON.stringify(userinfo));
+        localStorage.setItem(
+          "subgatherUserInfo",
+          JSON.stringify(localstorageUserInfo)
+        );
 
         setNick(res.data.data.nickname);
         //  console.log(userinfo)
@@ -48,7 +43,7 @@ const Mypageuser:React.FC<mypageuser> = ({subLength}) => {
   //       },
   //     })
   //     .then((res) => {
-     
+
   //       //  console.log(userinfo)
   //     })
   //     .catch((err) => {

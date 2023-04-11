@@ -445,7 +445,11 @@ module.exports = {
       //로그아웃을 진행해야하기때문에 따로뺀다.
       const refreshTokenData = checkRefreshToken(refreshToken);
 
+      console.log(refreshTokenData,refreshToken)
+
       if (!refreshTokenData) {
+        
+
         return res.status(401).send("token expired");
       }
       //로컬 스토리지에있던 accesstoken의 정보를 db랑 비교
