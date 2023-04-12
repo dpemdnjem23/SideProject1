@@ -165,7 +165,7 @@ const App = () => {
     }
   );
 
-  instance.interceptors.response.use(
+  const responseInstance = instance.interceptors.response.use(
     (response) => {
       return response;
     },
@@ -210,7 +210,6 @@ const App = () => {
           })
           .catch((err) => {
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
-            originalRequest._retry = true;
 
             fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
               method: "get",
@@ -235,9 +234,6 @@ const App = () => {
                 //       // window.location.reload();
               })
               .then((res) => {
-                originalRequest._retry = true;
-                console.log(originalRequest._retry);
-
                 //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
 
                 persistLogin(false);
@@ -246,12 +242,12 @@ const App = () => {
 
                 alert("로그인이 만료되었습니다. 다시 로그인해주세요");
 
-                // localStorage.clear();
-                // isSigninState.persist.clearStorage();
+                localStorage.clear();
+                isSigninState.persist.clearStorage();
 
                 // navigate("/");
 
-                // window.location.reload();
+                window.location.reload();
               })
               .catch((err) => {
                 console.log(err);
@@ -263,6 +259,7 @@ const App = () => {
         return instance(originalRequest);
       }
       // }
+      axios.interceptors.response.eject(responseInstance);
 
       return Promise.reject(error);
     }

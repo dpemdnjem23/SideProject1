@@ -166,6 +166,7 @@ module.exports = {
     // console.log(req.use)
 
     try {
+      //로그아웃을할때 , 
       console.log('난 로그아웃')
       // const accessTokenData = req.user;
 
@@ -174,6 +175,7 @@ module.exports = {
       //     Authorization: `Bearer ${token}`,
       //   },
       // });
+    
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {

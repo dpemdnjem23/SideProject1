@@ -60,9 +60,7 @@ const MypageModal = () => {
 
         console.log(userSignin);
         // isSigninState.persist.clearStorage();
-
-        window.location.assign('/')
-navigate('/')
+        navigate("/");
         // window.location.reload();
       })
       .catch((err) => {
