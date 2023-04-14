@@ -11,11 +11,13 @@ const {
   tokenExp,
 } = require("../utils/jwt");
 module.exports = {
-
-
   authchecker: async (req, res, next) => {
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
+
+      
+    // const refreshToken = req.cookies.req.refreshToken;
+//refreshoToken이 만약에 죽게된다면 undefined
 
     // const accessToken = authorization.split(" ")[1];
 
@@ -26,9 +28,9 @@ module.exports = {
         url.startsWith("/share") ||
         url.startsWith("/auth/signin") ||
         url.startsWith("/auth/signup") ||
-        url.startsWith("/callendar")||
-        url.startsWith('/auth/google')||
-        url.startsWith('/auth/kakao')
+        url.startsWith("/callendar") ||
+        url.startsWith("/auth/google") ||
+        url.startsWith("/auth/kakao")
       );
     };
 

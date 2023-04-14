@@ -151,6 +151,10 @@ const App = () => {
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
 
+
+      if (config.url === "/auth/signout") {
+        return instance.interceptors.response.eject(responseInstance);
+      }
       // console.log('성공')
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
@@ -245,9 +249,7 @@ const App = () => {
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
 
-                // navigate("/");
-
-                window.location.reload();
+                // window.location.reload();
               })
               .catch((err) => {
                 console.log(err);
@@ -256,10 +258,9 @@ const App = () => {
         // return axios.request(originalRequest)
 
         //다시 요청
-        return instance(originalRequest);
+        // return instance(originalRequest);
       }
       // }
-      axios.interceptors.response.eject(responseInstance);
 
       return Promise.reject(error);
     }

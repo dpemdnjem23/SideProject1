@@ -18,6 +18,8 @@ import { isSigninState, mainheaderuseStore } from "utils/state";
 
 //로그아웃을 하면 쿠키제거, 로컬스토리지 제거 새로고침
 const MypageModal = () => {
+  const accessToken: string | null = localStorage.getItem("accessToken");
+
   const navigate = useNavigate();
   const { showMypageModalOn } = mainheaderuseStore();
 
@@ -27,45 +29,48 @@ const MypageModal = () => {
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
   const handleSignout = () => {
-    fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
-      method: "get",
-      credentials: "include",
+    if (accessToken) {
+      fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+        method: "get",
+        credentials: "include",
 
-      headers: {
-        // "Accept" : 'application/json',
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res: any) => {
-        if (!res.ok) {
+        headers: {
+          // "Accept" : 'application/json',
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res: any) => {
+          if (!res.ok) {
+            persistLogin(false);
+            showMypageModalOn(false);
+            console.log(userSignin);
+
+            localStorage.removeItem("accessToken");
+            isSigninState.persist.clearStorage();
+            localStorage.removeItem("subgatherUserInfo");
+
+            throw new Error(res.status);
+            // window.location.reload()
+          }
+          return res.text();
+          //       // window.location.reload();
+        })
+        .then((res) => {
           persistLogin(false);
           showMypageModalOn(false);
+          // localStorage.clear();
+
           console.log(userSignin);
+          // isSigninState.persist.clearStorage();
+          navigate("/");
 
-          localStorage.removeItem("accessToken");
-          isSigninState.persist.clearStorage();
-          localStorage.removeItem("subgatherUserInfo");
-
-          throw new Error(res.status);
-          // window.location.reload()
-        }
-        return res.text();
-        //       // window.location.reload();
-      })
-      .then((res) => {
-        persistLogin(false);
-        showMypageModalOn(false);
-        // localStorage.clear();
-
-        console.log(userSignin);
-        // isSigninState.persist.clearStorage();
-        navigate("/");
-        // window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          // window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
