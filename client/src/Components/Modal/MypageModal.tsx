@@ -12,7 +12,10 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "Components/Login/Login";
 import { isSigninState, mainheaderuseStore } from "utils/state";
+import { instance } from "App";
 //로그아웃을 누르면 로그아웃이 되면서 로그인 해제
+axios.defaults.withCredentials = true;
+axios.defaults.headers.get["Content-Type"] = "application/json";
 
 //모달 닫기버튼은 app.js로 넘기고싶다.
 
@@ -30,16 +33,9 @@ const MypageModal = () => {
   );
   const handleSignout = () => {
     if (accessToken) {
-      fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
-        method: "get",
-        credentials: "include",
+      instance
+        .get("/auth/signout")
 
-        headers: {
-          // "Accept" : 'application/json',
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "application/json",
-        },
-      })
         .then((res: any) => {
           if (!res.ok) {
             persistLogin(false);
@@ -57,6 +53,7 @@ const MypageModal = () => {
           //       // window.location.reload();
         })
         .then((res) => {
+          console.log("여긴머에요");
           persistLogin(false);
           showMypageModalOn(false);
           // localStorage.clear();

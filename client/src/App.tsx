@@ -79,7 +79,7 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 
 const App = () => {
   // const navigate = useNavigate();
-
+// const navigate = useNavigate()
   //!
   // 로딩은 로그인할때만 작동하도록
   const { page } = paginationuseStore();
@@ -147,20 +147,24 @@ const App = () => {
 
   console.log(localstorageUserInfo.accessExp - today);
   //  const instanceRequest =
-  instance.interceptors.request.use(
+  const requestInstance: any = instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
 
 
-      if (config.url === "/auth/signout") {
-        return instance.interceptors.response.eject(responseInstance);
-      }
       // console.log('성공')
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
         config.headers = {
           Authorization: `Bearer ${accessToken}`,
         };
+      }
+
+      if (config.url === "/auth/signout") {
+        // instance.interceptors.request.eject(requestInstance);
+        instance.interceptors.response.eject(responseInstance);
+
+        return config;
       }
       return config;
     },
@@ -176,6 +180,7 @@ const App = () => {
     async (error) => {
       const originalRequest = error.config;
 
+      console.log(!originalRequest);
       // if (!originalRequest._retry) {
       if (
         !originalRequest._retry &&
@@ -258,7 +263,7 @@ const App = () => {
         // return axios.request(originalRequest)
 
         //다시 요청
-        // return instance(originalRequest);
+        return instance(originalRequest);
       }
       // }
 
