@@ -35,36 +35,26 @@ const MypageModal = () => {
     if (accessToken) {
       instance
         .get("/auth/signout")
-
-        .then((res: any) => {
-          if (!res.ok) {
-            persistLogin(false);
-            showMypageModalOn(false);
-            console.log(userSignin);
-
-            localStorage.removeItem("accessToken");
-            isSigninState.persist.clearStorage();
-            localStorage.removeItem("subgatherUserInfo");
-
-            throw new Error(res.status);
-            // window.location.reload()
-          }
-          return res.text();
-          //       // window.location.reload();
-        })
         .then((res) => {
-          console.log("여긴머에요");
           persistLogin(false);
           showMypageModalOn(false);
-          // localStorage.clear();
+          localStorage.clear();
 
           console.log(userSignin);
-          // isSigninState.persist.clearStorage();
+          isSigninState.persist.clearStorage();
+          
           navigate("/");
 
           // window.location.reload();
         })
         .catch((err) => {
+          persistLogin(false);
+          showMypageModalOn(false);
+
+          localStorage.removeItem("accessToken");
+          isSigninState.persist.clearStorage();
+          localStorage.removeItem("subgatherUserInfo");
+
           console.log(err);
         });
     }

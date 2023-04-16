@@ -79,7 +79,7 @@ axios.defaults.headers.get["Content-Type"] = "application/json";
 
 const App = () => {
   // const navigate = useNavigate();
-// const navigate = useNavigate()
+  // const navigate = useNavigate()
   //!
   // 로딩은 로그인할때만 작동하도록
   const { page } = paginationuseStore();
@@ -151,21 +151,21 @@ const App = () => {
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
 
-
       // console.log('성공')
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
         config.headers = {
           Authorization: `Bearer ${accessToken}`,
         };
+
+        if (config.url === "/auth/signout") {
+          console.log(config);
+          // instance.interceptors.request.eject(requestInstance);
+          instance.interceptors.response.eject(responseInstance);
+          return config;
+        }
       }
 
-      if (config.url === "/auth/signout") {
-        // instance.interceptors.request.eject(requestInstance);
-        instance.interceptors.response.eject(responseInstance);
-
-        return config;
-      }
       return config;
     },
     async (error) => {
@@ -180,7 +180,6 @@ const App = () => {
     async (error) => {
       const originalRequest = error.config;
 
-      console.log(!originalRequest);
       // if (!originalRequest._retry) {
       if (
         !originalRequest._retry &&
@@ -200,8 +199,6 @@ const App = () => {
             }
           )
           .then((res) => {
-            console.log("항상 먼저 실행");
-
             localStorage.setItem("accessToken", res.data.accessToken);
             //         //res.data
             localStorage.setItem(
