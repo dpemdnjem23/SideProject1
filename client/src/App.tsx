@@ -179,13 +179,14 @@ const App = () => {
     },
     async (error) => {
       const originalRequest = error.config;
-
+console.log(userSignin)
       // if (!originalRequest._retry) {
       if (
         !originalRequest._retry &&
         localstorageUserInfo.accessExp < today &&
         userSignin
       ) {
+
         axios
           .post(
             `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
@@ -199,6 +200,7 @@ const App = () => {
             }
           )
           .then((res) => {
+            console.log('a')
             localStorage.setItem("accessToken", res.data.accessToken);
             //         //res.data
             localStorage.setItem(
@@ -215,6 +217,7 @@ const App = () => {
             // setTokenExpired(result.accessToken);
           })
           .catch((err) => {
+            console.log('refreshToken만료')
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
 
             fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
@@ -251,6 +254,9 @@ const App = () => {
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
 
+                originalRequest._retry = true;
+                return Promise.reject(error);
+
                 // window.location.reload();
               })
               .catch((err) => {
@@ -260,6 +266,8 @@ const App = () => {
         // return axios.request(originalRequest)
 
         //다시 요청
+
+        console.log('여기로 오지마')
         return instance(originalRequest);
       }
       // }
