@@ -159,11 +159,12 @@ const App = () => {
         };
 
         if (config.url === "/auth/signout") {
-          console.log(config);
-          // instance.interceptors.request.eject(requestInstance);
+          instance.interceptors.request.eject(requestInstance);
           instance.interceptors.response.eject(responseInstance);
           return config;
         }
+      } else {
+        throw new Error("Authentication token is missing.");
       }
 
       return config;
@@ -179,7 +180,6 @@ const App = () => {
     },
     async (error) => {
       const originalRequest = error.config;
-console.log(userSignin)
       // if (!originalRequest._retry) {
       if (
         !originalRequest._retry &&
@@ -200,7 +200,7 @@ console.log(userSignin)
             }
           )
           .then((res) => {
-            console.log('a')
+            console.log("토큰 재발급 수행");
             localStorage.setItem("accessToken", res.data.accessToken);
             //         //res.data
             localStorage.setItem(
@@ -217,18 +217,16 @@ console.log(userSignin)
             // setTokenExpired(result.accessToken);
           })
           .catch((err) => {
-            console.log('refreshToken만료')
+            console.log("refreshToken만료");
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
 
             fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
               method: "get",
               credentials: "include",
-              headers: {
-                authorization: `Bearer ${accessToken}`,
-              },
             })
               .then((res: any) => {
                 if (!res.ok) {
+                  console.log("여긴안돼");
                   persistLogin(false);
                   showMypageModalOn(false);
 
@@ -244,30 +242,33 @@ console.log(userSignin)
               })
               .then((res) => {
                 //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
+                console.log(userSignin);
 
                 persistLogin(false);
-
-                console.log(userSignin);
 
                 alert("로그인이 만료되었습니다. 다시 로그인해주세요");
 
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
 
-                originalRequest._retry = true;
-                return Promise.reject(error);
+                if (axios.isCancel(error)) {
+                  console.log("Request canceled:", error.message);
+                } else {
+                  console.log("Error:", error.message);
+                }
 
-                // window.location.reload();
+                axios.interceptors.request.eject(requestInstance);
+                axios.interceptors.response.eject(responseInstance); // window.location.reload();
+                return Promise.reject(error);
               })
               .catch((err) => {
                 console.log(err);
               });
           });
-        // return axios.request(originalRequest)
 
         //다시 요청
 
-        console.log('여기로 오지마')
+        console.log("여기로 오지마");
         return instance(originalRequest);
       }
       // }
@@ -288,7 +289,13 @@ console.log(userSignin)
       }
     };
     fetchData();
-  }, [userSignin]);
+
+    return () => {
+      // axios.interceptors.request.eject(requestInstance);
+      // axios.interceptors.response.eject(responseInstance);
+      console.log("언마운트");
+    };
+  }, []);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

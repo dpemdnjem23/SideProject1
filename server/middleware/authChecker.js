@@ -30,13 +30,16 @@ module.exports = {
         url.startsWith("/auth/signup") ||
         url.startsWith("/callendar") ||
         url.startsWith("/auth/google") ||
-        url.startsWith("/auth/kakao")
+        url.startsWith("/auth/kakao")||
+        url.startsWith("/auth/signout")
+
       );
     };
 
     if (!authorization) {
       //토큰이 없는경우 허용되지 않는다. 단,예외
       if (isPublic(req.url)) {
+        console.log('해당되지 않는 건 이리와')
         //share login signup callendar는 토큰이 없어도 진입가능
 
         return next();

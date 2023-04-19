@@ -166,8 +166,8 @@ module.exports = {
     // console.log(req.use)
 
     try {
-      //로그아웃을할때 , 
-      console.log('난 로그아웃')
+      //로그아웃을할때 ,
+      console.log("난 로그아웃");
       // const accessTokenData = req.user;
 
       // await axios.get("https://kapi.kakao.com/v1/user/logout", {
@@ -175,7 +175,6 @@ module.exports = {
       //     Authorization: `Bearer ${token}`,
       //   },
       // });
-    
 
       return res.clearCookie("refreshToken").status(200).send("로그아웃 완료");
     } catch (err) {
@@ -220,7 +219,7 @@ module.exports = {
       );
 
       const Token = getAccessToken.data.access_token;
-      console.log( getAccessToken.data)
+      console.log(getAccessToken.data);
       // https://www.googleapis.com/oauth2/v2/userinfo?access_token=${Token}
       // https://www.googleapis.com/oauth2/v3/tokeninfo
       const getUserInfo = await axios.get(
@@ -432,25 +431,18 @@ module.exports = {
   },
 
   accessTokenReissueControl: async (req, res) => {
-    
+    console.log("getUserIssuee issue가 넘어왔어");
 
-
-    console.log('getUserIssuee issue가 넘어왔어')
-
-//accessToken이 만료가된경우 -> !accessToken,
+    //accessToken이 만료가된경우 -> !accessToken,
     try {
-
       const refreshToken = req.cookies.refreshToken;
-
 
       //리프레쉬토큰으로 재발급을한다 -> 리프레쉬토큰이 만약에 존재하지않으면
       //로그아웃을 진행해야하기때문에 따로뺀다.
       const refreshTokenData = checkRefreshToken(refreshToken);
 
-      console.log(refreshTokenData,refreshToken)
-
       if (!refreshTokenData) {
-        
+        console.log('refreshoToken',refreshTokenData, refreshToken);
 
         return res.status(401).send("token expired");
       }
@@ -464,8 +456,6 @@ module.exports = {
       if (!getUserInfo) {
         return res.status(400).send("존재하지않는 회원입니다.");
       }
-
-
 
       // id: 1,
       // username: 'xptmxm123',
@@ -531,13 +521,11 @@ module.exports = {
             social_user: social_user,
             isAdmin: isAdmin,
             accessExp: accessExp,
-            
           },
           accessToken: accessToken,
         });
       } else {
-        
-        console.log('요시 재발급')
+        console.log("요시 재발급");
         const accessToken = generateAccessToken({
           id,
           username,
