@@ -164,6 +164,8 @@ const App = () => {
           return config;
         }
       } else {
+        alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+
         throw new Error("Authentication token is missing.");
       }
 
@@ -186,7 +188,6 @@ const App = () => {
         localstorageUserInfo.accessExp < today &&
         userSignin
       ) {
-
         axios
           .post(
             `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
@@ -246,20 +247,8 @@ const App = () => {
 
                 persistLogin(false);
 
-                alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
-
-                if (axios.isCancel(error)) {
-                  console.log("Request canceled:", error.message);
-                } else {
-                  console.log("Error:", error.message);
-                }
-
-                axios.interceptors.request.eject(requestInstance);
-                axios.interceptors.response.eject(responseInstance); // window.location.reload();
-                return Promise.reject(error);
               })
               .catch((err) => {
                 console.log(err);
