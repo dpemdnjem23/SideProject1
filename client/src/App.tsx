@@ -64,9 +64,12 @@ import AlarmPage from "Pages/AlarmPage";
 //   setTimeIsNow: (input: number) => void;
 // };
 
+const cancelTokenSource = axios.CancelToken.source();
+
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
   timeout: 500,
+  cancelToken: cancelTokenSource.token,
 });
 
 // export const appUseStore = create<appState>()((set) => ({
@@ -81,6 +84,11 @@ const App = () => {
   // const navigate = useNavigate();
   // const navigate = useNavigate()
   //!
+  const url = new URL(window.location.href);
+  const searchs = url.search;
+
+  const navigate = useNavigate();
+
   // 로딩은 로그인할때만 작동하도록
   const { page } = paginationuseStore();
 
@@ -151,23 +159,29 @@ const App = () => {
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
 
-      // console.log('성공')
+      config.headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
-        config.headers = {
-          Authorization: `Bearer ${accessToken}`,
-        };
 
         if (config.url === "/auth/signout") {
           instance.interceptors.request.eject(requestInstance);
           instance.interceptors.response.eject(responseInstance);
           return config;
         }
-      } else {
-        alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-
-        throw new Error("Authentication token is missing.");
       }
+
+      if (!userSignin && !accessToken) {
+        console.log("여기오면 취소야");
+        // return Promise.reject(new Error('Reuest canceled'))
+      }
+
+      // } else {
+      //   console.log('망붕')
+
+      // }
 
       return config;
     },
@@ -182,6 +196,7 @@ const App = () => {
     },
     async (error) => {
       const originalRequest = error.config;
+
       // if (!originalRequest._retry) {
       if (
         !originalRequest._retry &&
@@ -201,7 +216,7 @@ const App = () => {
             }
           )
           .then((res) => {
-            console.log("토큰 재발급 수행");
+            console.log("일로와");
             localStorage.setItem("accessToken", res.data.accessToken);
             //         //res.data
             localStorage.setItem(
@@ -216,9 +231,10 @@ const App = () => {
             //  axios.request(originalRequest);
 
             // setTokenExpired(result.accessToken);
+
+            //다시 요청
           })
           .catch((err) => {
-            console.log("refreshToken만료");
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
 
             fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
@@ -227,7 +243,7 @@ const App = () => {
             })
               .then((res: any) => {
                 if (!res.ok) {
-                  console.log("여긴안돼");
+                  console.log("왜?");
                   persistLogin(false);
                   showMypageModalOn(false);
 
@@ -243,21 +259,23 @@ const App = () => {
               })
               .then((res) => {
                 //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
-                console.log(userSignin);
+                // window.location.replace("/");
 
                 persistLogin(false);
+                console.log("tjfps");
 
+                navigate("/login");
+                window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
+                cancelTokenSource.cancel();
+                return Promise.reject(error);
               })
               .catch((err) => {
                 console.log(err);
               });
           });
 
-        //다시 요청
-
-        console.log("여기로 오지마");
         return instance(originalRequest);
       }
       // }
@@ -271,7 +289,6 @@ const App = () => {
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
-
         setAlarmInfo(response.data.data);
       } catch (error) {
         // console.error("error");
@@ -280,11 +297,10 @@ const App = () => {
     fetchData();
 
     return () => {
-      // axios.interceptors.request.eject(requestInstance);
-      // axios.interceptors.response.eject(responseInstance);
-      console.log("언마운트");
+      axios.interceptors.request.eject(requestInstance);
+      axios.interceptors.response.eject(responseInstance);
     };
-  }, []);
+  }, [userSignin]);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {
@@ -371,61 +387,56 @@ const App = () => {
   //axios interceptor를 사용하여 요청전에 accesstoken
 
   return (
-    <BrowserRouter>
-      <div onClick={closeShowMypageModal} id="App">
-        {showErrModal ? <ErrModal></ErrModal> : null}
-        {mobileMyPage ? <MenuBar></MenuBar> : null}
-        {showAlarmPage ? <AlarmPage></AlarmPage> : null}
+    <div onClick={closeShowMypageModal} id="App">
+      {showErrModal ? <ErrModal></ErrModal> : null}
+      {mobileMyPage ? <MenuBar></MenuBar> : null}
+      {showAlarmPage ? <AlarmPage></AlarmPage> : null}
 
-        {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
-        <Routes>
-          {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
-          <Route element={<Mainheader />}>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/wallet" element={<WalletPage />} />
-            <Route
-              path="noticeBoard"
-              element={<NoticeBoardManage></NoticeBoardManage>}
-            />
-            <Route
-              path="/mypage/*"
-              element={<Navigate replace to="/mypage" />}
-            />
-
-            <Route path={`/share`} element={<SharePage></SharePage>} />
-          </Route>
-
-          <Route element={<MainHeaderLogo />}>
-            <Route path="/login" element={<SigninPage></SigninPage>} />
-            <Route path="/signup" element={<SignupPage></SignupPage>} />
-          </Route>
-
-          <Route path="/callendar" element={<CalendarPage />} />
-
+      {/* 로그인을 하면  로그인이 사라지고 마이페이지가 생겨야한다. */}
+      <Routes>
+        {/* 메인헤더는 구독 등록과, 구독 모음 등록 할시에는 보이지않아야 한다. */}
+        <Route element={<Mainheader />}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/wallet" element={<WalletPage />} />
           <Route
-            path="/subregist"
-            element={<SubRegisterPage></SubRegisterPage>}
-          ></Route>
+            path="/noticeBoard"
+            element={<NoticeBoardManage></NoticeBoardManage>}
+          />
+          <Route path="/mypage/*" element={<Navigate replace to="/mypage" />} />
 
-          <Route
-            path="/shareregist"
-            element={<ShareRegisterPage></ShareRegisterPage>}
-          ></Route>
+          <Route path={`/share`} element={<SharePage></SharePage>} />
+        </Route>
 
-          <Route
-            path="/callback/:auth"
-            element={<CallbackPage></CallbackPage>}
-          ></Route>
-          <Route
-            path="/calendarselect"
-            element={<CalendarSelect></CalendarSelect>}
-          ></Route>
+        <Route element={<MainHeaderLogo />}>
+          <Route path="/login" element={<SigninPage></SigninPage>} />
+          <Route path="/signup" element={<SignupPage></SignupPage>} />
+        </Route>
 
-          <Route path="/" element={<MainPage></MainPage>}></Route>
-        </Routes>
-      </div>
-    </BrowserRouter>
+        <Route path="/callendar" element={<CalendarPage />} />
+
+        <Route
+          path="/subregist"
+          element={<SubRegisterPage></SubRegisterPage>}
+        ></Route>
+
+        <Route
+          path="/shareregist"
+          element={<ShareRegisterPage></ShareRegisterPage>}
+        ></Route>
+
+        <Route
+          path="/callback/:auth"
+          element={<CallbackPage></CallbackPage>}
+        ></Route>
+        <Route
+          path="/calendarselect"
+          element={<CalendarSelect></CalendarSelect>}
+        ></Route>
+
+        <Route path="/" element={<MainPage></MainPage>}></Route>
+      </Routes>
+    </div>
   );
 };
 

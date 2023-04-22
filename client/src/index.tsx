@@ -4,12 +4,22 @@ import "./index.css";
 import "./css/reset.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-// import 
+import {
+  Route,
+  Navigate,
+  BrowserRouter,
+  Routes,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+// import
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
