@@ -30,6 +30,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //     user_id?:number
 
 // }
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.get["Content-Type"] = "application/json";
 
 import "../css/pages/WalletPage.css";
 import Loading from "Components/Common/loading";
@@ -99,8 +102,7 @@ const WalletPage = () => {
   };
 
   useEffect(() => {
-
-    instance
+    axios
       .get(`/wallet/info`)
       .then((res) => {
         let sum = 0;

@@ -163,6 +163,7 @@ const App = () => {
         Authorization: `Bearer ${accessToken}`,
       };
 
+
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
 
@@ -173,10 +174,7 @@ const App = () => {
         }
       }
 
-      if (!userSignin && !accessToken) {
-        console.log("여기오면 취소야");
-        // return Promise.reject(new Error('Reuest canceled'))
-      }
+  
 
       // } else {
       //   console.log('망붕')
@@ -197,13 +195,15 @@ const App = () => {
     async (error) => {
       const originalRequest = error.config;
 
-      // if (!originalRequest._retry) {
-      if (
-        !originalRequest._retry &&
-        localstorageUserInfo.accessExp < today &&
-        userSignin
-      ) {
-        axios
+      // console.log(
+      //   originalRequest._retry,
+      //   localstorageUserInfo.accessExp < today
+      // );
+
+      if (!originalRequest._retry && localstorageUserInfo.accessExp < today) {
+        originalRequest._retry = true;
+
+        return axios
           .post(
             `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
             {
@@ -228,35 +228,25 @@ const App = () => {
               "Authorization"
             ] = `Bearer ${res.data.accessToken}`;
 
+            return instance.request(originalRequest);
+
             //  axios.request(originalRequest);
 
             // setTokenExpired(result.accessToken);
+            // return instance(originalRequest);
 
             //다시 요청
           })
           .catch((err) => {
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
 
-            fetch(`${process.env.REACT_APP_API_URI}/auth/signout`, {
-              method: "get",
-              credentials: "include",
-            })
-              .then((res: any) => {
-                if (!res.ok) {
-                  console.log("왜?");
-                  persistLogin(false);
-                  showMypageModalOn(false);
-
-                  localStorage.removeItem("accessToken");
-                  isSigninState.persist.clearStorage();
-                  localStorage.removeItem("subgatherUserInfo");
-
-                  throw new Error(res.status);
-                  // window.location.reload()
-                }
-                return res.text();
-                //       // window.location.reload();
+            axios
+              .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+                headers: {
+                  authorization: `Bearer ${accessToken}`,
+                },
               })
+
               .then((res) => {
                 //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
                 // window.location.replace("/");
@@ -264,22 +254,29 @@ const App = () => {
                 persistLogin(false);
                 console.log("tjfps");
 
-                navigate("/login");
                 window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
-                cancelTokenSource.cancel();
-                return Promise.reject(error);
+
+                // navigate("/");
+                // cancelTokenSource.cancel();
+                // return Promise.reject(error);
               })
               .catch((err) => {
-                console.log(err);
+                console.error(err);
+
+                persistLogin(false);
+                showMypageModalOn(false);
+
+                localStorage.removeItem("accessToken");
+                isSigninState.persist.clearStorage();
+                localStorage.removeItem("subgatherUserInfo");
               });
           });
-
-        return instance(originalRequest);
       }
       // }
 
+      //에러로 내보낸다.
       return Promise.reject(error);
     }
   );
@@ -289,18 +286,19 @@ const App = () => {
       try {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
+
         setAlarmInfo(response.data.data);
       } catch (error) {
-        // console.error("error");
+        // console.log(error);
       }
     };
     fetchData();
 
-    return () => {
-      axios.interceptors.request.eject(requestInstance);
-      axios.interceptors.response.eject(responseInstance);
-    };
-  }, [userSignin]);
+    // return () => {
+    //   axios.interceptors.request.eject(requestInstance);
+    //   axios.interceptors.response.eject(responseInstance);
+    // };
+  }, []);
 
   // useEffect(() => {
   //   if (localstorageUserInfo.accessExp < today) {

@@ -525,7 +525,6 @@ module.exports = {
           accessToken: accessToken,
         });
       } else {
-        console.log("요시 재발급");
         const accessToken = generateAccessToken({
           id,
           username,
@@ -534,6 +533,8 @@ module.exports = {
           isAdmin,
         });
         const accessExp = tokenExp(accessToken);
+
+        console.log('재발급에 성공했습니다. 다음으로 넘어가세요')
 
         return res.status(200).send({
           data: {
