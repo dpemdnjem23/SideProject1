@@ -4,9 +4,12 @@ import axios, {
   AxiosRequestHeaders,
 } from "axios";
 import { config } from "dotenv";
+import { useEffect } from "react";
 import { isSigninState } from "./state";
-axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.withCredentials = true;
 
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.get["Content-Type"] = "application/json";
 const accessToken: string | null = localStorage.getItem("accessToken");
 
 const localstorageUserInfo = JSON.parse(
@@ -18,155 +21,130 @@ const today: number = Math.floor(Date.now() / 1000);
 const { persistLogin } = isSigninState();
 
 //axios interceptor를 사용하여 요청전에 accesstoken
-export const sos = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URI}`,
-  timeout: 5000,
 
-});
+// const instance = axios.create({
+//   baseURL: `${process.env.REACT_APP_API_URI}`,
+//   timeout: 5000,
+// });
 
-// instance.interceptors.request.use(
-//    (config: any) => {
-    // console.log("실력파", localstorageUserInfo.id);
+// export default instance
+    const requestInstance: any = axios.interceptors.request.use(
+      async (config: AxiosRequestConfig) => {
+        const accessToken: string | null = localStorage.getItem("accessToken");
 
-    // axios
-    //   .post(
-    //     `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
-    //     {
-    //       id: localstorageUserInfo.id,
-    //     },
-    //     {
-    //       headers: {
-    //         authorization: `Bearer ${accessToken}`,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
+        config.headers = {
+          Authorization: `Bearer ${accessToken}`,
+        };
 
-    //     localStorage.setItem("accessToken", res.data.accessToken);
-    //     //         //res.data
-    //     localStorage.setItem(
-    //       "subgatherUserInfo",
-    //       JSON.stringify(res.data.data)
-    //     );
-    //     // setTokenExpired(result.accessToken);
-    //   })
-    //   .catch((err) => {
-    //     persistLogin(false);
+        if (accessToken) {
+          // accessToken이 있는 경우, 요청 헤더에 추가합니다.
 
-    //     localStorage.removeItem("accessToken");
-    //     // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-    //     isSigninState.persist.clearStorage();
-    //     localStorage.removeItem("subgatherUserInfo");
-    //     window.location.assign("/");
+          if (config.url === "/auth/signout") {
+            axios.interceptors.request.eject(requestInstance);
+            axios.interceptors.response.eject(responseInstance);
+            return config;
+          }
+        }
 
-    //     console.log(err);
-    //   });
+        return config;
+      },
+      async (error) => {
+        return Promise.reject(error);
+      }
+    );
 
-//     return config;
-//   },
-//   (error: any) => {
-//     Promise.reject(error);
-//   }
-// );
+    const responseInstance = axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      async (error) => {
+        const originalRequest = error.config;
 
-// instance.interceptors.response.use(
-//   (response: any) => {
-//     return response;
-//   },
-//   async (error: any) => {
-//     const originalRequest = error.config;
+        // console.log(
+        //   originalRequest._retry,
+        //   localstorageUserInfo.accessExp < today
+        // );
 
-//     console.log(originalRequest);
+        if (!originalRequest._retry && localstorageUserInfo.accessExp < today) {
+          originalRequest._retry = true;
 
-//     if (
-//       error.response.status === 401 &&
-//       originalRequest.url === "auth/issueaccess"
-//     ) {
-//       //refresh token expired
+          return axios
+            .post(
+              `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
+              {
+                id: localstorageUserInfo.id,
+              },
+              {
+                headers: {
+                  authorization: `Bearer ${accessToken}`,
+                },
+              }
+            )
+            .then((res) => {
+              console.log("일로와");
+              localStorage.setItem("accessToken", res.data.accessToken);
+              //         //res.data
+              localStorage.setItem(
+                "subgatherUserInfo",
+                JSON.stringify(res.data.data)
+              );
 
-//       localStorage.clear();
-//       // window.location.assign('/')
-//       return Promise.reject(error);
-//     }
+              axios.defaults.headers.common[
+                "Authorization"
+              ] = `Bearer ${res.data.accessToken}`;
 
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
+              return axios.request(originalRequest);
 
-//       console.log("액세스 토큰 재발급");
+              //  axios.request(originalRequest);
 
-//       return;
-//     }
+              // setTokenExpired(result.accessToken);
+              // return instance(originalRequest);
 
-//     return Promise.reject(error);
-//   }
-// );
+              //다시 요청
+            })
+            .catch((err) => {
+              //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
 
-// axios.interceptors.request.eject(instance);
+              axios
+                .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+                  headers: {
+                    authorization: `Bearer ${accessToken}`,
+                  },
+                })
 
-// export default instance;
+                .then((res) => {
+                  //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
+                  // window.location.replace("/");
 
-// useEffect(() => {
-//   console.log("무시");
+                  persistLogin(false);
+                  console.log("tjfps");
 
-//   instance
-//     .get("/alarm/info")
-//     .then((res) => {
-//       console.log("alarminfo");
-//       // setAlarmInfo(res.data.data);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }, []);
+                  window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+                  localStorage.clear();
+                  isSigninState.persist.clearStorage();
 
-// async function reissuetoken (){
+                  // navigate("/");
+                  // cancelTokenSource.cancel();
+                  // return Promise.reject(error);
+                })
+                .catch((err) => {
+                  console.error(err);
 
-//   axios.post(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-//     id:localstorageUserInfo.id,
-//     headers: {
-//       authorization: `Bearer ${accessToken}`,
-//     },
-//   }
-//   body: JSON.stringify({)
-// fetch(`${process.env.REACT_APP_API_URI}/auth/issueaccess`, {
-//   body: JSON.stringify({
-//     id: localstorageUserInfo.id,
-//   }),
-//   method: "post",
-//   headers: {
-//     authorization: `Bearer ${accessToken}`,
-//   },
-//   credentials: "include",
-// })
-//   .then((res: any) => {
-//     if (!res.ok) {
-//       //accesstoken을 보냈더니 refreshk 가만료면 로그아웃을 한다.
-//       persistLogin(false);
+                  persistLogin(false);
+                  // showMypageModalOn(false);
 
-//       localStorage.removeItem("accessToken");
-//       // alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-//       isSigninState.persist.clearStorage();
-//       localStorage.removeItem("subgatherUserInfo");
-//       window.location.assign("/");
+                  localStorage.removeItem("accessToken");
+                  isSigninState.persist.clearStorage();
+                  localStorage.removeItem("subgatherUserInfo");
+                });
+            });
+        }
+        // }
 
-//       throw new Error(res.status);
-//     }
+        //에러로 내보낸다.
+        return Promise.reject(error);
+      }
+    );
 
-//     return res.json();
-//   })
-//   .then((result) => {
-//     //accesstoken을 보냈더니 기간만료 전이야 그러면 재발급
-//     localStorage.setItem("accessToken", result.accessToken);
-//     //res.data
-//     localStorage.setItem(
-//       "subgatherUserInfo",
-//       JSON.stringify(result.data)
-//     );
-//     // setTokenExpired(result.accessToken);
-//   })
-//   .catch((err) => {
-//     //accessToken 을 보냈을때 기간만료인경우 로그아웃        // setUserSi
-//   });
-//   }
-// }
+ 
+export {requestInstance,responseInstance}

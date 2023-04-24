@@ -163,7 +163,6 @@ const App = () => {
         Authorization: `Bearer ${accessToken}`,
       };
 
-
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
 
@@ -173,8 +172,6 @@ const App = () => {
           return config;
         }
       }
-
-  
 
       // } else {
       //   console.log('망붕')
@@ -293,11 +290,13 @@ const App = () => {
       }
     };
     fetchData();
+  }, []);
 
-    // return () => {
-    //   axios.interceptors.request.eject(requestInstance);
-    //   axios.interceptors.response.eject(responseInstance);
-    // };
+  useEffect(() => {
+    return () => {
+      axios.interceptors.request.eject(requestInstance);
+      axios.interceptors.response.eject(responseInstance);
+    };
   }, []);
 
   // useEffect(() => {

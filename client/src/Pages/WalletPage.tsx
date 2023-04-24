@@ -12,10 +12,7 @@ import {
   walletPageCostState,
 } from "utils/state";
 import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
-axios.defaults.withCredentials = true;
-// axios.defaults.headers.common['Authorization'] =  'Bearer token'
-axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.get["Content-Type"] = "application/json";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // interface walletInfo {
@@ -102,7 +99,7 @@ const WalletPage = () => {
   };
 
   useEffect(() => {
-    axios
+    instance
       .get(`/wallet/info`)
       .then((res) => {
         let sum = 0;

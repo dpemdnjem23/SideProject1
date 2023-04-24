@@ -1,5 +1,6 @@
 import React from "react";
 
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAirFreshener,
@@ -12,6 +13,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "Components/Login/Login";
 import { isSigninState, mainheaderuseStore } from "utils/state";
+// import instance from "utils/Intercepts";
 import { instance } from "App";
 //로그아웃을 누르면 로그아웃이 되면서 로그인 해제
 axios.defaults.withCredentials = true;
