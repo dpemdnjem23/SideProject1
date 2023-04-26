@@ -48,7 +48,7 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
-import { requestInstance, responseInstance } from "utils/Intercepts";
+// import { requestInstance, responseInstance } from "utils/Intercepts";
 
 // import instance from "utils/Intercepts";
 
@@ -156,8 +156,8 @@ const App = () => {
 
   console.log(localstorageUserInfo.accessExp - today);
   //  const instanceRequest =
-
-  
+  // requestInstance;
+  // responseInstance;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -173,16 +173,13 @@ const App = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    requestInstance
-    responseInstance
-    return () => {
-      axios.interceptors.request.eject(requestInstance);
-      axios.interceptors.response.eject(responseInstance);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     axios.interceptors.request.eject(requestInstance);
+  //     axios.interceptors.response.eject(responseInstance);
+  //   };
+  // }, []);
 
-  
   return (
     <div onClick={closeShowMypageModal} id="App">
       {showErrModal ? <ErrModal></ErrModal> : null}
