@@ -28,6 +28,8 @@ const { persistLogin } = isSigninState();
 // });
 
 // export default instance
+const useAxiosInterceptors = () => {
+  useEffect(() => {
     const requestInstance: any = axios.interceptors.request.use(
       async (config: AxiosRequestConfig) => {
         const accessToken: string | null = localStorage.getItem("accessToken");
@@ -145,6 +147,13 @@ const { persistLogin } = isSigninState();
         return Promise.reject(error);
       }
     );
+    return () => {
+      axios.interceptors.request.eject(requestInstance);
+      axios.interceptors.response.eject(responseInstance);
+    };
+  }, []);
+};
 
- 
+export default useAxiosInterceptors
+
 // export {requestInstance,responseInstance}

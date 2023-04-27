@@ -48,8 +48,9 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
+import useAxiosInterceptors from "utils/Intercepts";
 // import { requestInstance, responseInstance } from "utils/Intercepts";
-
+// import axios from "utils/Intercepts";
 // import instance from "utils/Intercepts";
 
 // import {
@@ -158,6 +159,9 @@ const App = () => {
   //  const instanceRequest =
   // requestInstance;
   // responseInstance;
+
+
+useAxiosInterceptors()
 
   useEffect(() => {
     const fetchData = async () => {
