@@ -48,6 +48,7 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
+import axiInstance from "utils/Intercepts";
 
 // import useAxiosInterceptors from "utils/Intercepts";
 // import { requestInstance, responseInstance } from "utils/Intercepts";
@@ -67,16 +68,26 @@ import AlarmPage from "Pages/AlarmPage";
 //   setTimeIsNow: (input: number) => void;
 // };
 
+// const localstorageUserInfo = JSON.parse(
+//   localStorage.getItem("subgatherUserInfo") || "{}"
+// );
+// const { persistLogin } = isSigninState();
 
+
+
+const today: number = Math.floor(Date.now() / 1000);
 
 const cancelTokenSource = axios.CancelToken.source();
-
 
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
   timeout: 500,
   cancelToken: cancelTokenSource.token,
 });
+
+const accessToken: string | null = localStorage.getItem("accessToken");
+
+
 
 // export const appUseStore = create<appState>()((set) => ({
 //   timeIsNow: Math.floor(Date.now() / 1000),
@@ -87,10 +98,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.get["Content-Type"] = "application/json";
 
 const App = () => {
-
-
-
-
   // const navigate = useNavigate();
   // const navigate = useNavigate()
   //!
@@ -112,6 +119,8 @@ const App = () => {
   // 로그인했을때만 로딩 하도록한다.
 
   //!
+
+  // axiInstance
 
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
@@ -155,7 +164,7 @@ const App = () => {
   //오늘 time이 accessExp 만료되기전에 해야하니깐 60초? 60초 미리 확인해서 로그인하도록 한다
   //다시 refresh token이 만료되는 경우 에만 작동되어야 한다. refresh가 없으면 로그아웃이 되는데
   // 로그아웃인경우는 작동하지 않는다.
-  const accessToken: string | null = localStorage.getItem("accessToken");
+  // const accessToken: string | null = localStorage.getItem("accessToken");
 
   const localstorageUserInfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || "{}"
@@ -171,10 +180,24 @@ const App = () => {
   // useAxiosInterceptors()
 
   // useEffect(() => {
+
+  // return () => {
+  //   instance.interceptors.request.eject(requestInstance);
+  //   instance.interceptors.request.eject(responseInstance);
+  // };
+  // }, [instance]);
+
+
+
+
+
+
+
+
   const requestInstance: any = instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
-
+  
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };
@@ -186,39 +209,39 @@ const App = () => {
           return;
         }
       }
-
+  
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
-
+  
         if (config.url === "/auth/signout") {
           instance.interceptors.request.eject(requestInstance);
           instance.interceptors.response.eject(responseInstance);
           return config;
         }
       }
-
+  
       return config;
     },
     async (error) => {
       return Promise.reject(error);
     }
   );
-
+  
   const responseInstance = instance.interceptors.response.use(
     (response) => {
       return response;
     },
     async (error) => {
       const originalRequest = error.config;
-
+  
       // console.log(
       //   originalRequest._retry,
       //   localstorageUserInfo.accessExp < today
       // );
-
+  
       if (!originalRequest._retry && localstorageUserInfo.accessExp < today) {
         originalRequest._retry = true;
-
+  
         return axios
           .post(
             `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
@@ -239,50 +262,50 @@ const App = () => {
               "subgatherUserInfo",
               JSON.stringify(res.data.data)
             );
-
+  
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${res.data.accessToken}`;
-
+  
             // return axios.request(originalRequest);
-
+  
             //  axios.request(originalRequest);
-
+  
             // setTokenExpired(result.accessToken);
             // return instance(originalRequest);
-
+  
             //다시 요청
           })
           .catch((err) => {
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
-
+  
             return axios
               .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
                 headers: {
                   authorization: `Bearer ${accessToken}`,
                 },
               })
-
+  
               .then((res) => {
                 //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
                 // window.location.replace("/");
-
+  
                 persistLogin(false);
                 console.log("tjfps");
-
+  
                 window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
-
+  
                 // cancelTokenSource.cancel();
                 // return Promise.reject(error);
               })
               .catch((err) => {
                 console.error(err);
-
+  
                 persistLogin(false);
                 // showMypageModalOn(false);
-
+  
                 localStorage.removeItem("accessToken");
                 isSigninState.persist.clearStorage();
                 localStorage.removeItem("subgatherUserInfo");
@@ -290,17 +313,14 @@ const App = () => {
           });
       }
       // }
-
+  
       //에러로 내보낸다.
       return Promise.reject(error);
     }
   );
 
-  // return () => {
-  //   instance.interceptors.request.eject(requestInstance);
-  //   instance.interceptors.request.eject(responseInstance);
-  // };
-  // }, [instance]);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -317,6 +337,9 @@ const App = () => {
     };
     fetchData();
   }, [userSignin]);
+
+
+  
   // useEffect(() => {
   //   return () => {
   //     axios.interceptors.request.eject(requestInstance);
@@ -378,4 +401,4 @@ const App = () => {
   );
 };
 
-export default App
+export default App;
