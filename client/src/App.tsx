@@ -267,6 +267,8 @@ const App = () => {
               "Authorization"
             ] = `Bearer ${res.data.accessToken}`;
   
+
+            return instance(originalRequest)
             // return axios.request(originalRequest);
   
             //  axios.request(originalRequest);
@@ -279,7 +281,7 @@ const App = () => {
           .catch((err) => {
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
   
-            return axios
+            axios
               .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
                 headers: {
                   authorization: `Bearer ${accessToken}`,
@@ -291,7 +293,8 @@ const App = () => {
                 // window.location.replace("/");
   
                 persistLogin(false);
-                console.log("tjfps");
+                
+                window.location.href = '/login'
   
                 window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
                 localStorage.clear();
