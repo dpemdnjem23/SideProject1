@@ -97,6 +97,7 @@ const WalletPage = () => {
   const closeCancellationModal = () => {
     setShowCancellation(false);
   };
+  ;;
 
   useEffect(() => {
     instance

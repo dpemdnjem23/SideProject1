@@ -48,7 +48,6 @@ import NoticeBoardManage from "Pages/NoticeBoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
-import axiInstance from "utils/Intercepts";
 
 // import useAxiosInterceptors from "utils/Intercepts";
 // import { requestInstance, responseInstance } from "utils/Intercepts";
