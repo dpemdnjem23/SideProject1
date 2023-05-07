@@ -79,6 +79,10 @@ const Mainheader = () => {
   };
 
   const openMenuBar = () => {
+
+    
+
+
     // mobileMyPageOn(true);
     mobileMyPageOn(true);
     // setShowAlarmModal(true);

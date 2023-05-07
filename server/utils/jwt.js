@@ -8,7 +8,7 @@ module.exports = {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: "10s" });
   },
   generateRefreshToken: (data) => {
-    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "1d" });
+    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "15s" });
   },
 
   checkRefreshToken: (refreshToken) => {
