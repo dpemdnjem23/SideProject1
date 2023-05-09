@@ -72,8 +72,6 @@ import AlarmPage from "Pages/AlarmPage";
 // );
 // const { persistLogin } = isSigninState();
 
-
-
 const today: number = Math.floor(Date.now() / 1000);
 
 const cancelTokenSource = axios.CancelToken.source();
@@ -85,8 +83,6 @@ export const instance: AxiosInstance = axios.create({
 });
 
 const accessToken: string | null = localStorage.getItem("accessToken");
-
-
 
 // export const appUseStore = create<appState>()((set) => ({
 //   timeIsNow: Math.floor(Date.now() / 1000),
@@ -172,29 +168,11 @@ const App = () => {
   const today: number = Math.floor(Date.now() / 1000);
 
   console.log(localstorageUserInfo.accessExp - today);
-  //  const instanceRequest =
-  // requestInstance;
-  // responseInstance;
-
-  // useAxiosInterceptors()
-
-  // useEffect(() => {
-
-  // return () => {
-  //   instance.interceptors.request.eject(requestInstance);
-  //   instance.interceptors.request.eject(responseInstance);
-  // };
-  // }, [instance]);
-
-
-
-
-
-
+  
   const requestInstance: any = instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
-  
+
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };
@@ -206,39 +184,39 @@ const App = () => {
           return;
         }
       }
-  
+
       if (accessToken) {
         // accessToken이 있는 경우, 요청 헤더에 추가합니다.
-  
+
         if (config.url === "/auth/signout") {
           instance.interceptors.request.eject(requestInstance);
           instance.interceptors.response.eject(responseInstance);
           return config;
         }
       }
-  
+
       return config;
     },
     async (error) => {
       return Promise.reject(error);
     }
   );
-  
+
   const responseInstance = instance.interceptors.response.use(
     (response) => {
       return response;
     },
     async (error) => {
       const originalRequest = error.config;
-  
+
       // console.log(
       //   originalRequest._retry,
       //   localstorageUserInfo.accessExp < today
       // );
-  
+
       if (!originalRequest._retry && localstorageUserInfo.accessExp < today) {
         originalRequest._retry = true;
-  
+
         return axios
           .post(
             `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
@@ -259,53 +237,52 @@ const App = () => {
               "subgatherUserInfo",
               JSON.stringify(res.data.data)
             );
-  
+
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${res.data.accessToken}`;
-  
 
-            return instance(originalRequest)
+            return instance(originalRequest);
             // return axios.request(originalRequest);
-  
+
             //  axios.request(originalRequest);
-  
+
             // setTokenExpired(result.accessToken);
             // return instance(originalRequest);
-  
+
             //다시 요청
           })
           .catch((err) => {
             //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
-  
+
             axios
               .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
                 headers: {
                   authorization: `Bearer ${accessToken}`,
                 },
               })
-  
+
               .then((res) => {
                 //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
                 // window.location.replace("/");
-  
+
                 persistLogin(false);
-                
-                window.location.href = '/login'
-  
+
+                window.location.href = "/login";
+
                 window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
                 localStorage.clear();
                 isSigninState.persist.clearStorage();
-  
+
                 // cancelTokenSource.cancel();
                 // return Promise.reject(error);
               })
               .catch((err) => {
                 console.error(err);
-  
+
                 persistLogin(false);
                 // showMypageModalOn(false);
-  
+
                 localStorage.removeItem("accessToken");
                 isSigninState.persist.clearStorage();
                 localStorage.removeItem("subgatherUserInfo");
@@ -313,16 +290,11 @@ const App = () => {
           });
       }
       // }
-  
+
       //에러로 내보낸다.
       return Promise.reject(error);
     }
   );
-
-
-
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -338,15 +310,15 @@ const App = () => {
       }
     };
     fetchData();
+
+    return () => {
+      axios.interceptors.request.eject(requestInstance);
+      axios.interceptors.response.eject(responseInstance);
+    };
   }, [userSignin]);
 
-
-  
   // useEffect(() => {
-  //   return () => {
-  //     axios.interceptors.request.eject(requestInstance);
-  //     axios.interceptors.response.eject(responseInstance);
-  //   };
+
   // }, []);
 
   return (

@@ -9,13 +9,14 @@ import "moment/locale/ko";
 
 import "../../css/components/CallendarPage/fullcalendarcenter.css";
 import { useWalletStore } from "utils/state";
+import { instance } from "App";
 
 const FullCalendarCenter = () => {
   const navigate = useNavigate();
 
   //start_date랑 같은 날짜에 해당하는 것만 map을 이용하여 달력에 나타낸다
 
-  const [grab, setGrab] = useState<any>('');
+  const [grab, setGrab] = useState<any>("");
   const { walletInfo, setWalletInfo } = useWalletStore();
   // const [walletData , setWalletDate] = useState<number>(0)
   // const [listWallet,]
@@ -29,8 +30,8 @@ const FullCalendarCenter = () => {
     e.dataTransfer.effectAllowed = "move";
     // e.dataTransfer.setData("text/html", e.target);
     e.dataTransfer.setData("text/html", e.target.id);
-    setGrab('')
-   
+    setGrab("");
+
     // console.log(e.dataTransfer.setData("text/html", e.target))
   };
 
@@ -38,13 +39,11 @@ const FullCalendarCenter = () => {
     e.target.classList.remove("grabbing");
     e.dataTransfer.dropEffect = "move";
     // setGrab(true)
-
   };
   //놓앗을때 start_end를
   const onDrop = (e: any) => {
     const startDate = e.target.id;
     //drop한 곳의 정보를 가져온다.
-
 
     const data = e.dataTransfer.getData("text/html"); // img태그 아이디를 가져옴
     // console.log(date.format("YYYYMMDD"))'
@@ -53,24 +52,13 @@ const FullCalendarCenter = () => {
 
     // if (startDate === typeof start)
     if (startDate.length >= 10) {
-    
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/wallet/startdate`,
-          {
-            id: data,
-            start_date: startDate,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res)=>{
+      instance
+        .patch(`/wallet/startdate`, {
+          id: data,
+          start_date: startDate,
+        })
+        .then((res) => {
           setGrab(res);
-    
         })
         .catch((err) => {
           setGrab(false);
@@ -92,12 +80,8 @@ const FullCalendarCenter = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+    instance
+      .get(`/wallet/info`)
       .then((res) => {
         let sum = 0;
 

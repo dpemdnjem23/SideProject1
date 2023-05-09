@@ -29,7 +29,6 @@ const MainPageContents2 = () => {
         if (entries[0].isIntersecting) {
 
           setRaise(entry.isIntersecting);
-          console.log('무시',raise)
 
         }
       });
