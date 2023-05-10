@@ -173,11 +173,13 @@ const App = () => {
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
 
+
+
+    
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };
       if (!accessToken) {
-        console.log("존재하지않아");
         if (config.url === "/alarm/info") {
           instance.interceptors.request.eject(requestInstance);
           instance.interceptors.response.eject(responseInstance);
@@ -287,6 +289,8 @@ const App = () => {
                 isSigninState.persist.clearStorage();
                 localStorage.removeItem("subgatherUserInfo");
               });
+
+
           });
       }
       // }
@@ -316,6 +320,11 @@ const App = () => {
       axios.interceptors.response.eject(responseInstance);
     };
   }, [userSignin]);
+
+
+
+
+  //만약 토큰이 만료가 됐고
 
   // useEffect(() => {
 
