@@ -27,7 +27,7 @@ const ShareCard = () => {
 
   useEffect(() => {
 
-    //에러로 안가네?
+    //에러로 안가네? 에러로 보내는 법
     setLoading(true);
     instance
       .get(`/share/info`, {

@@ -61,7 +61,11 @@ const Mainheader = () => {
       navigate("/");
       setShowErrModal(true);
     }
+
+
   };
+
+  //메인 헤더를
 
   const openShowMypageModal = () => {
     if (showMypageModal === false) {
