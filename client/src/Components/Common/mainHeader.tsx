@@ -65,7 +65,7 @@ const Mainheader = () => {
 
   };
 
-  //메인 헤더를
+  //메인 헤더를 건들이면
 
   const openShowMypageModal = () => {
     if (showMypageModal === false) {

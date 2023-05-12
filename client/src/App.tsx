@@ -168,14 +168,11 @@ const App = () => {
   const today: number = Math.floor(Date.now() / 1000);
 
   console.log(localstorageUserInfo.accessExp - today);
-  
+
   const requestInstance: any = instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       const accessToken: string | null = localStorage.getItem("accessToken");
 
-
-
-    
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };
@@ -289,8 +286,6 @@ const App = () => {
                 isSigninState.persist.clearStorage();
                 localStorage.removeItem("subgatherUserInfo");
               });
-
-
           });
       }
       // }
@@ -320,9 +315,6 @@ const App = () => {
       axios.interceptors.response.eject(responseInstance);
     };
   }, [userSignin]);
-
-
-
 
   //만약 토큰이 만료가 됐고
 
