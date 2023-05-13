@@ -209,14 +209,14 @@ const FullCalendarCenter = () => {
     <div id="Full_calendar_section">
       <div className="Full_calendar_head_section">
         <div className="Full_calendar_head">
+          <Link to="/">
+            <img className="Full_calendar_head_img" src="/images/2.png" />
+          </Link>
           <span className="Full_calendar_head_title">
             {date.locale("ko").format("YYYY") +
               " 년 " +
               date.locale("ko").format("MM") +
               " 월"}
-            <Link to="/">
-              <img className="Full_calendar_head_img" src="/images/2.png" />
-            </Link>
           </span>
           <div className="Full_calendar_util-button">
             <button className="Full_calendar_today" onClick={returnToday}>

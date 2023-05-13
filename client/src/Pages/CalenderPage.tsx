@@ -1,8 +1,9 @@
-import FullMyCalendar from 'Components/Subcalendar/fullcalendarcenter';
-import React ,{useState}from 'react'
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid'
+import FullMyCalendar from "Components/Subcalendar/fullcalendarcenter";
+import React, { useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
+import '../css/pages/CalendarPage.css'
 
 // import '../css/pages/CalendarPage.css'
 
@@ -10,19 +11,17 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 // handleDayClick = () =>void
 
 // }
-const CallendarPage:React.FC = () => {
+const CalendarPage: React.FC = () => {
   //캘린더 페이지에 진입하려고한다
-  //캘린더 페이지는 토큰이 없으면 진입할수 없다. 
+  //캘린더 페이지는 토큰이 없으면 진입할수 없다.
 
-
-  return(
-
-    <div id='Calendar_Page'>
-<FullMyCalendar></FullMyCalendar>
-{/* <FullCalendar plugins={[dayGridPlugin]}></FullCalendar> */}
-{/* <Calendar></Calendar> */}
+  return (
+    <div id="Calendar_Page">
+      <FullMyCalendar></FullMyCalendar>
+      {/* <FullCalendar plugins={[dayGridPlugin]}></FullCalendar> */}
+      {/* <Calendar></Calendar> */}
     </div>
-  )
+  );
 };
 
-export default CallendarPage;
+export default CalendarPage;
