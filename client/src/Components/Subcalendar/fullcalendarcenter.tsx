@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 import "moment/locale/ko";
 
-import "../../css/components/CallendarPage/fullcalendarcenter.css";
+import "../../css/components/CalendarPage/fullcalendarcenter.css";
 import { useWalletStore } from "utils/state";
 import { instance } from "App";
 
@@ -157,6 +157,11 @@ const FullCalendarCenter = () => {
                   ? "Fullselected"
                   : "";
 
+              const MoisSelected =
+                today.format("YYYYMMDD") === current.format("YYYYMMDD")
+                  ? "MoFullselected"
+                  : "";
+
               const isBlanked =
                 current.format("MM") !== today.format("MM") ? "blanked" : "";
               //오늘 날짜를 마킹한다.
@@ -172,9 +177,11 @@ const FullCalendarCenter = () => {
                   key={i}
                   //   onClick={() => handleDayClick(current)}
                 >
-                  <span className="Full_calendar_body_box_text">
-                    {current.format("D")}
-                  </span>
+                  <div className={` ${MoisSelected}`}>
+                    <span className={`Full_calendar_body_box_text`}>
+                      {current.format("D")}
+                    </span>
+                  </div>
                   <ul className="divided">
                     {walletInfo.map((el: any, index: number) => {
                       // console.log(current.format("YYYYMMDD"))
