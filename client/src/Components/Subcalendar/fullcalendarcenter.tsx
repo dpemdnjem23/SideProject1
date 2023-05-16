@@ -177,11 +177,11 @@ const FullCalendarCenter = () => {
                   key={i}
                   //   onClick={() => handleDayClick(current)}
                 >
-                  <div className={` ${MoisSelected}`}>
-                    <span className={`Full_calendar_body_box_text`}>
-                      {current.format("D")}
-                    </span>
-                  </div>
+                  <span
+                    className={`Full_calendar_body_box_text ${MoisSelected}`}
+                  >
+                    {current.format("D")}
+                  </span>
                   <ul className="divided">
                     {walletInfo.map((el: any, index: number) => {
                       // console.log(current.format("YYYYMMDD"))

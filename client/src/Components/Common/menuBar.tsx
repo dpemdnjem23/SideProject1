@@ -201,7 +201,7 @@ const MenuBar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/callendar">
+                  <Link onClick={closeMenuBar} to="/callendar">
                     <div>구독달력</div>
                     <div>
                       <FontAwesomeIcon
