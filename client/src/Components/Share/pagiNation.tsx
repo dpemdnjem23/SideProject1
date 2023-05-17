@@ -11,6 +11,9 @@ const SharePagiNation = () => {
   const { page, setPage } = paginationuseStore();
   const { setShareInfo, setLoading, shareInfo, loading } = shareCarduseStore();
   const [countPage, setCountPage] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<number>(page);
+
+  const [pageMatch, setPageMatch] = useState<boolean>(false);
 
   const limit = 6;
   // const numPages:number |null= 20;
@@ -57,21 +60,105 @@ const SharePagiNation = () => {
   const handleChangeIndexDown = () => {
     setPage(page - 1);
   };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width:768px)");
+    setPageMatch(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => setPageMatch(e.matches);
+
+    mediaQuery.addEventListener("change", listener);
+
+    return () => {
+      mediaQuery.removeEventListener("change", listener);
+    };
+  }, []);
+
+  // 모바일 pagination에서 추가될 사항
+  //1. 번호클릭시 가장위로
+  //2. css 변경
+
+  // window.scrollTo(0, 0);
+
+  useEffect(() => {
+    if (pageMatch) {
+      window.scrollTo(0, 0);
+    }
+  }, [page]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value);
+
+    setInputValue(newValue);
+  };
+
+  const goToPage = () => {
+    const pageInput: any = document.getElementById("pageInput");
+    console.log(pageInput);
+    const pageNumber = parseInt(pageInput);
+
+    if (pageNumber && pageNumber > 0) {
+      setPage(pageInput);
+    }
+  };
+
   return (
     <>
       {loading ? null : (
         <div className="pagination">
-          <button
-            onClick={handleChangeIndexDown}
-            className="pagination_firstbt"
-            disabled={page === 1}
-          >
-            <FontAwesomeIcon
-              className="pagination_icon"
-              icon={faAngleLeft}
-            ></FontAwesomeIcon>
-            <span>이전</span>
-          </button>
+          {pageMatch ? (
+            <div className="mobile_pagination">
+              <div>
+                <button
+                  onClick={handleChangeIndexDown}
+                  className="pagination_firstbt"
+                  disabled={page === 1}
+                >
+                  <FontAwesomeIcon
+                    className="pagination_icon"
+                    icon={faAngleLeft}
+                  ></FontAwesomeIcon>
+                  <span>이전</span>
+                </button>
+              </div>
+              <div className="mobile_pagination_pageNum">
+                <input
+                  maxLength={2 as number}
+                  value={page}
+                  type="text"
+                  id="pageInput"
+                />
+                <button onClick={goToPage} className="mobile_pagination_bt">
+                  이동
+                </button>
+              </div>
+
+              <button
+                onClick={handleChangeIndexUp}
+                className="pagination_thirdbt"
+                disabled={page === numPages}
+              >
+                <span>다음</span>
+                <FontAwesomeIcon
+                  className="pagination_icon"
+                  icon={faAngleRight}
+                ></FontAwesomeIcon>
+              </button>
+            </div>
+          ) : null}
+
+          {pageMatch ? null : (
+            <button
+              onClick={handleChangeIndexDown}
+              className="pagination_firstbt"
+              disabled={page === 1}
+            >
+              <FontAwesomeIcon
+                className="pagination_icon"
+                icon={faAngleLeft}
+              ></FontAwesomeIcon>
+              <span>이전</span>
+            </button>
+          )}
           <div>
             {pageNumbers.map((v, i) => {
               return (
@@ -93,17 +180,19 @@ const SharePagiNation = () => {
               );
             })}
           </div>
-          <button
-            onClick={handleChangeIndexUp}
-            className="pagination_thirdbt"
-            disabled={page === numPages}
-          >
-            <span>다음</span>
-            <FontAwesomeIcon
-              className="pagination_icon"
-              icon={faAngleRight}
-            ></FontAwesomeIcon>
-          </button>
+          {pageMatch ? null : (
+            <button
+              onClick={handleChangeIndexUp}
+              className="pagination_thirdbt"
+              disabled={page === numPages}
+            >
+              <span>다음</span>
+              <FontAwesomeIcon
+                className="pagination_icon"
+                icon={faAngleRight}
+              ></FontAwesomeIcon>
+            </button>
+          )}
         </div>
       )}
     </>
