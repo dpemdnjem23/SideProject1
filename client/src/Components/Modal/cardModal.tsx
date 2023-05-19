@@ -1,20 +1,32 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { shareCarduseStore } from "utils/state";
 
 import "../../css/common/modal/cardModal.css";
 const CardModal = () => {
-  const { shareInfo, cardIndex, clickModalNum, setCardModal } =
+  const { shareInfo, cardIndex, clickModalNum, setCardModal,cardModal } =
     shareCarduseStore();
 
 
 
   const closeCardModal = () => {
-    console.log('클릭')
     setCardModal(false);
 
   };
 
-  console.log(shareInfo[0].createdAt);
+
+
+
+  //모바일 일때만 적용한다.
+  useEffect(() => {
+    // 모달 열릴 때 body에 overflow: hidden 스타일 추가
+    document.body.style.overflow = 'hidden';
+
+    // 모달 닫힐 때 body에 overflow: auto 스타일 복원
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [cardModal]);
+
 
   return (
     <div     onClick={closeCardModal}

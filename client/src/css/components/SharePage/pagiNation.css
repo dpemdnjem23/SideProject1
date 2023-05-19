@@ -166,6 +166,7 @@
     color: black;
     font-weight: 200;
   }
+  
   .pagination_secondbt {
     letter-spacing: -1px;
     display: inline-block;
@@ -180,6 +181,12 @@
     border: 1px solid #aaa;
     background-color: rgb(247, 249, 250);
     color: gray;
+  }
+  .space{
+    height: 40px;
+    min-width: 120px;
+    margin: 0 2px 4px;
+
   }
 
   .pagination_thirdbt {

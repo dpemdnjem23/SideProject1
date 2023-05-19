@@ -11,14 +11,16 @@ const SharePagiNation = () => {
   const { page, setPage } = paginationuseStore();
   const { setShareInfo, setLoading, shareInfo, loading } = shareCarduseStore();
   const [countPage, setCountPage] = useState<number>(0);
-  const [inputValue, setInputValue] = useState<number>(page);
+  const [inputValue, setInputValue] = useState<number | string>(page);
+  const [isFirstPage, setIsFirstPage] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   const [pageMatch, setPageMatch] = useState<boolean>(false);
 
   const limit = 6;
   // const numPages:number |null= 20;
   const numPages = Math.ceil(countPage / limit);
-
+  console.log(numPages);
   const pageNumbers: number[] = [];
   for (let i = 1; i <= numPages; i++) {
     pageNumbers.push(i);
@@ -80,24 +82,38 @@ const SharePagiNation = () => {
   // window.scrollTo(0, 0);
 
   useEffect(() => {
+    setInputValue(page);
+
     if (pageMatch) {
       window.scrollTo(0, 0);
+    }
+
+    if (pageMatch && page === 1) {
+      setIsFirstPage(true);
+    } else {
+      setIsFirstPage(false);
+    }
+
+    if (pageMatch && page === numPages) {
+      setIsLastPage(true);
+    } else {
+      setIsLastPage(false);
     }
   }, [page]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value);
+    const newValue: number | string = event.target.value;
+    const numericValue: string = newValue.replace(/\D/g, ""); // Filter out non-numeric characters
 
-    setInputValue(newValue);
+    setInputValue(numericValue);
   };
 
   const goToPage = () => {
-    const pageInput: any = document.getElementById("pageInput");
-    console.log(pageInput);
-    const pageNumber = parseInt(pageInput);
+    const pageInput = document.getElementById("pageInput") as HTMLInputElement;
+    const pageNumber: number | string = parseInt(pageInput.value);
 
     if (pageNumber && pageNumber > 0) {
-      setPage(pageInput);
+      setPage(pageNumber);
     }
   };
 
@@ -108,22 +124,27 @@ const SharePagiNation = () => {
           {pageMatch ? (
             <div className="mobile_pagination">
               <div>
-                <button
-                  onClick={handleChangeIndexDown}
-                  className="pagination_firstbt"
-                  disabled={page === 1}
-                >
-                  <FontAwesomeIcon
-                    className="pagination_icon"
-                    icon={faAngleLeft}
-                  ></FontAwesomeIcon>
-                  <span>이전</span>
-                </button>
+                {isFirstPage ? (
+                  <div className="space"></div>
+                ) : (
+                  <button
+                    onClick={handleChangeIndexDown}
+                    className={`pagination_firstbt`}
+                    disabled={page === 1}
+                  >
+                    <FontAwesomeIcon
+                      className="pagination_icon"
+                      icon={faAngleLeft}
+                    ></FontAwesomeIcon>
+                    <span>이전</span>
+                  </button>
+                )}
               </div>
               <div className="mobile_pagination_pageNum">
                 <input
                   maxLength={2 as number}
-                  value={page}
+                  value={inputValue}
+                  onChange={handleInputChange}
                   type="text"
                   id="pageInput"
                 />
@@ -132,17 +153,21 @@ const SharePagiNation = () => {
                 </button>
               </div>
 
-              <button
-                onClick={handleChangeIndexUp}
-                className="pagination_thirdbt"
-                disabled={page === numPages}
-              >
-                <span>다음</span>
-                <FontAwesomeIcon
-                  className="pagination_icon"
-                  icon={faAngleRight}
-                ></FontAwesomeIcon>
-              </button>
+              {isLastPage ? (
+                <div className="space"></div>
+              ) : (
+                <button
+                  onClick={handleChangeIndexUp}
+                  className={`pagination_thirdbt`}
+                  disabled={page === numPages}
+                >
+                  <span>다음</span>
+                  <FontAwesomeIcon
+                    className="pagination_icon"
+                    icon={faAngleRight}
+                  ></FontAwesomeIcon>
+                </button>
+              )}
             </div>
           ) : null}
 
