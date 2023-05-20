@@ -1,3 +1,4 @@
+import { instance } from "App";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { alarmInfouseStore, mainheaderuseStore } from "utils/state";
@@ -64,26 +65,13 @@ const AlarmMain = () => {
   };
 
   const handleReadClick = (el: number) => {
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/alarm/update`,
-        { id: el },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+    instance
+      .patch(`/alarm/update`, { id: el })
       .then(() => {
         // console.log(res)
 
-        axios
-          .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          })
+        instance
+          .get(`/alarm/info`, )
           .then((res) => {
             setAlarmInfo(res.data.data);
           })
@@ -143,11 +131,11 @@ const AlarmMain = () => {
                     </div>
                     <div className="AlarmMainInfo_Section1_main">
                       <div className="AlarmMainInfo_Section1_contentarea">
-                          <div className="AlarmMainInfo_Section1_contentarea_title">
-                            {el.title}
-                          </div>
+                        <div className="AlarmMainInfo_Section1_contentarea_title">
+                          {el.title}
+                        </div>
 
-                        <div className= 'AlarmMainInfo_Section1_contentarea_main'>
+                        <div className="AlarmMainInfo_Section1_contentarea_main">
                           갱신까지 {el.remain_time}일 남았습니다. 확인해주세요{" "}
                         </div>
                         {/* <div className="alarmInfo_Section1_contentarea_date"></div> */}

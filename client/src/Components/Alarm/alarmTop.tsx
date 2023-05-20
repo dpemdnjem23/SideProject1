@@ -6,6 +6,7 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import { alarmInfouseStore, mainheaderuseStore } from "utils/state";
 
 import "../../css/components/Alarm/alarmTop.css";
+import { instance } from "App";
 const AlarmTop = () => {
   const {
     alarmInfo,
@@ -40,17 +41,8 @@ const AlarmTop = () => {
   };
   const handlebulkReadClick = () => {
     //버튼 클릭시 alarm에 존재하는 read update
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/alarm/update`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+    instance
+      .patch(`/alarm/update`)
       .then(() => {
         axios
           .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
