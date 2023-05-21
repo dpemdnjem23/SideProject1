@@ -1,3 +1,4 @@
+import { instance } from "App";
 import React, { useState } from "react";
 import {
   mypageNotiModalState,
@@ -35,29 +36,15 @@ const MypageEdit = () => {
       if (!regNickname.test(nickname)) {
         setNickErrMessage("닉네임을 제대로입력해주세요");
       } else {
-        fetch(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
-          method: "post",
-          body: JSON.stringify({
-            nickname: nickname,
-          }),
-          headers: {
-            authorzation: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        })
-          .then((res: any) => {
-            if (!res.ok) {
-              setShowNicknameNotiModal(false);
-              setNickErrMessage("동일한 닉네임이 존재합니다.");
-              throw new Error(res.status);
-            }
-            return res.text();
-          })
+        instance
+          .post(`/auth/nickcheck`, { nickname: nickname })
+
           .then((result) => {
             setShowNicknameNotiModal(true);
           })
           .catch((err) => {
+            setShowNicknameNotiModal(false);
+            setNickErrMessage("동일한 닉네임이 존재합니다.");
             console.log(err);
           });
       }
@@ -168,12 +155,9 @@ const MypageEdit = () => {
               변경하기
             </button>
           </div>
-
         </div>
         <span className="Mypage_useredit_nickErr">{passErrMessage}</span>
-
       </div>
-
     </div>
   );
 };

@@ -1,64 +1,48 @@
-
-
-
-
-import React  , {useState} from "react";
-import { mypageNotiModalState, mypageUserInfoState, showMypageState } from "utils/state";
+import React, { useState } from "react";
+import {
+  mypageNotiModalState,
+  mypageUserInfoState,
+  showMypageState,
+} from "utils/state";
 import axios from "axios";
 import "../../css/common/modal/PassNotificationModal.css";
+import { instance } from "App";
 
 const PassNotificationModal = () => {
-const {nickname} = mypageUserInfoState()
+  const { nickname } = mypageUserInfoState();
 
-const accessToken:string|null = localStorage.getItem("accessToken")
+  const accessToken: string | null = localStorage.getItem("accessToken");
 
-const{setEditUser,editUser,setPassEditUser} = showMypageState()
- 
-  const { showPasswordNotiModal,setShowPasswordNotilModal} =
+  const { setEditUser, editUser, setPassEditUser } = showMypageState();
+
+  const { showPasswordNotiModal, setShowPasswordNotilModal } =
     mypageNotiModalState();
 
   const handlePasseNotiModal = () => {
     if (showPasswordNotiModal) {
-
-      setShowPasswordNotilModal(false)
-
-      
+      setShowPasswordNotilModal(false);
+    } else {
+      setShowPasswordNotilModal(true);
     }
-    else{
- setShowPasswordNotilModal(true) 
-   }
-    
   };
 
   const handleModifyPass = () => {
-    axios.patch(
-      `${process.env.REACT_APP_API_URI}/user/edit`,
-      {
-        nickname:nickname
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-      }
-    ).then((res) =>{
-      setShowPasswordNotilModal(false)
-      setEditUser(false)
-      setPassEditUser(false)
-      // console.log(res.date)
+    instance
+      .patch(`${process.env.REACT_APP_API_URI}/user/edit`, {
+        nickname: nickname,
+      })
+      .then((res) => {
+        setShowPasswordNotilModal(false);
+        setEditUser(false);
+        setPassEditUser(false);
+        // console.log(res.date)
+      })
+      .catch((err) => {
+        //
 
-
-    }).catch((err)=>{
-      //
-
-      setShowPasswordNotilModal(false)
-
-    })
-  //변경하기를 누르는 순간 => 닉네임이 동일한지 체크해야된다.
-
- 
-
+        setShowPasswordNotilModal(false);
+      });
+    //변경하기를 누르는 순간 => 닉네임이 동일한지 체크해야된다.
   };
   return (
     <div id="PassNotificationModal">
@@ -79,7 +63,12 @@ const{setEditUser,editUser,setPassEditUser} = showMypageState()
           >
             취소
           </button>
-          <button onClick={handleModifyPass} className="PassNotificationModal_rightbt">확인</button>
+          <button
+            onClick={handleModifyPass}
+            className="PassNotificationModal_rightbt"
+          >
+            확인
+          </button>
         </div>
       </div>
     </div>
@@ -87,8 +76,6 @@ const{setEditUser,editUser,setPassEditUser} = showMypageState()
 };
 
 export default PassNotificationModal;
-
-
 
 // fetch(`${process.env.REACT_APP_API_URI}/user/edit`, {
 //     method: "post",

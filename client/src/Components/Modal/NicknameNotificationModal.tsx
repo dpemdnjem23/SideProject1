@@ -1,18 +1,23 @@
-import React  , {useState} from "react";
-import { mypageNotiModalState, mypageUserInfoState, showMypageState } from "utils/state";
+import React, { useState } from "react";
+import {
+  mypageNotiModalState,
+  mypageUserInfoState,
+  showMypageState,
+} from "utils/state";
 import axios from "axios";
 import "../../css/common/modal/NicknameNotificationModal.css";
 import { useNavigate } from "react-router";
+import { instance } from "App";
 
 const NicknameNotificationModal = () => {
-const {nickname} = mypageUserInfoState()
+  const { nickname } = mypageUserInfoState();
 
-const navigate = useNavigate()
-const accessToken:string|null = localStorage.getItem("accessToken")
+  const navigate = useNavigate();
+  const accessToken: string | null = localStorage.getItem("accessToken");
 
-const [nickErrMessage , setNickErrMessage] = useState<string>('')
-const{setEditUser,editUser} = showMypageState()
-  const userInfo: {nickname:string } = JSON.parse(
+  const [nickErrMessage, setNickErrMessage] = useState<string>("");
+  const { setEditUser, editUser } = showMypageState();
+  const userInfo: { nickname: string } = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || `{}`
   );
   const { setShowNicknameNotiModal, showNicknameNotiModal } =
@@ -20,44 +25,30 @@ const{setEditUser,editUser} = showMypageState()
 
   const handleNicknameNotiModal = () => {
     if (showNicknameNotiModal) {
-
-      setShowNicknameNotiModal(false)
-
-      
+      setShowNicknameNotiModal(false);
+    } else {
+      setShowNicknameNotiModal(true);
     }
-    else{
-      setShowNicknameNotiModal(true)
-    }
-    
   };
 
   const handleModifyNickname = () => {
     //닉네임을 체크하고, 동일한 닉네임이 없다면 변경한다.
-    axios.patch(
-      `${process.env.REACT_APP_API_URI}/user/edit`,
-      {
-        nickname:nickname
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-      }
-    ).then((res) =>{
-      setShowNicknameNotiModal(false)
-      setEditUser(false)
-      navigate('/')
-      //userInfo storage에 닉네임 재할당
-
-    }).catch((err)=>{
-      //
-      setShowNicknameNotiModal(false)
-      console.log(err)
-
-    })
-  //변경하기를 누르는 순간 => 닉네임이 동일한지 체크해야된다.
-
+    instance
+      .patch(`/user/edit`, {
+        nickname: nickname,
+      })
+      .then((res) => {
+        setShowNicknameNotiModal(false);
+        setEditUser(false);
+        navigate("/");
+        //userInfo storage에 닉네임 재할당
+      })
+      .catch((err) => {
+        //
+        setShowNicknameNotiModal(false);
+        console.log(err);
+      });
+    //변경하기를 누르는 순간 => 닉네임이 동일한지 체크해야된다.
   };
   return (
     <div id="NicknameNotificationModal">
@@ -78,7 +69,12 @@ const{setEditUser,editUser} = showMypageState()
           >
             취소
           </button>
-          <button onClick={handleModifyNickname} className="NicknameNotificationModal_rightbt">확인</button>
+          <button
+            onClick={handleModifyNickname}
+            className="NicknameNotificationModal_rightbt"
+          >
+            확인
+          </button>
         </div>
       </div>
     </div>

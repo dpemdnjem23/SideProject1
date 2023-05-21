@@ -16,6 +16,7 @@ import {
   Routes,
   useNavigate,
 } from "react-router-dom";
+import { instance } from "App";
 // const s = document.getElemnetsByClassName()
 
 const Mypagebar = () => {
@@ -50,7 +51,7 @@ const Mypagebar = () => {
     mobilePassEdit,
     mobileUserEdit,
   } = mobileMypageUseStore();
-  
+
   const accessToken: string | null = localStorage.getItem("accessToken");
 
   const handleEditUser = () => {
@@ -62,18 +63,15 @@ const Mypagebar = () => {
       setSocialEditUser(false);
       setMobilePassEdit(false);
       setMobileUserEdit(false);
-      setMobileMenu(false)
-      setMobileMenuName('마이페이지')
-
-
-  
+      setMobileMenu(false);
+      setMobileMenuName("마이페이지");
     } else {
       setMobilePassEdit(false);
       setMobileUserEdit(true);
       setEditUser(true);
       setDelUser(false);
-      setMobileMenu(true)
-      setMobileMenuName('회원 정보 수정')
+      setMobileMenu(true);
+      setMobileMenuName("회원 정보 수정");
     }
   };
 
@@ -94,14 +92,8 @@ const Mypagebar = () => {
 
     //가장 적게남은 결제일 의 결제금액의 합을 보여준다
 
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/paymentmanage`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      })
+    instance
+      .get(`/wallet/paymentmanage`, {})
       .then((res) => {
         //start_date+cycle cycle은 cycle 주기마다 cycle을 더해야한다
         //그러면 today가 end_date(start+cycle)에 도달했을때
@@ -136,12 +128,8 @@ const Mypagebar = () => {
   useEffect(() => {
     paymentManagement();
 
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+    instance
+      .get(`/wallet/payment`, {})
       .then((res) => {
         const costSum = res.data.data.map((pre: { cost: number }) => {
           return pre.cost;
@@ -158,12 +146,8 @@ const Mypagebar = () => {
         console.log(err);
       });
 
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+    instance
+      .get(`/wallet/info`, {})
       .then((res) => {
         let sum = 0;
 
@@ -259,10 +243,20 @@ const Mypagebar = () => {
         <div className="Mypage_bar_bottom title">섭개더 관리</div>
         <div className=" Mypage_bar_bottom_section">
           <Link to="/noticeBoard">
-            <div className='Mypage_bar_bottom_section_text'>구독 모음 관리</div>
+            <div className="Mypage_bar_bottom_section_text">구독 모음 관리</div>
           </Link>
-          <div className='Mypage_bar_bottom_section_text' onClick={handleEditUser}>회원 정보 수정</div>
-          <div className='Mypage_bar_bottom_section_text' onClick={handleDelUser}>회원탈퇴</div>
+          <div
+            className="Mypage_bar_bottom_section_text"
+            onClick={handleEditUser}
+          >
+            회원 정보 수정
+          </div>
+          <div
+            className="Mypage_bar_bottom_section_text"
+            onClick={handleDelUser}
+          >
+            회원탈퇴
+          </div>
         </div>
       </div>
       <div></div>

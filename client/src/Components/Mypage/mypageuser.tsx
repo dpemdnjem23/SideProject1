@@ -35,22 +35,7 @@ const Mypageuser: React.FC<mypageuser> = ({ subLength }) => {
       });
   };
 
-  // const walletData = () => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URI}/wallet/info`, {
-  //       headers: {
-  //         authorization: `Bearer ${accessToken}`,
-  //       },
-  //     })
-  //     .then((res) => {
-
-  //       //  console.log(userinfo)
-  //     })
-  //     .catch((err) => {
-  //       navigate("/");
-  //       console.log(err);
-  //     });
-  // };
+ 
 
   useEffect(() => {
     // walletData();

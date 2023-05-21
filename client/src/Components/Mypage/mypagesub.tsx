@@ -10,6 +10,9 @@ type props = {
 const Mypagesub: React.FC<props> = ({ openRegist }) => {
   // const [showRegist, setShowRegist] = useState<boolean>(false);
 
+
+  
+
   return (
     <>
       {/* // <div className='Mypage_sub_section'> */}

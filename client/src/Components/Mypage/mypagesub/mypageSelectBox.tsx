@@ -14,6 +14,7 @@ type subInfo = {
 
 import "../../../css/components/MyPage/MypageSub/mypageSelectBox.css";
 import { registSubInfoState, showDropDownList } from "utils/state";
+import { instance } from "App";
 
 const MypageSelectBox = () => {
   // const {subName} = e.target as HTMLElement
@@ -83,14 +84,8 @@ const MypageSelectBox = () => {
   }, [inputValue]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
-      method: "get",
-      credentials:'include',
-
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
+    instance.get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
+    
     })
       .then((res: any) => {
         if (!res.ok) {

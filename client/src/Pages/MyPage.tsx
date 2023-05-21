@@ -29,6 +29,7 @@ import {
   mobileMypageUseStore,
   pageUseStore,
   mypageUserInfoState,
+  isSigninState,
 } from "utils/state";
 import axios from "axios";
 import MypageSocialEdit from "Components/Mypage/mypageSocialUserEdit";
@@ -104,6 +105,9 @@ const MyPage = () => {
     mypagePaymentManagementState();
   //mypage 화면에 도달할때마다
 
+  const { persistLogin, userSignin } = isSigninState();
+  const todays: number = Math.floor(Date.now() / 1000);
+
   const resetState = () => {
     setCycleCal({ year: "", day: "", month: "" });
     setDateCal(moment());
@@ -111,7 +115,7 @@ const MyPage = () => {
     setSubCash("");
   };
 
-  const calSubCost = () =>
+  const calSubCost = () => {
     instance
       .get(`/wallet/info`)
       .then((res) => {
@@ -132,8 +136,8 @@ const MyPage = () => {
       .catch((err) => {
         console.log(err);
       });
-
-  const calPaymentCost = () =>
+  };
+  const calPaymentCost = () => {
     instance
       .get(`/wallet/payment`)
       .then((res) => {
@@ -152,7 +156,7 @@ const MyPage = () => {
       .catch((err) => {
         console.log(err);
       });
-
+  };
   useEffect(() => {
     calSubCost();
     calPaymentCost();

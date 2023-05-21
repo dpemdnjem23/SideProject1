@@ -17,83 +17,98 @@ const AlarmPage = () => {
   //alarmModal이 존재할때만
 
   const accessToken: string | null = localStorage.getItem("accessToken");
+  const { userSignin, persistLogin } = isSigninState();
 
   const localstorageUserInfo = JSON.parse(
     localStorage.getItem("subgatherUserInfo") || "{}"
   );
 
-  axios
-    .post(
-      `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
-      {
-        id: localstorageUserInfo.id,
-      },
-      {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
+  const today: number = Math.floor(Date.now() / 1000);
+
+    //만료가 된경우
+
+ const refreshTokenLogOut=()=>{
+
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URI}/auth/issueaccess`,
+        {
+          id: localstorageUserInfo.id,
         },
-      }
-    )
-    .then((res) => {
-      console.log("일로와");
-      localStorage.setItem("accessToken", res.data.accessToken);
-      //         //res.data
-      localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data.data));
-
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${res.data.accessToken}`;
-
-      const { userSignin,persistLogin } = isSigninState()
-
-
-      // return axios.request(originalRequest);
-
-      //  axios.request(originalRequest);
-
-      // setTokenExpired(result.accessToken);
-      // return instance(originalRequest);
-
-      //다시 요청
-    })
-    .catch((err) => {
-      //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
-
-      axios
-        .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+        {
           headers: {
             authorization: `Bearer ${accessToken}`,
           },
-        })
+        }
+      )
+      .then((res) => {
+        console.log("일로와");
+        localStorage.setItem("accessToken", res.data.accessToken);
+        //         //res.data
+        localStorage.setItem(
+          "subgatherUserInfo",
+          JSON.stringify(res.data.data)
+        );
 
-        .then((res) => {
-          //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
-          // window.location.replace("/");
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res.data.accessToken}`;
 
-          persistLogin(false);
+        // return axios.request(originalRequest);
 
-          window.location.href = "/login";
+        //  axios.request(originalRequest);
 
-          window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
-          localStorage.clear();
-          isSigninState.persist.clearStorage();
+        // setTokenExpired(result.accessToken);
+        // return instance(originalRequest);
 
-          // cancelTokenSource.cancel();
-          // return Promise.reject(error);
-        })
-        .catch((err) => {
-          console.error(err);
+        //다시 요청
+      })
+      .catch((err) => {
+        //refreshToken이 만료가된경우 로그아웃을 한다 -> 만료
 
-          persistLogin(false);
-          // showMypageModalOn(false);
+        axios
+          .get(`${process.env.REACT_APP_API_URI}/auth/signout`, {
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+          })
 
-          localStorage.removeItem("accessToken");
-          isSigninState.persist.clearStorage();
-          localStorage.removeItem("subgatherUserInfo");
-        });
-    });
+          .then((res) => {
+            //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
+            // window.location.replace("/");
+
+            persistLogin(false);
+
+            window.location.href = "/login";
+
+            window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");
+            localStorage.clear();
+            isSigninState.persist.clearStorage();
+
+            // cancelTokenSource.cancel();
+            // return Promise.reject(error);
+          })
+          .catch((err) => {
+            console.error(err);
+
+            persistLogin(false);
+            // showMypageModalOn(false);
+
+            localStorage.removeItem("accessToken");
+            isSigninState.persist.clearStorage();
+            localStorage.removeItem("subgatherUserInfo");
+          });
+      });
+  }
+
 
   useEffect(() => {
+
+    if (localstorageUserInfo.accessExp < today) {
+
+    refreshTokenLogOut()
+    }
     // if (showAlarmModal) {
     console.log(showAlarmModal, pageScroll);
 
