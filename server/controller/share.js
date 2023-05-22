@@ -100,11 +100,30 @@ module.exports = {
 
   shareDelete:async (req,res) =>{
 
+
+
 //해당되는 게시판을 삭제한다.
 // 삭제 -> userId를 찾는다. 찾으려면 id를 이용해서 userInfo를 찾는다.
 // userId와 게시판 정보가 일치하는 데이터를 찾아 삭제한다.
 
+const userId = req.user.userId || req.user.id;
 
+
+try{
+
+
+const userInfo = await user.findOne({where:{id:userId}})
+//userInfo를 찾아서 share에서 찾는다.
+console.log(userInfo.id)
+//찾은id와 shareid를 이용해서 삭제한다. 생ㅇ성된 share를 특정하는방법
+
+const shareInfo = await share.findOne({where:{user_id:userInfo.id}})
+
+
+}
+catch(error){
+  return res.status(500).send(error)
+}
 
 
 

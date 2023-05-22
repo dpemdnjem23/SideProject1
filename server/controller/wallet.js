@@ -273,8 +273,7 @@ module.exports = {
     let varCycleYear = cycleYear;
     const userId = req.user.userId || req.user.id;
 
-    console.log(start_date);
-    console.log(userId, id, "널 너무나 사랑해서 ");
+  
 
     try {
       let calculateEnd_date;
