@@ -9,6 +9,7 @@ import { mobileMypageUseStore, showMypageState } from "utils/state";
 import "../css/pages/mobileMyPageMenu.css";
 import { userInfo } from "os";
 import MobileMyPageSocial from "Components/Mypage/mobileMyPage/mobileMyPageSocialEdit";
+import MobileMyPageUserWithdrawal from "Components/Mypage/mobileMyPage/mobileMyPageUserWithdrawal";
 
 const MobileMyPageMenu = () => {
   // const
@@ -31,6 +32,8 @@ const MobileMyPageMenu = () => {
     setMobileUserEdit,
     mobilePassEdit,
     mobileUserEdit,
+    setMobileWithdrawal,
+    mobileWithdrawal,
   } = mobileMypageUseStore();
 
   const userinfo = JSON.parse(
@@ -52,6 +55,8 @@ const MobileMyPageMenu = () => {
     const textContent: string | null = energy.textContent;
 
     setMobileMenuName(textContent);
+    setMobileWithdrawal(true);
+    setDelUser(true);
   };
 
   //editUser && userinfo.social_user
@@ -65,8 +70,11 @@ const MobileMyPageMenu = () => {
         {mobileUserEdit && userinfo.social_user === false ? (
           <MobileMyPageUserEdit></MobileMyPageUserEdit>
         ) : null}
+        {mobileWithdrawal ? (
+          <MobileMyPageUserWithdrawal></MobileMyPageUserWithdrawal>
+        ) : null}
 
-        {mobileUserEdit ? null : (
+        {mobileUserEdit||mobileWithdrawal ? null : (
           <div className="MobileMyPageMenu_section_manage">
             <div>섭개더 관리</div>
             <Link to="/noticeBoard">
@@ -84,7 +92,7 @@ const MobileMyPageMenu = () => {
               회원탈퇴
             </div>
           </div>
-        )} 
+        )}
       </div>
     </div>
   );

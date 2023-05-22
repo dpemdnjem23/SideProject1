@@ -1,3 +1,4 @@
+import { instance } from "App";
 import React, { useEffect, useState } from "react";
 import {
   mobileMypageUseStore,
@@ -46,25 +47,11 @@ const MobileMyPageSocial = () => {
       if (!regNickname.test(nickname)) {
         setNickErrMessage("닉네임을 제대로입력해주세요");
       } else {
-        fetch(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
-          method: "post",
-          body: JSON.stringify({
+        instance
+          .post(`/auth/nickcheck`, {
             nickname: nickname,
-          }),
-          headers: {
-            authorzation: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        })
-          .then((res: any) => {
-            if (!res.ok) {
-              // setShowNicknameNotiModal(false);
-              setNickErrMessage("동일한 닉네임이 존재합니다.");
-              throw new Error(res.status);
-            }
-            return res.text();
           })
+    
           .then((result) => {
             setMobileNoti(true);
             if (mobileNoti) {
@@ -73,6 +60,8 @@ const MobileMyPageSocial = () => {
             //   setShowNicknameNotiModal(true);
           })
           .catch((err) => {
+            setNickErrMessage("동일한 닉네임이 존재합니다.");
+
             console.log(err);
           });
       }

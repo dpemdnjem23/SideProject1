@@ -15,6 +15,8 @@ const MobileMyPage = () => {
     setMobileUserEdit,
     mobilePassEdit,
     mobileUserEdit,
+    setMobileWithdrawal,
+
   } = mobileMypageUseStore();
   const {
     setDelUser,
@@ -37,6 +39,7 @@ const MobileMyPage = () => {
       setEditUser(false)
       setPassEditUser(false)
       setSocialEditUser(false)
+      setMobileWithdrawal(false)
     }
   };
 

@@ -1,3 +1,4 @@
+import { instance } from "App";
 import React, { useEffect, useState } from "react";
 import {
   mobileMypageUseStore,
@@ -53,24 +54,11 @@ const MobileMyPageUserEdit = () => {
           setMobileNoti(false);
         }
       } else {
-        fetch(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
-          method: "post",
-          body: JSON.stringify({
+        instance
+          .post(`${process.env.REACT_APP_API_URI}/auth/nickcheck`, {
             nickname: nickname,
-          }),
-          headers: {
-            authorzation: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        })
-          .then((res: any) => {
-            if (!res.ok) {
-              setNickErrMessage("동일한 닉네임이 존재합니다.");
-              throw new Error(res.status);
-            }
-            return res.text();
           })
+
           .then((result) => {
             setMobileNoti(true);
             if (mobileNoti) {
@@ -78,7 +66,7 @@ const MobileMyPageUserEdit = () => {
             }
           })
           .catch((err) => {
-            console.log(err);
+            setNickErrMessage("동일한 닉네임이 존재합니다.");
           });
       }
     }
@@ -88,40 +76,13 @@ const MobileMyPageUserEdit = () => {
     if (!password) {
       setPassErrMessage("비밀번호를 입력해주세요");
     } else {
-      // const regPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-
-      // if (!regPassword.test(password)) {
-      //   setPassErrMessage(
-      //     "비밀번호를 8~16자 소문자, 숫자, 특수문자 혼합해주세요"
-      //   );
-
-      // else{
-
-      fetch(`${process.env.REACT_APP_API_URI}/auth/passcheck`, {
-        method: "post",
-        body: JSON.stringify({
+      instance
+        .post(`${process.env.REACT_APP_API_URI}/auth/passcheck`, {
           password: password,
-        }),
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            setPassErrMessage("비밀번호가 일치하지 않습니다.");
-            if (mobilePassEdit) {
-              setMobilePassEdit(false);
-            }
-
-            // setShowNicknameNotiModal(false);
-            throw new Error(res.status);
-          }
-          return res.text();
         })
+
         .then((result) => {
-            setEditUser(true)
+          setEditUser(true);
           setPassEditUser(false);
           setEditUser(false);
           setMobilePassEdit(true);
@@ -132,6 +93,11 @@ const MobileMyPageUserEdit = () => {
           // setShowNicknameNotiModal(true);
         })
         .catch((err) => {
+          setPassErrMessage("비밀번호가 일치하지 않습니다.");
+          if (mobilePassEdit) {
+            setMobilePassEdit(false);
+          }
+
           console.log(err);
         });
     }

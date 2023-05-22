@@ -15,12 +15,10 @@ const {
   checkRefreshToken,
   tokenExp,
 } = require("../utils/jwt");
-const { off } = require("process");
 
 module.exports = {
   //페이지 네이션,
 
-  shareDelete: async (req, res) => {},
 
   registerShare: async (req, res) => {
     const { title, list_sub, description } = req.body;
@@ -99,4 +97,22 @@ module.exports = {
     //선택한 share의 인포를 보여준다.
     //만약, 나의 share라면 수정, 삭제 가 가능하도록 한다
   },
+
+  shareDelete:async (req,res) =>{
+
+//해당되는 게시판을 삭제한다.
+// 삭제 -> userId를 찾는다. 찾으려면 id를 이용해서 userInfo를 찾는다.
+// userId와 게시판 정보가 일치하는 데이터를 찾아 삭제한다.
+
+
+
+
+
+
+  },
+  shareEdit: async(req,res) =>{
+
+
+  }
 };
+

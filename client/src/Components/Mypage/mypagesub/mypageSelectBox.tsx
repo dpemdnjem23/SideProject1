@@ -42,11 +42,11 @@ const MypageSelectBox = () => {
     // const selectValue =
     setSelected(eText);
     setDropDownOpen(false);
-  }
+  };
 
   const openToggling = () => {
     setDropDownOpen(true);
-    
+
     if (dropDownOpen) {
       setDropDownOpen(false);
     }
@@ -84,21 +84,10 @@ const MypageSelectBox = () => {
   }, [inputValue]);
 
   useEffect(() => {
-    instance.get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {
-    
-    })
-      .then((res: any) => {
-        if (!res.ok) {
-          // navigate("/");
+    instance
+      .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {})
 
-          throw new Error(res.status);
-        }
-        // console.log(res.json())
-
-        return res.json();
-      })
       .then((result) => {
-        console.log(result.data);
         setNewArr(result.data);
         setUseSubscribe(result.data);
       })
@@ -138,7 +127,6 @@ const MypageSelectBox = () => {
       ) : null}
     </div>
   );
-
- };
+};
 
 export default MypageSelectBox;

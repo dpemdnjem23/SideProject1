@@ -221,6 +221,9 @@ type mypageMenu = {
   mobileMenu: boolean;
 
   setMobileMenu: (input: boolean) => void;
+
+  mobileWithdrawal:boolean,
+  setMobileWithdrawal:(input:boolean) =>void;
 };
 
 type mediaQuery = {
@@ -440,6 +443,8 @@ export const mobileMypageUseStore = create<mypageMenu>((set) => ({
   setMobilePassEdit: (input) => set({ mobilePassEdit: input }),
   mobileNoti: false,
   setMobileNoti: (input) => set({ mobileNoti: input }),
+  mobileWithdrawal:false,
+  setMobileWithdrawal:(input) => set({mobileWithdrawal:input}),
 
   mobileMenuName: "마이페이지",
   setMobileMenuName: (input) => set({ mobileMenuName: input }),

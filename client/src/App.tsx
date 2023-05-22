@@ -44,7 +44,7 @@ import ErrModal from "Components/Modal/errorModal";
 import CallbackPage from "Pages/CallbackPage";
 import { stringify } from "querystring";
 import Loading from "Components/Common/loading";
-import NoticeBoardManage from "Pages/NoticeBoardManage";
+import NoticeBoardManage from "Pages/BoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";

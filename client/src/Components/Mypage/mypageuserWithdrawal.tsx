@@ -1,3 +1,4 @@
+import { instance } from "App";
 import axios from "axios";
 import React from "react";
 import { NavigateFunction, useNavigate } from "react-router";
@@ -13,7 +14,7 @@ const MypageWithdrwal = () => {
   );
 
   const handleUserWithdrawal = () => {
-    axios.delete(`${process.env.REACT_APP_API_URI}/user/withdrawal`, {
+    instance.delete(`/user/withdrawal`, {
       data: {
         id: localstorageUserInfo.id,
       },

@@ -64,26 +64,11 @@ const MypageEdit = () => {
 
       // else{
 
-      fetch(`${process.env.REACT_APP_API_URI}/auth/passcheck`, {
-        method: "post",
-        body: JSON.stringify({
+      instance
+        .post(`${process.env.REACT_APP_API_URI}/auth/passcheck`, {
           password: password,
-        }),
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            setPassErrMessage("비밀번호가 일치하지 않습니다.");
-
-            // setShowNicknameNotiModal(false);
-            throw new Error(res.status);
-          }
-          return res.text();
         })
+
         .then((result) => {
           setPassEditUser(true);
           setEditUser(false);

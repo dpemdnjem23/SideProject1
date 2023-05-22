@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 import "../../../css/components/MyPage/MobileMyPage/mobileMyPageNotification.css";
+import { instance } from "App";
 const MobileMyPageNotification = () => {
   const { nickname } = mypageUserInfoState();
 
@@ -32,19 +33,10 @@ const MobileMyPageNotification = () => {
 
   const handleModifyNickname = () => {
     //닉네임을 체크하고, 동일한 닉네임이 없다면 변경한다.
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/user/edit`,
-        {
-          nickname: nickname,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+    instance
+      .patch(`/user/edit`, {
+        nickname: nickname,
+      })
       .then((res) => {
         setMobileNoti(false);
         setEditUser(false);
