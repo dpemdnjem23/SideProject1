@@ -61,6 +61,7 @@
   padding: 10px;
   margin-bottom: 20px;
 }
+
 .CardModal_section_top_section {
   display: flex;
   flex-direction: row;
@@ -88,7 +89,40 @@
 .CardModal_section_top_nick {
   border-bottom: 1px solid #eee;
   position: static;
+  display: flex;
+  justify-content: space-between;
 }
+
+.CardModal_section_top_btsec > button {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding-left: 5px;
+  width: 50px;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.CardModal_section_top_btsec > a>button {
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 50px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.CardModal_section_top_btsec > button:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(100, 96, 96);
+}
+
+.CardModal_section_top_btsec > a>button:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(100, 96, 96);
+}
+
+
+
 .CardModal_section_top_nick > div {
   display: inline-block;
   padding: 6px 11px;

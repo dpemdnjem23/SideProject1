@@ -26,7 +26,6 @@ const ShareCard = () => {
   };
 
   useEffect(() => {
-
     //에러로 안가네? 에러로 보내는 법
     setLoading(true);
     instance
@@ -34,7 +33,6 @@ const ShareCard = () => {
         params: { page: page },
       })
       .then((res) => {
-        console.log('실행되었다')
         setShareInfo(res.data.shareInfo);
         setLoading(false);
       })

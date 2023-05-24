@@ -48,6 +48,7 @@ import NoticeBoardManage from "Pages/BoardManage";
 import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
+import ShareEditPage from "Pages/Mypage/ShareEditPage";
 
 // import useAxiosInterceptors from "utils/Intercepts";
 // import { requestInstance, responseInstance } from "utils/Intercepts";
@@ -201,9 +202,7 @@ const App = () => {
     }
   );
 
-
-  if(localstorageUserInfo.accessExp < today){
-
+  if (localstorageUserInfo.accessExp < today) {
     //만료가 된경우
   }
 
@@ -373,6 +372,10 @@ const App = () => {
         <Route
           path="/calendarselect"
           element={<CalendarSelect></CalendarSelect>}
+        ></Route>
+        <Route
+          path="/shareedit"
+          element={<ShareEditPage></ShareEditPage>}
         ></Route>
 
         <Route path="/" element={<MainPage></MainPage>}></Route>

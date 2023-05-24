@@ -1,36 +1,56 @@
-import React,{useEffect} from "react";
+import { instance } from "App";
+import React, { useEffect } from "react";
 import { shareCarduseStore } from "utils/state";
+import { Link } from "react-router-dom";
 
 import "../../css/common/modal/cardModal.css";
 const CardModal = () => {
-  const { shareInfo, cardIndex, clickModalNum, setCardModal,cardModal } =
+  const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
     shareCarduseStore();
 
-
+  const userinfo = JSON.parse(
+    localStorage.getItem("subgatherUserInfo") || "{}"
+  );
 
   const closeCardModal = () => {
     setCardModal(false);
-
   };
 
+  console.log(shareInfo[clickModalNum].user_id);
 
+  const handleDelete = () => {
+    instance
+      .delete("/share/delete", {
+        data: {
+          id: cardIndex,
+        },
+      })
+      .then((res) => {
+        setCardModal(false);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-
+  const handleEdit = () => {
+    //수정으로 옮기고 옮기는 대신 데이터를
+    //그대로 갖다 놓는다.
+  };
   //모바일 일때만 적용한다.
   useEffect(() => {
     // 모달 열릴 때 body에 overflow: hidden 스타일 추가
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
     // 모달 닫힐 때 body에 overflow: auto 스타일 복원
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [cardModal]);
 
-
   return (
-    <div     onClick={closeCardModal}
-     id="CardModal">
+    <div onClick={closeCardModal} id="CardModal">
       <div onClick={(e) => e.stopPropagation()} className="CardModal_section">
         <div className="CardModal_section_Xbutton">
           <button onClick={() => setCardModal(false)}>X</button>
@@ -58,6 +78,16 @@ const CardModal = () => {
 
           <div className="CardModal_section_top_nick">
             <div>{shareInfo[clickModalNum].user.nickname}</div>
+            {shareInfo[clickModalNum].user_id === userinfo.id ? (
+              <div className="CardModal_section_top_btsec">
+                <button onClick={handleDelete}>삭 제</button>
+                {/* <button> */}
+                <Link to="/shareedit"><button>
+                수 정
+                  </button></Link>
+                {/* </button> */}
+              </div>
+            ) : null}
           </div>
         </div>
         <div className="CardModal_section_center">

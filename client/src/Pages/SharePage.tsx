@@ -88,7 +88,6 @@ const SharePage = () => {
             .then((res) => {
               //리프레쉬 토큰이 없는경우 로그아웃을 해야한다.
               // window.location.replace("/");
-              console.log("먼일이래");
 
               persistLogin(false);
               window.alert("로그인이 만료되었습니다. 다시 로그인해주세요");

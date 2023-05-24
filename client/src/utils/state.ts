@@ -170,6 +170,7 @@ type shareBoardState = {
 type shareCard = {
   id: number;
   title: string;
+  user_id:number;
   description: string;
   createdAt: string;
   list_sub: { list_sub: [string] };

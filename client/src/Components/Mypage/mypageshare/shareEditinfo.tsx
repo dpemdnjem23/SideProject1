@@ -1,10 +1,10 @@
 import { instance } from "App";
 import React, { useEffect, useState } from "react";
-import { shareRegisteruseStore, useWalletStore } from "utils/state";
+import { shareCarduseStore, shareRegisteruseStore, useWalletStore } from "utils/state";
 
 import "../../../css/components/MyPage/MypageShare/shareregistInfo.css";
 
-const ShareRegistInfo = () => {
+const ShareEditinfo = () => {
   //구독 정보 를 불러모으는 버튼이 있다.
   // 버튼을 누를시 구독정보를 불러오고 불러오는동안 대기화면 표시
   // 구독정보를 불러오고 싶지 않을수 있으니 버튼을 누르지 않으면 그냥 글만 쓸수 있다
@@ -13,7 +13,8 @@ const ShareRegistInfo = () => {
   const [button, setButton] = useState<boolean>(true);
   const { walletInfo, setWalletInfo } = useWalletStore();
   const {setUpdateWallet,updateWallet} = shareRegisteruseStore()
-
+  const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
+  shareCarduseStore()
   // const [newArr, setNewArr] = useState<subInfo[]>([]);
 
 
@@ -99,4 +100,4 @@ const ShareRegistInfo = () => {
   );
 };
 
-export default ShareRegistInfo;
+export default ShareEditinfo
