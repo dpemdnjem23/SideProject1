@@ -13,6 +13,8 @@ import {
 import { useNavigate } from "react-router";
 import { instance } from "App";
 import ShareEditinfo from "Components/Mypage/mypageshare/shareEditinfo";
+import ShareEditBoard from "Components/Mypage/mypageshare/shareEditBoard";
+
 const ShareEditPage = () => {
   const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
   const { shareBoard, shareTitle } = shareBoarduseStore();
@@ -116,8 +118,7 @@ const ShareEditPage = () => {
   return (
     <div id="ShareRegisterPage">
         <ShareEditinfo />
-      <ShareRegistBoard />
-
+<ShareEditBoard></ShareEditBoard>
       <div className="SharRegisterPage_bt">
         <CancellationButton />
 

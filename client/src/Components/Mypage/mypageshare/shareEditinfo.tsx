@@ -65,6 +65,12 @@ const ShareEditinfo = () => {
     //다시클릭시 원상복구
   };
 
+//   const handleChange =() =>{
+
+//   }
+
+
+console.log(shareInfo[clickModalNum])
 
 
   return (
