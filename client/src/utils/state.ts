@@ -3,6 +3,10 @@ import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
 
+
+
+
+
 export const accessToken = localStorage.getItem("accessToken") || null;
 
 type isSigninState = {
@@ -34,8 +38,8 @@ type showMypageState = {
 };
 type registSubInfoState = {
   selected: string | null;
-  walletInfoAdd:boolean;
-  setWalletInfoAdd:(input:boolean) =>void
+  walletInfoAdd: boolean;
+  setWalletInfoAdd: (input: boolean) => void;
   setSelected: (input: string | null) => void;
   subCash: string;
   setSubCash: (input: string) => void;
@@ -170,7 +174,7 @@ type shareBoardState = {
 type shareCard = {
   id: number;
   title: string;
-  user_id:number;
+  user_id: number;
   description: string;
   createdAt: string;
   list_sub: { list_sub: [string] };
@@ -223,18 +227,14 @@ type mypageMenu = {
 
   setMobileMenu: (input: boolean) => void;
 
-  mobileWithdrawal:boolean,
-  setMobileWithdrawal:(input:boolean) =>void;
+  mobileWithdrawal: boolean;
+  setMobileWithdrawal: (input: boolean) => void;
 };
 
 type mediaQuery = {
   setPageMatch: (input: boolean) => void;
   pageMatch: boolean;
 };
-
-
-
-
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -272,9 +272,9 @@ export const showDropDownList = create<dropDownListState>()((set) => ({
 
 export const registSubInfoState = create<registSubInfoState>()((set) => ({
   selected: "",
-  walletInfoAdd:false,
-  setWalletInfoAdd:(input) =>set({walletInfoAdd:input}),
-  
+  walletInfoAdd: false,
+  setWalletInfoAdd: (input) => set({ walletInfoAdd: input }),
+
   setSelected: (input) => set({ selected: input }),
   subCash: "",
   setSubCash: (input) => set({ subCash: input }),
@@ -445,18 +445,19 @@ export const mobileMypageUseStore = create<mypageMenu>((set) => ({
   setMobilePassEdit: (input) => set({ mobilePassEdit: input }),
   mobileNoti: false,
   setMobileNoti: (input) => set({ mobileNoti: input }),
-  mobileWithdrawal:false,
-  setMobileWithdrawal:(input) => set({mobileWithdrawal:input}),
+  mobileWithdrawal: false,
+  setMobileWithdrawal: (input) => set({ mobileWithdrawal: input }),
 
   mobileMenuName: "마이페이지",
   setMobileMenuName: (input) => set({ mobileMenuName: input }),
   mobileMenu: false,
   setMobileMenu: (input) => set({ mobileMenu: input }),
 }));
-export const pageUseStore= create<mediaQuery>((set) => ({
+export const pageUseStore = create<mediaQuery>((set) => ({
   pageMatch: false,
   setPageMatch: (input) => set({ pageMatch: input }),
 }));
+
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{

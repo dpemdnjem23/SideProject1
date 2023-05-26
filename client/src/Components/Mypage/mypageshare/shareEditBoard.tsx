@@ -8,25 +8,29 @@ import React, {
 import { shareBoarduseStore, shareCarduseStore } from "utils/state";
 import create from "zustand";
 
+type shareEditBoardState = {
+    shareEditTitle: string;
+    setShareEditTitle: (input: string) => void;
+    shareEditBoard: string;
+    setShareEditBoard: (input: string) => void;
+    
+  };
+  
+  
 import "../../../css/components/MyPage/MypageShare/shareregistBoard.css";
 const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
 shareCarduseStore();
 
-type shareEditState = {
-  shareEditTitle: string;
-  setShareEditTitle: (input: string) => void;
-  shareEditBoard: string;
-  setShareEditBoard: (input: string) => void;
-};
 
-export const pageUseStore = create<shareEditState>((set) => ({
+export const shareEditBoardUseStore = create<shareEditBoardState>((set) => ({
+    shareEditTitle: shareInfo[clickModalNum].title,
+    setShareEditTitle:(input:string) => set({shareEditTitle:input}),
+    shareEditBoard: shareInfo[clickModalNum].description,
+    setShareEditBoard:(input:string)=>set({shareEditBoard:input})
+  }));
+  
  
 
-    shareEditTitle:'',
-    shareEditBoard:shareInfo[clickModalNum].description
-
-
-}));
 
 const ShareEditBoard = () => {
   //데이터를 가져온다.
@@ -37,7 +41,6 @@ const ShareEditBoard = () => {
   //   let maxLength = 100
   // }
 
- 
 
   const [data, setData] = useState(shareInfo[clickModalNum].description);
 
