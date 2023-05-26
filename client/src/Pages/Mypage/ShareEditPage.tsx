@@ -94,7 +94,7 @@ const ShareEditPage = () => {
 
   const handleShareEdit = () => {
     instance
-      .patch(`${process.env.REACT_APP_API_URI}/share/register`, {
+      .patch(`/share/register`, {
         description: shareBoard,
         title: shareTitle,
         list_sub: updateWallet,
@@ -117,8 +117,8 @@ const ShareEditPage = () => {
 
   return (
     <div id="ShareRegisterPage">
-        <ShareEditinfo />
-<ShareEditBoard></ShareEditBoard>
+      <ShareEditinfo />
+      <ShareEditBoard />
       <div className="SharRegisterPage_bt">
         <CancellationButton />
 

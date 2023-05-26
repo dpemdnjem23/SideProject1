@@ -1,7 +1,32 @@
-import React, { ReactElement, TextareaHTMLAttributes } from "react";
+import { instance } from "App";
+import React, {
+  ReactElement,
+  TextareaHTMLAttributes,
+  useState,
+  useEffect,
+} from "react";
 import { shareBoarduseStore, shareCarduseStore } from "utils/state";
+import create from "zustand";
 
 import "../../../css/components/MyPage/MypageShare/shareregistBoard.css";
+const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
+shareCarduseStore();
+
+type shareEditState = {
+  shareEditTitle: string;
+  setShareEditTitle: (input: string) => void;
+  shareEditBoard: string;
+  setShareEditBoard: (input: string) => void;
+};
+
+export const pageUseStore = create<shareEditState>((set) => ({
+ 
+
+    shareEditTitle:'',
+    shareEditBoard:shareInfo[clickModalNum].description
+
+
+}));
 
 const ShareEditBoard = () => {
   //데이터를 가져온다.
@@ -12,9 +37,21 @@ const ShareEditBoard = () => {
   //   let maxLength = 100
   // }
 
-  const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
-  shareCarduseStore()
+ 
 
+  const [data, setData] = useState(shareInfo[clickModalNum].description);
+
+  useEffect(() => {
+    instance
+      .get(`/share/info`, {})
+
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setShareTitle(e.target.value);
   };
@@ -38,7 +75,6 @@ const ShareEditBoard = () => {
           className="shareRegistTitle"
           onChange={handleTitle}
           value={shareInfo[clickModalNum].title}
-          
         ></textarea>
         <textarea
           maxLength={200}
@@ -46,7 +82,6 @@ const ShareEditBoard = () => {
           name="board"
           onChange={handleBoard}
           value={shareInfo[clickModalNum].description}
-
         ></textarea>
       </div>
     </div>
