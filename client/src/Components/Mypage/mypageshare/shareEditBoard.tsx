@@ -7,60 +7,50 @@ import React, {
 } from "react";
 import { shareBoarduseStore, shareCarduseStore } from "utils/state";
 import create from "zustand";
-
+// const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
+//   shareCarduseStore();
 type shareEditBoardState = {
-    shareEditTitle: string;
-    setShareEditTitle: (input: string) => void;
-    shareEditBoard: string;
-    setShareEditBoard: (input: string) => void;
-    
-  };
-  
-  
-import "../../../css/components/MyPage/MypageShare/shareregistBoard.css";
-const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
-shareCarduseStore();
-
+  shareEditTitle: string;
+  setShareEditTitle: (input: string) => void;
+  shareEditBoard: string;
+  setShareEditBoard: (input: string) => void;
+};
 
 export const shareEditBoardUseStore = create<shareEditBoardState>((set) => ({
-    shareEditTitle: shareInfo[clickModalNum].title,
-    setShareEditTitle:(input:string) => set({shareEditTitle:input}),
-    shareEditBoard: shareInfo[clickModalNum].description,
-    setShareEditBoard:(input:string)=>set({shareEditBoard:input})
-  }));
-  
- 
+  shareEditTitle: "",
+  setShareEditTitle: (input: string) => set({ shareEditTitle: input }),
+  shareEditBoard: "",
+  setShareEditBoard: (input: string) => set({ shareEditBoard: input }),
+}));
 
+import "../../../css/components/MyPage/MypageShare/shareregistBoard.css";
 
 const ShareEditBoard = () => {
   //데이터를 가져온다.
 
-  const { setShareBoard, setShareTitle } = shareBoarduseStore();
+  const share = JSON.parse(localStorage.getItem("share") || "{}");
 
+  const {
+    setShareEditBoard,
+    setShareEditTitle,
+    shareEditBoard,
+    shareEditTitle,
+  } = shareEditBoardUseStore();
   // const onKeyPress = (area) =>{
   //   let maxLength = 100
   // }
 
-
-  const [data, setData] = useState(shareInfo[clickModalNum].description);
-
   useEffect(() => {
-    instance
-      .get(`/share/info`, {})
-
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setShareEditBoard(share.description);
+    setShareEditTitle(share.title);
   }, []);
+
   const handleTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setShareTitle(e.target.value);
+    setShareEditTitle(e.target.value);
   };
 
   const handleBoard = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setShareBoard(e.target.value);
+    setShareEditBoard(e.target.value);
   };
 
   // const handle
@@ -77,14 +67,14 @@ const ShareEditBoard = () => {
           placeholder="제목(20자)"
           className="shareRegistTitle"
           onChange={handleTitle}
-          value={shareInfo[clickModalNum].title}
+          value={shareEditTitle}
         ></textarea>
         <textarea
           maxLength={200}
           placeholder="왜 공유 하고싶은지 간단하게 적어주세요!(200자)"
           name="board"
           onChange={handleBoard}
-          value={shareInfo[clickModalNum].description}
+          value={shareEditBoard}
         ></textarea>
       </div>
     </div>

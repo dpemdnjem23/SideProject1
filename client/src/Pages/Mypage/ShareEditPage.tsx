@@ -10,15 +10,25 @@ import {
   shareBoarduseStore,
   shareRegisteruseStore,
 } from "utils/state";
+
 import { useNavigate } from "react-router";
 import { instance } from "App";
 import ShareEditinfo from "Components/Mypage/mypageshare/shareEditinfo";
-import ShareEditBoard from "Components/Mypage/mypageshare/shareEditBoard";
+import ShareEditBoard, {
+  shareEditBoardUseStore,
+} from "Components/Mypage/mypageshare/shareEditBoard";
 
 const ShareEditPage = () => {
   const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
   const { shareBoard, shareTitle } = shareBoarduseStore();
   const accessToken: string | null = localStorage.getItem("accessToken");
+
+  const {
+    setShareEditBoard,
+    shareEditBoard,
+    shareEditTitle,
+    setShareEditTitle,
+  } = shareEditBoardUseStore();
 
   // useEffect(()=>{
 
@@ -95,8 +105,8 @@ const ShareEditPage = () => {
   const handleShareEdit = () => {
     instance
       .patch(`/share/register`, {
-        description: shareBoard,
-        title: shareTitle,
+        description: shareEditBoard,
+        title: shareEditTitle,
         list_sub: updateWallet,
       })
 
@@ -110,6 +120,7 @@ const ShareEditPage = () => {
         console.log(err);
       });
   };
+
 
   // })
 

@@ -1,6 +1,10 @@
 import { instance } from "App";
 import React, { useEffect, useState } from "react";
-import { shareCarduseStore, shareRegisteruseStore, useWalletStore } from "utils/state";
+import {
+  shareCarduseStore,
+  shareRegisteruseStore,
+  useWalletStore,
+} from "utils/state";
 
 import "../../../css/components/MyPage/MypageShare/shareregistInfo.css";
 
@@ -12,19 +16,18 @@ const ShareEditinfo = () => {
 
   const [button, setButton] = useState<boolean>(true);
   const { walletInfo, setWalletInfo } = useWalletStore();
-  const {setUpdateWallet,updateWallet} = shareRegisteruseStore()
+  const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
   const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
-  shareCarduseStore()
+    shareCarduseStore();
   // const [newArr, setNewArr] = useState<subInfo[]>([]);
 
+  const share = JSON.parse(localStorage.getItem("share") || "{}");
 
-//구독 공유 접속하면 구독 목록을 불러올 데이터를 생성
+  //구독 공유 접속하면 구독 목록을 불러올 데이터를 생성
   useEffect(() => {
     instance
       .get(`/wallet/info`)
       .then((res) => {
-     
-
         setWalletInfo(res.data.data);
       })
       .catch((err) => {
@@ -32,17 +35,13 @@ const ShareEditinfo = () => {
       });
   }, []);
 
-
   //
-
-
 
   const importData = () => {
     setButton(false);
     setUpdateWallet(walletInfo);
-    
-    console.log(walletInfo)
 
+    console.log(walletInfo);
   };
 
   const deleteData = () => {
@@ -54,9 +53,6 @@ const ShareEditinfo = () => {
 
     const chooseList = updateWallet.filter((item) => {
       return item.id !== e;
-
-
-    
     });
 
     setUpdateWallet([...chooseList]);
@@ -65,13 +61,9 @@ const ShareEditinfo = () => {
     //다시클릭시 원상복구
   };
 
-//   const handleChange =() =>{
+  //   const handleChange =() =>{
 
-//   }
-
-
-console.log(shareInfo[clickModalNum])
-
+  //   }
 
   return (
     <div className="ShareRegistInfo_section">
@@ -106,4 +98,4 @@ console.log(shareInfo[clickModalNum])
   );
 };
 
-export default ShareEditinfo
+export default ShareEditinfo;

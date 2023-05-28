@@ -16,8 +16,6 @@ const CardModal = () => {
     setCardModal(false);
   };
 
-  console.log(shareInfo[clickModalNum].user_id);
-
   const handleDelete = () => {
     instance
       .delete("/share/delete", {
@@ -37,6 +35,7 @@ const CardModal = () => {
   const handleEdit = () => {
     //수정으로 옮기고 옮기는 대신 데이터를
     //그대로 갖다 놓는다.
+    localStorage.setItem("share", JSON.stringify(shareInfo[clickModalNum]));
   };
   //모바일 일때만 적용한다.
   useEffect(() => {
@@ -82,9 +81,9 @@ const CardModal = () => {
               <div className="CardModal_section_top_btsec">
                 <button onClick={handleDelete}>삭 제</button>
                 {/* <button> */}
-                <Link to="/shareedit"><button>
-                수 정
-                  </button></Link>
+                <Link onClick={handleEdit} to="/shareedit">
+                  <button>수 정</button>
+                </Link>
                 {/* </button> */}
               </div>
             ) : null}
