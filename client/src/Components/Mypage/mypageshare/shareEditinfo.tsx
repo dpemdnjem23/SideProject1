@@ -6,6 +6,11 @@ import {
   useWalletStore,
 } from "utils/state";
 
+interface Item {
+  id: number;
+  list_sub: string;
+}
+
 import "../../../css/components/MyPage/MypageShare/shareregistInfo.css";
 
 const ShareEditinfo = () => {
@@ -61,6 +66,8 @@ const ShareEditinfo = () => {
     //다시클릭시 원상복구
   };
 
+  console.log(share.list_sub, updateWallet);
+
   //   const handleChange =() =>{
 
   //   }
@@ -73,6 +80,10 @@ const ShareEditinfo = () => {
         <p className="ShareRegistInfo_section_title2">
           구독 공유를 위해 나의 구독 정보를 모으고, 글을 남겨주세요!
         </p>
+        <div>
+          *수정사항에서 구독 불러오기를 사용하면 초기화가 됩니다.* 
+          <br></br>기존의 구독을 사용하고자
+        </div>
       </div>
 
       <div className="ShareRegistInfo_section_sub2">
@@ -91,6 +102,17 @@ const ShareEditinfo = () => {
             })}
           </div>
         )}
+
+        <div>
+          {share.list_sub.list_sub.map((el:string[], index: number) => {
+            console.log(el);
+            return (
+              <div key={index}>
+                <span>{el}</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {button ? null : <button onClick={deleteData}>되돌아 가기</button>}

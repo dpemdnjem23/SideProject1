@@ -9,6 +9,9 @@ import { devtools, persist } from "zustand/middleware";
 
 export const accessToken = localStorage.getItem("accessToken") || null;
 
+
+
+
 type isSigninState = {
   userSignin: boolean;
   persistLogin: (input: boolean) => void;
@@ -235,6 +238,15 @@ type mediaQuery = {
   setPageMatch: (input: boolean) => void;
   pageMatch: boolean;
 };
+
+type shareEditState = {
+  shareEditTitle: string;
+  setShareEditTitle: (input: string) => void;
+  shareEditBoard: string;
+  setShareEditBoard: (input: string) => void;
+  shareEditWalletUpdate
+};
+
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -457,6 +469,14 @@ export const pageUseStore = create<mediaQuery>((set) => ({
   pageMatch: false,
   setPageMatch: (input) => set({ pageMatch: input }),
 }));
+
+export const shareEditUseStore = create<shareEditState>((set) => ({
+  shareEditTitle: "",
+  setShareEditTitle: (input: string) => set({ shareEditTitle: input }),
+  shareEditBoard: "",
+  setShareEditBoard: (input: string) => set({ shareEditBoard: input }),
+}));
+
 
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({

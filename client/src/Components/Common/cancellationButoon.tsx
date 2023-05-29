@@ -13,6 +13,7 @@ const CancellationButton = () => {
   const backToMypage = () => {
     if (pathname === "/shareedit") {
       navigate("/share");
+      localStorage.removeItem('share')
     } else {
       navigate("/mypage");
     }
