@@ -244,7 +244,7 @@ type shareEditState = {
   setShareEditTitle: (input: string) => void;
   shareEditBoard: string;
   setShareEditBoard: (input: string) => void;
-  shareEditWalletUpdate
+  // shareEditWalletUpdate
 };
 
 export const isSigninState = create<isSigninState>()(

@@ -5,11 +5,23 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import {  shareCarduseStore, shareEditUseStore } from "utils/state";
+import { shareBoarduseStore, shareCarduseStore } from "utils/state";
 import create from "zustand";
 // const { shareInfo, cardIndex, clickModalNum, setCardModal, cardModal } =
 //   shareCarduseStore();
+type shareEditBoardState = {
+  shareEditTitle: string;
+  setShareEditTitle: (input: string) => void;
+  shareEditBoard: string;
+  setShareEditBoard: (input: string) => void;
+};
 
+export const shareEditBoardUseStore = create<shareEditBoardState>((set) => ({
+  shareEditTitle: "",
+  setShareEditTitle: (input: string) => set({ shareEditTitle: input }),
+  shareEditBoard: "",
+  setShareEditBoard: (input: string) => set({ shareEditBoard: input }),
+}));
 
 import "../../../css/components/MyPage/MypageShare/shareregistBoard.css";
 
@@ -24,7 +36,7 @@ const ShareEditBoard = () => {
     shareEditBoard,
     shareEditTitle,
     
-  } = shareEditUseStore()
+  } = shareEditBoardUseStore();
   // const onKeyPress = (area) =>{
   //   let maxLength = 100
   // }

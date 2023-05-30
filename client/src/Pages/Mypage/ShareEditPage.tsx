@@ -8,15 +8,15 @@ import "../../css/pages/ShareRegisterPage.css";
 import {
   isSigninState,
   shareBoarduseStore,
+  shareEditUseStore,
   shareRegisteruseStore,
 } from "utils/state";
 
 import { useNavigate } from "react-router";
 import { instance } from "App";
 import ShareEditinfo from "Components/Mypage/mypageshare/shareEditinfo";
-import ShareEditBoard, {
-  shareEditBoardUseStore,
-} from "Components/Mypage/mypageshare/shareEditBoard";
+import ShareEditBoard
+ from "Components/Mypage/mypageshare/shareEditBoard";
 
 const ShareEditPage = () => {
   const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
@@ -28,7 +28,7 @@ const ShareEditPage = () => {
     shareEditBoard,
     shareEditTitle,
     setShareEditTitle,
-  } = shareEditBoardUseStore();
+  } = shareEditUseStore()
 
   // useEffect(()=>{
 

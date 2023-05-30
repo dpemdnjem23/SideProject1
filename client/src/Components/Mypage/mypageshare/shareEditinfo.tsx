@@ -11,7 +11,7 @@ interface Item {
   list_sub: string;
 }
 
-import "../../../css/components/MyPage/MypageShare/shareregistInfo.css";
+import "../../../css/components/MyPage/MypageShare/shareEditInfo.css";
 
 const ShareEditinfo = () => {
   //구독 정보 를 불러모으는 버튼이 있다.
@@ -80,9 +80,9 @@ const ShareEditinfo = () => {
         <p className="ShareRegistInfo_section_title2">
           구독 공유를 위해 나의 구독 정보를 모으고, 글을 남겨주세요!
         </p>
-        <div>
-          *수정사항에서 구독 불러오기를 사용하면 초기화가 됩니다.* 
-          <br></br>기존의 구독을 사용하고자
+        <div className='ShareEditInfo_section_caution'>
+          *수정사항에서 구독 불러오기를 사용하면 초기화가 됩니다.
+          <br></br>기존의 구독을 사용하고자 한다면 수정만 하시면됩니다.*
         </div>
       </div>
 
