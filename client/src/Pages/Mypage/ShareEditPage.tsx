@@ -103,6 +103,10 @@ const ShareEditPage = () => {
   // console.log(shareBoard,shareTitle,updateWallet)
 
   const handleShareEdit = () => {
+
+
+    console.log(shareEditBoard,'board',shareEditTitle,'title',updateWallet)
+    //shareEdit은 
     instance
       .patch(`/share/register`, {
         description: shareEditBoard,

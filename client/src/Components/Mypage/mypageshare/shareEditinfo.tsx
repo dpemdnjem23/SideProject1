@@ -38,6 +38,8 @@ const ShareEditinfo = () => {
       .catch((err) => {
         console.log(err);
       });
+
+      setUpdateWallet(share.list_sub.list_sub)
   }, []);
 
   //
@@ -66,7 +68,6 @@ const ShareEditinfo = () => {
     //다시클릭시 원상복구
   };
 
-  console.log(share.list_sub, updateWallet);
 
   //   const handleChange =() =>{
 
@@ -80,7 +81,7 @@ const ShareEditinfo = () => {
         <p className="ShareRegistInfo_section_title2">
           구독 공유를 위해 나의 구독 정보를 모으고, 글을 남겨주세요!
         </p>
-        <div className='ShareEditInfo_section_caution'>
+        <div className="ShareEditInfo_section_caution">
           *수정사항에서 구독 불러오기를 사용하면 초기화가 됩니다.
           <br></br>기존의 구독을 사용하고자 한다면 수정만 하시면됩니다.*
         </div>
@@ -102,17 +103,23 @@ const ShareEditinfo = () => {
             })}
           </div>
         )}
-
-        <div>
-          {share.list_sub.list_sub.map((el:string[], index: number) => {
-            console.log(el);
-            return (
-              <div key={index}>
-                <span>{el}</span>
-              </div>
-            );
-          })}
-        </div>
+        {button ? (
+          <div className="ShareEditInfo_section_sub">
+            <div className="ShareEditInfo_section_sub_title">
+              <div>현재 나의 구독</div>
+              <div>*나의 구독만 표시할뿐 수정되지 않습니다.</div>
+            </div>
+            <div className="ShareEditInfo_section_mySubscribe">
+              {share.list_sub.list_sub.map((el: string[], index: number) => {
+                return (
+                  <div key={index}>
+                    <span>{el}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {button ? null : <button onClick={deleteData}>되돌아 가기</button>}

@@ -54,6 +54,9 @@ const ShareEditBoard = () => {
     setShareEditBoard(e.target.value);
   };
 
+
+  console.log(shareEditBoard,shareEditTitle)
+
   // const handle
 
   return (
