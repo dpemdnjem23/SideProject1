@@ -38,11 +38,15 @@ const ShareEditinfo = () => {
       .catch((err) => {
         console.log(err);
       });
-
-      setUpdateWallet(share.list_sub.list_sub)
+    const chooseList = walletInfo.filter((item, id) => {
+      console.log(id, item.name, share.list_sub.list_sub);
+      return item.name === share.list_sub.list_sub[id];
+    });
+    
+    setUpdateWallet([...chooseList]);
   }, []);
-
   //
+
 
   const importData = () => {
     setButton(false);
@@ -67,7 +71,6 @@ const ShareEditinfo = () => {
     //새로 만들어서 , 복사를 해서 제거하도록한다
     //다시클릭시 원상복구
   };
-
 
   //   const handleChange =() =>{
 

@@ -87,6 +87,8 @@ const ShareRegisterPage = () => {
     }
   }, []);
 
+
+  console.log(updateWallet)
   // console.log(shareBoard,shareTitle,updateWallet)
 
   const handleShareRegister = () => {

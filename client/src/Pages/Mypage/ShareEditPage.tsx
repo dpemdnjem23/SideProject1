@@ -100,6 +100,8 @@ const ShareEditPage = () => {
     }
   }, []);
 
+
+
   // console.log(shareBoard,shareTitle,updateWallet)
 
   const handleShareEdit = () => {
@@ -108,14 +110,13 @@ const ShareEditPage = () => {
     console.log(shareEditBoard,'board',shareEditTitle,'title',updateWallet)
     //shareEdit은 
     instance
-      .patch(`/share/register`, {
+      .patch(`/share/edit`, {
         description: shareEditBoard,
         title: shareEditTitle,
         list_sub: updateWallet,
       })
 
       .then((result) => {
-        console.log(result);
 
         navigate("/share");
       })

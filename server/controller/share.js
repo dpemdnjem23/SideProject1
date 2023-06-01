@@ -1,6 +1,7 @@
 require("dotenv").config();
+const { sequelize } = require("../models");
 const moment = require("moment");
-const { Op, Sequelize } = require("sequelize");
+const { Op, Sequelize, literal, Model } = require("sequelize");
 
 const { default: axios } = require("axios");
 const { authchecker } = require("../middleware/authChecker");
@@ -102,20 +103,18 @@ module.exports = {
     const { id } = req.body;
     const userId = req.user.userId || req.user.id;
 
-
     try {
       //userInfo를 찾아서 share에서 찾는다.
       //찾은id와 shareid를 이용해서 삭제한다. 생ㅇ성된 share를 특정하는방법
 
-
-      console.log(id,userId,'id모음')
+      console.log(id, userId, "id모음");
 
       const shareInfo = await share.findOne({
         where: { user_id: userId, id: id },
       });
 
-     const all =  await share.findAll()
-      console.log(all)
+      const all = await share.findAll();
+      console.log(all);
 
       await shareInfo.destroy();
 
@@ -124,8 +123,56 @@ module.exports = {
       return res.status(500).send(error);
     }
   },
+
   shareEdit: async (req, res) => {
+    const { title, list_sub, description } = req.body;
+
+    const userId = req.user.userId || req.user.id;
+
     try {
+      const arr = [];
+
+      if (!title && !description) {
+        return res.status(400).send("제목과 글을 입력해주세요");
+      }
+
+      //list_sub={share:[]}
+      if (list_sub.length >= 1) {
+        for (let i = 0; i < list_sub.length; i++) {
+          arr.push(list_sub[i].name);
+        }
+      }
+
+      const shareNumSelect = await share.findOne({
+        where: {
+          // title: title,
+          // user_id: userId,
+          // description: description,
+          list_sub: {
+            list_sub: { [Op.contains]: [] }, // 원하는 내부 속성 값
+          },
+        },
+      });
+
+      //json_unquote(json_extract(`share`.`list_sub`,'$.\"list_sub\"'))
+
+      console.log(shareNumSelect, "shareNumSelect", arr);
+      //   list_sub: { list_sub: [] },
+      const shareEdit = await share.update(
+        {
+          title: title,
+          description: description,
+          list_sub: { list_sub: arr },
+        },
+        { where: { user_id: userId, id: shareNumSelect.id } }
+      );
+
+      console.log(shareEdit, "shareEdit");
+
+      if (!shareEdit) {
+        return res.status(400).send("공유가 수정되지 않았습니다.");
+      }
+      return res.status(200).send("수정 성공");
     } catch (error) {
       return res.status(500).send(error);
     }

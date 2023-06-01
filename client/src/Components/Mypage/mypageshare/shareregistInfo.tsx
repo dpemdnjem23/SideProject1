@@ -12,18 +12,15 @@ const ShareRegistInfo = () => {
 
   const [button, setButton] = useState<boolean>(true);
   const { walletInfo, setWalletInfo } = useWalletStore();
-  const {setUpdateWallet,updateWallet} = shareRegisteruseStore()
+  const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
 
   // const [newArr, setNewArr] = useState<subInfo[]>([]);
 
-
-//구독 공유 접속하면 구독 목록을 불러올 데이터를 생성
+  //구독 공유 접속하면 구독 목록을 불러올 데이터를 생성
   useEffect(() => {
     instance
       .get(`/wallet/info`)
       .then((res) => {
-     
-
         setWalletInfo(res.data.data);
       })
       .catch((err) => {
@@ -31,16 +28,11 @@ const ShareRegistInfo = () => {
       });
   }, []);
 
-
   //
-
-
 
   const importData = () => {
     setButton(false);
     setUpdateWallet(walletInfo);
-    
-    console.log(walletInfo)
 
   };
 
@@ -53,9 +45,6 @@ const ShareRegistInfo = () => {
 
     const chooseList = updateWallet.filter((item) => {
       return item.id !== e;
-
-
-    
     });
 
     setUpdateWallet([...chooseList]);
@@ -63,8 +52,6 @@ const ShareRegistInfo = () => {
     //새로 만들어서 , 복사를 해서 제거하도록한다
     //다시클릭시 원상복구
   };
-
-
 
   return (
     <div className="ShareRegistInfo_section">
