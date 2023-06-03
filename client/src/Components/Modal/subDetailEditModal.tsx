@@ -13,29 +13,28 @@ import {
   useWalletStore,
 } from "utils/state";
 import axios from "axios";
+import { instance } from "App";
 
 interface subDetailEdit {
   arrIndex: number;
   // clickModalNum: number;
 }
-const SubDetailEditModal: React.FC<subDetailEdit> = ({
-  arrIndex,
-  
-}) => {
-
+const SubDetailEditModal: React.FC<subDetailEdit> = ({ arrIndex }) => {
   const navigate = useNavigate();
   const accessToken: string | null = localStorage.getItem("accessToken");
-  const { walletInfo, setWalletInfo,clickModalNum, setShowSubEdit } = useWalletStore();
+  const { walletInfo, setWalletInfo, clickModalNum, setShowSubEdit } =
+    useWalletStore();
 
   const { dateCal, setDateCal, clearDateCal } = dateState();
 
   const { cycleCal, setCycleCal } = cycleState();
 
-  const [walletDate,setWalletDate] = useState<string>(moment().format('YYYY-MM-DD'))
+  const [walletDate, setWalletDate] = useState<string>(
+    moment().format("YYYY-MM-DD")
+  );
 
   const { setSubCash, subCash } = registSubInfoState();
-  console.log(clickModalNum,'cliick')
-
+  console.log(clickModalNum, "cliick");
 
   useEffect(() => {
     //에딧 모달에 들어오면
@@ -84,31 +83,20 @@ const SubDetailEditModal: React.FC<subDetailEdit> = ({
   const handelModifyWallet = () => {
     const number = subCash.replace(/,/g, "");
     const today = dateCal.format("YYYY-MM-DD");
-    console.log(clickModalNum,today)
+    console.log(clickModalNum, today);
 
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/wallet/edit`,
-        {
-          cycleYear: cycleCal.year,
-          cycleMonth: cycleCal.month,
-          cycleDay: cycleCal.day,
-          start_date: today,
-          cost: number,
-          id: clickModalNum,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
+    instance
+      .patch(`/wallet/edit`, {
+        cycleYear: cycleCal.year,
+        cycleMonth: cycleCal.month,
+        cycleDay: cycleCal.day,
+        start_date: today,
+        cost: number,
+        id: clickModalNum,
+      })
       .then((res) => {
         navigate("/wallet");
-        location.reload()
-        
+        location.reload();
       })
       .catch((err) => {
         alert("변경에 실패하였습니다.");

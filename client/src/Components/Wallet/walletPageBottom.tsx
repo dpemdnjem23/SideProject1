@@ -25,10 +25,7 @@ useEffect(()=>{
 
   instance
 .get(`${process.env.REACT_APP_API_URI}/wallet/payment`, {
-  headers: {
-    'Content-Type':'application/json',
-    authorization: `Bearer ${accessToken}`,
-  },
+ 
 })
 .then((res) => {
   const costSum = res.data.data.map((pre: { cost: number }) => {

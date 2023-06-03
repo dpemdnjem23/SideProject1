@@ -125,7 +125,7 @@ module.exports = {
   },
 
   shareEdit: async (req, res) => {
-    const { title, list_sub, description } = req.body;
+    const { title, list_sub, description, id } = req.body;
 
     const userId = req.user.userId || req.user.id;
 
@@ -143,20 +143,8 @@ module.exports = {
         }
       }
 
-      const shareNumSelect = await share.findOne({
-        where: {
-          // title: title,
-          // user_id: userId,
-          // description: description,
-          list_sub: {
-            list_sub: { [Op.contains]: [] }, // 원하는 내부 속성 값
-          },
-        },
-      });
-
       //json_unquote(json_extract(`share`.`list_sub`,'$.\"list_sub\"'))
 
-      console.log(shareNumSelect, "shareNumSelect", arr);
       //   list_sub: { list_sub: [] },
       const shareEdit = await share.update(
         {
@@ -164,7 +152,7 @@ module.exports = {
           description: description,
           list_sub: { list_sub: arr },
         },
-        { where: { user_id: userId, id: shareNumSelect.id } }
+        { where: { user_id: userId, id: id } }
       );
 
       console.log(shareEdit, "shareEdit");

@@ -36,7 +36,7 @@ const ShareEditinfo = () => {
         setWalletInfo(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     const chooseList = walletInfo.filter((item, id) => {
       console.log(id, item.name, share.list_sub.list_sub);
@@ -45,6 +45,7 @@ const ShareEditinfo = () => {
     
     setUpdateWallet([...chooseList]);
   }, []);
+
   //
 
 

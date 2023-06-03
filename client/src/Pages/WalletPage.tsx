@@ -129,7 +129,7 @@ const WalletPage = () => {
         <Loading></Loading>
       ) : (
         <>
-          {walletInfo.length < 0 ? (
+          {walletInfo.length <= 0 ? (
             <EmptyPage></EmptyPage>
           ) : (
             <>

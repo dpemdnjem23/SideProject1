@@ -13,22 +13,17 @@ const WalletPageTop = () => {
 
   useEffect(() => {
     instance
-      .get(`${process.env.REACT_APP_API_URI}/wallet/toptwo`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${accessToken}`,
-        },
-      })
+      .get(`/wallet/toptwo`, {})
       .then((res) => {
-        
         setWalletPeriod(res.data.data);
         setWalletImageInfo(res.data.wallet);
-       
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
+
+  console.log(walletPeriod)
 
   // console.log(walletPeriod,walletImageInfo)
   //갱신기간은 어떻게? 똑같은 것끼리 top2
@@ -39,7 +34,9 @@ const WalletPageTop = () => {
     <>
       <div className="WalletPage_Top_section_sub_title">
         {/* <p> {walletImageInfo[0].name},</p> */}
-    {walletPeriod.length>0?   <span>갱신이 얼마 남지 않았어요!</span>:null}
+        {walletPeriod.length > 0 ? (
+          <span>갱신이 얼마 남지 않았어요!</span>
+        ) : null}
       </div>
       <div className="WalletPage_Top_section">
         {walletPeriod.map((el: any, index: number) => {
@@ -51,18 +48,21 @@ const WalletPageTop = () => {
                   el.end_date.substr(8, 2) +
                   "일"}
               </span>
-              {walletImageInfo.map((el2: any,indexx) => {
+              {walletImageInfo.map((el2: any, indexx) => {
                 //이미지를 end_date에 맞게 분류 한다.
                 if (el.end_date === el2.end_date) {
-                //   style={{position: 'absolute'
+                  //   style={{position: 'absolute'
 
-                // style={{position: 'relative',
-                //                  right:`${indexx*5+20}px`}}
-           
-                // }} 
+                  // style={{position: 'relative',
+                  //                  right:`${indexx*5+20}px`}}
+
+                  // }}
                   return (
-                      <div key={el2.id} className="WalletPage_Top_imgsec" >
-                        <img  className={'WalletPage_Top_img'+indexx} src={el2.image}></img>
+                    <div key={el2.id} className="WalletPage_Top_imgsec">
+                      <img
+                        className={"WalletPage_Top_img" + indexx}
+                        src={el2.image}
+                      ></img>
                     </div>
                   );
                 }

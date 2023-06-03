@@ -49,6 +49,7 @@ import BottomBar from "Components/Common/footer";
 import MenuBar from "Components/Common/menuBar";
 import AlarmPage from "Pages/AlarmPage";
 import ShareEditPage from "Pages/Mypage/ShareEditPage";
+import SubDetailModal from "Components/Modal/subDetailModal";
 
 // import useAxiosInterceptors from "utils/Intercepts";
 // import { requestInstance, responseInstance } from "utils/Intercepts";
@@ -108,7 +109,6 @@ const App = () => {
   const limit = 6;
   const offset = page * limit;
 
-  const { walletInfo, setWalletInfo } = useWalletStore();
   const { setAlarmInfo } = alarmInfouseStore();
   const { userSignin } = isSigninState();
 
@@ -120,6 +120,7 @@ const App = () => {
 
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
+  const{showSubDetail,setShowSubDetail,setShowSubEdit} = useWalletStore()
 
   const {
     showMypageModal,
@@ -321,6 +322,32 @@ const App = () => {
     };
   }, [userSignin]);
 
+
+
+  useEffect(() => {
+
+    showMypageModalOn(false);
+    mobileMyPageOn(false)
+    setShowAlarmModal(false)
+    setShowSubDetail(false)
+    setShowSubEdit(false)
+
+  }, [navigate]);
+
+  const closeModlaClickHeader = () =>{
+    showMypageModalOn(false);
+    mobileMyPageOn(false)
+    setShowAlarmModal(false)
+    setShowSubDetail(false)
+    setShowSubEdit(false)
+  }
+
+
+  // useEffect(()=>{
+
+
+  // },[mobileMyPage])
+
   //만약 토큰이 만료가 됐고
 
   // useEffect(() => {
@@ -353,7 +380,7 @@ const App = () => {
           <Route path="/login" element={<SigninPage></SigninPage>} />
           <Route path="/signup" element={<SignupPage></SignupPage>} />
         </Route>
-        <Route path="/callendar" element={<CalendarPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
 
         <Route
           path="/subregist"

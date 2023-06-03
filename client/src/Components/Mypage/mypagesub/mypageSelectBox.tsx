@@ -26,6 +26,8 @@ const MypageSelectBox = () => {
   const { setSelected, selected } = registSubInfoState();
 
   const [useSubscribe, setUseSubscribe] = useState<subInfo[]>([]);
+  // const [useSubscribe, setUseSubscribe] = useState<any>([]);
+
   const [newArr, setNewArr] = useState<subInfo[]>([]);
   //autocomplete
   //hastext는 input 값 유무
@@ -59,6 +61,7 @@ const MypageSelectBox = () => {
     const chooseList = newArr.filter((item: subInfo) => {
       return item.sub_name?.includes(inputValue as string);
     });
+
     //만약에 ㅋ 을 입력했으면,
 
     if (chooseList.length === 0) {
@@ -77,6 +80,9 @@ const MypageSelectBox = () => {
     setInputValue(eText);
   };
 
+  console.log(newArr)
+
+
   //ㅋ을 입력했을때 sub함수가 작동하여선 안된다.
 
   useEffect(() => {
@@ -84,15 +90,18 @@ const MypageSelectBox = () => {
   }, [inputValue]);
 
   useEffect(() => {
+    console.log('진압해')
     instance
-      .get(`${process.env.REACT_APP_API_URI}/wallet/subregist`, {})
+      .get(`/wallet/subregist`, {})
 
       .then((result) => {
-        setNewArr(result.data);
-        setUseSubscribe(result.data);
+
+        console.log(result.data)
+        setNewArr(result.data.data);
+        setUseSubscribe(result.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

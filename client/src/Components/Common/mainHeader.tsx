@@ -61,8 +61,6 @@ const Mainheader = () => {
       navigate("/");
       setShowErrModal(true);
     }
-
-
   };
 
   //메인 헤더를 건들이면
@@ -83,10 +81,6 @@ const Mainheader = () => {
   };
 
   const openMenuBar = () => {
-
-    
-
-
     // mobileMyPageOn(true);
     mobileMyPageOn(true);
     // setShowAlarmModal(true);
@@ -103,7 +97,15 @@ const Mainheader = () => {
     setShowNumber(true);
   }, []);
 
-  console.log('')
+  const closeModlaClickHeader = () => {
+    showMypageModalOn(false);
+    mobileMyPageOn(false);
+    setShowAlarmModal(false);
+    setShowSubDetail(false);
+    setShowSubEdit(false);
+
+    console.log("클릭", showMypageModal, mobileMyPageOn);
+  };
 
   //   const clickToNotSign= () =>{
   // alert()
@@ -112,8 +114,8 @@ const Mainheader = () => {
   // onClick={(e) => e.stopPropagation()}
   return (
     <>
-      <div id="header">
-        <div className="logo">
+      <div onClick={closeModlaClickHeader} id="header">
+        <div onClick={(e) => e.stopPropagation()} className="logo">
           <Link to="/">
             <img width="60" src="./images/2.png" />
           </Link>
@@ -131,7 +133,7 @@ const Mainheader = () => {
               <Link to={`/share`}>구독공유</Link>
             </li>
             <li onClick={handleErrModal} className="menu">
-              <Link to="/callendar">구독달력</Link>
+              <Link to="/calendar">구독달력</Link>
             </li>
 
             {userSignin ? (

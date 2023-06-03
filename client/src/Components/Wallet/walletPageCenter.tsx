@@ -11,6 +11,8 @@ type walletPageCenter = {
 const WalletPageCenter: React.FC<walletPageCenter> = ({ openSubModal }) => {
   const { walletInfo } = useWalletStore();
 
+  console.log(walletInfo);
+
   // useEffect(()[=>{
 
   //   instance.delete(/)
@@ -27,21 +29,20 @@ const WalletPageCenter: React.FC<walletPageCenter> = ({ openSubModal }) => {
             className="WalletPage_center_sub_box"
           >
             <img src={el.image} />
-            <div>{el.name}</div>
-            <div>
+            <div className="WalletPage_center_sub_box_name">{el.name}</div>
+            <div className= "WalletPage_center_sub_box_days"> 
               <span>{el.cycleYear ? el.cycleYear + "년" : ""}</span>
               <span>&nbsp;{el.cycleMonth ? el.cycleMonth + "달" : ""}</span>
               <span>&nbsp;{el.cycleDay ? el.cycleDay + "일" : ""}</span>
             </div>
 
-            <div>
+            <div className= "WalletPage_center_sub_box_cost">
               {el.cost
                 .toString()
                 .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
               원
             </div>
-            <div>{el.end_date}</div>
-
+            <div className= "WalletPage_center_sub_box_date">{el.end_date}</div>
           </div>
         );
       })}

@@ -34,6 +34,9 @@ const ShareEditPage = () => {
 
   const navigate = useNavigate();
 
+  const share = JSON.parse(localStorage.getItem("share") || "{}");
+
+
   const { persistLogin, userSignin } = isSigninState();
 
   const userinfo = JSON.parse(
@@ -107,10 +110,10 @@ const ShareEditPage = () => {
   const handleShareEdit = () => {
 
 
-    console.log(shareEditBoard,'board',shareEditTitle,'title',updateWallet)
     //shareEdit은 
     instance
       .patch(`/share/edit`, {
+          id:share.id,
         description: shareEditBoard,
         title: shareEditTitle,
         list_sub: updateWallet,

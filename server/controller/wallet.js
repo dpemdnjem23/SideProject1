@@ -217,6 +217,9 @@ module.exports = {
     const { name, cost, start_date, cycleDay, cycleMonth, cycleYear } =
       req.body;
 
+
+      const userId = req.user.userId || req.user.id;
+
     //cycle 은 1년인경우 365일, 1달인경우 30일로 계산되어야 한다.
     // => start date에 더해짐
 
@@ -244,7 +247,7 @@ module.exports = {
       //cycle을 1년 1달 1일로 나타내고싶다.
 
       const createWallet = await wallet.create({
-        user_id: req.user.userId,
+        user_id: userId,
         name: name,
         start_date: start_date,
         cycleDay: cycleDay,
@@ -372,6 +375,8 @@ module.exports = {
           [Sequelize.fn("DISTINCT", Sequelize.col("end_date")), "end_date"],
         ],
       });
+
+
       if (!topTwoPeriod) {
         return res.status(400).send("날짜를 알수없다.");
       }
