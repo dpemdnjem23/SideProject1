@@ -120,8 +120,6 @@ module.exports = {
         },
       });
 
-      console.log(findWallet);
-
       // console.log(findWallet, "find");
 
       //기준점이되는 날짜 가장빠름
@@ -147,16 +145,75 @@ module.exports = {
   },
 
   paymentControll: async (req, res) => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+
+    const lastDay
+
     const userId = req.user.userId || req.user.id;
+
     try {
       //start_date 기간은 1달로 한다.
       // start_date에 도달하면 기간이 gte인경우 결제금액을 +한다.
       const today = moment().format("YYYY-MM-DD");
+      const day = moment().format("DD");
+      const year = moment().format("YYYY");
+      const month = moment().format("MM");
+      let sum = 0;
 
       const findWallet = await wallet.findAll({
         where: { user_id: userId, start_date: { [Op.lte]: today } },
-        attributes: ["cost"],
+        attributes: [
+          "cost",
+          "start_date",
+          "cycleDay",
+          "cycleMonth",
+          "cycleYear",
+        ],
       });
+
+      //1달기준이면 findWallet으로 한달동안 
+
+      const getMonthWalletCost = await wallet.findAll({
+        where: { user_id: userId, start_date: { [Op.lte]: today } },
+        attributes: [
+          "cost",
+          "start_date",
+          "cycleDay",
+          "cycleMonth",
+          "cycleYear",
+        ],
+      });
+
+
+      console.log(today, lastDayOfMonth);
+
+      //1. 주기를 계산한다 day , month year -> 1달을 기준(1~xx)
+      //주기가 3일  -> lasday/주기  * cost
+
+      console.log(
+        (lastDayOfMonth / findWallet[0].dataValues.cycleDay) *
+          findWallet[0].dataValues.cost
+      );
+      //이런 값들의 총합이 결제금액이 된다.
+      //1달 기준, 1year
+for(let i = 0 ; i<5;i++){
+  console.log(findWallet[0].dataValues,'한장씩')
+
+  console.log(findWallet[0].dataValues.cycleYear*3)
+
+  if(findWallet[0].dataValues.cycleDay){
+
+  }
+
+
+
+}
+
+      //만약 주기가 6개월이라면?
 
       if (!findWallet) {
         return res.status(400).send("수정할게 없다.");
@@ -189,8 +246,7 @@ module.exports = {
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
 
-    console.log(req.user,'req.user')
-
+    console.log(req.user, "req.user");
 
     const userId = req.user.userId || req.user.id;
 
@@ -217,8 +273,7 @@ module.exports = {
     const { name, cost, start_date, cycleDay, cycleMonth, cycleYear } =
       req.body;
 
-
-      const userId = req.user.userId || req.user.id;
+    const userId = req.user.userId || req.user.id;
 
     //cycle 은 1년인경우 365일, 1달인경우 30일로 계산되어야 한다.
     // => start date에 더해짐
@@ -275,8 +330,6 @@ module.exports = {
     let varCycleMonth = cycleMonth;
     let varCycleYear = cycleYear;
     const userId = req.user.userId || req.user.id;
-
-  
 
     try {
       let calculateEnd_date;
@@ -376,31 +429,24 @@ module.exports = {
         ],
       });
 
-
       if (!topTwoPeriod) {
         return res.status(400).send("날짜를 알수없다.");
       }
       //이게 문제네 2개일경우만 나타남
 
       if (topTwoPeriod.length === 1) {
-
-
         const walletInfo = await wallet.findAll({
           where: {
             end_date: topTwoPeriod[0].dataValues.end_date,
           },
         });
 
-
         if (!walletInfo) {
           return res.status(400).send("walletInfo err");
         }
 
-        return res
-          .status(200)
-          .send({ data: topTwoPeriod, wallet: walletInfo });
+        return res.status(200).send({ data: topTwoPeriod, wallet: walletInfo });
       } else {
-
         const walletInfo = await wallet.findAll({
           where: {
             [Op.or]: [
@@ -414,11 +460,8 @@ module.exports = {
           return res.status(400).send("walletInfo err");
         }
 
-        return res
-          .status(200)
-          .send({ data: topTwoPeriod, wallet: walletInfo });
+        return res.status(200).send({ data: topTwoPeriod, wallet: walletInfo });
       }
-
     } catch (err) {
       return res.status(500).send(err);
     }
