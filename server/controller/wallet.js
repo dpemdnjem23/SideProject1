@@ -151,7 +151,6 @@ module.exports = {
     const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
 
-    const lastDay
 
     const userId = req.user.userId || req.user.id;
 
@@ -174,8 +173,16 @@ module.exports = {
           "cycleYear",
         ],
       });
+      //1월 1일부터 1월 lastday까지
 
       //1달기준이면 findWallet으로 한달동안 
+
+      // 5월 3일이다.
+      //만약에 주기가 6개월이다
+      //end_date가 11월에 있다 그러면 얘는 계산할필요가 없어
+
+      // 주기가 한달이면?
+      //
 
       const getMonthWalletCost = await wallet.findAll({
         where: { user_id: userId, start_date: { [Op.lte]: today } },
@@ -200,15 +207,17 @@ module.exports = {
       );
       //이런 값들의 총합이 결제금액이 된다.
       //1달 기준, 1year
-for(let i = 0 ; i<5;i++){
-  console.log(findWallet[0].dataValues,'한장씩')
+for(let i = 0 ; i<findWallet.length;i++){
+  console.log(
+    (lastDayOfMonth / findWallet[i].dataValues.cycleDay) *
+      findWallet[i].dataValues.cost)
 
-  console.log(findWallet[0].dataValues.cycleYear*3)
 
-  if(findWallet[0].dataValues.cycleDay){
+    const remaningDays =  findWallet[i].dataValues.start_date
+    console.log(remaningDays)
 
-  }
 
+ 
 
 
 }
