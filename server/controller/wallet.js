@@ -150,8 +150,6 @@ module.exports = {
     const currentYear = currentDate.getFullYear();
     const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-
-
     const userId = req.user.userId || req.user.id;
 
     try {
@@ -175,7 +173,7 @@ module.exports = {
       });
       //1월 1일부터 1월 lastday까지
 
-      //1달기준이면 findWallet으로 한달동안 
+      //1달기준이면 findWallet으로 한달동안
 
       // 5월 3일이다.
       //만약에 주기가 6개월이다
@@ -195,32 +193,32 @@ module.exports = {
         ],
       });
 
-
       console.log(today, lastDayOfMonth);
 
       //1. 주기를 계산한다 day , month year -> 1달을 기준(1~xx)
       //주기가 3일  -> lasday/주기  * cost
+      //2. 주기는 last day를 넘지 않는다.
 
-      console.log(
-        (lastDayOfMonth / findWallet[0].dataValues.cycleDay) *
-          findWallet[0].dataValues.cost
-      );
-      //이런 값들의 총합이 결제금액이 된다.
-      //1달 기준, 1year
-for(let i = 0 ; i<findWallet.length;i++){
-  console.log(
-    (lastDayOfMonth / findWallet[i].dataValues.cycleDay) *
-      findWallet[i].dataValues.cost)
+      //기준일이 day일때
 
+      for (let i = 0; i < findWallet.length; i++) {
+        //1. 주기가곧start_date이므로 emaining계사해서
 
-    const remaningDays =  findWallet[i].dataValues.start_date
-    console.log(remaningDays)
+        const remaningDays = lastDayOfMonth - day;
 
+        // if()
 
- 
+        const subCost =
+          (remaningDays / findWallet[0].dataValues.cycleDay) *
+          findWallet[0].dataValues.cost;
 
+          
+          console.log((remaningDays / findWallet[0].dataValues.cycleDay));
 
-}
+        sum = sum + subCost;
+
+        console.log(sum);
+      }
 
       //만약 주기가 6개월이라면?
 
