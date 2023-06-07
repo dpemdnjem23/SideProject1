@@ -160,10 +160,12 @@ module.exports = {
       const year = moment().format("YYYY");
       const month = moment().format("MM");
       let sum = 0;
+      console.log(month)
 
       const findWallet = await wallet.findAll({
         where: { user_id: userId, start_date: { [Op.lte]: today } },
         attributes: [
+          "name",
           "cost",
           "start_date",
           "cycleDay",
@@ -185,6 +187,7 @@ module.exports = {
       const getMonthWalletCost = await wallet.findAll({
         where: { user_id: userId, start_date: { [Op.lte]: today } },
         attributes: [
+          "name",
           "cost",
           "start_date",
           "cycleDay",
@@ -193,7 +196,7 @@ module.exports = {
         ],
       });
 
-      console.log(today, lastDayOfMonth);
+      console.log(findWallet);
 
       //1. 주기를 계산한다 day , month year -> 1달을 기준(1~xx)
       //주기가 3일  -> lasday/주기  * cost
@@ -207,17 +210,27 @@ module.exports = {
         const remaningDays = lastDayOfMonth - day;
 
         // if()
+        if (findWallet[i].dataValues.cycleDay) {
+          const subCost =
+            (remaningDays / findWallet[i].dataValues.cycleDay) *
+            findWallet[i].dataValues.cost;
 
-        const subCost =
-          (remaningDays / findWallet[0].dataValues.cycleDay) *
-          findWallet[0].dataValues.cost;
+          console.log(
+            remaningDays,
+            remaningDays / findWallet[i].dataValues.cycleDay,
+            findWallet[i].name,
+            findWallet[i].dataValues.cycleMonth
+          );
+          sum=sum+subCost
+        }
+        else{
 
-          
-          console.log((remaningDays / findWallet[0].dataValues.cycleDay));
+          console.log('2',findWallet[i].dataValues.name)
+          sum=sum+findWallet[i].dataValues.cost
 
-        sum = sum + subCost;
-
+        }
         console.log(sum);
+
       }
 
       //만약 주기가 6개월이라면?
