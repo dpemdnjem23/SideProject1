@@ -247,6 +247,7 @@ type shareEditState = {
   // shareEditWalletUpdate
 };
 
+
 export const isSigninState = create<isSigninState>()(
   devtools(
     persist(
@@ -316,7 +317,7 @@ export const mypageSubCostState = create<mypageSubCostState>()((set) => ({
   setSubCost: (input) => set({ subCost: input }),
 }));
 
-export const walletPageCostState = create<walletPageCostState>()((set) => ({
+export const walletPageCostUseStore = create<walletPageCostState>()((set) => ({
   walletPayment: 0,
   walletSubCost: 0,
   setWalletSubCost: (input) => set({ walletSubCost: input }),

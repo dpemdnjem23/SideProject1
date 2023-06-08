@@ -145,10 +145,21 @@ module.exports = {
   },
 
   paymentControll: async (req, res) => {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const currentDate = moment();
+
+    const firstDay = currentDate.clone().startOf("month");
+    const lastDay = currentDate.clone().endOf("month");
+
+    const firstDayOfMonth=firstDay.format('YYYY-MM-DD')
+    const lastDayOfMonth =  lastDay.format('YYYY-MM-DD')
+
+
+    const lastDays = lastDay.format("DD")
+    
+
+
+    console.log('첫날:', );
+    console.log('마지막날:', );
 
     const userId = req.user.userId || req.user.id;
 
@@ -159,11 +170,15 @@ module.exports = {
       const day = moment().format("DD");
       const year = moment().format("YYYY");
       const month = moment().format("MM");
+
       let sum = 0;
-      console.log(month)
 
       const findWallet = await wallet.findAll({
-        where: { user_id: userId, start_date: { [Op.lte]: today } },
+        where: {
+          user_id: userId,
+          start_date: { [Op.between]: [firstDayOfMonth, lastDayOfMonth] },
+          // start_date: { [Op.lte]: today },
+        },
         attributes: [
           "name",
           "cost",
@@ -196,8 +211,6 @@ module.exports = {
         ],
       });
 
-      console.log(findWallet);
-
       //1. 주기를 계산한다 day , month year -> 1달을 기준(1~xx)
       //주기가 3일  -> lasday/주기  * cost
       //2. 주기는 last day를 넘지 않는다.
@@ -207,7 +220,7 @@ module.exports = {
       for (let i = 0; i < findWallet.length; i++) {
         //1. 주기가곧start_date이므로 emaining계사해서
 
-        const remaningDays = lastDayOfMonth - day;
+        const remaningDays = lastDays- day;
 
         // if()
         if (findWallet[i].dataValues.cycleDay) {
@@ -221,16 +234,12 @@ module.exports = {
             findWallet[i].name,
             findWallet[i].dataValues.cycleMonth
           );
-          sum=sum+subCost
-        }
-        else{
-
-          console.log('2',findWallet[i].dataValues.name)
-          sum=sum+findWallet[i].dataValues.cost
-
+          sum = sum + subCost;
+        } else {
+          console.log("2", findWallet[i].dataValues.name);
+          sum = sum + findWallet[i].dataValues.cost;
         }
         console.log(sum);
-
       }
 
       //만약 주기가 6개월이라면?
@@ -239,7 +248,7 @@ module.exports = {
         return res.status(400).send("수정할게 없다.");
       }
 
-      return res.status(200).send({ data: findWallet });
+      return res.status(200).send({ data: findWallet,cost:sum });
     } catch (err) {
       return res.status(500).send(err);
     }

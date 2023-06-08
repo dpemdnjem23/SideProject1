@@ -9,10 +9,14 @@ type walletPageBottom = {
 
 import "../../css/components/WalletPage/walletPagebottom.css";
 import { instance } from "App";
-const WalletPageBottom: React.FC<walletPageBottom> = ({ walletSubCost }) => {
-  const [walletPayment, setWalletPayment] = useState<number>(0);
+import { walletPageCostUseStore } from "utils/state";
+const WalletPageBottom: React.FC = () => {
 
   // const {} = walletPageCostState()
+
+  const {walletPayment,walletSubCost,setWalletPayment,setWalletSubCost} = walletPageCostUseStore()
+
+
 
   const accessToken: string | null = localStorage.getItem("accessToken");
 
@@ -29,12 +33,15 @@ const WalletPageBottom: React.FC<walletPageBottom> = ({ walletSubCost }) => {
         for (let i = 0; i < costSum.length; i++) {
           sum = sum + costSum[i];
         }
-        // setWalletSubCost(sum)
+        setWalletSubCost(res.data.cost)
         setWalletPayment(sum);
       })
       .catch((err) => {
         console.log(err);
       });
+
+
+
   }, []);
 
   //총 구독 가격은 현재 올라와있는 구독의 가격

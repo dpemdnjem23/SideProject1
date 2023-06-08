@@ -5,7 +5,7 @@ import {
   mypagePaymentManagementState,
   mypageSubCostState,
   showMypageState,
-  walletPageCostState,
+  walletPageCostUseStore,
 } from "utils/state";
 import "../../css/components/MyPage/mypagebar.css";
 import moment from "moment";
@@ -25,11 +25,10 @@ const Mypagebar = () => {
   //한번더 클릭하면 원래대로 돌아가야한다.
   // const { setDelUser, setEditUser, editUser, delUser } = showMypageState();
   // const {paymentDay , setPaymentDay}  = useState<number>(0)
-
+  const { setWalletPayment, setWalletSubCost, walletPayment, walletSubCost } =
+    walletPageCostUseStore();
   const [subManageDate, setSubManageDate] = useState<number>(0);
   const [subManageCost, setSubManageCost] = useState<number>(0);
-  const [walletPayment, setWalletPayment] = useState<number>(0);
-  const [walletSubCost, setWalletSubCost] = useState<number>(0);
 
   const {
     setDelUser,

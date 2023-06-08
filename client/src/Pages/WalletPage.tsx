@@ -9,7 +9,7 @@ import {
   dateState,
   registSubInfoState,
   useWalletStore,
-  walletPageCostState,
+  walletPageCostUseStore,
 } from "utils/state";
 import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
 
@@ -49,14 +49,15 @@ const WalletPage = () => {
     setShowSubDetail,
   } = useWalletStore();
 
+  
+
   const { selected, subCash, setWalletInfoAdd, walletInfoAdd } =
     registSubInfoState();
 
   // const [showSubDetail, setShowSubDetail] = useState<boolean>(false);
   // const [userEdit, setUserEdit] = useState<boolean>(false);
 
-  const [walletSubCost, setWalletSubCost] = useState<number>(0);
-
+const {walletPayment,walletSubCost,setWalletPayment,setWalletSubCost} = walletPageCostUseStore()
   // const [clickModalNum,setClickModalNum] = useState<number>(0)
   const [arrIndex, setArrIndex] = useState<number>(0);
   const [showCancellation, setShowCancellation] = useState<boolean>(false);
@@ -113,7 +114,6 @@ const WalletPage = () => {
           sum = sum + costSum[i];
         }
 
-        setWalletSubCost(sum);
 
         setWalletInfo(res.data.data);
         setLoading(false);
@@ -122,6 +122,32 @@ const WalletPage = () => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    instance
+      .get(`/wallet/payment`, {})
+      .then((res) => {
+        const costSum = res.data.data.map((pre: { cost: number }) => {
+          return pre.cost;
+        });
+
+        let sum = 0;
+
+        for (let i = 0; i < costSum.length; i++) {
+          sum = sum + costSum[i];
+        }
+        setWalletSubCost(res.data.cost)
+        setWalletPayment(sum);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+
+  }, []);
+
+ 
 
   return (
     <div id="WalletPage">
@@ -155,7 +181,6 @@ const WalletPage = () => {
                   openSubModal={openSubModal}
                 />
                 <WalletPageBottom
-                  walletSubCost={walletSubCost}
                   // walletInfo={walletInfo}
                 />
               </div>
