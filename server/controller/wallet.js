@@ -150,16 +150,13 @@ module.exports = {
     const firstDay = currentDate.clone().startOf("month");
     const lastDay = currentDate.clone().endOf("month");
 
-    const firstDayOfMonth=firstDay.format('YYYY-MM-DD')
-    const lastDayOfMonth =  lastDay.format('YYYY-MM-DD')
+    const firstDayOfMonth = firstDay.format("YYYY-MM-DD");
+    const lastDayOfMonth = lastDay.format("YYYY-MM-DD");
 
+    const lastDays = lastDay.format("DD");
 
-    const lastDays = lastDay.format("DD")
-    
-
-
-    console.log('첫날:', );
-    console.log('마지막날:', );
+    console.log("첫날:");
+    console.log("마지막날:");
 
     const userId = req.user.userId || req.user.id;
 
@@ -172,6 +169,7 @@ module.exports = {
       const month = moment().format("MM");
 
       let sum = 0;
+      let payment = 0;
 
       const findWallet = await wallet.findAll({
         where: {
@@ -220,7 +218,7 @@ module.exports = {
       for (let i = 0; i < findWallet.length; i++) {
         //1. 주기가곧start_date이므로 emaining계사해서
 
-        const remaningDays = lastDays- day;
+        const remaningDays = lastDays - day;
 
         // if()
         if (findWallet[i].dataValues.cycleDay) {
@@ -228,15 +226,15 @@ module.exports = {
             (remaningDays / findWallet[i].dataValues.cycleDay) *
             findWallet[i].dataValues.cost;
 
-          console.log(
-            remaningDays,
-            remaningDays / findWallet[i].dataValues.cycleDay,
-            findWallet[i].name,
-            findWallet[i].dataValues.cycleMonth
-          );
+          const subCost2 =
+            (lastDays / findWallet[i].dataValues.cycleDay) *
+            findWallet[i].dataValues.cost;
+
           sum = sum + subCost;
+          payment = payment + subCost2;
         } else {
-          console.log("2", findWallet[i].dataValues.name);
+          payment = payment + findWallet[i].dataValues.cost;
+
           sum = sum + findWallet[i].dataValues.cost;
         }
         console.log(sum);
@@ -248,7 +246,9 @@ module.exports = {
         return res.status(400).send("수정할게 없다.");
       }
 
-      return res.status(200).send({ data: findWallet,cost:sum });
+      return res
+        .status(200)
+        .send({ data: findWallet, cost: payment-sum, payment: payment });
     } catch (err) {
       return res.status(500).send(err);
     }

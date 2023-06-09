@@ -24,17 +24,11 @@ const WalletPageBottom: React.FC = () => {
     instance
       .get(`/wallet/payment`, {})
       .then((res) => {
-        const costSum = res.data.data.map((pre: { cost: number }) => {
-          return pre.cost;
-        });
 
-        let sum = 0;
-
-        for (let i = 0; i < costSum.length; i++) {
-          sum = sum + costSum[i];
-        }
-        setWalletSubCost(res.data.cost)
-        setWalletPayment(sum);
+        
+     
+        setWalletSubCost(res.data.payment)
+        setWalletPayment(res.data.cost);
       })
       .catch((err) => {
         console.log(err);
