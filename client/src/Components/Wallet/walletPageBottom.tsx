@@ -18,25 +18,6 @@ const WalletPageBottom: React.FC = () => {
 
 
 
-  const accessToken: string | null = localStorage.getItem("accessToken");
-
-  useEffect(() => {
-    instance
-      .get(`/wallet/payment`, {})
-      .then((res) => {
-
-        
-     
-        setWalletSubCost(res.data.payment)
-        setWalletPayment(res.data.cost);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-
-
-  }, []);
 
   //총 구독 가격은 현재 올라와있는 구독의 가격
   //총 결제 금액은 충 구독 가격에다가 현재 결제가남은 그액

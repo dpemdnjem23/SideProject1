@@ -104,16 +104,7 @@ const {walletPayment,walletSubCost,setWalletPayment,setWalletSubCost} = walletPa
     instance
       .get(`/wallet/info`)
       .then((res) => {
-        let sum = 0;
-
-        const costSum = res.data.data.map((pre: { cost: number }) => {
-          return pre.cost;
-        });
-
-        for (let i = 0; i < costSum.length; i++) {
-          sum = sum + costSum[i];
-        }
-
+     
 
         setWalletInfo(res.data.data);
         setLoading(false);

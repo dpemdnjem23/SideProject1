@@ -248,7 +248,7 @@ module.exports = {
 
       return res
         .status(200)
-        .send({ data: findWallet, cost: payment-sum, payment: payment });
+        .send({ data: getMonthWalletCost, cost: payment-sum, payment: payment });
     } catch (err) {
       return res.status(500).send(err);
     }
@@ -275,14 +275,16 @@ module.exports = {
     //구독 지갑은 해당하는 유저의 구독 정보만 보여줘야 한다.
     // startdate 순으로 배치한다.
 
-    console.log(req.user, "req.user");
 
     const userId = req.user.userId || req.user.id;
 
+    console.log(userId)
     try {
+    
       const findWallet = await wallet.findAll({
         where: { user_id: userId },
       });
+      console.log(findWallet)
 
       if (!findWallet) {
         return res.status(400).send("회원을 찾을수가 없습니다.");

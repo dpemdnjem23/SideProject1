@@ -126,48 +126,7 @@ const Mypagebar = () => {
 
   useEffect(() => {
     paymentManagement();
-
-    instance
-      .get(`/wallet/payment`, {})
-      .then((res) => {
-        const costSum = res.data.data.map((pre: { cost: number }) => {
-          return pre.cost;
-        });
-
-        let sum = 0;
-
-        for (let i = 0; i < costSum.length; i++) {
-          sum = sum + costSum[i];
-        }
-        setWalletPayment(sum);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    instance
-      .get(`/wallet/info`, {})
-      .then((res) => {
-        let sum = 0;
-
-        const costSum = res.data.data.map((pre: { cost: number }) => {
-          return pre.cost;
-        });
-
-        for (let i = 0; i < costSum.length; i++) {
-          sum = sum + costSum[i];
-        }
-
-        setWalletSubCost(sum);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
-
-  //결제완룡 walletPayment
-  //지출 총액은 전체 구독금액ㄷ에서
-  //구독금액이 10만원, 결제완료가 5만원 5만원
   return (
     <>
       <div className="Mypage_bar_top container">
@@ -228,7 +187,7 @@ const Mypagebar = () => {
             <br></br>
 
             <span className="Mypage_bar_center_section1_pay2">
-              {walletSubCost
+              {(walletSubCost - walletPayment)
                 .toString()
                 .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}{" "}
               원

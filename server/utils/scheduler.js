@@ -4,7 +4,7 @@ const { user, wallet, alarm } = require("../models");
 const { Op, Sequelize } = require("sequelize");
 
 //매일 0시에 실행되도록
-const rule = `59 59 23 * * *`;
+const rule = `0 33 22 * * *`;
 
 const schuduleDateControll = cron.schedule(rule, async (req, res) => {
   try {

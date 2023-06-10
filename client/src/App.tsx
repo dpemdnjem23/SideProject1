@@ -38,6 +38,7 @@ import {
   paginationuseStore,
   showErrModalState,
   useWalletStore,
+  walletPageCostUseStore,
 } from "utils/state";
 import { useStore } from "Components/Login/Login";
 import ErrModal from "Components/Modal/errorModal";
@@ -98,6 +99,8 @@ const App = () => {
   // const navigate = useNavigate();
   // const navigate = useNavigate()
   //!
+  const { setWalletPayment, setWalletSubCost, walletPayment, walletSubCost } =
+  walletPageCostUseStore()
   const url = new URL(window.location.href);
   const searchs = url.search;
 
@@ -341,6 +344,26 @@ const App = () => {
     setShowSubDetail(false)
     setShowSubEdit(false)
   }
+
+
+
+  useEffect(() => {
+    instance
+      .get(`/wallet/payment`, {})
+      .then((res) => {
+
+        
+     
+        setWalletSubCost(res.data.payment)
+        setWalletPayment(res.data.cost);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+
+  }, []);
 
 
   // useEffect(()=>{
