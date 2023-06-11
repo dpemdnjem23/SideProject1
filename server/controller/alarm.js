@@ -16,7 +16,6 @@ const {
   tokenExp,
 } = require("../utils/jwt");
 
-
 module.exports = {
   //1. 알람정보를 불러온다.
   //2, 알람정보를 등록한다.
@@ -31,7 +30,7 @@ module.exports = {
 
       if (id) {
         const alarmUpdate = await alarm.update(
-          { read: true },
+          { read: true, readAt: new Date() },
           { where: { id: id, user_id: userId } }
         );
 
@@ -50,29 +49,22 @@ module.exports = {
           where: { read: false, user_id: userId },
         });
 
+        for (let i = 0; i < alarmInfo.length; i++) {
+          const alarmInfoId = alarmInfo[i].id;
 
-        for(let i = 0 ; i<alarmInfo.length;i++){
-
-          const alarmInfoId=alarmInfo[i].id
-
-          console.log(alarmInfo)
-
+          console.log(alarmInfo);
 
           const alarmUpdate = await alarm.update(
             { read: true },
             { where: { id: alarmInfoId, user_id: userId } }
           );
 
-          if(!alarmUpdate){
-            return res.status(400).send('업데이트 안됨')
+          if (!alarmUpdate) {
+            return res.status(400).send("업데이트 안됨");
           }
-
-
         }
 
-    
-
-        return res.status(200).send('모두 읽음 처리')
+        return res.status(200).send("모두 읽음 처리");
       }
     } catch (err) {
       return res.status(500).send(err);
@@ -97,7 +89,6 @@ module.exports = {
         const day = moment(walletInfo[i].end_date).diff(today, "days");
 
         if (day <= 3) {
-
           const alarmInfo = await alarm.findOne({
             where: {
               wallet_id: walletInfo[i].dataValues.id,
@@ -136,15 +127,12 @@ module.exports = {
     }
   },
   alarmInfo: async (req, res) => {
+    const userId = req.user.userId || req.user.id;
 
-    console.log('alarmInfo 시작',req.user)
-    
     try {
-      const userId = req.user.userId || req.user.id;
-
-
-      console.log(userId,'userId')
+      console.log(userId)
       const alarmInfo = await alarm.findAll({ where: { user_id: userId } });
+      console.log(alarmInfo);
 
       return res.status(200).send({ data: alarmInfo });
     } catch (err) {

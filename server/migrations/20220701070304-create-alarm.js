@@ -11,19 +11,25 @@ module.exports = {
       image: {
         type: Sequelize.STRING,
       },
-     
+
       title: {
         type: Sequelize.STRING,
       },
-    
+
       read: {
         type: Sequelize.BOOLEAN,
-        defaultValue:false
+        defaultValue: false,
       },
-      remain_time:{
-        type:Sequelize.INTEGER
-      }
-,
+      remain_time: {
+        type: Sequelize.INTEGER,
+      },
+      readAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        allowNull: true,
+
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

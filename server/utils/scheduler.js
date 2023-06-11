@@ -4,7 +4,7 @@ const { user, wallet, alarm } = require("../models");
 const { Op, Sequelize } = require("sequelize");
 
 //매일 0시에 실행되도록
-const rule = `0 33 22 * * *`;
+const rule = `0 41 23 * * *`;
 
 const schuduleDateControll = cron.schedule(rule, async (req, res) => {
   try {
@@ -72,6 +72,33 @@ const schuduleDateControll = cron.schedule(rule, async (req, res) => {
   }
 });
 
+const scheduleAlarmDelete = cron.schedule(rule, async (req, res) => {
+
+
+  const cutoffDate = moment().subtract(8, 'days').toDate();
+
+  try{
+
+  
+
+  const alarmDestroy = await alarm.destroy({
+    where:{
+      
+
+    }
+  })
+
+
+
+
+}catch(err){
+return res.status(500).send(err)
+}
+
+});
+
+
+
 const scheduleAlarmRegister = cron.schedule(rule, async (req, res) => {
   const today = moment().format("YYYY-MM-DD");
 
@@ -121,6 +148,10 @@ const scheduleAlarmRegister = cron.schedule(rule, async (req, res) => {
   } catch (err) {
     return res.status(500).send(err);
   }
+  
+
+
+  
 });
 
 module.exports = { schuduleDateControll, scheduleAlarmRegister };

@@ -238,7 +238,6 @@ const App = () => {
             }
           )
           .then((res) => {
-            console.log("일로와");
             localStorage.setItem("accessToken", res.data.accessToken);
             //         //res.data
             localStorage.setItem(
@@ -311,6 +310,7 @@ const App = () => {
         // const s = await sos.get('/')
         const response = await instance.get("/alarm/info");
 
+        console.log(response.data.data)
         setAlarmInfo(response.data.data);
       } catch (error) {
         console.log("실패");

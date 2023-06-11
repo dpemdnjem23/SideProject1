@@ -155,8 +155,7 @@ module.exports = {
 
     const lastDays = lastDay.format("DD");
 
-    console.log("첫날:");
-    console.log("마지막날:");
+
 
     const userId = req.user.userId || req.user.id;
 
