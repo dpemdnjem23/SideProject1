@@ -15,12 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
       });
 
-      models.wallet.hasOne(models.alarm,{
-        foreignKey:'wallet_id',
-        sourceKey:'id',
-        
-      })
-      
+      models.wallet.hasOne(models.alarm, {
+        foreignKey: "wallet_id",
+        sourceKey: "id",
+      });
+
       // define association here
     }
   }

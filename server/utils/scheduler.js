@@ -4,12 +4,10 @@ const { user, wallet, alarm } = require("../models");
 const { Op, Sequelize } = require("sequelize");
 
 //매일 0시에 실행되도록
-const rule = `0 41 23 * * *`;
+const rule = "0 0 0 * * *";
 
 const schuduleDateControll = cron.schedule(rule, async (req, res) => {
   try {
-    console.log("실행");
-
     const today = moment().format("YYYY-MM-DD");
     // console.log('2022-10-30' < '2022-09-30')
 
@@ -73,85 +71,15 @@ const schuduleDateControll = cron.schedule(rule, async (req, res) => {
 });
 
 const scheduleAlarmDelete = cron.schedule(rule, async (req, res) => {
-
-
-  const cutoffDate = moment().subtract(8, 'days').toDate();
-
-  try{
-
-  
-
-  const alarmDestroy = await alarm.destroy({
-    where:{
-      
-
-    }
-  })
-
-
-
-
-}catch(err){
-return res.status(500).send(err)
-}
-
-});
-
-
-
-const scheduleAlarmRegister = cron.schedule(rule, async (req, res) => {
-  const today = moment().format("YYYY-MM-DD");
+  const cutoffDate = moment().subtract(8, "days").toDate();
 
   try {
-    const userId = req.user.userId || req.user.id;
-    // console.log(userId);
-
-    const walletInfo = await wallet.findAll({
-      where: { user_id: userId },
+    const alarmDestroy = await alarm.destroy({
+      where: {},
     });
-
-    for (let i = 0; i < walletInfo.length; i++) {
-      const day = moment(walletInfo[i].end_date).diff(today, "days");
-
-      if (day <= 3) {
-        const alarmInfo = await alarm.findOne({
-          where: {
-            wallet_id: walletInfo[i].dataValues.id,
-          },
-        });
-
-        // console.log(alarmInfo, "alarmInfo");
-
-        //존재하는 알람인지 확인
-        //존재하지 않는경우 생성해준다.
-        if (!alarmInfo) {
-          await alarm.create({
-            user_id: userId,
-            wallet_id: walletInfo[i].dataValues.id,
-            title: walletInfo[i].dataValues.name,
-            image: walletInfo[i].dataValues.image,
-            remain_time: day,
-            read: false,
-          });
-
-          // 없을경우 생성한다. 만약, 존재한다면?
-        }
-      } else {
-        //존재하면 생성할 필요 없다. 여러개의 wallet이 들어올수도
-        //있음으로
-
-        continue;
-      }
-    }
-
-    return res.status(200).send("알람이 생성 되었습니다.");
   } catch (err) {
     return res.status(500).send(err);
   }
-  
-
-
-  
 });
 
-module.exports = { schuduleDateControll, scheduleAlarmRegister };
+module.exports = { schuduleDateControll}

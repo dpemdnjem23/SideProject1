@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       models.alarm.belongsTo(models.user, {
         foreignKey: "user_id",
         sourceKey: "id",
-        onDelete: "cascade",
       });
       // define association here
     }
@@ -27,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       user_id: DataTypes.NUMBER,
       title: DataTypes.STRING,
       read: DataTypes.BOOLEAN,
-      readAt:DataTypes.DATE,
+      readAt: DataTypes.DATE,
       remain_time: DataTypes.NUMBER,
     },
     {

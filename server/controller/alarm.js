@@ -76,9 +76,9 @@ module.exports = {
     //end_date, start_date
 
     const today = moment().format("YYYY-MM-DD");
+    const userId = req.user.userId || req.user.id;
 
     try {
-      const userId = req.user.userId || req.user.id;
       // console.log(userId);
 
       const walletInfo = await wallet.findAll({
@@ -88,12 +88,16 @@ module.exports = {
       for (let i = 0; i < walletInfo.length; i++) {
         const day = moment(walletInfo[i].end_date).diff(today, "days");
 
-        if (day <= 3) {
-          const alarmInfo = await alarm.findOne({
+        //3일이상
+        if (1 <= day <= 3) {
+          console.log(day,walletInfo[i].dataValues.id, "day");
+
+          const alarmInfo = await alarm.findAll({
             where: {
               wallet_id: walletInfo[i].dataValues.id,
             },
           });
+          console.log(alarmInfo, "alarmInfo");
 
           // console.log(alarmInfo, "alarmInfo");
 
@@ -130,12 +134,15 @@ module.exports = {
     const userId = req.user.userId || req.user.id;
 
     try {
-      console.log(userId)
       const alarmInfo = await alarm.findAll({ where: { user_id: userId } });
-      console.log(alarmInfo);
+
+      if (!alarmInfo) {
+        return res.status(400).send("알람이 없어 ㅠ");
+      }
 
       return res.status(200).send({ data: alarmInfo });
     } catch (err) {
+      console.log("alarm all");
       return res.status(500).send(err);
     }
   },

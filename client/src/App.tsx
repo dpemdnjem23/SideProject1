@@ -100,7 +100,7 @@ const App = () => {
   // const navigate = useNavigate()
   //!
   const { setWalletPayment, setWalletSubCost, walletPayment, walletSubCost } =
-  walletPageCostUseStore()
+    walletPageCostUseStore();
   const url = new URL(window.location.href);
   const searchs = url.search;
 
@@ -123,7 +123,7 @@ const App = () => {
 
   //토큰이 만료되면 로그아웃이 되는데, 로그아웃 모달창이 뜨면서,
   const { showErrModal } = showErrModalState();
-  const{showSubDetail,setShowSubDetail,setShowSubEdit} = useWalletStore()
+  const { showSubDetail, setShowSubDetail, setShowSubEdit } = useWalletStore();
 
   const {
     showMypageModal,
@@ -305,17 +305,28 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        console.log("실행");
-        // const s = await sos.get('/')
-        const response = await instance.get("/alarm/info");
-
-        console.log(response.data.data)
-        setAlarmInfo(response.data.data);
-      } catch (error) {
-        console.log("실패");
-        // console.log(error);
-      }
+      console.log("실행");
+      // const s = await sos.get('/')
+      instance
+        .post("/alarm/register", {
+          id: localstorageUserInfo.id,
+        })
+        .then((res) => {
+          instance
+            .get("/alarm/info")
+            .then((res) => {
+              console.log(res.data.data);
+              setAlarmInfo(res.data.data);
+            })
+            .catch((err) => {
+              // console.log(err)
+            });
+          //등록하고 보여준다.
+        })
+        .catch((err) => {
+          //등록에 실패하면?
+          // console.log(err)
+        });
     };
     fetchData();
 
@@ -325,49 +336,35 @@ const App = () => {
     };
   }, [userSignin]);
 
-
-
   useEffect(() => {
-
     showMypageModalOn(false);
-    mobileMyPageOn(false)
-    setShowAlarmModal(false)
-    setShowSubDetail(false)
-    setShowSubEdit(false)
-
+    mobileMyPageOn(false);
+    setShowAlarmModal(false);
+    setShowSubDetail(false);
+    setShowSubEdit(false);
   }, [navigate]);
 
-  const closeModlaClickHeader = () =>{
+  const closeModlaClickHeader = () => {
     showMypageModalOn(false);
-    mobileMyPageOn(false)
-    setShowAlarmModal(false)
-    setShowSubDetail(false)
-    setShowSubEdit(false)
-  }
-
-
+    mobileMyPageOn(false);
+    setShowAlarmModal(false);
+    setShowSubDetail(false);
+    setShowSubEdit(false);
+  };
 
   useEffect(() => {
     instance
       .get(`/wallet/payment`, {})
       .then((res) => {
-
-        
-     
-        setWalletSubCost(res.data.payment)
+        setWalletSubCost(res.data.payment);
         setWalletPayment(res.data.cost);
       })
       .catch((err) => {
         console.log(err);
       });
-
-
-
   }, []);
 
-
   // useEffect(()=>{
-
 
   // },[mobileMyPage])
 

@@ -28,7 +28,7 @@ module.exports = {
         url.startsWith("/share") ||
         url.startsWith("/auth/signin") ||
         url.startsWith("/auth/signup") ||
-        url.startsWith("/callendar") ||
+        url.startsWith("/calendar") ||
         url.startsWith("/auth/google") ||
         url.startsWith("/auth/kakao")||
         url.startsWith("/auth/signout")
@@ -53,6 +53,8 @@ module.exports = {
       //토큰이 존재하는경우 -> 로그인 하는경우 반드시 액세스, 리프레쉬 발급
       const accessTokendata = checkAccessToken(accessToken);
 
+
+      
       //acceesTokendata -> null이야 그러면 reissueaccessToken
 
       // if (accessTokendata === null) {
