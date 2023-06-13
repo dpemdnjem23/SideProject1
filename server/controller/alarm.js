@@ -22,15 +22,47 @@ module.exports = {
   //3. read값을 바꿔준다.
   //4. 알람 정보를 삭제한다.
 
+  alarmDelete: async (req, res) => {
+    const today = moment().format("YYYY-MM-DD");
+
+    try {
+      const alarmInfo = await alarm.findAll({});
+      console.log(alarmInfo[0].dataValues.readAt,)
+
+      // console.log(
+      //   moment(alarmInfo[0].dataValues.readAt)
+      //     .add(7, "days")
+      //     .format("YYYY-MM-DD") > today
+      // );
+
+      const alarmDel = await alarm.destroy({
+        where: { read: true, readAt: today },
+      });
+
+      console.log("삭제",alarmDel);
+      // console.log(alarmInfo)
+
+
+      // if (!alarmInfo) {
+      //   return res.status(400).send("삭제실패");
+      // }
+
+      return res.status(200).send("삭제완료");
+    } catch (err) {
+      return res.status(500).send("삭제실패햇어 좀!");
+    }
+  },
+
   alarmReadUpdate: async (req, res) => {
     const { id } = req.body;
+    const today = moment().format("YYYY-MM-DD");
 
     try {
       const userId = req.user.userId || req.user.id;
 
       if (id) {
         const alarmUpdate = await alarm.update(
-          { read: true, readAt: new Date() },
+          { read: true, readAt: today },
           { where: { id: id, user_id: userId } }
         );
 
@@ -55,7 +87,7 @@ module.exports = {
           console.log(alarmInfo);
 
           const alarmUpdate = await alarm.update(
-            { read: true },
+            { read: true, readAt: today },
             { where: { id: alarmInfoId, user_id: userId } }
           );
 
@@ -89,15 +121,14 @@ module.exports = {
         const day = moment(walletInfo[i].end_date).diff(today, "days");
 
         //3일이상
-        if (1 <= day <= 3) {
-          console.log(day,walletInfo[i].dataValues.id, "day");
+        if (day <= 3) {
+          console.log(day, walletInfo[i].dataValues.id, "day");
 
-          const alarmInfo = await alarm.findAll({
+          const alarmInfo = await alarm.findOne({
             where: {
               wallet_id: walletInfo[i].dataValues.id,
             },
           });
-          console.log(alarmInfo, "alarmInfo");
 
           // console.log(alarmInfo, "alarmInfo");
 
@@ -136,13 +167,13 @@ module.exports = {
     try {
       const alarmInfo = await alarm.findAll({ where: { user_id: userId } });
 
+      console.log(alarmInfo);
       if (!alarmInfo) {
         return res.status(400).send("알람이 없어 ㅠ");
       }
 
       return res.status(200).send({ data: alarmInfo });
     } catch (err) {
-      console.log("alarm all");
       return res.status(500).send(err);
     }
   },

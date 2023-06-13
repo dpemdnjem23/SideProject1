@@ -71,12 +71,30 @@ const schuduleDateControll = cron.schedule(rule, async (req, res) => {
 });
 
 const scheduleAlarmDelete = cron.schedule(rule, async (req, res) => {
-  const cutoffDate = moment().subtract(8, "days").toDate();
+  const cutoffDate = moment().add(8, "days");
+  const today = moment().format("YYYY-MM-DD");
 
   try {
-    const alarmDestroy = await alarm.destroy({
-      where: {},
-    });
+    const alarmInfo = await alarm.findAll({});
+
+    for(i = 0 ; i<alarmInfo.length;i++){
+      moment(alarmInfo[i].dataValues.readAt).add(7,'days').format("YYYY-MM-DD")===today
+      const alarmDestroy = await alarm.destroy({
+        where: {read:true,readAt:today},
+      });
+
+      if(!alarmDestroy){
+
+        return res.status(400).send('삭제되지 않앗다.')
+      }
+
+
+      return res.status(200).send('삭제되었다.')
+
+    }
+
+
+   
   } catch (err) {
     return res.status(500).send(err);
   }

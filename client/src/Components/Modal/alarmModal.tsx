@@ -1,10 +1,9 @@
+import { instance } from "App";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { alarmInfouseStore, mainheaderuseStore } from "utils/state";
 
 import "../../css/common/modal/alarmModal.css";
-
-
 
 const AlarmModal = () => {
   const [alarmMode, setAlarmMode] = useState<boolean>(false);
@@ -18,16 +17,15 @@ const AlarmModal = () => {
     mobileMyPage,
     showMypageModalOn,
     setInfoNumber,
-    infoNumber
-  } = mainheaderuseStore()
-  const { alarmInfo, setAlarmInfo,alarmText, setAlarmText } = alarmInfouseStore();
-  
-  
+    infoNumber,
+  } = mainheaderuseStore();
+  const { alarmInfo, setAlarmInfo, alarmText, setAlarmText } =
+    alarmInfouseStore();
+
   const closeAlarmModal = () => {
     setShowAlarmModal(false);
     setShowNumber(true);
-    setShowAlarmPage(false)
-    
+    setShowAlarmPage(false);
   };
 
   const accessToken = localStorage.getItem("accessToken");
@@ -37,17 +35,8 @@ const AlarmModal = () => {
   //반복문을 통해서 단한개의 false도 존재하지 않는
   const handlebulkReadClick = () => {
     //버튼 클릭시 alarm에 존재하는 read update
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/alarm/update`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+    instance
+      .patch(`/alarm/update`, {})
       .then(() => {
         axios
           .get(`${process.env.REACT_APP_API_URI}/alarm/info`, {
@@ -68,17 +57,8 @@ const AlarmModal = () => {
   };
 
   const handleReadClick = (el: number) => {
-    axios
-      .patch(
-        `${process.env.REACT_APP_API_URI}/alarm/update`,
-        { id: el },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+    instance
+      .patch(`/alarm/update`, { id: el })
       .then(() => {
         // console.log(res)
 
@@ -116,8 +96,20 @@ const AlarmModal = () => {
         setAlarmText(true);
       }
     }
-    
   }, []);
+
+  const handleDeleteButton = () => {
+    instance
+      .delete("/alarm/cancel")
+      .then(() => {
+        console.log("성공");
+        //
+      })
+      .catch((err) => {
+        console.log(err);
+        //
+      });
+  };
 
   //알람을 가져와서 표현을할때에 존재하지 않으면,
 
@@ -154,6 +146,9 @@ const AlarmModal = () => {
                   <span>읽은 알림</span>
                 </div>
               </div>
+              <div>
+                <button onClick={handleDeleteButton}> 삭제</button>
+              </div>
 
               <div className="AlarmModal_header_contents">
                 <div
@@ -172,7 +167,9 @@ const AlarmModal = () => {
                     알림은 7일 동안 보관됩니다.
                   </div>
                 ) : alarmText ? (
-                  <div className={`AlarmModal_section_body_textbox ${isSelectedAlarm}`}>
+                  <div
+                    className={`AlarmModal_section_body_textbox ${isSelectedAlarm}`}
+                  >
                     <h1>현재 도착한 새알림이 없습니다.</h1>
                     <p>
                       현재 구독 에 대한 알림만 진행하고 있습니다.
