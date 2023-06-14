@@ -23,9 +23,10 @@ module.exports = {
   //4. 알람 정보를 삭제한다.
 
   alarmDelete: async (req, res) => {
-    const today = moment().format("YYYY-MM-DD");
+    const today = moment().toDate()
 
     try {
+      console.log(today)
       const alarmInfo = await alarm.findAll({});
       console.log(alarmInfo[0].dataValues.readAt,)
 
@@ -36,7 +37,7 @@ module.exports = {
       // );
 
       const alarmDel = await alarm.destroy({
-        where: { read: true, readAt: today },
+        where: { read: true, readAt: {[Op.gte]:today}},
       });
 
       console.log("삭제",alarmDel);

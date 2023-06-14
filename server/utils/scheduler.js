@@ -71,7 +71,7 @@ const schuduleDateControll = cron.schedule(rule, async (req, res) => {
 });
 
 const scheduleAlarmDelete = cron.schedule(rule, async (req, res) => {
-  const cutoffDate = moment().add(8, "days");
+  const cutoffDate = moment().add(7, "days").toDate();
   const today = moment().format("YYYY-MM-DD");
 
   try {
@@ -80,7 +80,7 @@ const scheduleAlarmDelete = cron.schedule(rule, async (req, res) => {
     for(i = 0 ; i<alarmInfo.length;i++){
       moment(alarmInfo[i].dataValues.readAt).add(7,'days').format("YYYY-MM-DD")===today
       const alarmDestroy = await alarm.destroy({
-        where: {read:true,readAt:today},
+        where: {read:true,readAt:{[Op.gte]:cutoffDate}},
       });
 
       if(!alarmDestroy){
@@ -100,4 +100,4 @@ const scheduleAlarmDelete = cron.schedule(rule, async (req, res) => {
   }
 });
 
-module.exports = { schuduleDateControll}
+module.exports = { schuduleDateControll,scheduleAlarmDelete}
