@@ -59,9 +59,7 @@ app.use('/share',shareRouter)
 
 
 
-// app.get("/", (req, res) => {
-//   res.send("Hello Nodes.js");
-// });
+
 
 app.listen(Port, () => {
   schuduleDateControll

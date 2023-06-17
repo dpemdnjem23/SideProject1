@@ -57,7 +57,6 @@ const Mainheader = () => {
     if (localStorage.getItem("accessToken")) {
       setShowErrModal(false);
     } else {
-      console.log("이것좀봐");
       navigate("/");
       setShowErrModal(true);
     }
@@ -104,7 +103,6 @@ const Mainheader = () => {
     setShowSubDetail(false);
     setShowSubEdit(false);
 
-    console.log("클릭", showMypageModal, mobileMyPageOn);
   };
 
   //   const clickToNotSign= () =>{

@@ -172,7 +172,6 @@ const App = () => {
   const { persistLogin } = isSigninState();
   const today: number = Math.floor(Date.now() / 1000);
 
-  console.log(localstorageUserInfo.accessExp - today);
 
   const requestInstance: any = instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
