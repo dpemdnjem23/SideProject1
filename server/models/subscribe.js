@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
   subscribe.init(
     {
       sub_name: DataTypes.STRING,
-
       image: DataTypes.STRING,
     },
     {

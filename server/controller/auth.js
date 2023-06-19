@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const axios = require("axios");
 const crypto = require("crypto");
-const { get } = require("mongoose");
 
 const { user } = require("../models");
 
