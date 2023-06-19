@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       models.alarm.belongsTo(models.wallet, {
         foreignKey: "wallet_id",
         sourceKey: "id",
+        onDelete: "CASCADE",
       });
 
       models.alarm.belongsTo(models.user, {
         foreignKey: "user_id",
         sourceKey: "id",
+        onDelete: "CASCADE",
       });
       // define association here
     }

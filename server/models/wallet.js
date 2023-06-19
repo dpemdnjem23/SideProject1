@@ -12,12 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       models.wallet.belongsTo(models.user, {
         foreignKey: "user_id",
         sourceKey: "id",
-        onDelete: "cascade",
+        onDelete: "CASCADE",
       });
 
       models.wallet.hasOne(models.alarm, {
         foreignKey: "wallet_id",
         sourceKey: "id",
+        onDelete: "CASCADE",
       });
 
       // define association here

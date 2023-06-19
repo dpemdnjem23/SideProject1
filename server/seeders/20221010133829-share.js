@@ -21,8 +21,8 @@ module.exports = {
         title: "어제 새로 구독 해봤는데요 저는 아직 좋은거같아요",
         description: "이제 추천안해요~ ",
         list_sub: JSON.stringify({ list_sub: ["해피문데이"] }),
-        createdAt: new Date(2021,6,20,18,20,12),
-        updatedAt: new Date(2021,6,20,18,20,12),
+        createdAt: new Date(2021, 6, 20, 18, 20, 12),
+        updatedAt: new Date(2021, 6, 20, 18, 20, 12),
       },
       {
         id: 24,
@@ -33,8 +33,8 @@ module.exports = {
         list_sub: JSON.stringify({
           list_sub: ["넷플릭스", "현대셀렉션", "쿠팡", ""],
         }),
-        createdAt: new Date(2022,2,3,20,54,12),
-        updatedAt: new Date(2022,2,3,20,54,12),
+        createdAt: new Date(2022, 2, 3, 20, 54, 12),
+        updatedAt: new Date(2022, 2, 3, 20, 54, 12),
       },
       {
         id: 25,
@@ -42,8 +42,8 @@ module.exports = {
         title: "뻘글입니다. 한번 족적을 남겨보고 싶어서요 ㅎㅎㅎ",
         description: "구독한건 없구요 구독 없이도 글쑬수 있더라구요 ",
         list_sub: JSON.stringify({ list_sub: [] }),
-        createdAt:new Date(2022,4,5,12,20,54),
-        updatedAt: new Date(2022,4,5,12,20,54),
+        createdAt: new Date(2022, 4, 5, 12, 20, 54),
+        updatedAt: new Date(2022, 4, 5, 12, 20, 54),
       },
       {
         id: 26,
@@ -52,8 +52,8 @@ module.exports = {
         description:
           "정말 무서운건 뭐나면요.......... 없어요 그런거 그래도 제가 추천하고 싶은게 있어요 이거 근데 사람들이 잘모르는게있는데 구독 그냥하면 비싸잖아요 방법이 있더라구요.. 여기다 쓰긴 어려워요",
         list_sub: JSON.stringify({ list_sub: ["유튜브 프리미엄"] }),
-        createdAt: new Date(2021,2,7,8,10,54),
-        updatedAt: new Date(2021,2,7,8,10,54),
+        createdAt: new Date(2021, 2, 7, 8, 10, 54),
+        updatedAt: new Date(2021, 2, 7, 8, 10, 54),
       },
       {
         id: 27,
@@ -62,8 +62,8 @@ module.exports = {
         description:
           "제가 영양제에 관심이 많은데 사려면 이것저것따질게많아서 여기 구독해서 먹고 있어요 정답은 아니고 살펴보고 맘에드는거 골라보세요~",
         list_sub: JSON.stringify({ list_sub: ["필리", "핏타민"] }),
-        createdAt: new Date(2021,9,5,14,20,54),
-        updatedAt: new Date(2021,9,5,14,20,54),
+        createdAt: new Date(2021, 9, 5, 14, 20, 54),
+        updatedAt: new Date(2021, 9, 5, 14, 20, 54),
       },
       {
         id: 28,
@@ -71,8 +71,8 @@ module.exports = {
         title: "요즘 귀찮아서 애용해요 원랜 안쓰는데..",
         description: "ㅈㄱㄴ",
         list_sub: JSON.stringify({ list_sub: ["청소연구소", "런드리고"] }),
-        createdAt: new Date(2021,9,5,20,18,54),
-        updatedAt: new Date(2021,9,5,20,18,54),
+        createdAt: new Date(2021, 9, 5, 20, 18, 54),
+        updatedAt: new Date(2021, 9, 5, 20, 18, 54),
       },
       {
         id: 29,
@@ -89,8 +89,8 @@ module.exports = {
             "클린배딩",
           ],
         }),
-        createdAt: new Date(2021,9,5,23,1,54),
-        updatedAt: new Date(2021,9,5,23,1,54),
+        createdAt: new Date(2021, 9, 5, 23, 1, 54),
+        updatedAt: new Date(2021, 9, 5, 23, 1, 54),
       },
       {
         id: 30,
@@ -99,8 +99,8 @@ module.exports = {
         description:
           "제가 구독하고있는걸 알려드리려고 하는데요 애가 많이아파서 어떻게 해야하지 하다가 알게 됐어요 여러분들도 생각이 있다면 한번 보시면 될것같아요 저는 A 이용하고있어요 아, 한개는 애견용품인데 그건그냥 다음달에 해지해요",
         list_sub: JSON.stringify({ list_sub: ["핏펫박스, 베이컨박스"] }),
-        createdAt: new Date(2021,10,23,12,20,54),
-        updatedAt: new Date(2021,10,23,12,20,54),
+        createdAt: new Date(2021, 10, 23, 12, 20, 54),
+        updatedAt: new Date(2021, 10, 23, 12, 20, 54),
       },
       {
         id: 31,
@@ -111,8 +111,8 @@ module.exports = {
         list_sub: JSON.stringify({
           list_sub: ["스마일클럽", "나물투데이", "술담화", "프레시코드"],
         }),
-        createdAt: new Date(2021,10,23,6,20,54),
-        updatedAt: new Date(2021,10,23,6,20,54),
+        createdAt: new Date(2021, 10, 23, 6, 20, 54),
+        updatedAt: new Date(2021, 10, 23, 6, 20, 54),
       },
       {
         id: 32,
@@ -121,8 +121,8 @@ module.exports = {
         description:
           "배달의 민족 , 쿠팡이츠 다써봤는데요 여러분들도 써보세요 근데이거 마지막이래요 슈퍼패스? 생긴다던대 혜택 줄어들거같아서 말씀드립니다~",
         list_sub: JSON.stringify({ list_sub: ["요기요 슈퍼클럽"] }),
-        createdAt:new Date(2021,10,23,8,10,54),
-        updatedAt: new Date(2021,10,23,8,10,54),
+        createdAt: new Date(2021, 10, 23, 8, 10, 54),
+        updatedAt: new Date(2021, 10, 23, 8, 10, 54),
       },
       {
         id: 33,
@@ -131,8 +131,8 @@ module.exports = {
         description:
           "제가 유튜브를 보고 와인에대해 공부하면서 관심을 갖게되었는데요 일일이 알아봐가면서 사긴 어려워서 어느정도 도움을 받고자 구독했고 와인에 또 음식이 빠질수 없으니 같이 사용해봤습니다.",
         list_sub: JSON.stringify({ list_sub: ["퍼플독", "위허들링"] }),
-        createdAt: new Date(2021,10,23,18,10,54),
-        updatedAt: new Date(2021,10,23,18,10,54),
+        createdAt: new Date(2021, 10, 23, 18, 10, 54),
+        updatedAt: new Date(2021, 10, 23, 18, 10, 54),
       },
       {
         id: 34,
@@ -143,8 +143,8 @@ module.exports = {
         list_sub: JSON.stringify({
           list_sub: ["넷플릭스", "원두데일리", "빈브라더스"],
         }),
-        createdAt: new Date(2021,10,23,22,58,54),
-        updatedAt: new Date(2021,10,23,22,58,54),
+        createdAt: new Date(2021, 10, 23, 22, 58, 54),
+        updatedAt: new Date(2021, 10, 23, 22, 58, 54),
       },
       {
         id: 35,
@@ -155,8 +155,8 @@ module.exports = {
         list_sub: JSON.stringify({
           list_sub: ["스테디 아리따움", "이마트몰", "톤28"],
         }),
-        createdAt: new Date(2021,11,24,10,20,54),
-        updatedAt: new Date(2021,11,24,10,20,54),
+        createdAt: new Date(2021, 11, 24, 10, 20, 54),
+        updatedAt: new Date(2021, 11, 24, 10, 20, 54),
       },
       {
         id: 36,
@@ -165,8 +165,8 @@ module.exports = {
         description:
           "음식에대한 고민이 있었는데요. 이걸로 해결이 됐어요 근데 좀 비싸서 솔직히 구독으로 추천하기가 좀 그렇네요 월구독료가 10만원쯤해요 이게 다른 구독 시스템과는 달리 좀화끈해요 ㅎㅎ;",
         list_sub: JSON.stringify({ list_sub: ["아일랜드박스"] }),
-        createdAt: new Date(2021,11,26,18,10,54),
-        updatedAt: new Date(2021,11,26,18,10,54),
+        createdAt: new Date(2021, 11, 26, 18, 10, 54),
+        updatedAt: new Date(2021, 11, 26, 18, 10, 54),
       },
       {
         id: 37,
@@ -184,8 +184,8 @@ module.exports = {
             "해피문데이",
           ],
         }),
-        createdAt: new Date(2021,11,26,5,12,54),
-        updatedAt: new Date(2021,11,26,5,12,54),
+        createdAt: new Date(2021, 11, 26, 5, 12, 54),
+        updatedAt: new Date(2021, 11, 26, 5, 12, 54),
       },
       {
         id: 38,
@@ -194,8 +194,8 @@ module.exports = {
         description:
           "제가 만든거에요 ~ 다른사람들이 좋은글 많이 써주셔서 전 뻘글 남겨봅니다. 구독은 하는데 등록하기가 귀찮아서; 나중에 사용할일 있으면 같이 남겨봅니다",
         list_sub: JSON.stringify({ list_sub: [] }),
-        createdAt: new Date(2021,12,8,12,58,54),
-        updatedAt: new Date(2021,12,8,12,58,54),
+        createdAt: new Date(2021, 12, 8, 12, 58, 54),
+        updatedAt: new Date(2021, 12, 8, 12, 58, 54),
       },
       {
         id: 39,
@@ -206,8 +206,8 @@ module.exports = {
         list_sub: JSON.stringify({
           list_sub: ["넷플릭스", "웨이브", "라프텔", "티빙"],
         }),
-        createdAt:new Date(2021,8,23,18,22,54),
-        updatedAt: new Date(2021,8,23,18,22,54),
+        createdAt: new Date(2021, 8, 23, 18, 22, 54),
+        updatedAt: new Date(2021, 8, 23, 18, 22, 54),
       },
       {
         id: 40,
@@ -225,8 +225,8 @@ module.exports = {
             "오설록",
           ],
         }),
-        createdAt: new Date(2021,6,1,10,1,54),
-        updatedAt: new Date(2021,6,1,10,1,54),
+        createdAt: new Date(2021, 6, 1, 10, 1, 54),
+        updatedAt: new Date(2021, 6, 1, 10, 1, 54),
       },
     ]);
 
