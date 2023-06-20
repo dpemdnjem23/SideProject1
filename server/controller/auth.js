@@ -59,16 +59,15 @@ module.exports = {
         });
       }
     } catch (err) {
-      return res.status(504).send(err);
+      return res.status(500).send(err);
     }
-    
+
   },
   signinControl: async (req, res) => {
     // const body = JSON.stringify(req.body)
-    console.log(req.body);
+    const { username, password } = req.body;
 
     try {
-      const { username, password } = req.body;
       // console.log(username,password)
 
       const salt = await user.findOne({
@@ -79,8 +78,6 @@ module.exports = {
       if (!salt) {
         return res.status(401).send("유저를 찾을수 없다.");
       }
-
-      console.log(salt);
 
       //2. 유저 db에서 이메일 확인하기
 
