@@ -27,7 +27,6 @@ module.exports = {
         model: "users", // Users 모델에서
         key: "id", // 그 아이디 값을 참고합니다.
       },
-      onDelete: "CASCADE",
 
     });
 

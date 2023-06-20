@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       models.share.belongsTo(models.user, {
         foreignKey: "user_id",
         sourceKey: "id",
-        onDelete: "CASCADE",
+        
       });
       // define association here
     }
