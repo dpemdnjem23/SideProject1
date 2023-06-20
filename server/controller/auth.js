@@ -61,6 +61,7 @@ module.exports = {
     } catch (err) {
       return res.status(504).send(err);
     }
+    
   },
   signinControl: async (req, res) => {
     // const body = JSON.stringify(req.body)

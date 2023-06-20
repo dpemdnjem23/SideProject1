@@ -31,7 +31,7 @@ module.exports = {
       return (
         url.startsWith("/share") ||
         url.startsWith("/auth/signin") ||
-        // url.startsWith("/auth/signup") ||
+        url.startsWith("/auth/signup") ||
         url.startsWith("/calendar") ||
         url.startsWith("/auth/google") ||
         url.startsWith("/auth/kakao")||
