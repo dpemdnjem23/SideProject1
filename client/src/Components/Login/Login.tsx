@@ -7,7 +7,6 @@ import { NavigateFunction, useNavigate } from "react-router";
 
 import "../../css/components/Login/Login.css";
 import { isSigninState } from "utils/state";
-axios.defaults.withCredentials = true;
 
 type SigninInfo = {
   username: string;
@@ -93,14 +92,20 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
-      axios
-        .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
+
+      console.log('여기바바')
+      fetch(`${process.env.REACT_APP_API_URI}/auth/signin`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json ",
+        },
+        credentials: "include",
+
+        body: JSON.stringify({
           username: signinInfo.username,
           password: signinInfo.password,
-          headers: {
-            "Content-Type": "application/json ",
-          },
-        })
+        }),
+      })
         .then((res: any) => {
           if (!res.ok) {
             mypageOn(false);
