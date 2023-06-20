@@ -59,7 +59,7 @@ module.exports = {
         });
       }
     } catch (err) {
-      return res.status(500).send(err);
+      return res.status(504).send(err);
     }
   },
   signinControl: async (req, res) => {
