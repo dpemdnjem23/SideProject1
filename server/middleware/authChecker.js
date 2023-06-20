@@ -12,6 +12,10 @@ const {
 } = require("../utils/jwt");
 module.exports = {
   authchecker: async (req, res, next) => {
+
+
+
+
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
 
