@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.share.belongsTo(models.user, {
+        onDelete:"cacade",
         foreignKey: "user_id",
         targetKey: "id",
       });
