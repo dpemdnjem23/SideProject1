@@ -16,17 +16,14 @@ module.exports = (sequelize, DataTypes) => {
       models.user.hasMany(models.alarm,{
         foreignKey:'user_id',
         sourceKey:'id',
-        onDelete:'cascade'
       })
       models.user.hasMany(models.share,{
         foreignKey:'user_id',
         sourceKey:'id',
-        onDelete:'cascade'
       })
       models.user.hasMany(models.wallet,{
         foreignKey:'user_id',
         sourceKey:'id',
-        onDelete:'cascade'
       })
       // define association here
     }
