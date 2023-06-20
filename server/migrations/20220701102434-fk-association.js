@@ -9,7 +9,7 @@ module.exports = {
         model: "users", // Users 모델에서
         key: "id", // 그 아이디 값을 참고합니다.
       },
-      onDelete:"CASCADE"
+      onDelete:"cascade"
     });
     await queryInterface.addColumn("wallets", "user_id", {
       type: Sequelize.INTEGER,
@@ -18,7 +18,7 @@ module.exports = {
         model: "users", // Users 모델에서
         key: "id", // 그 아이디 값을 참고합니다.
       },
-      onDelete: "CASCADE",
+      onDelete: "cascade",
     });
     await queryInterface.addColumn("shares", "user_id", {
       type: Sequelize.INTEGER,
@@ -27,6 +27,7 @@ module.exports = {
         model: "users", // Users 모델에서
         key: "id", // 그 아이디 값을 참고합니다.
       },
+      onDelete:"cascade"
 
     });
 
@@ -37,7 +38,7 @@ module.exports = {
         model: "wallets", // Users 모델에서
         key: "id", // 그 아이디 값을 참고합니다.
       },
-      onDelete: "CASCADE",
+      onDelete: "cascade",
     });
 
     /**

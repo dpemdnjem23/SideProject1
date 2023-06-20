@@ -10,14 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.alarm.belongsTo(models.wallet, {
         foreignKey: "wallet_id",
-        sourceKey: "id",
-        onDelete: "CASCADE",
+        targetKey: "id",
+        onDelete: "cascade",
       });
 
       models.alarm.belongsTo(models.user, {
         foreignKey: "user_id",
-        sourceKey: "id",
-        onDelete: "CASCADE",
+        targetKey: "id",
+        onDelete: "cascade",
       });
       // define association here
     }

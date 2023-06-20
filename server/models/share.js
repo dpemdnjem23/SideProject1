@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.share.belongsTo(models.user, {
         foreignKey: "user_id",
-        sourceKey: "id",
-        
+        targetKey: "id",
+        onDelete:"cascade"
       });
       // define association here
     }
