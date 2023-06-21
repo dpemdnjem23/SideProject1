@@ -69,7 +69,6 @@ module.exports = {
 
     try {
       // console.log(username,password)
-      return res.status(200).send('성공')
 
       const salt = await user.findOne({
         attributes: ["salt"],
