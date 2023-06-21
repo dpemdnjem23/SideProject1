@@ -22,7 +22,7 @@ const {
 const socketIo = require("socket.io");
 
 app.use(express.json()); //미들웨어
-app.use(express.urlencoded({ extended: true })); //미들웨어
+app.use(express.urlencoded({ extended: false })); //미들웨어
 
 app.use(cookieParser()); // 미들웨어
 
