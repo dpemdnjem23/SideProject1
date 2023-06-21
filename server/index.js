@@ -28,7 +28,7 @@ app.use(cookieParser()); // 미들웨어
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL, "http://localhost:3000"],
+    origin: [process.env.CLIENT_URL],
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })

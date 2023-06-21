@@ -52,6 +52,7 @@ const CallbackPage = () => {
           console.log(err);
         });
     } else if (url.pathname === "/callback/google") {
+      
       const code: string | null = searchs.split("=")[1].split("&")[0];
 
       fetch(`${process.env.REACT_APP_API_URI}/auth/google`, {

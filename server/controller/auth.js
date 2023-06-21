@@ -71,6 +71,8 @@ module.exports = {
     const { username, password } = req.body;
 
     try {
+
+      return res.status(200).send(req.body)
       // console.log(username,password)
 
       const salt = await user.findOne({

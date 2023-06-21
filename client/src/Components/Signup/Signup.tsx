@@ -75,7 +75,7 @@ const Signup = () => {
 
       // return false;
     } else {
-      console.log(username);
+    
 
       fetch(`${process.env.REACT_APP_API_URI}/auth/usernamecheck`, {
         body: JSON.stringify({ username: username }),

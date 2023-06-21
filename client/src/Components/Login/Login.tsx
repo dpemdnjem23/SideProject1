@@ -102,6 +102,8 @@ const Login = () => {
         })
 
         .then((res) => {
+
+          console.log(res)
           // navigate("/");
 
           localStorage.setItem("accessToken", res.data.accessToken);
@@ -111,12 +113,6 @@ const Login = () => {
           // setTokenExpired(res.accessToken);
           persistLogin(true);
           navigate("/");
-
-          // clearTimeout(tokenTimer)
-
-          //로그인을하는순간 setTimeOut 시작 하고
-
-          // console.log(res)
         })
         .catch((err) => {
           mypageOn(false);
@@ -126,8 +122,6 @@ const Login = () => {
           // mypageOff()
 
           console.log(err);
-
-          //로그인 정보가 맞지 않는경우. errmessage
         });
     }
   };

@@ -37,7 +37,8 @@ module.exports = {
         url.startsWith("/auth/kakao")||
         url.startsWith("/auth/signout")||
         url.startsWith("/auth/nickcheck")||
-        url.startsWith("/auth/passcheck")
+        url.startsWith("/auth/passcheck")||
+        url.startsWith("/auth/usernamecheck")
 
 
       );
