@@ -35,7 +35,10 @@ module.exports = {
         url.startsWith("/calendar") ||
         url.startsWith("/auth/google") ||
         url.startsWith("/auth/kakao")||
-        url.startsWith("/auth/signout")
+        url.startsWith("/auth/signout")||
+        url.startsWith("/auth/nickcheck")||
+        url.startsWith("/auth/passcheck")
+
 
       );
     };

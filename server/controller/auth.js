@@ -65,6 +65,9 @@ module.exports = {
   },
   signinControl: async (req, res) => {
     // const body = JSON.stringify(req.body)
+
+
+
     const { username, password } = req.body;
 
     try {
@@ -97,7 +100,6 @@ module.exports = {
           const getUserInfo = await user.findOne({
             where: { username: username, password: hardPassword },
           });
-          console.log(getUserInfo);
 
           if (!getUserInfo) {
             return res.status(401).send("이메일 및 비밀번호 확인");
@@ -108,6 +110,7 @@ module.exports = {
           const isSocial = getUserInfo.dataValues.social_user;
           const isAdmin = getUserInfo.dataValues.isAdmin;
           // const { email, nickname, id } = getUserInfo.dataValues;
+
           const accessToken = generateAccessToken({
             userUsername,
             userNick,
@@ -122,6 +125,8 @@ module.exports = {
             isAdmin,
             isSocial,
           });
+
+
           const accessExp = tokenExp(accessToken);
           const refreshExp = tokenExp(refreshToken);
 
@@ -142,7 +147,7 @@ module.exports = {
               accessExp: accessExp,
               refreshExp: refreshExp,
             },
-            accessToken: accessToken,
+            access: accessToken,
           });
 
           // 토큰 생성 한다. 구글, 카카오 인경우도 있으므로 id이용
