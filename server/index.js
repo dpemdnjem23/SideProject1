@@ -28,7 +28,7 @@ app.use(cookieParser()); // 미들웨어
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL],
+    origin: ["http://my-subgather.s3-website.ap-northeast-2.amazonaws.com"],
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })

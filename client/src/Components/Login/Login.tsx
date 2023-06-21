@@ -48,7 +48,7 @@ export const useStore = create<mypageState>()((set) => ({
 // type signInfo = {
 //   handleSignin: () => void;
 axios.defaults.withCredentials = true;
-axios.defaults.headers.post["Content-Type"] = "application/json";
+// axios.defaults.headers.post["Content-Type"] = "application/json";
 //   signinErrMessage:string;
 
 const Login = () => {
@@ -96,15 +96,25 @@ const Login = () => {
     } else if (signinInfo.password && signinInfo.username) {
       console.log("여기바바");
       axios
-        .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
-          username: signinInfo.username,
-          password: signinInfo.password,
-        })
+        .post(
+          `${process.env.REACT_APP_API_URI}/auth/signin`,
+          {
+            username: signinInfo.username,
+            password: signinInfo.password,
+          },
+
+          {
+            headers: {
+              "Content-Type": "application/json",
+
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
 
         .then((res) => {
-
-          console.log(res)
           // navigate("/");
+          console.log(res);
 
           localStorage.setItem("accessToken", res.data.accessToken);
 
@@ -115,6 +125,7 @@ const Login = () => {
           navigate("/");
         })
         .catch((err) => {
+
           mypageOn(false);
           setSigninInfo({ ...signinInfo, password: "" });
 
