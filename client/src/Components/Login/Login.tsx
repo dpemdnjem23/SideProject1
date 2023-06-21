@@ -47,6 +47,8 @@ export const useStore = create<mypageState>()((set) => ({
 
 // type signInfo = {
 //   handleSignin: () => void;
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post["Content-Type"] = "application/json";
 //   signinErrMessage:string;
 
 const Login = () => {
@@ -92,38 +94,20 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
-
-      console.log('여기바바')
-      fetch(`${process.env.REACT_APP_API_URI}/auth/signin`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json ",
-        },
-        credentials: "include",
-
-        body: JSON.stringify({
+      console.log("여기바바");
+      axios
+        .post(`${process.env.REACT_APP_API_URI}/auth/signin`, {
           username: signinInfo.username,
           password: signinInfo.password,
-        }),
-      })
-        .then((res: any) => {
-          if (!res.ok) {
-            mypageOn(false);
-            setSigninInfo({ ...signinInfo, password: "" });
-
-            setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
-
-            throw new Error(res.status);
-          }
-          return res.json();
         })
+
         .then((res) => {
           // navigate("/");
 
-          localStorage.setItem("accessToken", res.accessToken);
+          localStorage.setItem("accessToken", res.data.accessToken);
 
           localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data));
-          setTokenExpiration(res.data.accessExp);
+          setTokenExpiration(res.data.data.accessExp);
           // setTokenExpired(res.accessToken);
           persistLogin(true);
           navigate("/");
