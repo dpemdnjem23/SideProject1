@@ -95,15 +95,27 @@ const Login = () => {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
       console.log("여기바바");
-      axios
-        .post(
-          `${process.env.REACT_APP_API_URI}/auth/signin`,
-          {
-            username: signinInfo.username,
-            password: signinInfo.password,
-          },
-        )
+      fetch(`${process.env.REACT_APP_API_URI}/auth/signin`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: signinInfo.username,
+          password: signinInfo.password,
+        }),
+      })
+        .then((res) => {
+          if (!res) {
+            mypageOn(false);
+            setSigninInfo({ ...signinInfo, password: "" });
 
+            setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
+            throw new Error();
+          }
+          return res.json();
+        })
         .then((res) => {
           // navigate("/");
 
@@ -116,11 +128,10 @@ const Login = () => {
           navigate("/");
         })
         .catch((err) => {
+          // mypageOn(false);
+          // setSigninInfo({ ...signinInfo, password: "" });
 
-          mypageOn(false);
-          setSigninInfo({ ...signinInfo, password: "" });
-
-          setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
+          // setSigninErrMessage("아이디와 비밀번호를 정확히 입력해주세요");
           // mypageOff()
 
           console.log(err);
