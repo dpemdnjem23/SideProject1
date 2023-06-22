@@ -107,14 +107,12 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
 
-              "Access-Control-Allow-Origin": "*",
             },
           }
         )
 
         .then((res) => {
           // navigate("/");
-          console.log(res);
 
           localStorage.setItem("accessToken", res.data.accessToken);
 

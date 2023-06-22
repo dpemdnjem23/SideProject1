@@ -61,18 +61,13 @@ module.exports = {
     } catch (err) {
       return res.status(500).send(err);
     }
-
   },
   signinControl: async (req, res) => {
     // const body = JSON.stringify(req.body)
 
-
-
     const { username, password } = req.body;
 
     try {
-
-      return res.status(200).send(req.body)
       // console.log(username,password)
 
       const salt = await user.findOne({
@@ -127,7 +122,6 @@ module.exports = {
             isAdmin,
             isSocial,
           });
-
 
           const accessExp = tokenExp(accessToken);
           const refreshExp = tokenExp(refreshToken);
@@ -446,7 +440,7 @@ module.exports = {
       const refreshTokenData = checkRefreshToken(refreshToken);
 
       if (!refreshTokenData) {
-        console.log('refreshoToken',refreshTokenData, refreshToken);
+        console.log("refreshoToken", refreshTokenData, refreshToken);
 
         return res.status(401).send("token expired");
       }
@@ -538,7 +532,7 @@ module.exports = {
         });
         const accessExp = tokenExp(accessToken);
 
-        console.log('재발급에 성공했습니다. 다음으로 넘어가세요')
+        console.log("재발급에 성공했습니다. 다음으로 넘어가세요");
 
         return res.status(200).send({
           data: {
