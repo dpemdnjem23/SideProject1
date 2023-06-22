@@ -48,7 +48,7 @@ export const useStore = create<mypageState>()((set) => ({
 // type signInfo = {
 //   handleSignin: () => void;
 axios.defaults.withCredentials = true;
-// axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 //   signinErrMessage:string;
 
 const Login = () => {
@@ -102,13 +102,6 @@ const Login = () => {
             username: signinInfo.username,
             password: signinInfo.password,
           },
-
-          {
-            headers: {
-              "Content-Type": "application/json",
-
-            },
-          }
         )
 
         .then((res) => {
