@@ -71,6 +71,9 @@ module.exports = {
     try {
       // console.log(username,password)
 
+
+res.status(200).send(req.body)
+
       const salt = await user.findOne({
         attributes: ["salt"],
         where: { username },
