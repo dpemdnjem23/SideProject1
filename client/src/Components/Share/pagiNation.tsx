@@ -20,14 +20,13 @@ const SharePagiNation = () => {
   const limit = 6;
   // const numPages:number |null= 20;
   const numPages = Math.ceil(countPage / limit);
-  console.log(numPages);
   const pageNumbers: number[] = [];
   for (let i = 1; i <= numPages; i++) {
     pageNumbers.push(i);
   }
 
   useEffect(() => {
-    axios(`${process.env.REACT_APP_API_URI}/share/info`, {
+    axios.get(`${process.env.REACT_APP_API_URI}/share/info`, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -110,7 +110,7 @@ const {walletPayment,walletSubCost,setWalletPayment,setWalletSubCost} = walletPa
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

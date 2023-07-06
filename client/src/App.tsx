@@ -77,12 +77,9 @@ import SubDetailModal from "Components/Modal/subDetailModal";
 
 const today: number = Math.floor(Date.now() / 1000);
 
-const cancelTokenSource = axios.CancelToken.source();
-
 export const instance: AxiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URI}`,
-  timeout: 500,
-  cancelToken: cancelTokenSource.token,
+  // timeout: 1000,
 });
 
 const accessToken: string | null = localStorage.getItem("accessToken");
@@ -171,7 +168,6 @@ const App = () => {
   );
   const { persistLogin } = isSigninState();
   const today: number = Math.floor(Date.now() / 1000);
-
 
   const requestInstance: any = instance.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
@@ -304,7 +300,6 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("실행");
       // const s = await sos.get('/')
       instance
         .post("/alarm/register", {
@@ -314,7 +309,6 @@ const App = () => {
           instance
             .get("/alarm/info")
             .then((res) => {
-              console.log(res.data.data);
               setAlarmInfo(res.data.data);
             })
             .catch((err) => {
@@ -359,7 +353,7 @@ const App = () => {
         setWalletPayment(res.data.cost);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

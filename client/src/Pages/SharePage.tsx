@@ -101,7 +101,7 @@ const SharePage = () => {
               // return Promise.reject(error);
             })
             .catch((err) => {
-              console.error(err);
+              // console.error(err);
 
               persistLogin(false);
               // showMypageModalOn(false);

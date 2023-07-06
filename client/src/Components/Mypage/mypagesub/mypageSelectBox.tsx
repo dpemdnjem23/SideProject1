@@ -80,7 +80,6 @@ const MypageSelectBox = () => {
     setInputValue(eText);
   };
 
-  console.log(newArr)
 
 
   //ㅋ을 입력했을때 sub함수가 작동하여선 안된다.
@@ -90,13 +89,11 @@ const MypageSelectBox = () => {
   }, [inputValue]);
 
   useEffect(() => {
-    console.log('진압해')
     instance
       .get(`/wallet/subregist`, {})
 
       .then((result) => {
 
-        console.log(result.data)
         setNewArr(result.data.data);
         setUseSubscribe(result.data.data);
       })

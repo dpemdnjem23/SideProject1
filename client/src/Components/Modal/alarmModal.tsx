@@ -48,11 +48,11 @@ const AlarmModal = () => {
             setAlarmInfo(res.data.data);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -72,11 +72,11 @@ const AlarmModal = () => {
             setAlarmInfo(res.data.data);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -98,18 +98,6 @@ const AlarmModal = () => {
     }
   }, []);
 
-  const handleDeleteButton = () => {
-    instance
-      .delete("/alarm/cancel")
-      .then(() => {
-        console.log("성공");
-        //
-      })
-      .catch((err) => {
-        console.log(err);
-        //
-      });
-  };
 
   //알람을 가져와서 표현을할때에 존재하지 않으면,
 
@@ -146,10 +134,7 @@ const AlarmModal = () => {
                   <span>읽은 알림</span>
                 </div>
               </div>
-              <div>
-                <button onClick={handleDeleteButton}> 삭제</button>
-              </div>
-
+        
               <div className="AlarmModal_header_contents">
                 <div
                   onClick={handlebulkReadClick}

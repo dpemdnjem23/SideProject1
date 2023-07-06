@@ -15,8 +15,7 @@ import {
 import { useNavigate } from "react-router";
 import { instance } from "App";
 import ShareEditinfo from "Components/Mypage/mypageshare/shareEditinfo";
-import ShareEditBoard
- from "Components/Mypage/mypageshare/shareEditBoard";
+import ShareEditBoard from "Components/Mypage/mypageshare/shareEditBoard";
 
 const ShareEditPage = () => {
   const { setUpdateWallet, updateWallet } = shareRegisteruseStore();
@@ -28,14 +27,13 @@ const ShareEditPage = () => {
     shareEditBoard,
     shareEditTitle,
     setShareEditTitle,
-  } = shareEditUseStore()
+  } = shareEditUseStore();
 
   // useEffect(()=>{
 
   const navigate = useNavigate();
 
   const share = JSON.parse(localStorage.getItem("share") || "{}");
-
 
   const { persistLogin, userSignin } = isSigninState();
 
@@ -59,7 +57,6 @@ const ShareEditPage = () => {
           }
         )
         .then((res) => {
-          console.log("일로와");
           localStorage.setItem("accessToken", res.data.accessToken);
           //         //res.data
           localStorage.setItem(
@@ -91,7 +88,7 @@ const ShareEditPage = () => {
               isSigninState.persist.clearStorage();
             })
             .catch((err) => {
-              console.error(err);
+              // console.error(err);
 
               persistLogin(false);
 
@@ -103,24 +100,19 @@ const ShareEditPage = () => {
     }
   }, []);
 
-
-
   // console.log(shareBoard,shareTitle,updateWallet)
 
   const handleShareEdit = () => {
-
-
-    //shareEdit은 
+    //shareEdit은
     instance
       .patch(`/share/edit`, {
-          id:share.id,
+        id: share.id,
         description: shareEditBoard,
         title: shareEditTitle,
         list_sub: updateWallet,
       })
 
       .then((result) => {
-
         navigate("/share");
       })
       .catch((err) => {
@@ -128,7 +120,6 @@ const ShareEditPage = () => {
         console.log(err);
       });
   };
-
 
   // })
 

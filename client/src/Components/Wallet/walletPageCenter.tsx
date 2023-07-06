@@ -11,7 +11,6 @@ type walletPageCenter = {
 const WalletPageCenter: React.FC<walletPageCenter> = ({ openSubModal }) => {
   const { walletInfo } = useWalletStore();
 
-  console.log(walletInfo);
 
   // useEffect(()[=>{
 

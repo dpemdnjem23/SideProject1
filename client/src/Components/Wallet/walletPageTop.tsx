@@ -23,7 +23,6 @@ const WalletPageTop = () => {
       });
   }, []);
 
-  console.log(walletPeriod)
 
   // console.log(walletPeriod,walletImageInfo)
   //갱신기간은 어떻게? 똑같은 것끼리 top2

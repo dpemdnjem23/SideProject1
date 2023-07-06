@@ -43,7 +43,6 @@ const ShareRegisterPage = () => {
           }
         )
         .then((res) => {
-          console.log("일로와");
           localStorage.setItem("accessToken", res.data.accessToken);
           //         //res.data
           localStorage.setItem(
@@ -75,7 +74,7 @@ const ShareRegisterPage = () => {
               isSigninState.persist.clearStorage();
             })
             .catch((err) => {
-              console.error(err);
+              // console.error(err);
 
               persistLogin(false);
 
@@ -88,7 +87,6 @@ const ShareRegisterPage = () => {
   }, []);
 
 
-  console.log(updateWallet)
   // console.log(shareBoard,shareTitle,updateWallet)
 
   const handleShareRegister = () => {
@@ -100,13 +98,13 @@ const ShareRegisterPage = () => {
       })
 
       .then((result) => {
-        console.log(result);
+        // console.log(result);
 
         navigate("/share");
       })
       .catch((err) => {
         alert("제목과 글을 입력해주세요");
-        console.log(err);
+        // console.log(err);
       });
   };
 

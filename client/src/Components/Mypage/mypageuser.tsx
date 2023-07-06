@@ -31,7 +31,7 @@ const Mypageuser: React.FC<mypageuser> = ({ subLength }) => {
       })
       .catch((err) => {
         navigate("/");
-        console.log(err);
+        // console.log(err);
       });
   };
 

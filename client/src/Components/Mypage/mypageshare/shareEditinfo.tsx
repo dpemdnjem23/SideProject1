@@ -39,7 +39,6 @@ const ShareEditinfo = () => {
         // console.log(err);
       });
     const chooseList = walletInfo.filter((item, id) => {
-      console.log(id, item.name, share.list_sub.list_sub);
       return item.name === share.list_sub.list_sub[id];
     });
     
@@ -53,7 +52,6 @@ const ShareEditinfo = () => {
     setButton(false);
     setUpdateWallet(walletInfo);
 
-    console.log(walletInfo);
   };
 
   const deleteData = () => {

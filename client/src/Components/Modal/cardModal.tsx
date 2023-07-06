@@ -28,7 +28,7 @@ const CardModal = () => {
         window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

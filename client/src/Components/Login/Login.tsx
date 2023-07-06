@@ -94,7 +94,6 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
-      console.log("여기바바");
       fetch(`${process.env.REACT_APP_API_URI}/auth/signin`, {
         method: "POST",
         credentials: "include",
@@ -119,10 +118,10 @@ const Login = () => {
         .then((res) => {
           // navigate("/");
 
-          localStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("accessToken", res.access);
 
           localStorage.setItem("subgatherUserInfo", JSON.stringify(res.data));
-          setTokenExpiration(res.data.data.accessExp);
+          setTokenExpiration(res.data.accessExp);
           // setTokenExpired(res.accessToken);
           persistLogin(true);
           navigate("/");

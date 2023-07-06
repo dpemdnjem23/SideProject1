@@ -21,8 +21,10 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 module.exports = {
   getUserInfo: async (req, res) => {
+
+    const userId = req.user.userId || req.user.id;
+
     try {
-      const userId = req.user.userId || req.user.id;
 
       const userinfo = await user.findOne({ where: { id: userId } });
 
