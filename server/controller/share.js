@@ -94,6 +94,34 @@ module.exports = {
   shareSelectInfo: async (req, res) => {
     //선택한 share의 인포를 보여준다.
     //만약, 나의 share라면 수정, 삭제 가 가능하도록 한다
+    const userId = req.user.userId || req.user.id;
+
+    try{
+
+
+      //share 에서 내것만 가져온다.
+      //id, title, user_id 만 가져오기
+
+
+      const shareInfo = await share.findAll({
+        where: { user_id: userId },
+      });
+
+      if(shareInfo){
+        return res.status(400).send('내꺼없어')
+      }
+
+
+      return res.status(200).send(shareInfo)
+
+
+
+    }catch(err){
+      return res.status(500).send(err)
+    }
+
+
+
   },
 
   shareDelete: async (req, res) => {
