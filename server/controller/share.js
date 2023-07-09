@@ -96,32 +96,23 @@ module.exports = {
     //만약, 나의 share라면 수정, 삭제 가 가능하도록 한다
     const userId = req.user.userId || req.user.id;
 
-    try{
-
-
+    try {
       //share 에서 내것만 가져온다.
-      //id, title, user_id 만 가져오기
-
+      //id, title, user_id,createdAt 만 가져오기
 
       const shareInfo = await share.findAll({
         where: { user_id: userId },
+        attributes: ["id", "user_id", "createdAt", "title"],
       });
 
-      if(shareInfo){
-        return res.status(400).send('내꺼없어')
+      if (shareInfo) {
+        return res.status(400).send("내꺼없어");
       }
 
-
-      return res.status(200).send(shareInfo)
-
-
-
-    }catch(err){
-      return res.status(500).send(err)
+      return res.status(200).send(shareInfo);
+    } catch (err) {
+      return res.status(500).send(err);
     }
-
-
-
   },
 
   shareDelete: async (req, res) => {

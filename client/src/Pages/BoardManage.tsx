@@ -1,4 +1,4 @@
-import ManageContents from "Components/SharePageManage/ManageContents";
+import ManageContents from "Components/SharePageManage/ManageBoardHeader";
 import React from "react";
 
 import "../css/pages/NoticeBoardManage.css";
