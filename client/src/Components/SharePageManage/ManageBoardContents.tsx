@@ -1,27 +1,45 @@
-import React,{useState,useEffect} from 'react'
-// import 
+import { instance } from "App";
+import React, { useState, useEffect } from "react";
+// import
 
+const ManageBoardContents = () => {
+  const [boardContents, setBoardContents] = useState([]);
 
-const ManageBoardContents=() =>{
+  const localstorageUserInfo = JSON.parse(
+    localStorage.getItem("subgatherUserInfo") || "{}"
+  );
+  //갯수만큼
 
+  instance
+    .get("/share/selectifno", {})
+    .then((res) => {
+      setBoardContents(res.data);
+    })
+    .catch(() => {
+      //   console.log(err)
+    });
 
-    const localstorageUserInfo = JSON.parse(
-        localStorage.getItem("subgatherUserInfo") || "{}"
-      );
-      //갯수만큼
-    
-      //   instance
-      //     .get("/share/selectifno", {})
-      //     .then((res) => {})
-      //     .catch((err) => {});
+    console.log(boardContents)
 
-    return(
-        <div className='ManageBoardContents' >
-
-        </div>
-    )
-
-
-
-}
-export default ManageBoardContents
+  return (
+    <table className="ManageBoardContents">
+      <thead>
+        {boardContents.map((contents:any) => {
+          return (
+            <tr key={contents.id}>
+              <th>{contents.id}</th>
+              <th>{contents.title}</th>
+              <th>{localstorageUserInfo.nickname}</th>
+              <th>{'날짜'}</th>
+              <th>
+                  <button></button>
+                  <button></button>
+              </th>
+            </tr>
+          );
+        })}
+      </thead>
+    </table>
+  );
+};
+export default ManageBoardContents;
