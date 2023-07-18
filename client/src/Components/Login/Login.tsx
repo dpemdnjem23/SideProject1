@@ -94,6 +94,7 @@ const Login = () => {
     } else if (!signinInfo.username && !signinInfo.password) {
       setSigninErrMessage("아이디와 비밀번호를 입력해주세요.");
     } else if (signinInfo.password && signinInfo.username) {
+
       fetch(`${process.env.REACT_APP_API_URI}/auth/signin`, {
         method: "POST",
         credentials: "include",

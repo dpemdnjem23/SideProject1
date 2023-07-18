@@ -75,6 +75,7 @@ module.exports = {
         attributes: ["salt"],
         where: { username },
       });
+      console.log(salt)
 
       if (!salt) {
         return res.status(401).send("유저를 찾을수 없다.");
