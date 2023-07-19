@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { paginationuseStore, shareCarduseStore } from "utils/state";
 
 import "../../css/components/SharePage/shareCard.css";
+
 const ShareCard = () => {
   const { page } = paginationuseStore();
   const {

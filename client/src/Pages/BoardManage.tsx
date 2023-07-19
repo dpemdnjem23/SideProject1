@@ -29,19 +29,23 @@ const NoticeBoardManage = () => {
         <Loading></Loading>
       ) : (
         <div className="NoticeBoardManage_section">
-          <div>
-            <img src="/ready2.jpg"></img>
-            <div>내가 쓴 구독 공유글 이 존재하지 않습니다.</div>
-            <div>구독 고유글 을 작성후 확인바랍니다. </div>
-          </div>
+          {boardContents.length<1 ? (
+            <div>
+              <img src="/ready2.jpg"></img>
+              <div>내가 쓴 구독 공유글 이 존재하지 않습니다.</div>
+              <div>구독 공유글 을 작성후 확인바랍니다. </div>
+            </div>
+          ) : (
+            <>
+              <div className="NoticeBoardManage_text">
+                <h1> 구독 공유 관리</h1>
+                <p>내가 공유 했던 구독 들을 수정, 삭제로 관리할수 있습니다.</p>
+              </div>
 
-          <div className="NoticeBoardManage_text">
-            <h1> 구독 공유 관리</h1>
-            <p>내가 공유 했던 구독 들을 수정, 삭제로 관리할수 있습니다.</p>
-          </div>
-
-          <ManageBoardHeader></ManageBoardHeader>
-          <ManageBoardContents></ManageBoardContents>
+              <ManageBoardHeader></ManageBoardHeader>
+              <ManageBoardContents></ManageBoardContents>
+            </>
+          )}
         </div>
       )}
     </div>

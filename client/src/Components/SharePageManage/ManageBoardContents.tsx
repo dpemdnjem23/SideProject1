@@ -17,7 +17,26 @@ const ManageBoardContents = () => {
   //갯수만큼
   // moment()
 
-  
+  const handleEditClick = (id: number) => {
+    //
+    localStorage.setItem("share", JSON.stringify(boardContents[id]));
+  };
+
+  const handleDeleteClick = (id: number) => {
+    instance
+      .delete("/share/delete", {
+        data: {
+          id: id,
+        },
+      })
+      .then((res) => {
+        // setCardModal(false);
+        window.location.reload();
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  };
 
   return (
     <table className="ManageBoardContents">
@@ -30,8 +49,12 @@ const ManageBoardContents = () => {
               <th>{localstorageUserInfo.nickname}</th>
               <th>{contents.createdAt.substring(0, 10)}</th>
               <th>
-                <button>수정</button>
-                <button>삭제</button>
+                <button onClick={() => handleEditClick(contents.id)}>
+                  수정
+                </button>
+                <button onClick={() => handleDeleteClick(contents.id)}>
+                  삭제
+                </button>
               </th>
             </tr>
           );
