@@ -3,14 +3,7 @@ import create from "zustand";
 
 import { devtools, persist } from "zustand/middleware";
 
-
-
-
-
 export const accessToken = localStorage.getItem("accessToken") || null;
-
-
-
 
 type isSigninState = {
   userSignin: boolean;
@@ -248,18 +241,20 @@ type shareEditState = {
 };
 
 //shareifno
-type shareinfo= {
+type shareSelectInfo = {
   id: number;
   title: string;
-  user_id: number;
   createdAt: string;
-
 };
-type shareManage ={
+type shareManage = {
+  boardContents: shareSelectInfo[];
+  setBoardContents: (input: shareSelectInfo[]) => void;
+};
 
-  shareManage:[]
-
-}
+export const shareSelectUseStore = create<shareManage>()((set) => ({
+  boardContents: [],
+  setBoardContents: (input) => set({ boardContents: input }),
+}));
 
 export const isSigninState = create<isSigninState>()(
   devtools(
@@ -490,8 +485,6 @@ export const shareEditUseStore = create<shareEditState>((set) => ({
   shareEditBoard: "",
   setShareEditBoard: (input: string) => set({ shareEditBoard: input }),
 }));
-
-
 
 // export const walletInfoState = create<walletInfoState>()((set) => ({
 //   walletInfo:{

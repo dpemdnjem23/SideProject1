@@ -12,16 +12,11 @@ const {
 } = require("../utils/jwt");
 module.exports = {
   authchecker: async (req, res, next) => {
-
-
-
-
     const authorization =
       req.headers["Authorization"] || req.headers["authorization"];
 
-      
     // const refreshToken = req.cookies.req.refreshToken;
-//refreshoToken이 만약에 죽게된다면 undefined
+    //refreshoToken이 만약에 죽게된다면 undefined
 
     // const accessToken = authorization.split(" ")[1];
 
@@ -34,20 +29,18 @@ module.exports = {
         url.startsWith("/auth/signup") ||
         url.startsWith("/calendar") ||
         url.startsWith("/auth/google") ||
-        url.startsWith("/auth/kakao")||
-        url.startsWith("/auth/signout")||
-        url.startsWith("/auth/nickcheck")||
-        url.startsWith("/auth/passcheck")||
+        url.startsWith("/auth/kakao") ||
+        url.startsWith("/auth/signout") ||
+        url.startsWith("/auth/nickcheck") ||
+        url.startsWith("/auth/passcheck") ||
         url.startsWith("/auth/usernamecheck")
-
-
       );
     };
 
     if (!authorization) {
       //토큰이 없는경우 허용되지 않는다. 단,예외
       if (isPublic(req.url)) {
-        console.log('해당되지 않는 건 이리와')
+        console.log("해당되지 않는 건 이리와");
         //share login signup callendar는 토큰이 없어도 진입가능
 
         return next();
@@ -61,8 +54,6 @@ module.exports = {
       //토큰이 존재하는경우 -> 로그인 하는경우 반드시 액세스, 리프레쉬 발급
       const accessTokendata = checkAccessToken(accessToken);
 
-
-      
       //acceesTokendata -> null이야 그러면 reissueaccessToken
 
       // if (accessTokendata === null) {

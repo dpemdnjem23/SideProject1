@@ -175,7 +175,9 @@ const App = () => {
 
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
+        withCredentials: true,
       };
+
       if (!accessToken) {
         if (config.url === "/alarm/info") {
           instance.interceptors.request.eject(requestInstance);
