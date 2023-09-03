@@ -39,6 +39,6 @@ _구독을 했지만 뭘 했는지 기억이 안날땐\
 
 ## API-FLOW
 
-![subgather drawio](https://github.com/dpemdnjem23/SideProject1/assets/83865101/7ef5c438-06ec-487f-b160-c2e2e6b9af55)
+![subgather drawio](https://github.com/dpemdnjem23/SideProject1/assets/83865101/7ef5c438-06ec-487f-b160-c2e2e6b9af55.png)
 
 ## DB SCHEME
