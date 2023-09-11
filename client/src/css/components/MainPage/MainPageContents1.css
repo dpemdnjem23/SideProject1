@@ -52,6 +52,7 @@
 
 .MainPageContents1_bt_section > a {
   border: 0;
+  z-index: 999;
   cursor: pointer;
   width: 100%;
   max-width: 240px;
