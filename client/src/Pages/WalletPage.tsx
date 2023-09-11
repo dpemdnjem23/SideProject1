@@ -115,6 +115,19 @@ const {walletPayment,walletSubCost,setWalletPayment,setWalletSubCost} = walletPa
   }, []);
 
 
+
+  useEffect(() => {
+    instance
+      .get(`/wallet/payment`, {})
+      .then((res) => {
+        setWalletSubCost(res.data.payment);
+        setWalletPayment(res.data.cost);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  }, []);
+
  
 
   return (
