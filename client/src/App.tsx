@@ -96,7 +96,6 @@ const App = () => {
   // const navigate = useNavigate();
   // const navigate = useNavigate()
   //!
-  console.log(process.env.REACT_APP_API_URI,'나와라')
   const { setWalletPayment, setWalletSubCost, walletPayment, walletSubCost } =
     walletPageCostUseStore();
   const url = new URL(window.location.href);
