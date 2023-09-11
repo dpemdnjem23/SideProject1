@@ -15,7 +15,7 @@ const walletRouter = require("./routes/wallet");
 const shareRouter = require("./routes/share");
 const {
   schuduleDateControll,
-  scheduleAlarmRegister,
+  // scheduleAlarmRegister,
   scheduleAlarmDelete,
 } = require("./utils/scheduler");
 
